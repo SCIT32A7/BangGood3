@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="global.sesoc.banggood.dao.CustomerDAO">
+ 	<insert id="customer_insert" parameterType="Customer">
+		insert into customer values(#{custid}, #{password}, #{email}, #{phone})
+	</insert>
+	<select id="customer_select" resultType="Customer" parameterType="String">
+		select * from customer where custid = #{custid}
+	</select>
+	<update id="customer_update" parameterType="Customer">
+		update customer set password = #{password}, email = #{email}, phone = #{phone}
+		where custid = #{custid}
+	</update>
+	<delete id="customer_delete">
+		delete customer where custid = #{0} and password = #{1}
+	</delete>
+</mapper>

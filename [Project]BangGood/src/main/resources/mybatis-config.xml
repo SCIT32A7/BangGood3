@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+ 	<typeAliases>
+ 		<typeAlias type="global.sesoc.banggood.vo.Customer" alias="Customer"/>
+ 		<typeAlias type="global.sesoc.banggood.vo.Property" alias="Property"/>
+ 		<typeAlias type="global.sesoc.banggood.vo.SearchBoard" alias="SearchBoard"/>
+ 		<typeAlias type="global.sesoc.banggood.vo.SearchReply" alias="SearchReply"/>
+ 		<typeAlias type="global.sesoc.banggood.vo.Property_map" alias="Property_map"/>
+ 	</typeAliases>
+  <mappers>
+    <mapper resource="mappers/CustomerMapper.xml"/>
+    <mapper resource="mappers/PropertyMapper.xml"/>
+    <mapper resource="mappers/SearchBoardMapper.xml"/>
+  </mappers>
+</configuration>

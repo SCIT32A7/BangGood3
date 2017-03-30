@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="global.sesoc.banggood.dao.SearchBoardDAO">
+ 	
+ 	<!-- 게시글 등록 -->
+ 	<insert id="insert_searchBoard" parameterType="SearchBoard">
+		insert into searchboard 
+ 		(searchboard_no, custid, searchboard_title, searchboard_text) 		
+ 		values (seq_searchboard_no.nextval, #{custid}, #{searchboard_title}, #{searchboard_text})
+ 	</insert>
+ 	
+ 	<!-- 읽기 -->
+ 	<select id="get_searchBoard" parameterType="_int" resultType="SearchBoard">
+ 		select * from searchboard where searchboard_no = #{searchboard_no}
+ 	</select>
+ 	
+ 	<!-- 조회수 증가 -->
+ 	<update id="addHits" parameterType="_int">
+ 		update searchboard set hits = hits+1 where searchboard_no = #{searchboard_no}
+ 	</update>
+	
+	<!-- 게시글 갯수 조회 -->
+	<select id="getCount" resultType="_int">
+		select count(*) from searchboard
+	</select>
+	
+	<!-- 전체 글 조회 -->
+	<select id="list_searchBoard" resultType="searchboard" parameterType="map">	
+	select *
+	from (select rownum r, board.*	
+ 		from (select * from searchboard order by searchboard_inputdate desc) board
+   	 ) where r between #{firstText} and #{lastText}    
+	</select>
+	
+	<!-- 수정 -->
+	<update id="update_searchBoard" parameterType="SearchBoard">
+		update searchboard
+		set	searchboard_title = #{searchboard_title}, 
+		searchboard_text = #{searchboard_text}
+		where searchboard_no = #{searchboard_no}
+	</update>
+	
+	<!-- 삭제 -->
+	<delete id="delete_searchBoard" parameterType="_int">
+		delete searchboard where searchboard_no = #{searchboard_no}
+	</delete>
+	
+	<!-- 댓글입력 -->
+	<insert id = "insert_searchReply" parameterType="SearchReply">
+		insert searchreply
+		(searchreply_no, searchboard_no, custid, searchreply_text)
+		values (seq_searchreply_no.nextval, #{searchBoard_no}, #{custid}, #{searchreply_text})
+	</insert>
+	
+	<!-- 댓글 리스트 출력 -->
+	<select id = "getList_searchReply" resultType="SearchReply" parameterType="_int">
+	 	select * from searchreply where searchboard_no = #{searchboard_no}
+	</select>
+
+	<!-- 댓글 삭제 -->
+	<delete id = "delete_searchReply" parameterType="_int">
+		delete searchreply where searchboard_no = #{searchboard_no}
+	</delete>
+	
+	<!-- 수정 전 댓글 호출 -->
+	<select id = "select_searchReply" parameterType="_int" resultType="SearchReply">
+		select * from searchreply where searchReply_no = #{searchReply_no}
+	</select>
+	
+	<!-- 댓글 수정 -->
+	<update id = "update_searchReply" parameterType = "SearchReply">
+		update searchreply set
+		searchreply_text = #{searchreply_text}
+		where searchReply_no = #{searchReply_no}
+	</update>
+	
+	<!-- 댓글 갯수 조회 -->
+	<select id = "getReplyCount" parameterType="_int" resultType="_int">
+		select count(*) from searchreply where searchboard_no = #{searchboard_no}
+	</select>
+		
+</mapper>
