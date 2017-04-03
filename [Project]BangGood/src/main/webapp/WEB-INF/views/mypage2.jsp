@@ -64,17 +64,17 @@
 			<div class="col-md-3 md-margin-bottom-40">
 
 				<h4>
-					<span>${loginId}</span> 님 마이페이지 입니다.
+					<span>OOO</span> 님 마이페이지 입니다.
 				</h4>
 				<hr>
 
 				<div class="margin-bottom-50"></div>
 				<ul class="list-group sidebar-nav-v1 margin-bottom-40"
 					id="sidebar-nav-1">
-					<li class="list-group-item active">
+					<li class="list-group-item">
 					<a href="mypage"><i class="fa fa-cubes" style="width:15px; height:10px;"></i> 등록매물</a>
 					</li>
-					<li class="list-group-item">
+					<li class="list-group-item active">
 					<a href="mypage2"><i class="fa fa-cubes" style="width:15px; height:10px;"></i> 관심매물</a>
 					</li>
 					<li class="list-group-item">
@@ -97,7 +97,7 @@
 			<div class="col-md-9">
 				<div class="g-pd-20">
 					<div class="headline">
-						<h2>등록매물</h2>
+						<h2>관심매물</h2>
 					</div>
 					<!--row-->
 					<div class="row">
@@ -139,7 +139,7 @@
 					</div>
 					<hr>
 					<!--  end row -->
-
+					
 					<!--row-->
 					<div class="row">
 						<div class="col-sm-5">
@@ -179,8 +179,8 @@
 						</div>
 					</div>
 					<hr>
-					<!-- row -->
-
+					<!-- row -->	
+									
 				</div>
 				<!-- End Profile Content -->
 			</div>

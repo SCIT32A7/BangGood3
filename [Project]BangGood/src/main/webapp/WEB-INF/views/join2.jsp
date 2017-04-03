@@ -4,7 +4,7 @@
 <div class="modal fade" role="dialog" id="JoinModal">
 	<div class=" modal-dialog g-pt-80">
 		<div class="modal-body row space-xlg-hor equal-height-columns">
-			<div class="form-block reg-block col-md-12 col-sm-8" style="height: 424px; background-color:#fff">
+			<div class="form-block reg-block col-md-12 col-sm-8 joinbox" style="background-color:#fff">
 					
 				<div class="form-block-header g-mb-20 g-mt-20">
 					<h1 class="margin-bottom-10 text-center">  회원가입

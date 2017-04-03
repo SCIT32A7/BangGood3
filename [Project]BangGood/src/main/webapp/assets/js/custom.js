@@ -113,17 +113,17 @@ $(function() {
 				"custid" : id
 			},
 			success : function(resp) {
-				alert("success");
 				if (resp == "exist") {
 					$("#checkid_result").html(id + "는 이미 등록된 아이디입니다.");
+					$(".joinbox").attr("height","434px");
 					checkStatus = 'no';
 				} else {
 					$("#checkid_result").html(id + "는 사용할 수 있습니다.");
+					$(".joinbox").attr("height","434px");
 					checkStatus = 'yes';
 				}
 			},
 			error : function(jqXHR, request, error) {
-				alert("에러");
 				return false;
 			}
 		});
@@ -210,6 +210,30 @@ function loginCheck(){
 	password.value = pw.value;
 	form.submit();
 }
+
+function loginCheck1(){
+	var id = $("#login_id").val();
+	var pw = $("#login_pw").val();
+	if(id.length == 0){
+		alert('아이디를 입력해주세요.');
+		return false;
+	}
+	if(pw.length == 0){
+		alert('비밀번호를 입력해주세요.');
+		return false;
+	}
+	
+	var form = $("#sendlogin").val();
+	var custid = $("#custid").val();
+	var password =$("#password").val();
+	
+	custid.val(id);
+	password.val(pw);
+	form.submit();
+}
+
+
+
 
 
 function senddate() {

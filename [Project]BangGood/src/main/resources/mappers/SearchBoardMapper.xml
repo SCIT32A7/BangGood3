@@ -8,8 +8,9 @@
  	<!-- 게시글 등록 -->
  	<insert id="insert_searchBoard" parameterType="SearchBoard">
 		insert into searchboard 
- 		(searchboard_no, custid, searchboard_title, searchboard_text) 		
- 		values (seq_searchboard_no.nextval, #{custid}, #{searchboard_title}, #{searchboard_text})
+ 		(searchboard_no, custid, email, searchboard_title, searchboard_text) 		
+ 		values
+		(seq_searchboard_no.nextval, #{custid}, #{email}, #{searchBoard_title}, #{searchBoard_text})
  	</insert>
  	
  	<!-- 읽기 -->

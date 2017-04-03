@@ -40,6 +40,26 @@ public class HomeController {
 		return "searchboard";
 	}
 	
+	@RequestMapping(value = "/mypage", method = RequestMethod.GET)
+	public String mypage(Model model) {
+		return "mypage";
+	}
+	
+	@RequestMapping(value = "/mypage2", method = RequestMethod.GET)
+	public String mypage2(Model model) {
+		return "mypage2";
+	}
+	
+	@RequestMapping(value = "/mypage3", method = RequestMethod.GET)
+	public String mypage3(Model model) {
+		return "mypage3";
+	}
+	
+	@RequestMapping(value = "/mypage4", method = RequestMethod.GET)
+	public String mypage4(Model model) {
+		return "mypage4";
+	}
+	
 	
 	@RequestMapping(value = "/intoMap", method = RequestMethod.POST)
 	public @ResponseBody ArrayList<Property> intoMap(Model model){

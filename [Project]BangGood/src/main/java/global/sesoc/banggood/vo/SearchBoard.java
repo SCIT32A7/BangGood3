@@ -6,6 +6,7 @@ public class SearchBoard {
 
 	private int searchBoard_no;
 	private String custid;
+	private String email;
 	private String searchBoard_title;
 	private String searchBoard_text;
 	private String searchBoard_inputdate;
@@ -13,25 +14,19 @@ public class SearchBoard {
 	private int searchBoard_reply;
 	private ArrayList<SearchReply> searchReply;
 
-	public SearchBoard(int searchBoard_no, String custid, String searchBoard_title, String searchBoard_text,
-			String searchBoard_inputdate, int searchBoard_hits, int searchBoard_reply,
+	public SearchBoard(int searchBoard_no, String custid, String email, String searchBoard_title,
+			String searchBoard_text, String searchBoard_inputdate, int searchBoard_hits, int searchBoard_reply,
 			ArrayList<SearchReply> searchReply) {
 		super();
 		this.searchBoard_no = searchBoard_no;
 		this.custid = custid;
+		this.email = email;
 		this.searchBoard_title = searchBoard_title;
 		this.searchBoard_text = searchBoard_text;
 		this.searchBoard_inputdate = searchBoard_inputdate;
 		this.searchBoard_hits = searchBoard_hits;
 		this.searchBoard_reply = searchBoard_reply;
 		this.searchReply = searchReply;
-	}
-
-	public SearchBoard(String custid, String searchBoard_title, String searchBoard_text) {
-		super();
-		this.custid = custid;
-		this.searchBoard_title = searchBoard_title;
-		this.searchBoard_text = searchBoard_text;
 	}
 
 	public SearchBoard() {
@@ -52,6 +47,14 @@ public class SearchBoard {
 
 	public void setCustid(String custid) {
 		this.custid = custid;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public String getSearchBoard_title() {
@@ -104,10 +107,10 @@ public class SearchBoard {
 
 	@Override
 	public String toString() {
-		return "SearchBoard [searchBoard_no=" + searchBoard_no + ", custid=" + custid + ", searchBoard_title="
-				+ searchBoard_title + ", searchBoard_text=" + searchBoard_text + ", searchBoard_inputdate="
-				+ searchBoard_inputdate + ", searchBoard_hits=" + searchBoard_hits + ", searchBoard_reply="
-				+ searchBoard_reply + "]";
+		return "SearchBoard [searchBoard_no=" + searchBoard_no + ", custid=" + custid + ", email=" + email
+				+ ", searchBoard_title=" + searchBoard_title + ", searchBoard_text=" + searchBoard_text
+				+ ", searchBoard_inputdate=" + searchBoard_inputdate + ", searchBoard_hits=" + searchBoard_hits
+				+ ", searchBoard_reply=" + searchBoard_reply + ", searchReply=" + searchReply + "]";
 	}
 
 }

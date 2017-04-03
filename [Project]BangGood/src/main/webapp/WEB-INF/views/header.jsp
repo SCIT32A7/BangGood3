@@ -38,7 +38,7 @@
 						<li class="page-scroll"><a href="">매물관리</a></li>
 						<li class="page-scroll"><a href="">게시글 관리</a></li>
 					</c:if>
-					<li class="page-scroll"><a href="">마이 페이지</a></li>
+					<li class="page-scroll"><a href="mypage">마이 페이지</a></li>
 					<li class="page-scroll"><a href="logout">로그아웃</a></li>									
 				</c:if>
 				<c:if test ="${not empty loginId}">

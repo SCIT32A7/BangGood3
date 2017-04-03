@@ -64,20 +64,20 @@
 			<div class="col-md-3 md-margin-bottom-40">
 
 				<h4>
-					<span>${loginId}</span> 님 마이페이지 입니다.
+					<span>OOO</span> 님 마이페이지 입니다.
 				</h4>
 				<hr>
 
 				<div class="margin-bottom-50"></div>
 				<ul class="list-group sidebar-nav-v1 margin-bottom-40"
 					id="sidebar-nav-1">
-					<li class="list-group-item active">
+					<li class="list-group-item">
 					<a href="mypage"><i class="fa fa-cubes" style="width:15px; height:10px;"></i> 등록매물</a>
 					</li>
 					<li class="list-group-item">
 					<a href="mypage2"><i class="fa fa-cubes" style="width:15px; height:10px;"></i> 관심매물</a>
 					</li>
-					<li class="list-group-item">
+					<li class="list-group-item active">
 					<a href="mypage3"><i class="fa fa-comments" style="width:15px; height:10px;"></i> 메세지</a>
 					</li>
 					<li class="list-group-item ">
@@ -97,42 +97,40 @@
 			<div class="col-md-9">
 				<div class="g-pd-20">
 					<div class="headline">
-						<h2>등록매물</h2>
+						<h2>메세지</h2>
 					</div>
 					<!--row-->
 					<div class="row">
-						<div class="col-sm-5">
-							<img class="img-responsive" src="assets/img/main/img12.jpg"
-								style="">
-						</div>
-						<div class="col-sm-5">
-							<h2>
-								<a href="#">Rigging in Autodesk 3Ds Max</a>
-							</h2>
-							<ul class="list-unstyled list-inline blog-info-v2"
-								style="float: left">
-								<li>By: <a class="color-green" href="#">Edward Rooster</a>
-								</li>
-								<li><i class="fa fa-clock-o"></i> Jan 02, 2013</li>
-							</ul>
-							<p style="float: left">Lorem Ipsum is simply dummy text of
-								the printing and typesetting industry printing. Donec non
-								dignissim eros. Mauris faucibus turpis volutpat sagittis
-								rhoncus. Pellentesque et rhoncus sapien, sed ullamcorper justo.
-							</p>
-						</div>
-						<div class="col-sm-2">
-							<button class=" mypage_btn btn-u btn-block rounded">
-								<a href="#">수정</a>
-							</button>
-							<button class="mypage_btn btn-u btn-block rounded">
-								<a href="#">삭제</a>
-							</button>
-							<div class="project-share">
-								<ul class="list-inline comment-list-v2 pull-right g-mt-100">
-									<li><i class="fa fa-eye"></i><a href="#">25</a></li>
-									<li><i class="fa fa-comments"></i><a href="#">32</a></li>
-									<li><i class="fa fa-heart"></i><a href="#">32</a></li>
+						<div class="col-sm-12">
+							<div class="table-responsive">
+								<table class="table">
+									<thead>
+										<tr>
+											<th>제목</th>
+											<th>작성자</th>
+											<th class="hidden-sm">조회</th>
+											<th class="hidden-sm">등록일</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td><a href="#">결제 시스템 교체 작업 안내</a></td>
+											<td>운영자</td>
+											<td class="hidden-sm">123</td>
+											<td class="hidden-sm">2017.03.28</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+
+							<div class="text-center">
+
+								<ul class="pagination pagination">
+									<li><a href="#">1</a></li>
+									<li><a href="#">2</a></li>
+									<li><a href="#">3</a></li>
+									<li><a href="#">4</a></li>
+									<li><a href="#">5</a></li>
 								</ul>
 							</div>
 						</div>
@@ -140,46 +138,6 @@
 					<hr>
 					<!--  end row -->
 
-					<!--row-->
-					<div class="row">
-						<div class="col-sm-5">
-							<img class="img-responsive" src="assets/img/main/img12.jpg"
-								style="">
-						</div>
-						<div class="col-sm-5">
-							<h2>
-								<a href="#">Rigging in Autodesk 3Ds Max</a>
-							</h2>
-							<ul class="list-unstyled list-inline blog-info-v2"
-								style="float: left">
-								<li>By: <a class="color-green" href="#">Edward Rooster</a>
-								</li>
-								<li><i class="fa fa-clock-o"></i> Jan 02, 2013</li>
-							</ul>
-							<p style="float: left">Lorem Ipsum is simply dummy text of
-								the printing and typesetting industry printing. Donec non
-								dignissim eros. Mauris faucibus turpis volutpat sagittis
-								rhoncus. Pellentesque et rhoncus sapien, sed ullamcorper justo.
-							</p>
-						</div>
-						<div class="col-sm-2">
-							<button class=" mypage_btn btn-u btn-block rounded">
-								<a href="#">수정</a>
-							</button>
-							<button class="mypage_btn btn-u btn-block rounded">
-								<a href="#">삭제</a>
-							</button>
-							<div class="project-share">
-								<ul class="list-inline comment-list-v2 pull-right g-mt-100">
-									<li><i class="fa fa-eye"></i><a href="#">25</a></li>
-									<li><i class="fa fa-comments"></i><a href="#">32</a></li>
-									<li><i class="fa fa-heart"></i><a href="#">32</a></li>
-								</ul>
-							</div>
-						</div>
-					</div>
-					<hr>
-					<!-- row -->
 
 				</div>
 				<!-- End Profile Content -->
