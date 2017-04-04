@@ -41,6 +41,15 @@
 <link rel="stylesheet" href="assets/css/custom.css">
 <link rel="stylesheet"
 	href="assets/plugins/font-awesome/css/font-awesome.min.css">
+	<script type="text/javascript">
+		function msg_open() {
+			  window.open("mypage3", "", "'scrollbars=yes, toolbar=no, location=no, resizable=yes, status=no, menubar=yes, width=750px, height=265px, left=0, top=0'");
+
+		};
+
+
+		
+		</script>
 </head>
 
 <body id="body" data-spy="scroll" data-target=".one-page-header"
@@ -64,7 +73,7 @@
 			<div class="col-md-3 md-margin-bottom-40">
 
 				<h4>
-					<span>OOO</span> 님 마이페이지 입니다.
+					<span>${loginId}</span> 님 마이페이지 입니다.
 				</h4>
 				<hr>
 
@@ -81,7 +90,7 @@
 					<a href="mypage3"><i class="fa fa-comments" style="width:15px; height:10px;"></i> 메세지</a>
 					</li>
 					<li class="list-group-item ">
-					<a href="mypage4"><i class="fa fa-user" style="width:15px; height:10px;"></i> 회원정보수정</a>
+					<a href="mypage4"><i class="fa fa-user" style="width:15px; height:10px;"></i> 개인정보 수정</a>
 					</li>
 				</ul>
 
@@ -114,7 +123,7 @@
 									</thead>
 									<tbody>
 										<tr>
-											<td><a href="#">결제 시스템 교체 작업 안내</a></td>
+											<td><a href="#" type="button" onclick="msg_open()">결제 시스템 교체 작업 안내</a></td>
 											<td>운영자</td>
 											<td class="hidden-sm">123</td>
 											<td class="hidden-sm">2017.03.28</td>
@@ -172,5 +181,6 @@
 
 		<!-- custom -->
 		<script src="assets/js/custom.js"></script>
+		
 </body>
 </html>

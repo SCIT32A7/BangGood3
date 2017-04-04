@@ -152,7 +152,7 @@
    		});
    	       
    	       
-   /* 		   function searchAddrFromCoords(coords, callback) {
+   			/*  function searchAddrFromCoords(coords, callback) {
        		// 좌표로 행정동 주소 정보를 요청합니다
       			 geocoder.coord2addr(coords, callback); 
    	       } */

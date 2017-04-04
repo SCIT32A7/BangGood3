@@ -1,6 +1,7 @@
 package global.sesoc.banggood.repository;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
@@ -44,12 +45,28 @@ public class SearchBoardRepository {
 		return board;
 	}
 	
-	// 전체 글 갯수 구하기
-	public int getCount(){
+	//게시글 찾기
+	public SearchBoard selectBoard(int searchBoard_no){
 		SearchBoardDAO dao = sqlsession.getMapper(SearchBoardDAO.class);
+		SearchBoard board = null;
+		try {
+			board = dao.get_searchBoard(searchBoard_no);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}		
+		return board;
+	}
+	
+	// 전체 글 갯수 구하기
+	public int getCount(String searchTitle, String searchText){
+		SearchBoardDAO dao = sqlsession.getMapper(SearchBoardDAO.class);
+		Map<String, String> search = new HashMap<>();
+		search.put("searchTitle", searchTitle);
+		search.put("searchText", searchText);
 		int count = 0;
 		try {
-			count = dao.getCount();
+			count = dao.getCount(search);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -96,19 +113,6 @@ public class SearchBoardRepository {
 		return result;
 	}
 	
-	// 게시글의 댓글 갯수 조회
-	public int getReplyCount(int searchBoard_no){
-		int count = 0;
-		SearchBoardDAO dao = sqlsession.getMapper(SearchBoardDAO.class);
-		try {
-			count = dao.getReplyCount(searchBoard_no);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return count;
-	}
-	
 	// 게시글 댓글 출력
 	public ArrayList<SearchReply> getList_searchReply (int searchBoard_no){
 		ArrayList<SearchReply> srList = new ArrayList<>();
@@ -128,6 +132,20 @@ public class SearchBoardRepository {
 		SearchBoardDAO dao = sqlsession.getMapper(SearchBoardDAO.class);
 		try {
 			result = dao.insert_searchReply(searchReply);
+			dao.addReplyCount(searchReply.getSearchBoard_no());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
+	public int delete_searchReply(int searchReply_no, int searchBoard_no){
+		int result = 0;
+		SearchBoardDAO dao = sqlsession.getMapper(SearchBoardDAO.class);
+		try {
+			result = dao.delete_searchReply(searchReply_no);
+			dao.subReplyCount(searchBoard_no);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

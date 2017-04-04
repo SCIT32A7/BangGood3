@@ -88,6 +88,9 @@ public class CustomerController {
 
 	@RequestMapping(value = "customer_update", method = RequestMethod.POST)
 	public String update(Customer customer, Model model) {
+		String custid = (String) session.getAttribute("loginId");
+		
+		customer.setCustid(custid);
 		int result = cr.update(customer);
 		String message = null;
 		if (result > 0) {
@@ -96,7 +99,7 @@ public class CustomerController {
 			message = "fail";
 		}
 		model.addAttribute("result", message);
-		return "update";
+		return "mypage4";
 	}
 
 }

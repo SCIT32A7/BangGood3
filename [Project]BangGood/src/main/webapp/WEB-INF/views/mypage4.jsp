@@ -1,8 +1,23 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri = "http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->
 <!--[if !IE]><!-->
+<c:if test = "${not empty result}">
+	<c:if test = "${result == 'fail'}">
+		<script>
+			alert('변경에 실패하였습니다.');
+			location.href = "./mypage4";
+		</script>
+	</c:if>
+	<c:if test = "${result == 'success'}">
+		<script>
+			alert('변경되었습니다.');
+			location.href = "./mypage";
+		</script>
+	</c:if>
+</c:if>
 <html lang="en">
 <!--<![endif]-->
 <head>
@@ -64,7 +79,7 @@
 			<div class="col-md-3 md-margin-bottom-40">
 
 				<h4>
-					<span>OOO</span> 님 마이페이지 입니다.
+					<span>${loginId}</span> 님 마이페이지 입니다.
 				</h4>
 				<hr>
 
@@ -81,7 +96,7 @@
 					<a href="mypage3"><i class="fa fa-comments" style="width:15px; height:10px;"></i> 메세지</a>
 					</li>
 					<li class="list-group-item active">
-					<a href="mypage4"><i class="fa fa-user" style="width:15px; height:10px;"></i> 회원정보수정</a>
+					<a href="mypage4"><i class="fa fa-user" style="width:15px; height:10px;"></i> 개인정보 수정</a>
 					</li>
 				</ul>
 
@@ -97,41 +112,47 @@
 			<div class="col-md-9">
 				<div class="g-pd-20">
 					<div class="headline">
-						<h2>회원정보수정</h2>
+						<h2>비밀번호 변경</h2>
 					</div>
 					<!--row-->
 					<div class="row">
 						<div class="col-sm-8">
-							<table class="table">
+						<form action ="customer_update" method = "post" onsubmit = "return checkUpdate()">
+							<table class="table">							
 								<div class="form-group">
 									<tbody>
-
 										<tr>
 											<th>아이디</th>
-											<td><span>OOO</span></td>
+											<td><span>${modify_customer.custid}</span></td>
 										</tr>
 										<tr>
 											<th>비밀번호</th>
 											<td><input class="rounded form-control pull-width"
-												type="password"></td>
+												type="password" name = "password" id = "pw1"></td>
 										</tr>
 										<tr>
 											<th>비밀번호 <br>다시입력</th>
 											<td><input class="rounded form-control pull-width"
-												type="password"></td>
+												type="password" id = "pw2"></td>
+										</tr>
+										<tr>
+											<th>전화번호</th>
+											<td><input class="rounded form-control pull-width"
+												type="text" id = "phone" name = "phone" value = "${modify_customer.phone}"></td>
 										</tr>
 										<tr>
 											<th>이메일</th>
-											<td><span>이메일@</span></td>
+											<td><span id = "email" name = "email">${modify_customer.email}</span></td>
 										</tr>
 										<tr>
-											<td colspan="2"><input class="rounded form-control mypage_modify_btn"
-												type="submit" value="저장"></td>
+											<td colspan="2">
+											<input class="rounded form-control mypage_modify_btn" type="submit" value="저장"></td>
 										</tr>
 									</tbody>
 								</div>
 								<!--// form-->
 							</table>
+						</form>
 						</div>
 					</div>
 					<hr>
@@ -169,5 +190,33 @@
 
 		<!-- custom -->
 		<script src="assets/js/custom.js"></script>
+		<script type="text/javascript">
+		function checkUpdate(){
+			var pw1 = document.getElementById("pw1");
+			var pw2 = document.getElementById("pw2");
+			var p = document.getElementById("phone");
+			
+			if(pw1.value.length == 0){
+				alert('비밀번호를 입력해주세요.');
+				return false;
+			}
+			
+			if(pw2.value.length == 0){
+				alert('비밀번호 재입력을 입력해주세요.');
+				return false;
+			}
+			
+			if(pw1.value != pw2.value){
+				alert('비밀번호 다시 확인해 주세요.');
+				return false;
+			}
+			
+			if(p.value.length == 0){
+				alert('전화번호를 입력해주세요.');
+				return false;
+			}
+			return true;
+		}
+		</script>
 </body>
 </html>

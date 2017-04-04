@@ -9,7 +9,7 @@
 <head>
 <title>banngg</title>
 <script type="text/javascript">
-function writeCheck(){
+function updateCheck(){
 	var title = document.getElementById("searchtitle");
 	var text = document.getElementById("searchtext");
 	if(title.value.length == 0){
@@ -20,13 +20,13 @@ function writeCheck(){
 		alert('게시글의 내용을 입력해주세요');
 		return false;
 	}
-	
+
 	var form = document.getElementById("send_text");
 	var searchBoard_title = document.getElementById("searchBoard_title");
 	var searchBoard_text = document.getElementById("searchBoard_text");
 	searchBoard_title.value = title.value;
 	searchBoard_text.value = text.value;
-	form.action = "write_searchboard";
+	form.action = "update_searchboard";
 	form.method = "post";
 	form.submit();
 }
@@ -72,7 +72,7 @@ function writeCheck(){
 	
 	<div class="searchboard_title2 margin-bottom-20">
 		<div class="searchboard_title-in">
-			<h1>문의게시판 작성</h1>
+			<h1>문의게시판 내용 수정</h1>
 		</div>
 	</div>
 	<div class="container content">
@@ -82,20 +82,20 @@ function writeCheck(){
 				<tbody>
 					<tr>
 						<th style="width: 100px">제목</th>
-						<td><input class="rounded form-control pull-width" type="text" id = "searchtitle"></td>
+						<td><input class="rounded form-control pull-width" type="text" id = "searchtitle" value = "${searchBoard.searchBoard_title}"></td>
 					</tr>
 					<tr>
 						<th style="width: 100px">이름</th>
-						<td><input class="rounded form-control pull-width" type="text" readonly value = "${loginId}" ></td>
+						<td><input class="rounded form-control pull-width" type="text" readonly value = "${searchBoard.custid}" ></td>
 					</tr>
 					<tr>
 						<th style="width: 100px">이메일</th>
-						<td><input class="rounded form-control pull-width" type="text" readonly value = "${loginCustomer.email}"></td>
+						<td><input class="rounded form-control pull-width" type="text" readonly value = "${searchBoard.email}"></td>
 					</tr>
 					<tr>
 						<th>내용</th>
 						<td><textarea type="text" class="pull-width" id = "searchtext"
-								style="width: 100%; height: 250px"></textarea></td>
+								style="width: 100%; height: 250px">${searchBoard.searchBoard_text}</textarea></td>
 					</tr>
 
 				</tbody>
@@ -103,12 +103,13 @@ function writeCheck(){
 			<form id = "send_text">
 				<input type = "hidden" id = "searchBoard_text" name = "searchBoard_text">
 				<input type = "hidden" id = "searchBoard_title" name = "searchBoard_title">
+				<input type = "hidden" id = "searchBoard_no" name = "searchBoard_no" value = "${searchBoard.searchBoard_no}">
 			</form>
 		</table>
 	</div>
 	<div class="pull-right">
-	<a href = "javascript:writeCheck()" class="btn-u btn-block g-ml-10" style="background-color:#f7be22; width:80px;">작성완료</a> 
-	<a href="searchboard" class="btn-u btn-block" style="background-color:#f7be22; width:80px;">돌아가기</a>
+	<a href = "javascript:updateCheck()" class="btn-u btn-block g-ml-10" style="background-color:#f7be22; width:80px;">수정완료</a> 
+	<a href="read_searchboard?searchBoard_no=${searchBoard.searchBoard_no}" class="btn-u btn-block" style="background-color:#f7be22; width:80px;">돌아가기</a>
 	</div>
 	</div>
 	<div class="clearfix margin-bottom-20"></div>

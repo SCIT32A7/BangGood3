@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->
 <!--[if !IE]><!-->
-<<c:if test = "${not empty result}">
+<c:if test = "${not empty result}">
 	<c:if test = "${result=='fail'}">
 		<script>
 			alert('아이디나 비밀번호를 다시 확인해주세요.');

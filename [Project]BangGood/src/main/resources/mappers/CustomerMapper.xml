@@ -10,7 +10,7 @@
 		select * from customer where custid = #{custid}
 	</select>
 	<update id="customer_update" parameterType="Customer">
-		update customer set password = #{password}, email = #{email}, phone = #{phone}
+		update customer set password = #{password}, phone = #{phone}
 		where custid = #{custid}
 	</update>
 	<delete id="customer_delete">

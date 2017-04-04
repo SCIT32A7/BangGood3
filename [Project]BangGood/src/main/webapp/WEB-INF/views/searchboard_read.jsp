@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-
+<%@ taglib prefix="c" uri ="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->
 <!--[if !IE]><!-->
@@ -48,14 +48,14 @@
 	class="demo-lightbox-gallery font-main promo-padding-top">
 	<main class="wrapper"> <!-- header --> <%@ include
 		file="header.jsp"%> <!-- end header --> <!-- menu -->
-	<%@ include file="join.jsp"%> <%@ include
-		file="join2.jsp"%> <%@ include
-		file="join3.jsp"%> <%@ include
-		file="login.jsp"%> <!-- end menu -->
+	<%@ include file="join.jsp"%> 
+	<%@ include	file="join2.jsp"%>
+    <%@ include	file="join3.jsp"%>
+    <%@ include	file="login.jsp"%> <!-- end menu -->
 
 	<div class="searchboard_title margin-bottom-20">
 		<div class="searchboard_title-in">
-			<h1>게시판</h1>
+			<h1>${searchBoard.searchBoard_title}</h1>
 		</div>
 	</div>
 	<div class="container content">
@@ -63,6 +63,12 @@
 			<div class="pull-left">
 				<a href="searchboard" class="btn-u btn-block rounded g-mb-30"
 					style="background-color: #f7be22; width: 80px;">돌아가기</a>
+				<c:if test = "${loginId == searchBoard.custid }">
+				<a href="javascript:deleteCheck()" class="btn-u btn-block rounded g-mb-30"
+					style="background-color: #f7be22; width: 80px;">삭제하기</a>
+				<a href="javascript:updateCheck()" class="btn-u btn-block rounded g-mb-30"
+					style="background-color: #f7be22; width: 80px;">변경하기</a>
+				</c:if>
 			</div>
 
 			<table class="table">
@@ -70,15 +76,19 @@
 					<tbody>
 						<tr>
 							<th style="width: 100px">제목</th>
-							<td><span>제목들어감</span></td>
+							<td><span>${searchBoard.searchBoard_title}</span></td>
 						</tr>
 						<tr>
 							<th style="width: 100px">작성자</th>
-							<td><span>작성들어감</span></td>
+							<td><span>${searchBoard.custid}</span></td>
+						</tr>
+						<tr>
+							<th style="width: 100px">작성일</th>
+							<td><span>${searchBoard.searchBoard_inputdate}</span></td>
 						</tr>
 						<tr>
 							<th>내용</th>
-							<td><span>내용들어감</span></td>
+							<td><span style = "white-space: pre-line">${searchBoard.searchBoard_text}</span></td>
 						</tr>
 					</tbody>
 				</div>
@@ -89,8 +99,12 @@
 		<div class="row">
 			<div>
 					<!-- 댓글 여기다 만드3 -->
+					<input type = "text" name ="searchreply_text" id ="searchreply_text">
+					<input type ="hidden" name = "boardnum" id = "boardnum" value = "${searchBoard.searchBoard_no}">
+					<input type ="hidden" name = "loginId" id = "loginId" value = "${loginId}">					
+					<input type = "button" id = "searchreply_insert" value="댓글 등록"><br>
+				<span id = "replyArea"></span>			      	
 			</div>
-
 		</div>
 	</div>
 	<div class="clearfix margin-bottom-20"></div>
@@ -126,6 +140,114 @@
 
 	<!-- custom -->
 	<script src="assets/js/custom.js"></script>
+<script type="text/javascript">
 
+//게시글 삭제
+function deleteCheck(){
+	if(confirm('게시물을 삭제하시겠습니까?')){
+		location.href="delete_searchboard?searchBoard_no=${searchBoard.searchBoard_no}"
+	}
+	return;
+}
+
+//게시글 수정
+function updateCheck(){
+	if(confirm('게시물을 수정하시겠습니까?')){
+		location.href="update_searchboardform?searchBoard_no=${searchBoard.searchBoard_no}"
+	}
+	return;
+}
+
+var id = $("#loginId").val();
+var num = $("#boardnum").val();
+// 처음에 댓글 리스트 불러오기
+$(function (){
+	$("#searchreply_insert").on('click', regist);	
+	init(num);
+});
+
+// 댓글 리스트 호출 함수
+function init() {
+	$.ajax({
+		method : "post",
+		url : "get_searchreply",
+		dataType : "json",
+		data : {			
+			"searchBoard_no" : num
+		},
+		success : output
+	});
+}
+
+// 댓글 리스트 출력 함수
+function output(resp) {
+	var data = '<table border = "1">';
+		data += '<tr><th>내용</th><th>작성자</th><th>작성일</th></tr>'
+	$.each(resp, function(index, item){
+		data += '<tr class="reviewtr">';
+		data += '	<td class="text">' + item.searchReply_text + '</td>';
+		data += '	<td class="name">' + item.custid + '</td>';
+		data += '	<td class="regdate">' + item.searchReply_inputdate + '</td>';
+		data += '	<td><input type="button" class="delbtn" reply_id="'+item.custid+'" data-sno="'+item.searchReply_no+'"value="삭제" /></td>';
+		data += '</tr>';
+	});
+	data += '</table>';	
+	$("#replyArea").html(data);
+	$(".delbtn").on('click', replyDel);
+}
+
+// 댓글 입력함수
+function regist(){
+	
+	var searchreply = $("#searchreply_text").val();
+	
+	if(searchreply.length ==0) {
+		alert("데이터를 입력해 주세요");
+		return;
+	}
+
+	$.ajax({
+		method : "post",
+		url : "insert_searchreply",
+		data : {			
+			"searchreply" : searchreply,
+			"searchBoard_no" : num
+		},
+		success : function(resp) {
+			if(resp == 1){ 
+				alert('댓글등록');
+				$("#searchreply_text").val("");
+				init();
+			}
+			else alert('댓글 등록 실패');
+		}
+	});
+}
+
+
+//댓글 삭제 함수
+function replyDel(){
+	var reply_id = $(this).attr("reply_id");
+	if(id != reply_id){
+		alert('작성자만 삭제 가능합니다.')
+		return false;
+	}
+	
+	
+	var replynum = $(this).attr("data-sno");
+	$.ajax({
+		method : "post",
+		url : "delete_searchreply",
+		data : {
+			"searchReply_no" : replynum,
+			"searchBoard_no" : num
+		},
+		success : init
+	});
+}
+
+
+
+</script>
 </body>
 </html>

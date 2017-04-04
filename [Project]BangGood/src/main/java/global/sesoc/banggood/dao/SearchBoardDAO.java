@@ -18,7 +18,7 @@ public interface SearchBoardDAO {
 	public int addHits(int searchBoard_no) throws Exception;
 
 	// 전체 글 개수 구하기
-	public int getCount() throws Exception;
+	public int getCount(Map<String, String> search) throws Exception;
 
 	// 게시글 리스트 받기
 	public ArrayList<SearchBoard> list_searchBoard(Map<String, Object> search) throws Exception;
@@ -29,8 +29,11 @@ public interface SearchBoardDAO {
 	// 게시글 삭제
 	public int delete_searchBoard(int searchBoard_no) throws Exception;
 	
-	// 댓글 갯수 구하기
-	public int getReplyCount(int searchBoard_no) throws Exception;
+	// 댓글 갯수 추가
+	public int addReplyCount(int searchBoard_no) throws Exception;
+	
+	// 댓글 갯수 감소
+	public int	subReplyCount(int searchBoard_no) throws Exception;
 
 	// 문의게시판 댓글입력
 	public int insert_searchReply(SearchReply sr) throws Exception;

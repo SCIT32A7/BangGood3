@@ -64,7 +64,7 @@
 			<div class="col-md-3 md-margin-bottom-40">
 
 				<h4>
-					<span>OOO</span> 님 마이페이지 입니다.
+					<span>${loginId}</span> 님 마이페이지 입니다.
 				</h4>
 				<hr>
 
@@ -81,7 +81,7 @@
 					<a href="mypage3"><i class="fa fa-comments" style="width:15px; height:10px;"></i> 메세지</a>
 					</li>
 					<li class="list-group-item ">
-					<a href="mypage4"><i class="fa fa-user" style="width:15px; height:10px;"></i> 회원정보수정</a>
+					<a href="mypage4"><i class="fa fa-user" style="width:15px; height:10px;"></i> 개인정보 수정</a>
 					</li>
 				</ul>
 

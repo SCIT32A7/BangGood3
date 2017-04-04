@@ -24,8 +24,8 @@
 			<div class="menu-container">
 			
 				<ul class="nav navbar-nav">				
-					<li class="page-scroll home move"><a href="search"><span
-							data-hover="Home">방 검색</span></a></li>
+					<li class="page-scroll home move"><a href="search">
+					<span data-hover="Home">방 검색</span></a></li>
 					<li class="page-scroll"><a href="">방 등록</a></li>					
 					<li class="page-scroll"><a href="searchboard">게시판</a></li>
 					<li class="page-scroll"><a href="">관심목록</a></li>	
