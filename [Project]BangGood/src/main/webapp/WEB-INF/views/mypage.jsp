@@ -78,7 +78,7 @@
 					<a href="mypage2"><i class="fa fa-cubes" style="width:15px; height:10px;"></i> 관심매물</a>
 					</li>
 					<li class="list-group-item">
-					<a href="mypage3"><i class="fa fa-comments" style="width:15px; height:10px;"></i> 메세지</a>
+					<a href="get_messageList"><i class="fa fa-comments" style="width:15px; height:10px;"></i> 메세지</a>
 					</li>
 					<li class="list-group-item ">
 					<a href="mypage4"><i class="fa fa-user" style="width:15px; height:10px;"></i> 개인정보 수정</a>

@@ -31,6 +31,7 @@ public class SearchBoardRepository {
 		return bList;
 	}
 	
+	
 	//게시글 읽기
 	public SearchBoard getBoard(int searchBoard_no){
 		SearchBoardDAO dao = sqlsession.getMapper(SearchBoardDAO.class);
@@ -140,6 +141,7 @@ public class SearchBoardRepository {
 		return result;
 	}
 	
+	// 댓글 삭제
 	public int delete_searchReply(int searchReply_no, int searchBoard_no){
 		int result = 0;
 		SearchBoardDAO dao = sqlsession.getMapper(SearchBoardDAO.class);

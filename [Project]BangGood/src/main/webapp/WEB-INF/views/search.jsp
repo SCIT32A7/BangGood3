@@ -61,8 +61,8 @@
 <script type="text/javascript">
    var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
    var options = { //지도를 생성할 때 필요한 기본 옵션
-      center : new daum.maps.LatLng(37.50939689946017, 127.06428819444035), //지도의 중심좌표.
-      level : 4
+      center : new daum.maps.LatLng(37.584556360279436, 126.98217957940335), //지도의 중심좌표.
+      level : 5
    //지도의 레벨(확대, 축소 정도)
    };
 

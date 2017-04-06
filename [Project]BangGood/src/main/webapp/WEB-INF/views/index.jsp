@@ -100,10 +100,10 @@
 			<!-- floor -->
 			<section id="floor">
 				<div class="container g-pt-80">
-					<div class="heading-v14 text-center g-mb-60">
-						<span class="heading-v14__block-name g-dp-block g-mb-20">search</span>
-						<h1 class="heading-v14__title font-main g-mb-60">도면도 찾기</h1>
-						<p class="heading-v14__text">
+					<div class="main_head text-center g-mb-60">
+						<span class="main_name g-dp-block g-mb-20">search</span>
+						<h1 class="main_title font-main g-mb-60">도면도 찾기</h1>
+						<p class="main_text">
 							방긋에서는 도면도로 찾기시스템을 제공하고있습니다.
 						</p>
 					</div>

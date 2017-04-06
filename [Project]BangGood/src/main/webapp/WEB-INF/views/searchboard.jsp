@@ -74,8 +74,7 @@ function pagingForSubmit(currentPage){
 		<div class="headline">
 			<h2>문의게시판</h2>	
 			
-			<form action="searchboard" id = "pagingForm" method="get" style="display:inline-block">
-			<div class="pull-right">
+			<form action="searchboard" id = "pagingForm" method="get" class="g-dp-inline pull-right">
 				<select name="searchTitle">
 					<option value="title" ${title == 'title' ? 'selected':''}>제목</option>
 					<option value="title-text" ${title == 'title-text' ? 'selected':''}>제목+내용</option>
@@ -90,7 +89,6 @@ function pagingForSubmit(currentPage){
 						<a href="writeboard">글쓰기</a>	
 			</button>
 			<input type = "hidden" name = "page" id = "page">
-			</div>
 			</form>
 		</div>
 		<!-- Tab pannel 4 -->
@@ -128,15 +126,15 @@ function pagingForSubmit(currentPage){
 		</div>
 
 		<div class="text-center">
-		<a href="javascript:pagingForSubmit(${navi.currentPage - navi.pagePerGroup})">◁◁</a>&nbsp;			
-		<a href="javascript:pagingForSubmit(${navi.currentPage - 1})">◀</a>&nbsp;
 				<ul class="pagination pagination">
+					<li><a href="javascript:pagingForSubmit(${navi.currentPage - navi.pagePerGroup})">◁◁</a></li>
+					<li><a href="javascript:pagingForSubmit(${navi.currentPage - 1})">◀</a></li>
 					<c:forEach var = "page" begin = "${navi.startPageGroup}" end="${navi.endPageGroup}">
 						<li><a href="javascript:pagingForSubmit(${page})">${page}</a></li>
 					</c:forEach>		
+					<li><a href="javascript:pagingForSubmit(${navi.currentPage + 1})">▶</a></li>
+					<li><a href="javascript:pagingForSubmit(${navi.currentPage + navi.pagePerGroup})">▷▷</a></li>
 				</ul>	
-		<a href="javascript:pagingForSubmit(${navi.currentPage + 1})">▶</a>&nbsp;			
-		<a href="javascript:pagingForSubmit(${navi.currentPage + navi.pagePerGroup})">▷▷</a>		
 		</div>
 		<!-- End Tab pannel 4 -->
 	</div>

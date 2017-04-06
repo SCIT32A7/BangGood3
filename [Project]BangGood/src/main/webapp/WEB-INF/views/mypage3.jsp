@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri ="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->
 <!--[if !IE]><!-->
@@ -42,14 +43,21 @@
 <link rel="stylesheet"
 	href="assets/plugins/font-awesome/css/font-awesome.min.css">
 	<script type="text/javascript">
-		function msg_open() {
-			  window.open("mypage3", "", "'scrollbars=yes, toolbar=no, location=no, resizable=yes, status=no, menubar=yes, width=750px, height=265px, left=0, top=0'");
-
+		function msg_open(number) {
+			  window.open("message?msg_no="+number, "", 'titlebar=no, scrollbars=yes, toolbar=no, location=no, resizable=no, status=no, menubar=yes, width=350, height=420, left=30%, top=40%');
 		};
-
-
 		
-		</script>
+		function msg_write() {
+			  window.open("message_write", "", 'titlebar=no, scrollbars=yes, toolbar=no, location=no, resizable=no, status=no, menubar=yes, width=350, height=400, left=30%, top=40%');
+		};
+		
+		function pagingForSubmit(currentPage){
+			var form = document.getElementById("pagingForm")
+			var page = document.getElementById("page");
+			page.value = currentPage;
+			form.submit();
+		}
+	</script>
 </head>
 
 <body id="body" data-spy="scroll" data-target=".one-page-header"
@@ -87,7 +95,7 @@
 					<a href="mypage2"><i class="fa fa-cubes" style="width:15px; height:10px;"></i> 관심매물</a>
 					</li>
 					<li class="list-group-item active">
-					<a href="mypage3"><i class="fa fa-comments" style="width:15px; height:10px;"></i> 메세지</a>
+					<a href="get_messageList"><i class="fa fa-comments" style="width:15px; height:10px;"></i> 메세지</a>
 					</li>
 					<li class="list-group-item ">
 					<a href="mypage4"><i class="fa fa-user" style="width:15px; height:10px;"></i> 개인정보 수정</a>
@@ -107,6 +115,16 @@
 				<div class="g-pd-20">
 					<div class="headline">
 						<h2>메세지</h2>
+						<div class="pull-right">
+							<button class="btn-u btn-block rounded"
+								style="background-color: #f7be22; width: 130px;">
+								<a href="get_iwriteList"></i>보낸 쪽지함</a>
+							</button>
+							<button class="btn-u btn-block rounded"
+								style="background-color: #f7be22; width: 130px;">
+								<a href="javascript:msg_write()"></i>메세지 작성</a>
+							</button>
+						</div>
 					</div>
 					<!--row-->
 					<div class="row">
@@ -115,33 +133,54 @@
 								<table class="table">
 									<thead>
 										<tr>
-											<th>제목</th>
-											<th>작성자</th>
-											<th class="hidden-sm">조회</th>
-											<th class="hidden-sm">등록일</th>
+											<th>내용</th>
+											<th>보낸이</th>
+											<th class="hidden-sm">받은날짜</th>
+											<th class="hidden-sm">읽은날짜</th>
 										</tr>
 									</thead>
 									<tbody>
+									<c:if test = "${messageList.size()==0}">
+										쪽지함이 비어있습니다.
+									</c:if>
+									<c:if test = "${messageList.size()>0}">	
+									<c:forEach var = "msg" items = "${messageList}">							
 										<tr>
-											<td><a href="#" type="button" onclick="msg_open()">결제 시스템 교체 작업 안내</a></td>
-											<td>운영자</td>
-											<td class="hidden-sm">123</td>
-											<td class="hidden-sm">2017.03.28</td>
+											<td><a href="javascript:msg_open(${msg.msg_no})" type="button" 
+											style="white-space:nowrap; text-overflow:ellipsis; overflow:hidden; width:100px">
+											${msg.msg_text}</a></td>
+											<td>${msg.sender}</td>
+											<td class="hidden-sm">${msg.sentDate}</td>
+											<td class="hidden-sm">
+												<c:if test = "${msg.isChecked == 'false'}">
+													읽지않음
+												</c:if>
+												<c:if test = "${msg.isChecked == 'true'}">
+													${msg.readDate}
+												</c:if>
+											</td>
 										</tr>
+									</c:forEach>	
+									</c:if>
 									</tbody>
 								</table>
+								
 							</div>
-
-							<div class="text-center">
-
+							
+							<form action="get_messageList" id = "pagingForm" method="get">
+								<div class="text-center">
 								<ul class="pagination pagination">
-									<li><a href="#">1</a></li>
-									<li><a href="#">2</a></li>
-									<li><a href="#">3</a></li>
-									<li><a href="#">4</a></li>
-									<li><a href="#">5</a></li>
+									<li><a href="javascript:pagingForSubmit(${navi.currentPage - navi.pagePerGroup})">◁◁</a></li>
+									<li><a href="javascript:pagingForSubmit(${navi.currentPage - 1})">◀</a></li>
+									<c:forEach var = "page" begin = "${navi.startPageGroup}" end="${navi.endPageGroup}">
+										<li><a href="javascript:pagingForSubmit(${page})">${page}</a></li>
+									</c:forEach>		
+									<li><a href="javascript:pagingForSubmit(${navi.currentPage + 1})">▶</a></li>
+									<li><a href="javascript:pagingForSubmit(${navi.currentPage + navi.pagePerGroup})">▷▷</a></li>
+									<input type = "hidden" name = "page" id = "page">
 								</ul>
-							</div>
+								</div>								
+							</form>
 						</div>
 					</div>
 					<hr>

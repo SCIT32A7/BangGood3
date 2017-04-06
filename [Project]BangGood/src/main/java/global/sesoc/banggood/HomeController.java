@@ -1,5 +1,6 @@
 package global.sesoc.banggood;
 
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -19,9 +20,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import global.sesoc.banggood.dao.PropertyDAO;
 import global.sesoc.banggood.repository.CustomerRepository;
+import global.sesoc.banggood.repository.MessageRepository;
 import global.sesoc.banggood.repository.SearchBoardRepository;
 import global.sesoc.banggood.util.PageNavigator;
 import global.sesoc.banggood.vo.Customer;
+import global.sesoc.banggood.vo.Message;
 import global.sesoc.banggood.vo.Property;
 import global.sesoc.banggood.vo.Property_map;
 import global.sesoc.banggood.vo.SearchBoard;
@@ -40,6 +43,9 @@ public class HomeController {
 	
 	@Autowired
 	CustomerRepository cr;
+	
+	@Autowired
+	MessageRepository mr;
 	
 	@Autowired
 	HttpSession session;
@@ -98,13 +104,7 @@ public class HomeController {
 	public String mypage2(Model model) {
 		return "mypage2";
 	}
-	
-	// 메시지 함으로 이동
-	@RequestMapping(value = "/mypage3", method = RequestMethod.GET)
-	public String mypage3(Model model) {
-		return "mypage3";
-	}
-	
+		
 	// 개인정보 수정으로 이동
 	@RequestMapping(value = "/mypage4", method = RequestMethod.GET)
 	public String mypage4(Model model) {
@@ -114,10 +114,31 @@ public class HomeController {
 		return "mypage4";
 	}
 	
+	@RequestMapping(value = "/insert_property", method = RequestMethod.GET)
+	public String insert_property(Model model) {
+		return "insert_property";
+	}
 	
-	
-	
-	
+	@RequestMapping(value = "/message", method = RequestMethod.GET)
+	public String message(int msg_no, 
+			@RequestParam(value = "mine", defaultValue = "no") String mine,
+			Model model) {
+		Message message = mr.read_message(msg_no, mine);
+		model.addAttribute("msg", message);	
+		model.addAttribute("mine", mine);
+		return "message";
+	}
+
+	@RequestMapping(value = "/message_send", method = RequestMethod.GET)
+	public String message_send(String sender, Model model) {
+		model.addAttribute("sender", sender);
+		return "message_send";
+	}
+
+	@RequestMapping(value = "/message_write", method = RequestMethod.GET)
+	public String message_write(Model model) {
+		return "message_write";
+	}
 	
 	
 	

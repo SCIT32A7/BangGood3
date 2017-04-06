@@ -48,43 +48,10 @@ a:hover {
 }
 
 /* heading-v14 */
-.heading-v14 {
-	position: relative;
-}
+
 
 /*bar*/
-.heading-v14:after {
-	width: 70px;
-  height: 10px;
-  position: absolute;
-  background: #f7b70b;
-  content: "";
-  top: 100px;
-  left: 50%;
-  margin-left: -35px;
-}
 
-.heading-v14__block-name {
-	color: #f7b70b;
-	text-transform: uppercase;
-	font-size: 12px;
-	font-weight: bold;
-}
-
-.heading-v14__title {
-	color: #000;
-	text-transform: uppercase;
-	font-size: 40px;
-	font-weight: bold;
-}
-
-.heading-v14__text {
-	color: #999;
-	font-size: 16px;
-	max-width: 60%;
-	margin-left: auto;
-	margin-right: auto;
-}
 
 /*different color*/
 .heading-v14--diff:after {

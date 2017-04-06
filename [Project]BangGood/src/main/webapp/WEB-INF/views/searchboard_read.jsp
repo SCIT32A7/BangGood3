@@ -62,15 +62,15 @@
 		<div class="row">
 			<div class="pull-left">
 				<a href="searchboard" class="btn-u btn-block rounded g-mb-30"
-					style="background-color: #f7be22; width: 80px;">돌아가기</a>
+					style="width: 80px;">돌아가기</a>
 				<c:if test = "${loginId == searchBoard.custid }">
 				<a href="javascript:deleteCheck()" class="btn-u btn-block rounded g-mb-30"
-					style="background-color: #f7be22; width: 80px;">삭제하기</a>
+					style="width: 80px;">삭제하기</a>
 				<a href="javascript:updateCheck()" class="btn-u btn-block rounded g-mb-30"
-					style="background-color: #f7be22; width: 80px;">변경하기</a>
+					style="width: 80px;">변경하기</a>
 				</c:if>
 			</div>
-
+			<div classs="col-md-8">
 			<table class="table">
 				<div class="form-group">
 					<tbody>
@@ -94,20 +94,25 @@
 				</div>
 				<!--// form-->
 			</table>
+			</div>
 		</div>
 		<!-- end row -->
 		<div class="row">
-			<div>
-					<!-- 댓글 여기다 만드3 -->
-					<input type = "text" name ="searchreply_text" id ="searchreply_text">
+				<!-- 댓글 쓰는곳 -->
+			<div class="col-md-12">
 					<input type ="hidden" name = "boardnum" id = "boardnum" value = "${searchBoard.searchBoard_no}">
-					<input type ="hidden" name = "loginId" id = "loginId" value = "${loginId}">					
-					<input type = "button" id = "searchreply_insert" value="댓글 등록"><br>
-				<span id = "replyArea"></span>			      	
+					<input type ="hidden" name = "loginId" id = "loginId" value = "${loginId}">
+					<input type ="text" name ="searchreply_text" id ="searchreply_text" class="form-control rounded pull-left" style="width:500px; height:45px">
+					<input type ="button" id = "searchreply_insert" value="댓글 등록" class="btn-u btn-block rounded pull-left" style="width:100px; height:45px;">
+					<br>
+						      	
 			</div>
 		</div>
+		<div class="clearfix margin-bottom-20"></div>
+		<span id = "replyArea"></span>	
 	</div>
-	<div class="clearfix margin-bottom-20"></div>
+	<!-- content -->
+	
 
 	</main>
 	<!-- JS Global Compulsory -->
@@ -181,14 +186,13 @@ function init() {
 
 // 댓글 리스트 출력 함수
 function output(resp) {
-	var data = '<table border = "1">';
-		data += '<tr><th>내용</th><th>작성자</th><th>작성일</th></tr>'
+	var data = '<table>';
 	$.each(resp, function(index, item){
 		data += '<tr class="reviewtr">';
-		data += '	<td class="text">' + item.searchReply_text + '</td>';
-		data += '	<td class="name">' + item.custid + '</td>';
+		data += '	<td class="name" style="padding-right:30px; color:#ccc">' + item.custid + '</td>';
+		data += '	<td class="text" style="width:50%">' + item.searchReply_text + '</td>';
 		data += '	<td class="regdate">' + item.searchReply_inputdate + '</td>';
-		data += '	<td><input type="button" class="delbtn" reply_id="'+item.custid+'" data-sno="'+item.searchReply_no+'"value="삭제" /></td>';
+		data += '	<td><input type="button" class="delbtn btn-u btn-block rounded g-mb-5" style="background-color:#f7be22";" reply_id="'+item.custid+'" data-sno="'+item.searchReply_no+'"value="삭제" /></td>';
 		data += '</tr>';
 	});
 	data += '</table>';	

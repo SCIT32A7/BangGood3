@@ -5,6 +5,7 @@
 <configuration>
  	<typeAliases>
  		<typeAlias type="global.sesoc.banggood.vo.Customer" alias="Customer"/>
+ 		<typeAlias type="global.sesoc.banggood.vo.Message" alias="Message"/>
  		<typeAlias type="global.sesoc.banggood.vo.Property" alias="Property"/>
  		<typeAlias type="global.sesoc.banggood.vo.SearchBoard" alias="SearchBoard"/>
  		<typeAlias type="global.sesoc.banggood.vo.SearchReply" alias="SearchReply"/>
@@ -12,6 +13,7 @@
  	</typeAliases>
   <mappers>
     <mapper resource="mappers/CustomerMapper.xml"/>
+    <mapper resource="mappers/MessageMapper.xml"/>
     <mapper resource="mappers/PropertyMapper.xml"/>
     <mapper resource="mappers/SearchBoardMapper.xml"/>
   </mappers>

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="global.sesoc.banggood.dao.MessageDAO">
+
+	<!-- 메시지 전송 -->
+	<insert id="send_message" parameterType="Message">
+		insert into message
+		(msg_no, custid, receiver, msg_text)
+		values (seq_msg_no.nextval, #{sender}, #{receiver}, #{msg_text})
+	</insert>
+
+	<!-- 메시지 읽기 -->
+	<select id="read_message" parameterType="_int" resultType="Message">
+		select msg_no, custid sender, receiver, msg_text,
+		senddate sentDate, readdate readDate, ischecked isChecked
+		from message where msg_no = #{msg_no}
+	</select>
+
+	<!-- 메시지 읽은 후 상태변화 -->
+	<update id="update_readdate" parameterType="_int">
+		update message set
+		readdate = sysdate, ischecked = 'true'
+		where msg_no = #{msg_no}
+	</update>
+
+	<!-- 메시지 함 열기, 개인에게 온 메시지 리스트 출력 -->
+	<select id="getMessage" parameterType="map" resultType="Message">
+	select *
+		from (select rownum r, board.* from
+			(select msg_no, custid sender, receiver, msg_text,
+				case
+					when to_char(senddate,'YY-MM-DD') = to_char(sysdate, 'YY-MM-DD')
+					then to_char(senddate,'HH24:MI:SS')
+					else to_char(senddate,'YY-MM-DD')
+				end as sentDate,
+				case
+					when to_char(readdate,'YY-MM-DD') = to_char(sysdate, 'YY-MM-DD')
+					then to_char(readdate,'HH24:MI:SS')
+					else to_char(readdate,'YY-MM-DD')
+				end as readDate,
+			ischecked isChecked
+		from message
+		where receiver = #{custid}
+		order by msg_no desc) board
+	) where r between #{firstText} and #{lastText}
+	</select>
+	
+	<!-- 메시지 함 열기 전 메시지 갯수 구하기 -->
+	<select id="getCount" parameterType="String" resultType="_int">
+		select count(*) from message where receiver = #{custid}
+	</select>
+	
+	<!-- 메시지 함 열기, 자기가 쓴 메시지 리스트 출력 -->
+	<select id="get_iwriteList" parameterType="map" resultType="Message">
+	select *
+		from (select rownum r, board.* from
+			(select msg_no, custid sender, receiver, msg_text,
+				case
+					when to_char(senddate,'YY-MM-DD') = to_char(sysdate, 'YY-MM-DD')
+					then to_char(senddate,'HH24:MI:SS')
+					else to_char(senddate,'YY-MM-DD')
+				end as sentDate,
+				case
+					when to_char(readdate,'YY-MM-DD') = to_char(sysdate, 'YY-MM-DD')
+					then to_char(readdate,'HH24:MI:SS')
+					else to_char(readdate,'YY-MM-DD')
+				end as readDate,
+			ischecked isChecked
+		from message
+		where custid = #{custid}
+		order by msg_no desc) board
+	) where r between #{firstText} and #{lastText}
+	</select>
+
+	<!-- 내가 쓴 메시지 리스트 출력전  메시지 갯수 구하기 -->
+	<select id="get_iwriteCount" parameterType="String" resultType="_int">
+		select count(*) from message where custid = #{custid}
+	</select>
+
+	<!-- 메시지 삭제 -->
+	<delete id="delete_message" parameterType="_int">
+		delete message where msg_no = #{msg_no}
+	</delete>
+
+</mapper>

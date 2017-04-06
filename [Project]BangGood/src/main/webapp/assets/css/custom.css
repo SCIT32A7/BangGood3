@@ -1,4 +1,40 @@
 /* main */
+
+.main_head {
+	position: relative;
+}
+.main_head:after {
+	width: 70px;
+  height: 10px;
+  position: absolute;
+  background: #f7b70b;
+  content: "";
+  top: 100px;
+  left: 50%;
+  margin-left: -35px;
+}
+
+.main_name {
+	color: #f7b70b;
+	text-transform: uppercase;
+	font-size: 12px;
+	font-weight: bold;
+}
+
+.main_title {
+	color: #000;
+	text-transform: uppercase;
+	font-size: 40px;
+	font-weight: bold;
+}
+
+.main_text {
+	color: #999;
+	font-size: 16px;
+	max-width: 60%;
+	margin-left: auto;
+	margin-right: auto;
+}
 .Carousel {
 	width: 100%;
 }
@@ -91,4 +127,52 @@
 	background-color: #f7be22;
 	color: #fff;
 	margin-top:20px;
+}
+/* insert_property */
+.insert_head {
+	position: relative;
+}
+.insert_head:after {
+  width: 139px;
+  height: 2px;
+  position: absolute;
+  background: #f7b70b;
+  content: "";
+  top: 50px;
+  left: 50%;
+  margin-left: -35px;
+}
+
+.insert_name {
+	color: #f7b70b;
+	text-transform: uppercase;
+	font-size: 12px;
+	font-weight: bold;
+}
+
+.insert_title {
+	color: #000;
+	text-transform: uppercase;
+	font-size: 28px;
+	font-weight: bold;
+}
+
+.insert_text {
+	color: #999;
+	font-size: 16px;
+	max-width: 60%;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.insert_box_bg{
+	background: url(../img/bg/13.jpg) no-repeat;
+}
+/* message */ 
+.message_bg{
+	color:#fff;
+	background: #f7b70b;
+	font-size: 18px;
+	font-weight: bold;
+	padding:10px;
 }
