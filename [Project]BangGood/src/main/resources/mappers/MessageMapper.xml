@@ -42,9 +42,9 @@
 					else to_char(readdate,'YY-MM-DD')
 				end as readDate,
 			ischecked isChecked
-		from message
-		where receiver = #{custid}
-		order by msg_no desc) board
+			from message
+			where receiver = #{custid}
+			order by msg_no desc) board
 	) where r between #{firstText} and #{lastText}
 	</select>
 	

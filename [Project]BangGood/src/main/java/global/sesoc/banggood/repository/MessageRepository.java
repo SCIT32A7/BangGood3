@@ -36,7 +36,7 @@ public class MessageRepository {
 		Message m = null;
 		try {
 			m = dao.read_message(msg_no);
-			if (mine.equals("no")) {
+			if (mine.equals("no") && m.getIsChecked().equals("false")) {
 				dao.update_readdate(msg_no); // 메시지 상태 변화
 			}
 		} catch (Exception e) {

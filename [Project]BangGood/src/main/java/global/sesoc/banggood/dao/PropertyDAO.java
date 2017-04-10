@@ -27,11 +27,18 @@ public interface PropertyDAO {
 	//public int delete_floorplan(Floorplan floorplan) throws Exception;  // 평면도 삭제 후 재등록
 
 	//조건조회
-	public ArrayList<Property> searchProperty();
+	public ArrayList<Property> searchProperty(String searchaddress);
 	// 매물 조건 검색, 지도에 표시, 기본 조건은 서울시, 나머지는 전체 검색
 	// 조건내용 : rent_type, address(area), floor, property_type, deposit, month_fee, built_year,
 	// RoomOption(1 or 2) – pet, car, elevator
 	
+	// 지도 상에서 매물 정보 띄우기
 	public Property_map readProperty_map(String address);
+	
+	// 주소 자동완성을 위한 메소드
+	public ArrayList<String> getPosition(String searchText);
+	
+	// 마을의 중심 좌표를 위한 메소드
+	public String get_town(String searchaddress);
 
 }

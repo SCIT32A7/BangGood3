@@ -4,17 +4,33 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="global.sesoc.banggood.dao.PropertyDAO">
 
+	
+	
+	
+	
+	
+	
 	<!-- 주소내 모든 매물 검색 -->
- 	<select id="searchProperty" resultType="Property">
+ 	<select id="searchProperty" parameterType="String" resultType="Property">
 		select address, address_detail  
 		from property 
-		where address like '%'||'서울 종로'||'%'
+		where address like '%'||#{searchaddress}||'%'
 	</select>
 
 	<!-- 지도 마커 클릭시 매물 간단 정보 출력 -->
 	<select id = "readProperty_map" parameterType="String" resultType="Property_map">
 		select property_no, rent_type, deposit, month_fee from property
 		where address||' '||address_detail like '%'||#{address}||'%'
+	</select>	
+	
+	<!-- 주소 자동검색을 위한 SQL -->
+	<select id="getPosition" parameterType="String" resultType="String">
+		select searchtext from position where searchtext like '%'||#{searchText}||'%'	
+	</select>
+	
+	<!-- 마을 중심좌표를 찾기위한 SQL -->
+	<select id="get_town" parameterType="String" resultType="String">
+		select position_address from position where searchtext = #{searchaddress}	
 	</select>
 	
 </mapper>
