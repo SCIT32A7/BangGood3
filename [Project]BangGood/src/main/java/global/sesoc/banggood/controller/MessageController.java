@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import global.sesoc.banggood.repository.MessageRepository;
 import global.sesoc.banggood.util.PageNavigator;
+import global.sesoc.banggood.vo.Customer;
 import global.sesoc.banggood.vo.Message;
 import global.sesoc.banggood.vo.SearchBoard;
 
@@ -26,17 +27,38 @@ public class MessageController {
 
 	@Autowired
 	MessageRepository mr;
+	
+	// 메시지 읽기
+	@RequestMapping(value = "/message", method = RequestMethod.GET)
+	public String message(int msg_no, @RequestParam(value = "mine", defaultValue = "no") String mine, Model model) {
+		Message message = mr.read_message(msg_no, mine);
+		model.addAttribute("msg", message);
+		model.addAttribute("mine", mine);
+		return "message";
+	}
+	
+	// 메시지 전송
+	@RequestMapping(value = "/message_send", method = RequestMethod.GET)
+	public String message_send(String sender, Model model) {
+		model.addAttribute("sender", sender);
+		return "message_send";
+	}
 
+	// 메시지 쓰기  창 열기
+	@RequestMapping(value = "/message_write", method = RequestMethod.GET)
+	public String message_write(Model model) {
+		return "message_write";
+	}
 	
 	// 메시지 전송 메소드
 	@RequestMapping(value = "send_message", method = RequestMethod.POST)
 	public String send_message(Message message, Model model) {		
 		String custid = (String) session.getAttribute("loginId");
 		message.setSender(custid);
-		int result = mr.send_message(message);
+		Customer result = mr.send_message(message);
 		String m = null;
-		if (result == 0) {
-			m = "false";
+		if (result == null) {
+			m = "fail";
 		} else {
 			m = "success";
 		}

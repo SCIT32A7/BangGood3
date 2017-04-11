@@ -8,7 +8,7 @@
 			this.close();
 		</script>
 	</c:if>
-	<c:if test = "${result == 'fali'}">
+	<c:if test = "${result == 'fail'}">
 		<script>
 			alert('없는 아이디 입니다.')
 		</script>

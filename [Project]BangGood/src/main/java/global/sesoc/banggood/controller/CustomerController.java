@@ -101,5 +101,26 @@ public class CustomerController {
 		model.addAttribute("result", message);
 		return "mypage4";
 	}
+	
+	// 마이페이지로 이동, 등록매물로 이동됨
+	@RequestMapping(value = "/mypage", method = RequestMethod.GET)
+	public String mypage(Model model) {
+		return "mypage";
+	}
+
+	// 관심매물로 이동
+	@RequestMapping(value = "/mypage2", method = RequestMethod.GET)
+	public String mypage2(Model model) {
+		return "mypage2";
+	}
+
+	// 개인정보 수정으로 이동
+	@RequestMapping(value = "/mypage4", method = RequestMethod.GET)
+	public String mypage4(Model model) {
+		String custid = (String) session.getAttribute("loginId");
+		Customer loginCustomer = cr.search(custid);
+		model.addAttribute("modify_customer", loginCustomer);
+		return "mypage4";
+	}
 
 }

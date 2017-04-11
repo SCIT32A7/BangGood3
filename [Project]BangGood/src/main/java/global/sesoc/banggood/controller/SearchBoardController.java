@@ -1,7 +1,10 @@
+
 package global.sesoc.banggood.controller;
 
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 import javax.swing.plaf.synth.SynthSpinnerUI;
@@ -13,9 +16,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import global.sesoc.banggood.repository.SearchBoardRepository;
+import global.sesoc.banggood.util.PageNavigator;
 import global.sesoc.banggood.vo.Customer;
 import global.sesoc.banggood.vo.SearchBoard;
 import global.sesoc.banggood.vo.SearchReply;
@@ -30,6 +35,35 @@ public class SearchBoardController {
 	
 	@Autowired
 	SearchBoardRepository sbr;
+	
+	// 문의게시판 리스트로 이동
+	@RequestMapping(value = "/searchboard", method = RequestMethod.GET)
+	public String listBoard(@RequestParam(value = "searchTitle", defaultValue = "") String searchTitle,
+			@RequestParam(value = "searchText", defaultValue = "") String searchText,
+			@RequestParam(value = "page", defaultValue = "1") int page, Model model) {
+
+		int countPerPage = 10; // 페이지 당 글 수
+		int pagePerGroup = 5; // 페이지 그룹에 표시되는 그룹 수
+
+		int total = sbr.getCount(searchTitle, searchText); // 전체 글 갯수 가져오기
+
+		PageNavigator navi = new PageNavigator(countPerPage, pagePerGroup, page, total);
+
+		Map<String, Object> search = new HashMap<>();
+		search.put("searchTitle", searchTitle);
+		search.put("searchText", searchText);
+		search.put("firstText", navi.getStartRecord() + 1);
+		search.put("lastText", countPerPage + (navi.getCurrentPage() - 1) * countPerPage);
+
+		ArrayList<SearchBoard> bList = sbr.listBoard(search);
+
+		model.addAttribute("list", bList);
+		model.addAttribute("title", searchTitle);
+		model.addAttribute("text", searchText);
+		model.addAttribute("navi", navi);
+
+		return "searchboard";
+	}
 	
 	
 	// 문의게시판 글쓰기 화면으로 이동

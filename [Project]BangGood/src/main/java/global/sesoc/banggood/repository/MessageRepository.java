@@ -7,8 +7,10 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import global.sesoc.banggood.dao.CustomerDAO;
 import global.sesoc.banggood.dao.MessageDAO;
 import global.sesoc.banggood.dao.SearchBoardDAO;
+import global.sesoc.banggood.vo.Customer;
 import global.sesoc.banggood.vo.Message;
 
 @Repository
@@ -18,11 +20,16 @@ public class MessageRepository {
 	SqlSession session;
 
 	// 메시지 전송
-	public int send_message(Message message) {
+	public Customer send_message(Message message) {
+		CustomerDAO cDao = session.getMapper(CustomerDAO.class);
 		MessageDAO dao = session.getMapper(MessageDAO.class);
-		int result = 0;
+		
+		Customer result = null;
 		try {
-			result = dao.send_message(message);
+			result = cDao.customer_select(message.getReceiver());
+			if(result != null){
+				dao.send_message(message);
+			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

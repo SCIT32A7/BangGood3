@@ -115,6 +115,7 @@
 	<!-- google map -->
 	<script type="text/javascript"
 		src="//apis.daum.net/maps/maps3.js?apikey=8af91664dfbd610fb326b81f6ed2ca57&libraries=services"></script>
+	
 	<script type="text/javascript">
 		var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
 		var options = { //지도를 생성할 때 필요한 기본 옵션
@@ -145,6 +146,7 @@
 		
 	
 		$(function() {			
+			// 주소 자동 완성을 위한 메소드
 			var text = $("#addresstext");
 			var array;
 			$("#addresstext").keyup(function() {
@@ -270,36 +272,31 @@
 					});
 			});
 
-										/*  function searchAddrFromCoords(coords, callback) {
-										// 좌표로 행정동 주소 정보를 요청합니다
-										 geocoder.coord2addr(coords, callback); 
-										} */
+			/*  function searchAddrFromCoords(coords, callback) {
+			// 좌표로 행정동 주소 정보를 요청합니다
+			 geocoder.coord2addr(coords, callback); 
+			} */
 
-										function searchDetailAddrFromCoords(
-												coords, callback) {
-											// 좌표로 법정동 상세 주소 정보를 요청합니다
-											geocoder.coord2detailaddr(coords,
-													callback);
-										}
+			function searchDetailAddrFromCoords(coords, callback) {
+			// 좌표로 법정동 상세 주소 정보를 요청합니다
+				geocoder.coord2detailaddr(coords,callback);}
 
-										var iwRemoveable = true; // removeable 속성을 ture 로 설정하면 인포윈도우를 닫을 수 있는 x버튼이 표시됩니다 
-										// 인포윈도우를 생성합니다
-										infowindow = new daum.maps.InfoWindow({
-											content : content1,
-											removable : iwRemoveable
+			var iwRemoveable = true; // removeable 속성을 ture 로 설정하면 인포윈도우를 닫을 수 있는 x버튼이 표시됩니다 
+			// 인포윈도우를 생성합니다
+			infowindow = new daum.maps.InfoWindow(
+					{content : content1,
+					removable : iwRemoveable
+					});
 
-										});
-
-										// 마커에 클릭이벤트를 등록합니다	   	 
-										daum.maps.event.addListener(marker, 'click', function() {
-													// 마커 위에 인포윈도우를 표시합니다
-													infowindow.open(map, marker);
-										});
-										// 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
-										// map.setCenter(coords);	        
-									}
-								});
-				}
+					// 마커에 클릭이벤트를 등록합니다	   	 
+					daum.maps.event.addListener(marker, 'click', function() {
+					// 마커 위에 인포윈도우를 표시합니다
+					infowindow.open(map, marker);});
+					// 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+					// map.setCenter(coords);	        
+					}
+				});
+			}
 		}
 		
 		// 지도에 나타난 마커를 지우는 함수
