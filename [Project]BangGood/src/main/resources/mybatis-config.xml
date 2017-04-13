@@ -10,6 +10,7 @@
  		<typeAlias type="global.sesoc.banggood.vo.SearchBoard" alias="SearchBoard"/>
  		<typeAlias type="global.sesoc.banggood.vo.SearchReply" alias="SearchReply"/>
  		<typeAlias type="global.sesoc.banggood.vo.Property_map" alias="Property_map"/>
+ 		<typeAlias type="global.sesoc.banggood.vo.Property_search" alias="Property_search"/>
  	</typeAliases>
   <mappers>
     <mapper resource="mappers/CustomerMapper.xml"/>

@@ -2,13 +2,13 @@ package global.sesoc.banggood.vo;
 
 public class Maintence {
 
-	private int property_no;
-	private int internet;
-	private int tvfee;
-	private int cleaning;
-	private int waterfee;
-	private int gasfee;
-	private int electronic;
+	private int property_no = 0;
+	private int internet = 2;
+	private int tvfee = 2;
+	private int cleaning = 2;
+	private int waterfee = 2;
+	private int gasfee = 2;
+	private int electronic = 2;
 
 	public Maintence(int property_no, int internet, int tvfee, int cleaning, int waterfee, int gasfee, int electronic) {
 		super();

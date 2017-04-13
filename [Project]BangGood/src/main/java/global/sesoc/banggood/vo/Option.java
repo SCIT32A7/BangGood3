@@ -2,23 +2,23 @@ package global.sesoc.banggood.vo;
 
 public class Option {
 
-	private int property_no;
-	private int pet;
-	private int car;
-	private int elevator;
-	private int air_conditioner;
-	private int fridge;
-	private int washing_machine;
-	private int gas_stove;
-	private int electric_stove;
-	private int microwave;
-	private int desk;
-	private int rack;
-	private int bed;
-	private int closet;
-	private int shoecabinet;
-	private int doorlock;
-	private int wifi;
+	private int property_no = 0;
+	private int pet = 2;
+	private int car = 2;
+	private int elevator = 2;
+	private int air_conditioner = 2;
+	private int fridge = 2;
+	private int washing_machine = 2;
+	private int gas_stove = 2;
+	private int electric_stove = 2;
+	private int microwave = 2;
+	private int desk = 2;
+	private int rack = 2;
+	private int bed = 2;
+	private int closet = 2;
+	private int shoecabinet = 2;
+	private int doorlock = 2;
+	private int wifi = 2;
 
 	public Option(int property_no, int pet, int car, int elevator, int air_conditioner, int fridge, int washing_machine,
 			int gas_stove, int electric_stove, int microwave, int desk, int rack, int bed, int closet, int shoecabinet,

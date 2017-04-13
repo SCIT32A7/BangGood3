@@ -4,33 +4,73 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="global.sesoc.banggood.dao.PropertyDAO">
 
-	
-	
-	
-	
-	
-	
+
+
+
+
+
+
 	<!-- 주소내 모든 매물 검색 -->
- 	<select id="searchProperty" parameterType="String" resultType="Property">
-		select address, address_detail  
-		from property 
-		where address like '%'||#{searchaddress}||'%'
+	<select id="searchProperty" parameterType="Property_search"
+		resultType="String">
+		select pro.address
+		from
+		(select property_no, address from property
+		where
+		address like '%'||#{searchaddress}||'%'
+		and (deposit between #{deposit1} and #{deposit2})
+		and (month_fee between #{deposit1} and #{deposit2})
+		<if test="property_type != 'all'"> and property_type = #{searchaddress} </if>
+		<if test="rent_type != 'all'"> and rent_type = #{rent_type} </if>
+		<if test="floor != 0">
+			<choose>
+				<when test="floor == 1"> and (floor between 1 and 3) </when>
+				<when test="floor == 4"> and (floor between 4 and 6) </when>
+				<when test="floor == 7"> and (floor between 7 and 9) </when>
+				<when test="floor == 10"> and floor >= 10 </when>
+			</choose>
+		</if>
+		<if test="maintence_fee != 'all'"> and maintence_fee is null </if>
+		<if test="newbuild != 'all'">and built_year > 2014</if>
+		) pro,
+		(select property_no from roomoption
+		<if test="car != 0"> and car = #{car} </if>
+		<if test="pet != 0"> and pet = #{pet} </if>
+		<if test="elevator != 0"> and elevator = #{elevator} </if>
+		<if test="air_conditioner != 0"> and air_conditioner = #{air_conditioner} </if>
+		<if test="fridge != 0"> and fridge = #{fridge} </if>
+		<if test="washing_machine != 0"> and washing_machine = #{washing_machine} </if>
+		<if test="gas_stove != 0"> and gas_stove = #{gas_stove} </if>
+		<if test="electric_stove != 0"> and electric_stove = #{electric_stove} </if>
+		<if test="microwave != 0"> and microwave = #{microwave} </if>
+		<if test="desk != 0"> and desk = #{desk} </if>
+		<if test="rack != 0"> and rack = #{rack} </if>
+		<if test="bed != 0"> and bed = #{bed} </if>
+		<if test="closet != 0"> and closet = #{closet} </if>
+		<if test="shoecabinet != 0"> and shoecabinet = #{shoecabinet} </if>
+		<if test="doorlock != 0"> and doorlock = #{doorlock} </if>
+		<if test="wifi != 0"> and wifi = #{wifi} </if>
+		) op
+		where pro.property_no = op.property_no
 	</select>
 
 	<!-- 지도 마커 클릭시 매물 간단 정보 출력 -->
-	<select id = "readProperty_map" parameterType="String" resultType="Property_map">
+	<select id="readProperty_map" parameterType="String" resultType="Property_map">
 		select property_no, rent_type, deposit, month_fee from property
-		where address||' '||address_detail like '%'||#{address}||'%'
-	</select>	
-	
+		where
+		address||' '||address_detail like '%'||#{address}||'%'
+	</select>
+
 	<!-- 주소 자동검색을 위한 SQL -->
 	<select id="getPosition" parameterType="String" resultType="String">
-		select searchtext from position where searchtext like '%'||#{searchText}||'%'	
+		select searchtext from position where searchtext like
+		'%'||#{searchText}||'%'
 	</select>
-	
+
 	<!-- 마을 중심좌표를 찾기위한 SQL -->
 	<select id="get_town" parameterType="String" resultType="String">
-		select position_address from position where searchtext = #{searchaddress}	
+		select
+		position_address from position where searchtext = #{searchaddress}
 	</select>
-	
+
 </mapper>

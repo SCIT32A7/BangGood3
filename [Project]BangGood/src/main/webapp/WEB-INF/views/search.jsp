@@ -67,12 +67,15 @@
 
 <body id="body" data-spy="scroll" data-target=".one-page-header"
 	class="demo-lightbox-gallery font-main promo-padding-top">
-	<main class="wrapper"> <!-- header --> <%@ include
-		file="header.jsp"%> <!-- end header --> <!-- menu -->
-	<%@ include file="join.jsp"%> <%@ include
-		file="join2.jsp"%> <%@ include
-		file="join3.jsp"%> <%@ include
-		file="login.jsp"%> <!-- end menu --> <!-- searchbox -->
+	<main class="wrapper"> <!-- header --> 
+	<%@ include	file="header.jsp"%> <!-- end header --> 
+	<!-- menu -->
+	<%@ include file="join.jsp"%>
+	<%@ include	file="join2.jsp"%>
+	<%@ include	file="join3.jsp"%>
+	<%@ include	file="login.jsp"%>
+	<!-- end menu -->
+	<!-- searchbox -->
 	<div id="searchbox" class="g-mt-10 pull-width"
 		style="border-top: 1px solid #333; height: 50px;">
 		<input id="addresstext" name="searchText"> 
@@ -127,9 +130,11 @@
 
 		var map = new daum.maps.Map(container, options); //지도 생성 및 객체 리턴	
 		
-		var markers = [];
+		var markers = []; //마커 생성을 위한 전역변수		
 		
-		var address; 
+		var text; // 주소 검색을 위한 전역변수		
+		var address = $("#addresstext"); // 동주소 검색용 전역변수
+		
 		$(function() {
 			$.ajax({
 				method : "POST",
@@ -147,7 +152,7 @@
 	
 		$(function() {			
 			// 주소 자동 완성을 위한 메소드
-			var text = $("#addresstext");
+			text = $("#addresstext");
 			var array;
 			$("#addresstext").keyup(function() {
 				$.ajax({
@@ -220,7 +225,7 @@
 				//add = addre[index];
 				///console.log(add);
 				// 주소로 좌표를 검색합니다
-				geocoder.addr2coord(addre[index].address + " "+ addre[index].address_detail, function(status, result) {
+				geocoder.addr2coord(addre[index], function(status, result) {
 				// 정상적으로 검색이 완료됐으면 
 				if (status === daum.maps.services.Status.OK) {
 

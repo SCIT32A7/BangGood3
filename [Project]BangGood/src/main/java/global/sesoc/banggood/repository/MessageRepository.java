@@ -9,7 +9,6 @@ import org.springframework.stereotype.Repository;
 
 import global.sesoc.banggood.dao.CustomerDAO;
 import global.sesoc.banggood.dao.MessageDAO;
-import global.sesoc.banggood.dao.SearchBoardDAO;
 import global.sesoc.banggood.vo.Customer;
 import global.sesoc.banggood.vo.Message;
 
