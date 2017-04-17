@@ -70,6 +70,7 @@ new daum.Postcode({
        
        document.getElementById('sample5_roadAddress').value = '도로명 : '+fullRoadAddr; //도로명 주소 변수
        document.getElementById('sample5_jibunAddress').value ='지번 : '+ data.jibunAddress; //지번주소
+
        
 
        

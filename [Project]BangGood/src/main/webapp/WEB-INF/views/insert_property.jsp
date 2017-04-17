@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-
+<%@ taglib prefix="c" uri = "http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->
 <!--[if !IE]><!-->
@@ -354,6 +354,30 @@ table tr td {
 							</div>
 						</div>
 					</div>
+					
+					
+					
+					
+	<!-- 사진 실험	 -->
+				
+				
+	<div class="form-group row">
+		<div class="col-md-6 field">
+			<label for="email">프로필 파일</label>
+			<article> 
+				<input type="file" id="uploadFile" name="uploadFile" 
+				accept=".gif, .jpg, .png" multiple onclick="proFileShow();"> 
+			</article>
+			<div id='holder'></div>
+		</div>
+	</div>
+	
+	
+	
+	<!-- 실험 -->
+	
+	
+	
 				<!-- end board -->
 				<div class="margin-bottom-50"></div>
 				
@@ -418,6 +442,30 @@ table tr td {
 	<script src="//apis.daum.net/maps/maps3.js?apikey=8af91664dfbd610fb326b81f6ed2ca57&libraries=services"></script>
 	<script src="assets/js/postcode.js"></script>
 	
+	
+	<script type="text/javascript">
+	
+	function proFileShow() { 
+		var upload = document.getElementsByName('uploadFile')[0],
+			holder = document.getElementById('holder');
+		
+		upload.onchange = function (e) {
+			e.preventDefault();
+			var file = upload.files[0],
+				reader = new FileReader();
+			reader.onload = function (event) {
+				var img = new Image();
+				img.src = event.target.result;
+				img.width = 200;
+				img.height = 150;
+				holder.innerHTML = '';
+				holder.appendChild(img);
+			};
+			reader.readAsDataURL(file);
+			return false;
+		};
+	}
+	</script>
 	
 </body>
 </html>

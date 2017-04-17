@@ -21,12 +21,47 @@ public class PropertyRepository {
 	SqlSession query;
 	
 	// 매물 정보 디비에 삽입하는 메소드
+		public int insert_property(Property property, Option option, Maintence maintence){
+			int result = 0;
+			PropertyDAO pd = query.getMapper(PropertyDAO.class);
+			try {
+				result += pd.insert_property(property);
+				int property_no = pd.select_recently_property();
+				option.setProperty_no(property_no);
+				maintence.setProperty_no(property_no);
+				result += pd.insert_option(option);
+				result += pd.insert_maintence(maintence);
+				
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}		
+			return result;		
+		}
+	
+/*	// 매물 정보 디비에 삽입하는 메소드
 	public int insert_property(Property property, Option option, Maintence maintence,
 			Floorplan floorplan, ArrayList<Picture> pList){
 		int result = 0;
-		
-		return result = 0;		
-	}
+		PropertyDAO pd = query.getMapper(PropertyDAO.class);
+		try {
+			result += pd.insert_property(property);  // 매물 정보 삽입
+			int property_no = pd.select_recently_property();
+			option.setProperty_no(property_no);
+			maintence.setProperty_no(property_no);
+			floorplan.setProperty_no(property_no);
+			for(int i=0;i<pList.size();i++){
+				pList.get(i).setProperty_no(property_no);
+			}
+			result += pd.insert_option(option);	// 옵션 내용 삽입
+			result += pd.insert_maintence(maintence);	// 관리비 포함내역 삽입
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}		
+		return result;		
+	}*/
 
 	// 검색 범위 자동완성을 위한 메소드
 	public ArrayList<String> search_point(String searchText) {

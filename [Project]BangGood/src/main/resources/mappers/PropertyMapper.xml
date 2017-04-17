@@ -3,13 +3,49 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="global.sesoc.banggood.dao.PropertyDAO">
-
-
-
-
-
-
-
+	
+	<!-- 매물 기본 정보 삽입 -->
+	<insert id="insert_property" parameterType="Property">
+		insert into property
+		(property_no, custid, rent_type, address, address_detail, building_name, 
+		floor, property_type, deposit, month_fee, maintence_fee, built_year,
+		roomsize, property_title, property_text)
+		values 
+		(seq_property_no.nextval, #{custid}, #{rent_type}, #{address}, 
+		#{address_detail}, #{bulildingName}, #{floor}, #{property_type}, #{deposit}, 
+		#{month_fee}, #{maintence_fee}, #{built_year}, #{roomSize},
+		#{board_title}, #{board_text})	
+	</insert>
+	
+	<!-- 가장 최근에 입력된 매물의 번호 가져오기 -->
+	<select id="select_recently_property" resultType = "_int" >
+		select p.property_no
+		from (select * from property order by property_inputdate desc) p 
+		where rownum = 1
+	</select>
+	
+	<!-- 매물 옵션 내용 입력하기 -->
+	<insert id="insert_option" parameterType="Option">
+		insert into roomoption
+		(property_no, pet, car, elevator, air_conditioner, fridge, washing_machine,
+		gas_stove, electric_stove, microwave, desk, rack, bed, closet, shoecabinet,
+		doorlock, wifi)
+		values
+		(#{property_no}, #{pet}, #{car}, #{elevator}, #{air_conditioner}, 
+		#{fridge}, #{washing_machine}, #{gas_stove}, #{electric_stove}, 
+		#{microwave}, #{desk}, #{rack}, #{bed}, #{closet}, #{shoecabinet},
+		#{doorlock}, #{wifi})	
+	</insert>
+	
+	<!-- 매물 관리비 포함내역 입력하기 -->
+	<insert id="insert_maintence" parameterType="Maintence">
+		insert into maintence
+		(property_no, internet, tvfee, cleaning, waterfee, gasfee, electronic)
+		values (#{property_no}, #{internet}, #{tvfee}, 
+		#{cleaning}, #{waterfee}, #{gasfee}, #{electronic})
+	
+	</insert>
+	
 	<!-- 주소내 모든 매물 검색 -->
 	<select id="searchProperty" parameterType="Property_search"
 		resultType="String">
@@ -19,8 +55,9 @@
 		where
 		address like '%'||#{searchaddress}||'%'
 		and (deposit between #{deposit1} and #{deposit2})
-		and (month_fee between #{deposit1} and #{deposit2})
-		<if test="property_type != 'all'"> and property_type = #{searchaddress} </if>
+		and (month_fee between #{month_fee1} and #{month_fee2})
+		and isaccessible = 'true'
+		<if test="property_type != 'all'"> and property_type = #{property_type} </if>
 		<if test="rent_type != 'all'"> and rent_type = #{rent_type} </if>
 		<if test="floor != 0">
 			<choose>
@@ -63,8 +100,7 @@
 
 	<!-- 주소 자동검색을 위한 SQL -->
 	<select id="getPosition" parameterType="String" resultType="String">
-		select searchtext from position where searchtext like
-		'%'||#{searchText}||'%'
+		select searchtext from position where searchtext like '%'||#{searchText}||'%'
 	</select>
 
 	<!-- 마을 중심좌표를 찾기위한 SQL -->
