@@ -93,9 +93,16 @@
 
 	<!-- 지도 마커 클릭시 매물 간단 정보 출력 -->
 	<select id="readProperty_map" parameterType="String" resultType="Property_map">
-		select property_no, rent_type, deposit, month_fee from property
-		where
-		address||' '||address_detail like '%'||#{address}||'%'
+		select pro.property_no property_no, pro.rent_type rent_type,
+		      pro.deposit deposit, pro.month_fee month_fee, pro.property_title property_title, 
+			  pic.pic_name pic_name, pic.pic_savename pic_savename
+		from (select property_no, rent_type, deposit, month_fee, property_title
+			  from property
+			  where address||' '||address_detail like '%'||#{address}||'%') pro,
+			 (select property_no, pic_name, pic_savename 
+			  from picture
+			  where pic_division = 'main') pic 
+		where pro.property_no = pic.property_no
 	</select>
 
 	<!-- 주소 자동검색을 위한 SQL -->

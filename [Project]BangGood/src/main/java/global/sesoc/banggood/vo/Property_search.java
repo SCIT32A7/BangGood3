@@ -2,32 +2,32 @@ package global.sesoc.banggood.vo;
 
 public class Property_search {
 
-	private String searchaddress = "서울 종로";
-	private String property_type = "all";
-	private String rent_type = "all";
-	private int deposit1 = 0;
-	private int deposit2 = 999999;
-	private int month_fee1 = 0;
-	private int month_fee2 = 9999;
-	private int floor = 0;
-	private String maintence_fee = "all";
-	private String newbuild = "all";
-	private int pet = 0;
-	private int car = 0;
-	private int elevator = 0;
-	private int air_conditioner = 0;
-	private int fridge = 0;
-	private int washing_machine = 0;
-	private int gas_stove = 0;
-	private int electric_stove = 0;
-	private int microwave = 0;
-	private int desk = 0;
-	private int rack = 0;
-	private int bed = 0;
-	private int closet = 0;
-	private int shoecabinet = 0;
-	private int doorlock = 0;
-	private int wifi = 0;
+	private String searchaddress;
+	private String property_type;
+	private String rent_type;
+	private int deposit1;
+	private int deposit2;
+	private int month_fee1;
+	private int month_fee2;
+	private int floor;
+	private String maintence_fee;
+	private String newbuild;
+	private int pet;
+	private int car;
+	private int elevator;
+	private int air_conditioner;
+	private int fridge;
+	private int washing_machine;
+	private int gas_stove;
+	private int electric_stove;
+	private int microwave;
+	private int desk;
+	private int rack;
+	private int bed;
+	private int closet;
+	private int shoecabinet;
+	private int doorlock;
+	private int wifi;
 
 	public Property_search(String searchaddress, String property_type, String rent_type, int deposit1, int deposit2,
 			int month_fee1, int month_fee2, int floor, String maintence_fee, String newbuild, int pet, int car,

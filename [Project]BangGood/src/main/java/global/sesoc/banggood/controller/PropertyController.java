@@ -153,7 +153,6 @@ public class PropertyController {
 	@RequestMapping(value = "/intoMap", method = RequestMethod.POST)
 	public @ResponseBody ArrayList<String> intoMap(Property_search search) {
 		ArrayList<String> pList = pr.intoMap(search);
-		System.out.println(pList.size());
 		return pList;
 	}
 

@@ -146,9 +146,9 @@
 									<c:if test = "${messageList.size()>0}">	
 									<c:forEach var = "msg" items = "${messageList}">							
 										<tr>
-											<td><a href="javascript:msg_open(${msg.msg_no})" type="button" 
-											style="white-space:nowrap; text-overflow:ellipsis; overflow:hidden; width:100px">
-											${msg.msg_text}</a></td>
+											<td><div style = "display:inline-block; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; width:500px">
+											<a href="javascript:msg_open(${msg.msg_no})" type="button">
+											${msg.msg_text}</a></div></td>
 											<td>${msg.sender}</td>
 											<td class="hidden-sm">${msg.sentDate}</td>
 											<td class="hidden-sm">

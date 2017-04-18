@@ -7,6 +7,7 @@ public class Picture {
 	private int pic_no;
 	private String pic_name;
 	private String pic_savename;
+	private String pic_division;
 	private int property_no;
 	private MultipartFile file;
 
@@ -38,6 +39,14 @@ public class Picture {
 		this.pic_savename = pic_savename;
 	}
 
+	public String getPic_division() {
+		return pic_division;
+	}
+
+	public void setPic_division(String pic_division) {
+		this.pic_division = pic_division;
+	}
+
 	public int getProperty_no() {
 		return property_no;
 	}
@@ -57,7 +66,7 @@ public class Picture {
 	@Override
 	public String toString() {
 		return "Picture [pic_no=" + pic_no + ", pic_name=" + pic_name + ", pic_savename=" + pic_savename
-				+ ", property_no=" + property_no + ", file=" + file + "]";
+				+ ", pic_division=" + pic_division + ", property_no=" + property_no + ", file=" + file + "]";
 	}
 
 }

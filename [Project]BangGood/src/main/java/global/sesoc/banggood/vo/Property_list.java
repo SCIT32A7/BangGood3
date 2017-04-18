@@ -3,6 +3,7 @@ package global.sesoc.banggood.vo;
 public class Property_list {
 
 	private int property_no;
+	private String property_title;
 	private String rent_type;
 	private int board_no;
 	private String custid;
@@ -10,12 +11,14 @@ public class Property_list {
 	private int board_hits;
 	private int deposit;
 	private int month_fee;
-	private Floorplan floorplan;
+	private String pic_name;
+	private String pic_savename;
 
-	public Property_list(int property_no, String rent_type, int board_no, String custid, String board_inputdate,
-			int board_hits, int deposit, int month_fee, Floorplan floorplan) {
+	public Property_list(int property_no, String property_title, String rent_type, int board_no, String custid,
+			String board_inputdate, int board_hits, int deposit, int month_fee, String pic_name, String pic_savename) {
 		super();
 		this.property_no = property_no;
+		this.property_title = property_title;
 		this.rent_type = rent_type;
 		this.board_no = board_no;
 		this.custid = custid;
@@ -23,7 +26,8 @@ public class Property_list {
 		this.board_hits = board_hits;
 		this.deposit = deposit;
 		this.month_fee = month_fee;
-		this.floorplan = floorplan;
+		this.pic_name = pic_name;
+		this.pic_savename = pic_savename;
 	}
 
 	public Property_list() {
@@ -36,6 +40,14 @@ public class Property_list {
 
 	public void setProperty_no(int property_no) {
 		this.property_no = property_no;
+	}
+
+	public String getProperty_title() {
+		return property_title;
+	}
+
+	public void setProperty_title(String property_title) {
+		this.property_title = property_title;
 	}
 
 	public String getRent_type() {
@@ -94,19 +106,28 @@ public class Property_list {
 		this.month_fee = month_fee;
 	}
 
-	public Floorplan getFloorplan() {
-		return floorplan;
+	public String getPic_name() {
+		return pic_name;
 	}
 
-	public void setFloorplan(Floorplan floorplan) {
-		this.floorplan = floorplan;
+	public void setPic_name(String pic_name) {
+		this.pic_name = pic_name;
+	}
+
+	public String getPic_savename() {
+		return pic_savename;
+	}
+
+	public void setPic_savename(String pic_savename) {
+		this.pic_savename = pic_savename;
 	}
 
 	@Override
 	public String toString() {
-		return "Property_list [property_no=" + property_no + ", rent_type=" + rent_type + ", board_no=" + board_no
-				+ ", custid=" + custid + ", board_inputdate=" + board_inputdate + ", board_hits=" + board_hits
-				+ ", deposit=" + deposit + ", month_fee=" + month_fee + ", floorplan=" + floorplan + "]";
+		return "Property_list [property_no=" + property_no + ", property_title=" + property_title + ", rent_type="
+				+ rent_type + ", board_no=" + board_no + ", custid=" + custid + ", board_inputdate=" + board_inputdate
+				+ ", board_hits=" + board_hits + ", deposit=" + deposit + ", month_fee=" + month_fee + ", pic_name="
+				+ pic_name + ", pic_savename=" + pic_savename + "]";
 	}
 
 }

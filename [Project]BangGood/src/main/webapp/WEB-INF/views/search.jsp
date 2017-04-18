@@ -60,6 +60,26 @@
 	height: 190px;
 	padding: 10px;
 }
+
+
+
+
+.wrap {position: absolute;left: 0;bottom: 40px;width: 288px;height: 132px;margin-left: -144px;text-align: left;overflow: hidden;font-size: 12px;font-family: 'Malgun Gothic', dotum, '돋움', sans-serif;line-height: 1.5;}
+    .wrap * {padding: 0;margin: 0;}
+    .wrap .info {width: 286px;height: 120px;border-radius: 5px;border-bottom: 2px solid #ccc;border-right: 1px solid #ccc;overflow: hidden;background: #fff;}
+    .wrap .info:nth-child(1) {border: 0;box-shadow: 0px 1px 2px #888;}
+    .info .title {padding: 5px 0 0 10px;height: 30px;background: #eee;border-bottom: 1px solid #ddd;font-size: 18px;font-weight: bold;}
+    .info .close {position: absolute;top: 10px;right: 10px;color: #888;width: 17px;height: 17px;background: url('http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/overlay_close.png');}
+    .info .close:hover {cursor: pointer;}
+    .info .body {position: relative;overflow: hidden;}
+    .info .desc {position: relative;margin: 13px 0 0 90px;height: 75px;}
+    .desc .ellipsis {overflow: hidden;text-overflow: ellipsis;white-space: nowrap;}
+    .desc .jibun {font-size: 11px;color: #888;margin-top: -2px;}
+    .info .img {position: absolute;top: 6px;left: 5px;width: 73px;height: 71px;border: 1px solid #ddd;color: #888;overflow: hidden;}
+    .info:after {content: '';position: absolute;margin-left: -12px;left: 50%;bottom: 0;width: 22px;height: 12px;background: url('http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png')}
+    .info .link {color: #5085BB;}
+
+
 </style>
 
 
@@ -119,34 +139,56 @@
 	<script type="text/javascript"
 		src="//apis.daum.net/maps/maps3.js?apikey=8af91664dfbd610fb326b81f6ed2ca57&libraries=services"></script>
 	
-	<script type="text/javascript">
+	<script type="text/javascript">		
 		var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
 		var options = { //지도를 생성할 때 필요한 기본 옵션
 			center : new daum.maps.LatLng(37.584556360279436,
 					126.98217957940335), //지도의 중심좌표.
-			level : 5
-		//지도의 레벨(확대, 축소 정도)
+			level : 5 //지도의 레벨(확대, 축소 정도)
 		};
 
 		var map = new daum.maps.Map(container, options); //지도 생성 및 객체 리턴	
+		var imageSrc = "assets/img/maker.png", // 마커이미지의 주소입니다    
+	   	  imageSize = new daum.maps.Size(32, 35), // 마커이미지의 크기입니다
+	  	  imageOption = {offset: new daum.maps.Point(27, 69)}; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
+	    var markerImage = new daum.maps.MarkerImage(imageSrc, imageSize, imageOption)
 		
-		var markers = []; //마커 생성을 위한 전역변수		
+		var markers = []; //마커 생성을 위한 전역변수
 		
 		var text; // 주소 검색을 위한 전역변수		
 		var address = $("#addresstext"); // 동주소 검색용 전역변수
 		
+		// 조건 검색용 전역변수
+		var searchaddress = "서울 종로";
+		var property_type = "all";
+		var rent_type = "all";
+		var deposit1 = 0;
+		var deposit2 = 999999;
+		var month_fee1 = 0;
+		var month_fee2 = 9999;
+		var floor = 0;
+		var maintence_fee = "all";
+		var newbuild = "all";
+		var pet = 0;
+		var car = 0;
+		var elevator = 0;
+		var air_conditioner = 0;
+		var fridge = 0;
+		var washing_machine = 0;
+		var gas_stove = 0;
+		var electric_stove = 0;
+		var microwave = 0;
+		var desk = 0;
+		var rack = 0;
+		var bed = 0;
+		var closet = 0;
+		var shoecabinet = 0;
+		var doorlock = 0;
+		var wifi = 0;	
+		
+		
 		$(function() {
-			$.ajax({
-				method : "POST",
-				url : "intoMap",
-				success : function(resp) {
-					address = resp;
-					output(address);
-				},
-				error : function() {
-					console.log("33");
-				}
-			});
+			send_data();
 		});
 		
 	
@@ -168,38 +210,42 @@
 						})
 					}
 				});
-			});
-
-			
+			});		
 			
 			// 검색한 동의 중심좌표를 구하기 위한 메소드
 			$("#searchaddresscenter_button").click(function(){
+				searchaddress = $("#addresstext").val();
 				$.ajax({
 					method : "get",
 					url : "search_town",
 					data : {
-						"searchaddress" : text.val()
+						"searchaddress" : searchaddress
 					},
 					success : function(resp) {
 						set_center(resp.position_address); // 찾은 좌표로 중심 이동
 						setMarkers(null);	// 기존 마커 제거
-						$.ajax({
-							method : "POST",
-							url : "intoMap",
-							data : {
-								"searchaddress" : text.val()
-							},
-							success : function(resp) {
-								address = resp;
-								output(address);
-							},
-							error : function() {
-								console.log("33");
-							}
-						});
+						send_data();
 					}
 				});
-			});			
+			});
+			
+		    $("input[name=searchText]").keydown(function (key) {		    	 
+		        if(key.keyCode == 13){//키가 13이면 실행 (엔터는 13)
+		        	searchaddress = $("#addresstext").val();
+					$.ajax({
+						method : "get",
+						url : "search_town",
+						data : {
+							"searchaddress" : searchaddress
+						},
+						success : function(resp) {
+							set_center(resp.position_address); // 찾은 좌표로 중심 이동
+							setMarkers(null);	// 기존 마커 제거
+							send_data();
+						}
+					});		     	
+		        }		 
+		    });
 		})
 		
 		// 주소-좌표 변환 객체를 생성합니다
@@ -216,13 +262,58 @@
 			});
 		}
 
-
+		
+		// 검색 조건을 서버에 보내는 메소드
+		function send_data(){
+			$.ajax({
+				method : "POST",
+				url : "intoMap",
+				data : {
+					"searchaddress" : searchaddress,
+					"property_type" : property_type,
+					"rent_type" : rent_type,
+					"deposit1" : deposit1,
+					"deposit2" : deposit2,
+					"month_fee1" : month_fee1,
+					"month_fee2" : month_fee2,
+					"floor" : floor,
+					"maintence_fee" : maintence_fee,
+					"newbuild" : newbuild,
+					"pet" : pet,
+					"car" : car,
+					"elevator" : elevator,
+					"air_conditioner" : air_conditioner,
+					"fridge" : fridge,
+					"washing_machine" : washing_machine,
+					"gas_stove" : gas_stove,
+					"electric_stove" : electric_stove,
+					"microwave" : microwave,
+					"desk" : desk,
+					"rack" : rack,
+					"bed" : bed,
+					"closet" : closet,
+					"shoecabinet" : shoecabinet,
+					"doorlock" : doorlock,
+					"wifi" : wifi
+				},
+				success : function(resp) {
+					address = resp;
+					output(address);
+				},
+				
+				error : function() {
+					console.log("33");
+				}
+			});
+		}
+		
+		var content; // 오버레이 태그 내용
+		var overlay; // 오버레이 전역변수
 		// 검색될 매물을 마커로 표시
-		function output(addre) {
-			var infowindow;
-
-			for ( var index in addre) {
-				//add = addre[index];
+		function output(addre) {			
+		
+			for (var index in addre) {		
+				
 				///console.log(add);
 				// 주소로 좌표를 검색합니다
 				geocoder.addr2coord(addre[index], function(status, result) {
@@ -235,23 +326,23 @@
 					var marker = new daum.maps.Marker({
 						map : map,
 						position : coords,
+						image : markerImage,
 						clickable : true
 					});
 
 					marker.setMap(map);
 					markers.push(marker);
 
-					console.log(JSON.stringify(result));
+					//console.log(JSON.stringify(result));
 					//var iwContent = "<div style='padding:5px;'>"+result.addr[0].newAddress+"<br>"+result.addr[0].title+"</div>"; // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
-
-					var content1;
-					var detailAddr;
-					var property_map;
-
+					
+					var property_map;  // 전송받는 매물 정보를 담을 변수		
+					
 					daum.maps.event.addListener(marker, 'click', function(mouseEvent) {
 						searchDetailAddrFromCoords(coords, function(status, result) {
 						if (status === daum.maps.services.Status.OK) {
 							console.log(JSON.stringify(result));
+							
 							$.ajax({
 								method : "POST",
 								url : "read_property_map",
@@ -259,57 +350,63 @@
 									"address" : result[0].jibunAddress.name
 								},
 								success : function(resp) {
-										property_map = resp;
-										detailAddr = !!result[0].roadAddress.name ? '<div>도로명주소 : '+ result[0].roadAddress.name + '</div>': '';
-										detailAddr += '<div>지번 주소 : '+ result[0].jibunAddress.name + '</div>';
-										detailAddr += '<div>전월세 : '+ property_map.rent_type+ '</div>';
-										detailAddr += '<div>보증금 : '+ property_map.deposit+ '</div>';
-										detailAddr += '<div>월세 : '+ property_map.month_fee+ '</div>';
-
-										content = '<div class="bAddr">'+ '<span class="title">매물정보</span>'+ detailAddr + '</div>';
-
+										
+										property_map = resp;					
+										content = '<div class="wrap">';
+										content +=	'<div class="info">';
+										content +=		'<div class="title">';
+										content +=			property_map.property_title
+										content +=			'<div class="close" onclick="closeOverlay()" title="X"></div>';
+										content +=		'</div>';
+										content +=		'<div class="body">'
+										content +=			'<div class="img">';
+										content +=				'<img src="download?pic_name='+property_map.pic_name+'&pic_savename='+property_map.pic_savename+'" width="73" height="71">';
+										content +=			'</div>';
+										content +=			'<div class="desc">';
+										content +=				'<div class="ellipsis">'+property_map.rent_type +'</div>';
+										content +=				'<div class="jibun ellipsis">'+property_map.deposit+'/'+property_map.month_fee+'</div>';
+										content +=				'<div><a href="" target="_blank" class="link">내용보기</a></div>';
+										content +=			'</div>';						
+										content +=		'</div>';
+										content +=	 '</div>';
+										content += '</div>';
+										
+										overlay = new daum.maps.CustomOverlay({
+										    content: content,
+										    map: map,
+										    position: marker.getPosition()       
+										});
+										
+										overlay.setMap(map);
 										// 인포윈도우에 클릭한 위치에 대한 법정동 상세 주소정보를 표시합니다
-										infowindow.setContent(detailAddr);
-										infowindow.open(map, marker);
+										//infowindow.setContent(content);
+										//infowindow.open(map, marker);
 								}
 							});
 						}
+						});
 					});
-			});
-
-			/*  function searchAddrFromCoords(coords, callback) {
-			// 좌표로 행정동 주소 정보를 요청합니다
-			 geocoder.coord2addr(coords, callback); 
-			} */
-
-			function searchDetailAddrFromCoords(coords, callback) {
-			// 좌표로 법정동 상세 주소 정보를 요청합니다
-				geocoder.coord2detailaddr(coords,callback);}
-
-			var iwRemoveable = true; // removeable 속성을 ture 로 설정하면 인포윈도우를 닫을 수 있는 x버튼이 표시됩니다 
-			// 인포윈도우를 생성합니다
-			infowindow = new daum.maps.InfoWindow(
-					{content : content1,
-					removable : iwRemoveable
-					});
-
-					// 마커에 클릭이벤트를 등록합니다	   	 
-					daum.maps.event.addListener(marker, 'click', function() {
-					// 마커 위에 인포윈도우를 표시합니다
-					infowindow.open(map, marker);});
-					// 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
-					// map.setCenter(coords);	        
 					}
-				});
-			}
+					function searchDetailAddrFromCoords(coords, callback) {
+					// 좌표로 법정동 상세 주소 정보를 요청합니다
+						geocoder.coord2detailaddr(coords,callback);
+					}			     
+				});			
+			}			
 		}
+	
+	// 커스텀 오버레이를 닫기 위해 호출되는 함수입니다 
+	function closeOverlay() {
+		overlay.setMap(null);
+	}
 		
-		// 지도에 나타난 마커를 지우는 함수
-		function setMarkers(map) {
-		    for (var i = 0; i < markers.length; i++) {
-		        markers[i].setMap(map);
-		    }            
-		}
+		
+	// 지도에 나타난 마커를 지우는 함수
+	function setMarkers(map) {			
+		for (var i = 0; i < markers.length; i++) {
+			markers[i].setMap(map);
+		}            
+	}
 	</script>
 	<!-- custom -->
 
