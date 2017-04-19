@@ -42,8 +42,7 @@
 		insert into maintence
 		(property_no, internet, tvfee, cleaning, waterfee, gasfee, electronic)
 		values (#{property_no}, #{internet}, #{tvfee}, 
-		#{cleaning}, #{waterfee}, #{gasfee}, #{electronic})
-	
+		#{cleaning}, #{waterfee}, #{gasfee}, #{electronic})	
 	</insert>
 	
 	<!-- 주소내 모든 매물 검색 -->

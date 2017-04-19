@@ -14,7 +14,7 @@
 			</button>
 
 			<a class="navbar-brand" href="./"> <img
-				class="img-responsive" src="assets/img/5.png" alt="Logo">
+				class="img-responsive" src="assets/img/title/17.png" alt="Logo">
 			</a>
 		</div>
 
@@ -28,7 +28,6 @@
 					<span data-hover="Home">방 검색</span></a></li>
 					<li class="page-scroll"><a href="insert_property">방 등록</a></li>					
 					<li class="page-scroll"><a href="searchboard">게시판</a></li>
-					<li class="page-scroll"><a href="">관심목록</a></li>	
 				<c:if test ="${empty loginId}">
 					<li class="page-scroll"><a href="#" id="joinBtn1">회원가입</a></li>
 					<li class="page-scroll"><a href="#" id="loginBtn">로그인</a></li>
@@ -38,6 +37,7 @@
 						<li class="page-scroll"><a href="">매물관리</a></li>
 						<li class="page-scroll"><a href="">게시글 관리</a></li>
 					</c:if>
+					<li class="page-scroll"><a href="">관심목록</a></li>	
 					<li class="page-scroll"><a href="mypage">마이 페이지</a></li>
 					<li class="page-scroll"><a href="logout">로그아웃</a></li>									
 				</c:if>

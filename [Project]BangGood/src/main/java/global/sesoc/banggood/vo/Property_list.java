@@ -5,30 +5,15 @@ public class Property_list {
 	private int property_no;
 	private String property_title;
 	private String rent_type;
-	private int board_no;
 	private String custid;
-	private String board_inputdate;
-	private int board_hits;
+	private String property_inputdate;
+	private int property_hits;
+	private int reply_count;
+	private int property_like;
 	private int deposit;
 	private int month_fee;
 	private String pic_name;
 	private String pic_savename;
-
-	public Property_list(int property_no, String property_title, String rent_type, int board_no, String custid,
-			String board_inputdate, int board_hits, int deposit, int month_fee, String pic_name, String pic_savename) {
-		super();
-		this.property_no = property_no;
-		this.property_title = property_title;
-		this.rent_type = rent_type;
-		this.board_no = board_no;
-		this.custid = custid;
-		this.board_inputdate = board_inputdate;
-		this.board_hits = board_hits;
-		this.deposit = deposit;
-		this.month_fee = month_fee;
-		this.pic_name = pic_name;
-		this.pic_savename = pic_savename;
-	}
 
 	public Property_list() {
 		super();
@@ -58,14 +43,6 @@ public class Property_list {
 		this.rent_type = rent_type;
 	}
 
-	public int getBoard_no() {
-		return board_no;
-	}
-
-	public void setBoard_no(int board_no) {
-		this.board_no = board_no;
-	}
-
 	public String getCustid() {
 		return custid;
 	}
@@ -74,20 +51,36 @@ public class Property_list {
 		this.custid = custid;
 	}
 
-	public String getBoard_inputdate() {
-		return board_inputdate;
+	public String getProperty_inputdate() {
+		return property_inputdate;
 	}
 
-	public void setBoard_inputdate(String board_inputdate) {
-		this.board_inputdate = board_inputdate;
+	public void setProperty_inputdate(String property_inputdate) {
+		this.property_inputdate = property_inputdate;
 	}
 
-	public int getBoard_hits() {
-		return board_hits;
+	public int getProperty_hits() {
+		return property_hits;
 	}
 
-	public void setBoard_hits(int board_hits) {
-		this.board_hits = board_hits;
+	public void setProperty_hits(int property_hits) {
+		this.property_hits = property_hits;
+	}
+
+	public int getReply_count() {
+		return reply_count;
+	}
+
+	public void setReply_count(int reply_count) {
+		this.reply_count = reply_count;
+	}
+
+	public int getProperty_like() {
+		return property_like;
+	}
+
+	public void setProperty_like(int property_like) {
+		this.property_like = property_like;
 	}
 
 	public int getDeposit() {
@@ -125,9 +118,10 @@ public class Property_list {
 	@Override
 	public String toString() {
 		return "Property_list [property_no=" + property_no + ", property_title=" + property_title + ", rent_type="
-				+ rent_type + ", board_no=" + board_no + ", custid=" + custid + ", board_inputdate=" + board_inputdate
-				+ ", board_hits=" + board_hits + ", deposit=" + deposit + ", month_fee=" + month_fee + ", pic_name="
-				+ pic_name + ", pic_savename=" + pic_savename + "]";
+				+ rent_type + ", custid=" + custid + ", property_inputdate=" + property_inputdate + ", property_hits="
+				+ property_hits + ", reply_count=" + reply_count + ", property_like=" + property_like + ", deposit="
+				+ deposit + ", month_fee=" + month_fee + ", pic_name=" + pic_name + ", pic_savename=" + pic_savename
+				+ "]";
 	}
 
 }

@@ -50,21 +50,11 @@
 <link rel="stylesheet"
 	href="assets/plugins/font-awesome/css/font-awesome.min.css">
 <style type="text/css">
-.searchbox2 {
-	background-color: rgba(247, 190, 34, 0.5);
-	position: absolute;
-	top: 50%;
-	left: 9%;
-	z-index: 100;
-	width: 300px;
-	height: 190px;
-	padding: 10px;
+
+.table tbody tr td {
+   height: 30px;
 }
-
-
-
-
-.wrap {position: absolute;left: 0;bottom: 40px;width: 288px;height: 132px;margin-left: -144px;text-align: left;overflow: hidden;font-size: 12px;font-family: 'Malgun Gothic', dotum, '돋움', sans-serif;line-height: 1.5;}
+    .wrap {position: absolute;left: 0;bottom: 40px;width: 288px;height: 132px;margin-left: -144px;text-align: left;overflow: hidden;font-size: 12px;font-family: 'Malgun Gothic', dotum, '돋움', sans-serif;line-height: 1.5;}
     .wrap * {padding: 0;margin: 0;}
     .wrap .info {width: 286px;height: 120px;border-radius: 5px;border-bottom: 2px solid #ccc;border-right: 1px solid #ccc;overflow: hidden;background: #fff;}
     .wrap .info:nth-child(1) {border: 0;box-shadow: 0px 1px 2px #888;}
@@ -78,7 +68,6 @@
     .info .img {position: absolute;top: 6px;left: 5px;width: 73px;height: 71px;border: 1px solid #ddd;color: #888;overflow: hidden;}
     .info:after {content: '';position: absolute;margin-left: -12px;left: 50%;bottom: 0;width: 22px;height: 12px;background: url('http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png')}
     .info .link {color: #5085BB;}
-
 
 </style>
 
@@ -96,22 +85,133 @@
 	<%@ include	file="login.jsp"%>
 	<!-- end menu -->
 	<!-- searchbox -->
-	<div id="searchbox" class="g-mt-10 pull-width"
-		style="border-top: 1px solid #333; height: 50px;">
-		<input id="addresstext" name="searchText"> 
-		<input id = "searchaddresscenter_button" type="button" value="찾기">
-	</div>
-	<!-- end searchbox -->
-
-	<div id="map" style="width: 100%; height: 800px;"></div>
-
-
-	<!-- searchbox2 -->
-	<div class="searchbox2">
-		<input id="addresstext" name="searchText"> 
-		<input type="button" id ="searchaddress_button" value="찾기">
-	</div>
-	<!-- end searchbox2 --> </main>
+      <div id="searchbox" class="search">
+         <input type="text" id="addresstext" name="searchText" class="search_form col-sm-9" placeholder="지역을 입력하세요." > 
+         <input type="image" id ="searchaddresscenter_button" src="assets/img/search.png" class="search_label">
+      </div>
+      
+      <div class="clearfix"></div>
+   <!-- end searchbox -->
+    <div style="margin-top:18px"></div>
+    <div class="search_container">
+    <div class="searchbox2 col-sm-2" id="searchbox2">
+       
+       
+      <div class="searchbox3">
+            <table class="table text-center">
+               <tbody>
+                  <tr>
+                     <td>
+                        <label for="property">전세</label>
+                        <input type="radio" name="property" id ="year_rent" class="insert_label">
+                        <label for="property" class="g-ml-10">월세</label>
+                        <input type="radio" name="property" id ="month_rent" class="insert_label">         
+                     </td>
+                  </tr>
+                  <tr>
+                     <td>
+                        <label for="rent_type">원룸</label>
+                        <input type="radio" name="rent_type" id ="oneroom">         
+                        <label for="rent_type" class="g-ml-10">투룸</label>
+                        <input type="radio" name="rent_type" id ="tworoom">         
+                     </td>
+                  </tr>
+                  <tr>
+                     <td>
+                        <p>보증금</p>
+                         <input type="text" class="form-control" id="deposit1" style="float:left; width:35%">
+						 <span class="pull-left g-mt-10" style="margin:"> ~ </span>
+                         <input type="text" class="form-control" id="deposit2" style="float:left; width:35%">
+                         <input type="image" id ="searchdeposit_button" src="assets/img/search.png">
+                     </td>
+                  </tr>
+                  <tr>
+                     <td>
+                        <p>월세</p>
+                         <input type="text" class="form-control" id="month_fee1" style="float:left; width:35%">
+						 <span class="pull-left g-mt-10" style="margin:"> ~ </span>
+                         <input type="text" class="form-control" id="month_fee2" style="float:left; width:35%">
+                         <input type="image" id ="searchmonth_fee_button" src="assets/img/search.png">
+                     </td>
+                  </tr>
+                  <tr>
+                     <td>
+                        <p style="display:inline; text-left">층수</p>
+                         <select class="form-control" id="floor" style="display:inline; width:46%">
+                             <option selected="selected">-----</option>
+                             <option value="1">1~3층</option>
+                             <option value="4">4~6층</option>
+                             <option value="7">7~10층</option>
+                             <option value="10">10층 이상</option>
+                           </select>
+                     </td>
+                  <tr>
+                  <tr>
+                     <td>
+                        <p>추가옵션</p>
+                        <label for="maintence_fee">관리비 없음</label>
+                        <input type="checkbox" name="maintence_fee" value="">      
+                        <br>   
+                        <label for="car">주차 가능</label>
+                        <input type="checkbox" name="car" value="">
+                        <br>
+                        <label for="elevator">엘리베이터</label>
+                        <input type="checkbox" name="elevator" value="">
+                        <br>         
+                        <label for="pet">애완동물</label>
+                        <input type="checkbox" name="pet" value="">
+                        <br>
+                        <label for="newbulid">신축</label>
+                        <input type="checkbox" name="newbulid" value="">
+                     </td>
+                  </tr>
+                  <tr>
+                     <td>
+                        <p>가구옵션</p>
+                        <label for="newbulid">에어컨</label>
+                        <input type="checkbox" name="newbulid" value="">         
+                        <label for="option">냉장고</label>
+                        <input type="checkbox" name="option" value="">
+                        <br>
+                        <label for="option">세탁기</label>
+                        <input type="checkbox" name="option" value="">         
+                        <label for="option">가스렌지</label>
+                        <input type="checkbox" name="option" value="">
+                        <br>
+                        <label for="option">인덕션</label>
+                        <input type="checkbox" name="option" value="">         
+                        <label for="option">전자레인지</label>
+                        <input type="checkbox" name="option" value="">
+                        <br>
+                        <label for="option">책상</label>
+                        <input type="checkbox" name="option" value="">         
+                        <label for="option">선반</label>
+                        <input type="checkbox" name="option" value="">
+                        <label for="option">침대</label>
+                        <input type="checkbox" name="option" value="">
+                        <br>
+                        <label for="option">옷장</label>
+                        <input type="checkbox" name="option" value="">
+                        <label for="option">신발장</label>
+                        <input type="checkbox" name="option" value="">   
+                        <br>      
+                        <label for="option">도어락</label>
+                        <input type="checkbox" name="option" value="">
+                        
+                        <label for="option">무선인터넷</label>
+                        <input type="checkbox" name="option" value="">         
+                     </td>
+                  </tr>
+                     
+               </tbody>
+            </table>
+         </div>
+    </div>
+    <div class="col-sm-10" style="margin:0; padding:0;">
+   <div id="map" class="map" style="height:1000px;width: 100%;float:left;"></div>
+   </div>
+   </div>
+   </main>
 
 	<!-- 자동완성 -->
 	<link rel="stylesheet"
@@ -154,6 +254,7 @@
 	    var markerImage = new daum.maps.MarkerImage(imageSrc, imageSize, imageOption)
 		
 		var markers = []; //마커 생성을 위한 전역변수
+		var overlays = [];
 		
 		var text; // 주소 검색을 위한 전역변수		
 		var address = $("#addresstext"); // 동주소 검색용 전역변수
@@ -223,7 +324,6 @@
 					},
 					success : function(resp) {
 						set_center(resp.position_address); // 찾은 좌표로 중심 이동
-						setMarkers(null);	// 기존 마커 제거
 						send_data();
 					}
 				});
@@ -240,12 +340,49 @@
 						},
 						success : function(resp) {
 							set_center(resp.position_address); // 찾은 좌표로 중심 이동
-							setMarkers(null);	// 기존 마커 제거
 							send_data();
 						}
 					});		     	
 		        }		 
 		    });
+		    
+		    $("#year_rent").click(function(){
+		    	rent_type = '전세';
+		    	alert(property_type);
+		    	send_data();
+		    });
+		    
+		    $("#month_rent").click(function(){
+		    	rent_type = '월세';
+		    	alert(property_type);
+		    	send_data();
+		    });
+
+		    $("#oneroom").click(function(){
+		    	property_type = '원룸';
+		    	send_data();
+		    });
+		    
+		    $("#tworoom").click(function(){
+		    	property_type = '투룸';
+		    	send_data();
+		    });		    
+		    
+		    $("#searchdeposit_button").click(function(){
+		    	var input_deposit1 = $("$deposit1").val();
+		    	var input_deposit2 = $("$deposit2").val();
+		    	if(input_deposit1.isNaN()){
+		    		alert('숫자만 입력가능합니다.');
+		    		return false;
+		    	}
+		    	send_data();
+		    });
+		    
+		    
+		    
+		    
+		    
+		    
 		})
 		
 		// 주소-좌표 변환 객체를 생성합니다
@@ -307,99 +444,105 @@
 			});
 		}
 		
-		var content; // 오버레이 태그 내용
-		var overlay; // 오버레이 전역변수
-		// 검색될 매물을 마커로 표시
-		function output(addre) {			
-		
-			for (var index in addre) {		
-				
-				///console.log(add);
-				// 주소로 좌표를 검색합니다
-				geocoder.addr2coord(addre[index], function(status, result) {
-				// 정상적으로 검색이 완료됐으면 
-				if (status === daum.maps.services.Status.OK) {
-
-					var coords = new daum.maps.LatLng(result.addr[0].lat, result.addr[0].lng);
-
-					// 결과값으로 받은 위치를 마커로 표시합니다
-					var marker = new daum.maps.Marker({
-						map : map,
-						position : coords,
-						image : markerImage,
-						clickable : true
-					});
-
-					marker.setMap(map);
-					markers.push(marker);
-
-					//console.log(JSON.stringify(result));
-					//var iwContent = "<div style='padding:5px;'>"+result.addr[0].newAddress+"<br>"+result.addr[0].title+"</div>"; // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
-					
-					var property_map;  // 전송받는 매물 정보를 담을 변수		
-					
-					daum.maps.event.addListener(marker, 'click', function(mouseEvent) {
-						searchDetailAddrFromCoords(coords, function(status, result) {
-						if (status === daum.maps.services.Status.OK) {
-							console.log(JSON.stringify(result));
-							
-							$.ajax({
-								method : "POST",
-								url : "read_property_map",
-								data : {
-									"address" : result[0].jibunAddress.name
-								},
-								success : function(resp) {
-										
-										property_map = resp;					
-										content = '<div class="wrap">';
-										content +=	'<div class="info">';
-										content +=		'<div class="title">';
-										content +=			property_map.property_title
-										content +=			'<div class="close" onclick="closeOverlay()" title="X"></div>';
-										content +=		'</div>';
-										content +=		'<div class="body">'
-										content +=			'<div class="img">';
-										content +=				'<img src="download?pic_name='+property_map.pic_name+'&pic_savename='+property_map.pic_savename+'" width="73" height="71">';
-										content +=			'</div>';
-										content +=			'<div class="desc">';
-										content +=				'<div class="ellipsis">'+property_map.rent_type +'</div>';
-										content +=				'<div class="jibun ellipsis">'+property_map.deposit+'/'+property_map.month_fee+'</div>';
-										content +=				'<div><a href="" target="_blank" class="link">내용보기</a></div>';
-										content +=			'</div>';						
-										content +=		'</div>';
-										content +=	 '</div>';
-										content += '</div>';
-										
-										overlay = new daum.maps.CustomOverlay({
-										    content: content,
-										    map: map,
-										    position: marker.getPosition()       
-										});
-										
-										overlay.setMap(map);
-										// 인포윈도우에 클릭한 위치에 대한 법정동 상세 주소정보를 표시합니다
-										//infowindow.setContent(content);
-										//infowindow.open(map, marker);
-								}
-							});
-						}
-						});
-					});
-					}
-					function searchDetailAddrFromCoords(coords, callback) {
-					// 좌표로 법정동 상세 주소 정보를 요청합니다
-						geocoder.coord2detailaddr(coords,callback);
-					}			     
-				});			
-			}			
-		}
 	
-	// 커스텀 오버레이를 닫기 위해 호출되는 함수입니다 
-	function closeOverlay() {
-		overlay.setMap(null);
+	// 검색될 매물을 마커로 표시
+	function output(addre) {
+		var num = 0;
+		allCloseOverlay();
+		setMarkers(null);	// 기존 마커 제거
+		for (var index in addre) {		
+				
+			///console.log(add);
+			// 주소로 좌표를 검색합니다
+			geocoder.addr2coord(addre[index], function(status, result) {
+			// 정상적으로 검색이 완료됐으면 
+			if (status === daum.maps.services.Status.OK) {
+
+				var coords = new daum.maps.LatLng(result.addr[0].lat, result.addr[0].lng);
+				// 결과값으로 받은 위치를 마커로 표시합니다
+				var marker = new daum.maps.Marker({
+					map : map,
+					position : coords,
+					//image : markerImage,
+					clickable : true
+				});
+
+				marker.setMap(map);					
+				markers.push(marker);
+					
+				var property_map;  // 전송받는 매물 정보를 담을 변수		
+				var content; // 오버레이 태그 내용
+				
+				daum.maps.event.addListener(marker, 'click', function(mouseEvent) {
+					searchDetailAddrFromCoords(coords, function(status, result) {
+					if (status === daum.maps.services.Status.OK) {
+						console.log(JSON.stringify(result));
+						
+						$.ajax({
+							method : "POST",
+							url : "read_property_map",
+							data : {
+								"address" : result[0].jibunAddress.name
+							},
+							success : function(resp) {										
+									property_map = resp;
+									var overlayTitle = " [ "+property_map.rent_type+" ] "+ property_map.deposit+"/"+property_map.month_fee;
+									content = '<div class="wrap">';
+									content +=	'<div class="info">';
+									content +=		'<div class="title">';
+									content +=			overlayTitle
+									content +=			'<div class="close" onclick="closeOverlay('+num+')" title="X"></div>';
+									content +=		'</div>';
+									content +=		'<div class="body">'
+									content +=			'<div class="img">';
+									content +=				'<img src="download?pic_name='+property_map.pic_name+'&pic_savename='+property_map.pic_savename+'" width="73" height="71">';
+									content +=			'</div>';
+									content +=			'<div class="desc">';
+									content +=				'<div class="ellipsis">'+property_map.property_title+'</div>';
+									content +=				'<div class="jibun ellipsis"></div>';
+									content +=				'<div><a href="" target="_blank" class="link">내용보기</a></div>';
+									content +=			'</div>';						
+									content +=		'</div>';
+									content +=	 '</div>';
+									content += '</div>';
+									
+									overlay = new daum.maps.CustomOverlay({
+									    content: content,
+									    map: map,
+									    position: marker.getPosition()
+									});
+									
+									overlay.setMap(map);
+									overlays.push(overlay);
+									num += 1;
+									
+							}
+						});
+					}
+					});
+				});					
+				}
+			
+				function searchDetailAddrFromCoords(coords, callback) {
+				// 좌표로 법정동 상세 주소 정보를 요청합니다
+					geocoder.coord2detailaddr(coords,callback);
+				}			     
+			});			
+		}			
 	}
 		
+	// 커스텀 오버레이를 닫기 위해 호출되는 함수입니다 
+	function closeOverlay(num) {
+		overlays[num].setMap(null);
+	}
+	
+	// 오픈 된 모든 커스텀 오버레이를 닫기 위해 호출되는 함수입니다 
+	function allCloseOverlay() {
+		for (var i = 0; i < overlays.length; i++) {
+			overlays[i].setMap(null);
+		}
+		overlays = [];
+	}		
 		
 	// 지도에 나타난 마커를 지우는 함수
 	function setMarkers(map) {			
@@ -407,6 +550,8 @@
 			markers[i].setMap(map);
 		}            
 	}
+	
+	
 	</script>
 	<!-- custom -->
 

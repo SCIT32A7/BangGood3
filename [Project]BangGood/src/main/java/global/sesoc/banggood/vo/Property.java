@@ -16,76 +16,15 @@ public class Property {
 	private int month_fee;
 	private int maintence_fee;
 	private int built_year;
-	private Double roomSize;
-	private String isAccessible;
-	private String isSoldOut;
-	private String board_title;
-	private String board_text;
-	private String board_inputdate;
-	private int board_hits;
+	private Double roomsize;
+	private String isaccessible;
+	private String issoldout;
+	private String property_title;
+	private String property_text;
+	private String property_inputdate;
+	private int property_hits;
 	private int reply_count;
-	private ArrayList<RoomReply> replyList;
-	private ArrayList<Picture> picList;
-	private Floorplan floorplan;
-	private Maintence maintence;
-	private Option option;
-
-	public Property(int property_no, String custid, String rent_type, String address, String address_detail,
-			String bulildingName, int floor, String property_type, int deposit, int month_fee, int maintence_fee,
-			int built_year, Double roomSize, String isAccessible, String isSoldOut, String board_title,
-			String board_text, String board_inputdate, int board_hits, int reply_count, ArrayList<RoomReply> replyList,
-			ArrayList<Picture> picList, Floorplan floorplan, Maintence maintence, Option option) {
-		super();
-		this.property_no = property_no;
-		this.custid = custid;
-		this.rent_type = rent_type;
-		this.address = address;
-		this.address_detail = address_detail;
-		this.bulildingName = bulildingName;
-		this.floor = floor;
-		this.property_type = property_type;
-		this.deposit = deposit;
-		this.month_fee = month_fee;
-		this.maintence_fee = maintence_fee;
-		this.built_year = built_year;
-		this.roomSize = roomSize;
-		this.isAccessible = isAccessible;
-		this.isSoldOut = isSoldOut;
-		this.board_title = board_title;
-		this.board_text = board_text;
-		this.board_inputdate = board_inputdate;
-		this.board_hits = board_hits;
-		this.reply_count = reply_count;
-		this.replyList = replyList;
-		this.picList = picList;
-		this.floorplan = floorplan;
-		this.maintence = maintence;
-		this.option = option;
-	}
-
-	public Property(String custid, String rent_type, String address, String address_detail, String bulildingName,
-			int floor, String property_type, int deposit, int month_fee, int maintence_fee, int built_year,
-			Double roomSize, String board_title, String board_text, Floorplan floorplan, Maintence maintence,
-			Option option) {
-		super();
-		this.custid = custid;
-		this.rent_type = rent_type;
-		this.address = address;
-		this.address_detail = address_detail;
-		this.bulildingName = bulildingName;
-		this.floor = floor;
-		this.property_type = property_type;
-		this.deposit = deposit;
-		this.month_fee = month_fee;
-		this.maintence_fee = maintence_fee;
-		this.built_year = built_year;
-		this.roomSize = roomSize;
-		this.board_title = board_title;
-		this.board_text = board_text;
-		this.floorplan = floorplan;
-		this.maintence = maintence;
-		this.option = option;
-	}
+	private int property_like;
 
 	public Property() {
 		super();
@@ -187,60 +126,60 @@ public class Property {
 		this.built_year = built_year;
 	}
 
-	public Double getRoomSize() {
-		return roomSize;
+	public Double getRoomsize() {
+		return roomsize;
 	}
 
-	public void setRoomSize(Double roomSize) {
-		this.roomSize = roomSize;
+	public void setRoomsize(Double roomsize) {
+		this.roomsize = roomsize;
 	}
 
-	public String getIsAccessible() {
-		return isAccessible;
+	public String getIsaccessible() {
+		return isaccessible;
 	}
 
-	public void setIsAccessible(String isAccessible) {
-		this.isAccessible = isAccessible;
+	public void setIsaccessible(String isaccessible) {
+		this.isaccessible = isaccessible;
 	}
 
-	public String getIsSoldOut() {
-		return isSoldOut;
+	public String getIssoldout() {
+		return issoldout;
 	}
 
-	public void setIsSoldOut(String isSoldOut) {
-		this.isSoldOut = isSoldOut;
+	public void setIssoldout(String issoldout) {
+		this.issoldout = issoldout;
 	}
 
-	public String getBoard_title() {
-		return board_title;
+	public String getProperty_title() {
+		return property_title;
 	}
 
-	public void setBoard_title(String board_title) {
-		this.board_title = board_title;
+	public void setProperty_title(String property_title) {
+		this.property_title = property_title;
 	}
 
-	public String getBoard_text() {
-		return board_text;
+	public String getProperty_text() {
+		return property_text;
 	}
 
-	public void setBoard_text(String board_text) {
-		this.board_text = board_text;
+	public void setProperty_text(String property_text) {
+		this.property_text = property_text;
 	}
 
-	public String getBoard_inputdate() {
-		return board_inputdate;
+	public String getProperty_inputdate() {
+		return property_inputdate;
 	}
 
-	public void setBoard_inputdate(String board_inputdate) {
-		this.board_inputdate = board_inputdate;
+	public void setProperty_inputdate(String property_inputdate) {
+		this.property_inputdate = property_inputdate;
 	}
 
-	public int getBoard_hits() {
-		return board_hits;
+	public int getProperty_hits() {
+		return property_hits;
 	}
 
-	public void setBoard_hits(int board_hits) {
-		this.board_hits = board_hits;
+	public void setProperty_hits(int property_hits) {
+		this.property_hits = property_hits;
 	}
 
 	public int getReply_count() {
@@ -251,44 +190,12 @@ public class Property {
 		this.reply_count = reply_count;
 	}
 
-	public ArrayList<RoomReply> getReplyList() {
-		return replyList;
+	public int getProperty_like() {
+		return property_like;
 	}
 
-	public void setReplyList(ArrayList<RoomReply> replyList) {
-		this.replyList = replyList;
-	}
-
-	public ArrayList<Picture> getPicList() {
-		return picList;
-	}
-
-	public void setPicList(ArrayList<Picture> picList) {
-		this.picList = picList;
-	}
-
-	public Floorplan getFloorplan() {
-		return floorplan;
-	}
-
-	public void setFloorplan(Floorplan floorplan) {
-		this.floorplan = floorplan;
-	}
-
-	public Maintence getMaintence() {
-		return maintence;
-	}
-
-	public void setMaintence(Maintence maintence) {
-		this.maintence = maintence;
-	}
-
-	public Option getOption() {
-		return option;
-	}
-
-	public void setOption(Option option) {
-		this.option = option;
+	public void setProperty_like(int property_like) {
+		this.property_like = property_like;
 	}
 
 	@Override
@@ -296,10 +203,10 @@ public class Property {
 		return "Property [property_no=" + property_no + ", custid=" + custid + ", rent_type=" + rent_type + ", address="
 				+ address + ", address_detail=" + address_detail + ", bulildingName=" + bulildingName + ", floor="
 				+ floor + ", property_type=" + property_type + ", deposit=" + deposit + ", month_fee=" + month_fee
-				+ ", maintence_fee=" + maintence_fee + ", built_year=" + built_year + ", roomSize=" + roomSize
-				+ ", isAccessible=" + isAccessible + ", isSoldOut=" + isSoldOut + ", board_title=" + board_title
-				+ ", board_text=" + board_text + ", board_inputdate=" + board_inputdate + ", board_hits=" + board_hits
-				+ ", reply_count=" + reply_count + "]";
+				+ ", maintence_fee=" + maintence_fee + ", built_year=" + built_year + ", roomsize=" + roomsize
+				+ ", isaccessible=" + isaccessible + ", issoldout=" + issoldout + ", property_title=" + property_title
+				+ ", property_text=" + property_text + ", property_inputdate=" + property_inputdate + ", property_hits="
+				+ property_hits + ", reply_count=" + reply_count + ", property_like=" + property_like + "]";
 	}
 
 }
