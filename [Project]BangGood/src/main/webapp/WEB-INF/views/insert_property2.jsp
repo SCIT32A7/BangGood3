@@ -135,8 +135,8 @@ body { background: #b3ecff; }
    
    <!-- 평면도 기능 코드 -->
 
-<script type="text/javascript" src="resources/jquery-3.2.0.min.js"></script>
-<script type="text/javascript" src="resources/Canvas0416.js"></script>
+<!-- <script type="text/javascript" src="assets/js/jquery-3.2.0.min.js"></script> -->
+<script type="text/javascript" src="assets/js/FloorplanCanvas.js"></script>
 <script>
 //Basic 변수 모음
 	var canvas;
@@ -161,6 +161,7 @@ body { background: #b3ecff; }
 	var Redo = [];
 	
 	var px; //선 길이
+	var scale; //축척
 	var rectPx1;
 	var rectPx2;
 	var LW = ''; //LineWidth 선 두깨
@@ -198,37 +199,37 @@ body { background: #b3ecff; }
 	//이미지 관련 선언..........................
 	var buttonImage;
 	var imgSource = {
-			singleBed : "resources/icons/singleBed.PNG",
-			doubleBed : "resources/icons/doubleBed.png",
-			door : "resources/icons/door.png",
-			toilet : "resources/icons/toilet.png",
-			triBath : "resources/icons/triBath.png",
-			rectBath : "resources/icons/rectBath.png",
-			shower : "resources/icons/shower.PNG",
-			washstand : "resources/icons/washstand.png",
-			microwave : "resources/icons/microwave.PNG",
-			oven : "resources/icons/oven.PNG",
-			kitchenSink : "resources/icons/kitchenSink.png",
-			singleDoorRefriger : "resources/icons/singleDoorRefriger.PNG",
-			doubleDoorRefriger : "resources/icons/doubleDoorRefriger.PNG",
-			desk : "resources/icons/desk.png",
-			bookShelve : "resources/icons/bookShelve.png",
-			shoeCloset : "resources/icons/shoeCloset.png",
-			drum : "resources/icons/drum.png",
-			washingMachine : "resources/icons/washingMachine.PNG",
-			airconditioner : "resources/icons/airconditioner.png",
-			gasStove2 : "resources/icons/gasStove2.png",
-			gasStove4 : "resources/icons/gasStove4.png",
-			stoveVent : "resources/icons/stoveVent.png",
-			vent : "resources/icons/vent.png",
-			wardrobe : "resources/icons/wardrobe.png",
-			tv : "resources/icons/tv.png",
-			sofa1 : "resources/icons/sofa1.png",
-			sofa2 : "resources/icons/sofa2.png",
-			sofa4 : "resources/icons/sofa4.png",
-			diningTable : "resources/icons/diningTable.png",
-			table1 : "resources/icons/table1.png",
-			table2 : "resources/icons/table2.png"
+			singleBed : "assets/img/icons/singleBed.PNG",
+			doubleBed : "assets/img/icons/doubleBed.png",
+			door : "assets/img/icons/door.png",
+			toilet : "assets/img/icons/toilet.png",
+			triBath : "assets/img/icons/triBath.png",
+			rectBath : "assets/img/icons/rectBath.png",
+			shower : "assets/img/icons/shower.PNG",
+			washstand : "assets/img/icons/washstand.png",
+			microwave : "assets/img/icons/microwave.PNG",
+			oven : "assets/img/icons/oven.PNG",
+			kitchenSink : "assets/img/icons/kitchenSink.png",
+			singleDoorRefriger : "assets/img/icons/singleDoorRefriger.PNG",
+			doubleDoorRefriger : "assets/img/icons/doubleDoorRefriger.PNG",
+			desk : "assets/img/icons/desk.png",
+			bookShelve : "assets/img/icons/bookShelve.png",
+			shoeCloset : "assets/img/icons/shoeCloset.png",
+			drum : "assets/img/icons/drum.png",
+			washingMachine : "assets/img/icons/washingMachine.PNG",
+			airconditioner : "assets/img/icons/airconditioner.png",
+			gasStove2 : "assets/img/icons/gasStove2.png",
+			gasStove4 : "assets/img/icons/gasStove4.png",
+			stoveVent : "assets/img/icons/stoveVent.png",
+			vent : "assets/img/icons/vent.png",
+			wardrobe : "assets/img/icons/wardrobe.png",
+			tv : "assets/img/icons/tv.png",
+			sofa1 : "assets/img/icons/sofa1.png",
+			sofa2 : "assets/img/icons/sofa2.png",
+			sofa4 : "assets/img/icons/sofa4.png",
+			diningTable : "assets/img/icons/diningTable.png",
+			table1 : "assets/img/icons/table1.png",
+			table2 : "assets/img/icons/table2.png"
 	};
 	var img;
 	var iconState;
@@ -376,7 +377,7 @@ body { background: #b3ecff; }
 			//파일 다운로드 기능
 			var dataURL = canvas.toDataURL("image/png");
 			var newdata = dataURL.replace(/^data:image\/png/, 'data:application/octet-stream');
-			$('a.button').attr('download', 'your_pic_name.png').attr('href', newdata);
+			$('a.button').attr('download', 'floorplan.png').attr('href', newdata);
 
 			//세이브 기능
 			var iconArray = iconState.icons;
@@ -426,7 +427,11 @@ body { background: #b3ecff; }
 				}
 			});
 		});
-
+		
+		//축적 얻어오기
+		$("#canvasScale").change(function() {
+			scale = getScale();
+		});
 
 		//메뉴 인터페이스 단
 		//메뉴창 선 설정 
@@ -682,7 +687,7 @@ body { background: #b3ecff; }
 			//line//
 			if (clickE && status == 'lineDrawing') { //그리는 도중의 status값 lineDrawing
 				//선 길이 출력 기능
-				px = getLineLength(downXY, XY); //....................................
+				px = getLineLength(downXY, XY, scale); //....................................
 				ctx.save();
 				ctx.font = "15px Comic Sans MS";
 				ctx.fillStyle = "blue";
@@ -757,6 +762,12 @@ body { background: #b3ecff; }
 			<option value="door">문</option>
 			<option value="window" selected="selected">창문</option>
 		</select>
+		Scale
+		<select id="canvasScale">
+			<option value="원룸" selected="selected">원룸</option>
+			<option value="투룸" >투룸</option>
+			<option value="아파트" >아파트</option>
+		</select>
 		<input type="button" value="clear" id="clearCanvas" />
 		<span>
 			<form action="loadCanvas" method="post" name="loadDataForm">
@@ -798,7 +809,7 @@ body { background: #b3ecff; }
 			<input type="button" class="buttonImage" btn-num="table1" value="table1" />
 			<input type="button" class="buttonImage" btn-num="table2" value="table2" />
 		</div>
-		<a href="#" class="button" id="btn-download" download="Floorplan.png">Download</a>
+		<a href="#" class="button" id="btn-download" download="Floorplan.png">데이터 저장 및 이미지 다운로드</a>
 	</div>
 	<!-- 동서남북 아이콘 -->
 	<div class="box">

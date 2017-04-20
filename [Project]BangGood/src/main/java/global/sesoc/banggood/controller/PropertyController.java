@@ -98,16 +98,18 @@ public class PropertyController {
 		model.addAttribute("maintence", maintence);
 		return "insert_property2";
 	}
-
+*/
+	/*
 	// 방등록 2차, 평면도 그리기 페이지로 이동
 	@RequestMapping(value = "/insert_property2", method = RequestMethod.POST)
 	public String insert_property2(@ModelAttribute("property") Property property,
 			@ModelAttribute("option") Option option, @ModelAttribute("maintence") Maintence maintence,
 			Floorplan floorplan, Model model) {
 		model.addAttribute("floorplan", floorplan);
-		return "insert_property3";
+		return "insert_property2";
 	}
-
+	*/
+/*
 	// 방등록 3차, 평면도 및 사진 첨부하기
 	@RequestMapping(value = "/insert_property3", method = RequestMethod.POST)
 	public String insert_property3(@ModelAttribute("property") Property property,
