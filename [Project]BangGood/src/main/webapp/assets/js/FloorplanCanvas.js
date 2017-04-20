@@ -335,8 +335,8 @@ function drawRect(rect) {
 	ctx.lineWidth = rect.line1.lineWidth;
 	ctx.stroke();
 	
-	ctx.font = "5px Comic Sans MS";
-	ctx.fillStyle = "blue";
+	ctx.font = "15px Comic Sans MS";
+	ctx.fillStyle = "green";
 	ctx.fillText(rect.line1.length, (rect.line1.coordinate.x0+rect.line1.coordinate.x1)/2, rect.line1.coordinate.y0);
 	ctx.fillText(rect.line2.length, rect.line1.coordinate.x1, (rect.line1.coordinate.y1 +rect.line2.coordinate.y1)/2 );
 	ctx.fillText(rect.line1.length, (rect.line2.coordinate.x0 + rect.line2.coordinate.x1)/2, (rect.line2.coordinate.y0));
