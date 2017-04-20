@@ -5,114 +5,116 @@
 <mapper namespace="global.sesoc.banggood.dao.PropertyDAO">
 	
 	<!-- 매물 기본 정보 삽입 -->
-	<insert id="insert_property" parameterType="Property">
-		insert into property
-		(property_no, custid, rent_type, address, address_detail, building_name, 
-		floor, property_type, deposit, month_fee, maintence_fee, built_year,
-		roomsize, property_title, property_text)
-		values 
-		(seq_property_no.nextval, #{custid}, #{rent_type}, #{address}, 
-		#{address_detail}, #{bulildingName}, #{floor}, #{property_type}, #{deposit}, 
-		#{month_fee}, #{maintence_fee}, #{built_year}, #{roomSize},
-		#{board_title}, #{board_text})	
-	</insert>
-	
-	<!-- 가장 최근에 입력된 매물의 번호 가져오기 -->
-	<select id="select_recently_property" resultType = "_int" >
-		select p.property_no
-		from (select * from property order by property_inputdate desc) p 
-		where rownum = 1
-	</select>
-	
-	<!-- 매물 옵션 내용 입력하기 -->
-	<insert id="insert_option" parameterType="Option">
-		insert into roomoption
-		(property_no, pet, car, elevator, air_conditioner, fridge, washing_machine,
-		gas_stove, electric_stove, microwave, desk, rack, bed, closet, shoecabinet,
-		doorlock, wifi)
-		values
-		(#{property_no}, #{pet}, #{car}, #{elevator}, #{air_conditioner}, 
-		#{fridge}, #{washing_machine}, #{gas_stove}, #{electric_stove}, 
-		#{microwave}, #{desk}, #{rack}, #{bed}, #{closet}, #{shoecabinet},
-		#{doorlock}, #{wifi})	
-	</insert>
-	
-	<!-- 매물 관리비 포함내역 입력하기 -->
-	<insert id="insert_maintence" parameterType="Maintence">
-		insert into maintence
-		(property_no, internet, tvfee, cleaning, waterfee, gasfee, electronic)
-		values (#{property_no}, #{internet}, #{tvfee}, 
-		#{cleaning}, #{waterfee}, #{gasfee}, #{electronic})	
-	</insert>
-	
-	<!-- 주소내 모든 매물 검색 -->
-	<select id="searchProperty" parameterType="Property_search"
-		resultType="String">
-		select pro.address
-		from
-		(select property_no, address from property
-		where
-		address like '%'||#{searchaddress}||'%'
-		and (deposit between #{deposit1} and #{deposit2})
-		and (month_fee between #{month_fee1} and #{month_fee2})
-		and isaccessible = 'true'
-		<if test="property_type != 'all'"> and property_type = #{property_type} </if>
-		<if test="rent_type != 'all'"> and rent_type = #{rent_type} </if>
-		<if test="floor != 0">
-			<choose>
-				<when test="floor == 1"> and (floor between 1 and 3) </when>
-				<when test="floor == 4"> and (floor between 4 and 6) </when>
-				<when test="floor == 7"> and (floor between 7 and 9) </when>
-				<when test="floor == 10"> and floor >= 10 </when>
-			</choose>
-		</if>
-		<if test="maintence_fee != 'all'"> and maintence_fee is null </if>
-		<if test="newbuild != 'all'">and built_year > 2014</if>
-		) pro,
-		(select property_no from roomoption
-		<if test="car != 0"> and car = #{car} </if>
-		<if test="pet != 0"> and pet = #{pet} </if>
-		<if test="elevator != 0"> and elevator = #{elevator} </if>
-		<if test="air_conditioner != 0"> and air_conditioner = #{air_conditioner} </if>
-		<if test="fridge != 0"> and fridge = #{fridge} </if>
-		<if test="washing_machine != 0"> and washing_machine = #{washing_machine} </if>
-		<if test="gas_stove != 0"> and gas_stove = #{gas_stove} </if>
-		<if test="electric_stove != 0"> and electric_stove = #{electric_stove} </if>
-		<if test="microwave != 0"> and microwave = #{microwave} </if>
-		<if test="desk != 0"> and desk = #{desk} </if>
-		<if test="rack != 0"> and rack = #{rack} </if>
-		<if test="bed != 0"> and bed = #{bed} </if>
-		<if test="closet != 0"> and closet = #{closet} </if>
-		<if test="shoecabinet != 0"> and shoecabinet = #{shoecabinet} </if>
-		<if test="doorlock != 0"> and doorlock = #{doorlock} </if>
-		<if test="wifi != 0"> and wifi = #{wifi} </if>
-		) op
-		where pro.property_no = op.property_no
-	</select>
+   <insert id="insert_property" parameterType="Property">
+      insert into property
+      (property_no, custid, rent_type, address, address_detail, building_name, 
+      floor, property_type, deposit, month_fee, maintence_fee, built_year,
+      roomsize, property_title, property_text)
+      values 
+      (seq_property_no.nextval, #{custid}, #{rent_type}, #{address}, 
+      #{address_detail}, #{bulildingName}, #{floor}, #{property_type}, #{deposit}, 
+      #{month_fee}, #{maintence_fee}, #{built_year}, #{roomSize},
+      #{board_title}, #{board_text})   
+   </insert>
+   
+   <!-- 가장 최근에 입력된 매물의 번호 가져오기 -->
+   <select id="select_recently_property" resultType = "_int" >
+      select p.property_no
+      from (select * from property order by property_inputdate desc) p 
+      where rownum = 1
+   </select>
+   
+   <!-- 매물 옵션 내용 입력하기 -->
+   <insert id="insert_option" parameterType="Option">
+      insert into roomoption
+      (property_no, pet, car, elevator, air_conditioner, fridge, washing_machine,
+      gas_stove, electric_stove, microwave, desk, rack, bed, closet, shoecabinet,
+      doorlock, wifi)
+      values
+      (#{property_no}, #{pet}, #{car}, #{elevator}, #{air_conditioner}, 
+      #{fridge}, #{washing_machine}, #{gas_stove}, #{electric_stove}, 
+      #{microwave}, #{desk}, #{rack}, #{bed}, #{closet}, #{shoecabinet},
+      #{doorlock}, #{wifi})   
+   </insert>
+   
+   <!-- 매물 관리비 포함내역 입력하기 -->
+   <insert id="insert_maintence" parameterType="Maintence">
+      insert into maintence
+      (property_no, internet, tvfee, cleaning, waterfee, gasfee, electronic)
+      values (#{property_no}, #{internet}, #{tvfee}, 
+      #{cleaning}, #{waterfee}, #{gasfee}, #{electronic})   
+   </insert>
+   
+   <!-- 주소내 모든 매물 검색 -->
+   <select id="searchProperty" parameterType="Property_search"
+      resultType="String">
+      select pro.address
+      from
+      (select property_no, address from property
+      where
+      address like '%'||#{searchaddress}||'%'
+      and (deposit between #{deposit1} and #{deposit2})
+      and (month_fee between #{month_fee1} and #{month_fee2})
+      and isaccessible = 'true'
+      <if test="property_type != 'all'"> and property_type = #{property_type} </if>
+      <if test="rent_type != 'all'"> and rent_type = #{rent_type} </if>
+      <if test="floor != 0">
+         <choose>
+            <when test="floor == 1"> and (floor between 1 and 3) </when>
+            <when test="floor == 4"> and (floor between 4 and 6) </when>
+            <when test="floor == 7"> and (floor between 7 and 9) </when>
+            <when test="floor == 10"> and floor >= 10 </when>
+         </choose>
+      </if>
+      <if test="maintence_fee != 'all'"> and maintence_fee is null </if>
+      <if test="newbuild != 'all'">and built_year > 2014</if>
+      ) pro,
+      (select property_no from roomoption
+      where
+      total >= 0 
+      <if test="car != 0"> and car = #{car} </if>
+      <if test="pet != 0"> and pet = #{pet} </if>
+      <if test="elevator != 0"> and elevator = #{elevator} </if>
+      <if test="air_conditioner != 0"> and air_conditioner = #{air_conditioner} </if>
+      <if test="fridge != 0"> and fridge = #{fridge} </if>
+      <if test="washing_machine != 0"> and washing_machine = #{washing_machine} </if>
+      <if test="gas_stove != 0"> and gas_stove = #{gas_stove} </if>
+      <if test="electric_stove != 0"> and electric_stove = #{electric_stove} </if>
+      <if test="microwave != 0"> and microwave = #{microwave} </if>
+      <if test="desk != 0"> and desk = #{desk} </if>
+      <if test="rack != 0"> and rack = #{rack} </if>
+      <if test="bed != 0"> and bed = #{bed} </if>
+      <if test="closet != 0"> and closet = #{closet} </if>
+      <if test="shoecabinet != 0"> and shoecabinet = #{shoecabinet} </if>
+      <if test="doorlock != 0"> and doorlock = #{doorlock} </if>
+      <if test="wifi != 0"> and wifi = #{wifi} </if>
+      ) op
+      where pro.property_no = op.property_no
+   </select>
 
-	<!-- 지도 마커 클릭시 매물 간단 정보 출력 -->
-	<select id="readProperty_map" parameterType="String" resultType="Property_map">
-		select pro.property_no property_no, pro.rent_type rent_type,
-		      pro.deposit deposit, pro.month_fee month_fee, pro.property_title property_title, 
-			  pic.pic_name pic_name, pic.pic_savename pic_savename
-		from (select property_no, rent_type, deposit, month_fee, property_title
-			  from property
-			  where address||' '||address_detail like '%'||#{address}||'%') pro,
-			 (select property_no, pic_name, pic_savename 
-			  from picture
-			  where pic_division = 'main') pic 
-		where pro.property_no = pic.property_no
-	</select>
+   <!-- 지도 마커 클릭시 매물 간단 정보 출력 -->
+   <select id="readProperty_map" parameterType="String" resultType="Property_map">
+      select pro.property_no property_no, pro.rent_type rent_type,
+            pro.deposit deposit, pro.month_fee month_fee, pro.property_title property_title, 
+           pic.pic_name pic_name, pic.pic_savename pic_savename
+      from (select property_no, rent_type, deposit, month_fee, property_title
+           from property
+           where address||' '||address_detail like '%'||#{address}||'%') pro,
+          (select property_no, pic_name, pic_savename 
+           from picture
+           where pic_division = 'main') pic 
+      where pro.property_no = pic.property_no
+   </select>
 
-	<!-- 주소 자동검색을 위한 SQL -->
-	<select id="getPosition" parameterType="String" resultType="String">
-		select searchtext from position where searchtext like '%'||#{searchText}||'%'
-	</select>
+   <!-- 주소 자동검색을 위한 SQL -->
+   <select id="getPosition" parameterType="String" resultType="String">
+      select searchtext from position where searchtext like '%'||#{searchText}||'%'
+   </select>
 
-	<!-- 마을 중심좌표를 찾기위한 SQL -->
-	<select id="get_town" parameterType="String" resultType="String">
-		select
-		position_address from position where searchtext = #{searchaddress}
-	</select>
+   <!-- 마을 중심좌표를 찾기위한 SQL -->
+   <select id="get_town" parameterType="String" resultType="String">
+      select
+      position_address from position where searchtext = #{searchaddress}
+   </select>
 
 </mapper>
