@@ -137,9 +137,9 @@
 							</button>
 							<div class="project-share">
 								<ul class="list-inline comment-list-v2 pull-right g-mt-100">
-									<li><i class="fa fa-eye"></i><a href="#">${property.property_hits}</a></li>
-									<li><i class="fa fa-comments"></i><a href="#">${property.reply_count}</a></li>
-									<li><i class="fa fa-heart"></i><a href="#">${property.property_like}</a></li>
+									<li><i class="fa fa-eye"></i>${property.property_hits}</li>
+									<li><i class="fa fa-comments"></i>${property.reply_count}</li>
+									<li><i class="fa fa-heart"></i>${property.property_like}</li>
 								</ul>
 							</div>
 						</div>
