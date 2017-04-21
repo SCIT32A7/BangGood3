@@ -94,94 +94,54 @@
 			<!--End Left Sidebar-->
 
 			<!-- Profile Content -->
-			<div class="col-md-9">
+				<div class="col-md-9">
 				<div class="g-pd-20">
+				<c:if test = "${myCart.size() == 0}">
+					<h2>현재 등록하신 매물이 없습니다.</h2>
+				</c:if>
+				<c:if test = "${myCart.size() > 0}">
 					<div class="headline">
-						<h2>관심매물</h2>
+						<h2>등록매물</h2>
 					</div>
 					<!--row-->
+					<c:forEach var = "cart" items = "${myCart}">
 					<div class="row">
 						<div class="col-sm-5">
-							<img class="img-responsive" src="assets/img/main/img12.jpg"
-								style="">
+							<img src="download?pic_name=${cart.pic_name}&pic_savename=${cart.pic_savename}">
 						</div>
 						<div class="col-sm-5">
 							<h2>
-								<a href="#">Rigging in Autodesk 3Ds Max</a>
+								<a href="#">[ ${cart.rent_type} ] ${cart.deposit} / ${cart.month_fee}</a>
 							</h2>
 							<ul class="list-unstyled list-inline blog-info-v2"
 								style="float: left">
-								<li>By: <a class="color-green" href="#">Edward Rooster</a>
+								<li>By: <a class="color-green" href="#">${cart.custid}</a>
 								</li>
-								<li><i class="fa fa-clock-o"></i> Jan 02, 2013</li>
+								<li><i class="fa fa-clock-o"></i> ${cart.property_inputdate}</li>
 							</ul>
-							<p style="float: left">Lorem Ipsum is simply dummy text of
-								the printing and typesetting industry printing. Donec non
-								dignissim eros. Mauris faucibus turpis volutpat sagittis
-								rhoncus. Pellentesque et rhoncus sapien, sed ullamcorper justo.
+							<p style="float: left">							
+								 ${cart.property_title}
 							</p>
 						</div>
 						<div class="col-sm-2">
-							<button class=" mypage_btn btn-u btn-block rounded">
-								<a href="#">수정</a>
-							</button>
 							<button class="mypage_btn btn-u btn-block rounded">
 								<a href="#">삭제</a>
 							</button>
 							<div class="project-share">
 								<ul class="list-inline comment-list-v2 pull-right g-mt-100">
-									<li><i class="fa fa-eye"></i><a href="#">25</a></li>
-									<li><i class="fa fa-comments"></i><a href="#">32</a></li>
-									<li><i class="fa fa-heart"></i><a href="#">32</a></li>
+									<li><i class="fa fa-eye"></i><a href="#">${cart.property_hits}</a></li>
+									<li><i class="fa fa-comments"></i><a href="#">${cart.reply_count}</a></li>
+									<li><i class="fa fa-heart"></i><a href="#">${cart.property_like}</a></li>
 								</ul>
 							</div>
 						</div>
 					</div>
 					<hr>
-					<!--  end row -->
-					
-					<!--row-->
-					<div class="row">
-						<div class="col-sm-5">
-							<img class="img-responsive" src="assets/img/main/img12.jpg"
-								style="">
-						</div>
-						<div class="col-sm-5">
-							<h2>
-								<a href="#">Rigging in Autodesk 3Ds Max</a>
-							</h2>
-							<ul class="list-unstyled list-inline blog-info-v2"
-								style="float: left">
-								<li>By: <a class="color-green" href="#">Edward Rooster</a>
-								</li>
-								<li><i class="fa fa-clock-o"></i> Jan 02, 2013</li>
-							</ul>
-							<p style="float: left">Lorem Ipsum is simply dummy text of
-								the printing and typesetting industry printing. Donec non
-								dignissim eros. Mauris faucibus turpis volutpat sagittis
-								rhoncus. Pellentesque et rhoncus sapien, sed ullamcorper justo.
-							</p>
-						</div>
-						<div class="col-sm-2">
-							<button class=" mypage_btn btn-u btn-block rounded">
-								<a href="#">수정</a>
-							</button>
-							<button class="mypage_btn btn-u btn-block rounded">
-								<a href="#">삭제</a>
-							</button>
-							<div class="project-share">
-								<ul class="list-inline comment-list-v2 pull-right g-mt-100">
-									<li><i class="fa fa-eye"></i><a href="#">25</a></li>
-									<li><i class="fa fa-comments"></i><a href="#">32</a></li>
-									<li><i class="fa fa-heart"></i><a href="#">32</a></li>
-								</ul>
-							</div>
-						</div>
-					</div>
-					<hr>
-					<!-- row -->	
-									
+					</c:forEach>
+					<!--  end row -->	
+					</c:if>				
 				</div>
+				
 				<!-- End Profile Content -->
 			</div>
 		</div>

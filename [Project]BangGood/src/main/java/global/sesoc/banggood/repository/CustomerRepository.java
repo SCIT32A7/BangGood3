@@ -1,11 +1,15 @@
 package global.sesoc.banggood.repository;
 
+import java.util.ArrayList;
+import java.util.Map;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import global.sesoc.banggood.dao.CustomerDAO;
 import global.sesoc.banggood.vo.Customer;
+import global.sesoc.banggood.vo.Property_list;
 
 @Repository
 public class CustomerRepository {
@@ -47,6 +51,57 @@ public class CustomerRepository {
 			e.printStackTrace();
 		}
 		return result;
+	}
+	
+	// 등록한 매물 목록 보기
+	public ArrayList<Property_list> see_myinsert(String custid){
+		CustomerDAO cd = query.getMapper(CustomerDAO.class);
+		ArrayList<Property_list> pro_in_list = new ArrayList<>();
+		try {
+			pro_in_list = cd.see_myinsert(custid);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return pro_in_list;
+	}
+	
+	// 장바구니 등록
+	public int insert_cart(Map<String, Object> cartMap){
+		CustomerDAO cd = query.getMapper(CustomerDAO.class);
+		int result = 0;
+		try {
+			result =  cd.insert_cart(cartMap);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
+	// 장바구니 내용 삭제
+	public int delete_cart(int cart_no){
+		CustomerDAO cd = query.getMapper(CustomerDAO.class);
+		int result = 0;
+		try {
+			result = cd.delete_cart(cart_no);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
+	}
+	//장바구니 보기
+	public ArrayList<Property_list> see_myCart(String custid){
+		CustomerDAO cd = query.getMapper(CustomerDAO.class);
+		ArrayList<Property_list> mycart = new ArrayList<>();
+		try {
+			mycart = cd.see_myCart(custid);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return mycart;
 	}
 
 	

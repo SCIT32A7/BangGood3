@@ -129,6 +129,10 @@
 					<!--row-->
 					<div class="row">
 						<div class="col-sm-12">
+						<c:if test = "${messageList.size()==0}">
+								쪽지함이 비어있습니다.
+						</c:if>
+						<c:if test = "${messageList.size()>0}">	
 							<div class="table-responsive">
 								<table class="table">
 									<thead>
@@ -140,10 +144,6 @@
 										</tr>
 									</thead>
 									<tbody>
-									<c:if test = "${messageList.size()==0}">
-										쪽지함이 비어있습니다.
-									</c:if>
-									<c:if test = "${messageList.size()>0}">	
 									<c:forEach var = "msg" items = "${messageList}">							
 										<tr>
 											<td><div style = "display:inline-block; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; width:500px">
@@ -161,12 +161,9 @@
 											</td>
 										</tr>
 									</c:forEach>	
-									</c:if>
 									</tbody>
-								</table>
-								
+								</table>							
 							</div>
-							
 							<form action="get_messageList" id = "pagingForm" method="get">
 								<div class="text-center">
 								<ul class="pagination pagination">
@@ -181,6 +178,7 @@
 								</ul>
 								</div>								
 							</form>
+							</c:if>								
 						</div>
 					</div>
 					<hr>

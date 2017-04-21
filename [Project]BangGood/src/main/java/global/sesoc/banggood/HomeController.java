@@ -30,7 +30,7 @@ public class HomeController {
 	// 첫 메인 화면
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home() {
-		return "insert_property3";
+		return "index";
 	}
 
 	@RequestMapping(value = "savephoto", method = RequestMethod.POST)

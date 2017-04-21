@@ -159,10 +159,6 @@ $(function() {
 			alert('휴대폰 번호를 입력해주세요.');
 			return false;
 		}
-		if (phone.isNaN()) {
-			alert('휴대폰 번호는 숫자로 입력하세요.');
-			return false;
-		}
 		if(checkStatus == "no"){
 			alert('아이디 중복 확인을 해주세요.');
 			return false;

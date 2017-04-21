@@ -37,19 +37,6 @@
   overflow: hidden;
 }
 
-/*Pace loader*/
-.pace .pace-progress {
-	background: #f7b70b;
-}
-
-.pace .pace-progress-inner {
- 	box-shadow: 0 0 10px #f7b70b, 0 0 5px #f7b70b;
-}
-
-.pace .pace-activity {
-	border-top-color: #f7b70b;
-	border-left-color: #f7b70b;
-}
 
 /* --------------------------------------------------
     [2. Header]
@@ -58,7 +45,8 @@
 @media (min-width: 992px) {	
 	.construction-header.one-page-header.navbar {
     padding: 8px 0px;
-    transition: all 0.3s ease-in-out,
+    transition: all 0.4s ease-in-out;
+    border-bottom: 2px solid #f7be22;
 	}
 
 	.construction-header.one-page-header.top-nav-collapse {
@@ -87,29 +75,18 @@
 }
 
 .construction-header.one-page-header .navbar-brand img {
-	max-height: 45px;
+	max-height: 70px;
 }
 
 /* Designing the a links */
 .construction-header.one-page-header .navbar-nav > li > a,
 .construction-header.one-page-header .navbar-nav > li > a:focus {
-	padding: 8px 5px;
-	margin: 0 3px;
-	font-size: 12px;
-	font-weight: bold;
-  text-transform: uppercase;
-  color: #222;
-}
-/* Designing the a links */
-.construction-header.one-page-header .navbar-nav > li > p,
-.construction-header.one-page-header .navbar-nav > li > p:focus {
-	display:block;
-	padding: 8px 5px;
-	margin: 0 3px;
-	font-size: 12px;
-	font-weight: bold;
-  text-transform: uppercase;
-  color: #222;
+	padding: 14px 8px;
+    margin: 0 3px;
+    font-size: 14px;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #333;
 }
 /* Removing before circles */
 .construction-header.one-page-header .navbar-nav > li > a:before {

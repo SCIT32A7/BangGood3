@@ -1,5 +1,7 @@
 package global.sesoc.banggood.controller;
 
+import java.util.ArrayList;
+
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import global.sesoc.banggood.repository.CustomerRepository;
 import global.sesoc.banggood.vo.Customer;
+import global.sesoc.banggood.vo.Property_list;
 
 @Controller
 public class CustomerController {
@@ -28,6 +31,7 @@ public class CustomerController {
 	// ajax
 	@RequestMapping(value = "join", method = RequestMethod.POST)
 	public @ResponseBody String join(Customer customer) {
+		System.out.println(customer);
 		int result = cr.insert(customer);
 		String message = null;
 		if (result == 1) {
@@ -42,6 +46,7 @@ public class CustomerController {
 	@ResponseBody
 	@RequestMapping(value = "checkid", method = RequestMethod.POST)
 	public String searchId(String custid) {
+		System.out.println(custid);
 		Customer customer = cr.search(custid);
 		String message = null;
 		if (customer != null) {
@@ -73,7 +78,7 @@ public class CustomerController {
 		return "redirect:/";
 	}
 
-
+	// 개인정보 수정
 	@RequestMapping(value = "customer_update", method = RequestMethod.POST)
 	public String update(Customer customer, Model model) {
 		String custid = (String) session.getAttribute("loginId");
@@ -92,19 +97,35 @@ public class CustomerController {
 	
 	// 마이페이지로 이동, 등록매물로 이동됨
 	@RequestMapping(value = "/mypage", method = RequestMethod.GET)
-	public String mypage(Model model) {
+	public String see_myinsert(Model model) {
+		ArrayList<Property_list> pro_in_list 
+		= cr.see_myinsert((String)session.getAttribute("loginId"));
+		model.addAttribute("pro_in_list", pro_in_list);
 		return "mypage";
 	}
 
-	// 관심매물로 이동
+	// 장바구니로 이동
 	@RequestMapping(value = "/mypage2", method = RequestMethod.GET)
-	public String mypage2(Model model) {
+	public String see_myCart(Model model) {
+		ArrayList<Property_list> myCart
+		= cr.see_myCart((String)session.getAttribute("loginId"));
+		model.addAttribute("myCart", myCart);
 		return "mypage2";
+	}
+	
+	// 장바구니 등록은 나중에 읽기 하면서 하자
+
+	
+	// 장바구니 내역 삭제
+	@RequestMapping(value = "/delete_cart", method = RequestMethod.POST)
+	public String delete_cart(int cart_no){
+		cr.delete_cart(cart_no);
+		return "redirect:mypage2";
 	}
 
 	// 개인정보 수정으로 이동
 	@RequestMapping(value = "/mypage4", method = RequestMethod.GET)
-	public String mypage4(Model model) {
+	public String modify_customer(Model model) {
 		String custid = (String) session.getAttribute("loginId");
 		Customer loginCustomer = cr.search(custid);
 		model.addAttribute("modify_customer", loginCustomer);

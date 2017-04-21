@@ -125,6 +125,10 @@
 					<!--row-->
 					<div class="row">
 						<div class="col-sm-12">
+						<c:if test = "${iwriteList.size()==0}">
+							현재까지 쓴 쪽지가 없습니다
+						</c:if>
+						<c:if test = "${iwriteList.size()>0}">	
 							<div class="table-responsive">
 								<table class="table">
 									<thead>
@@ -136,10 +140,6 @@
 										</tr>
 									</thead>
 									<tbody>
-									<c:if test = "${iwriteList.size()==0}">
-										현재까지 쓴 쪽지가 없습니다
-									</c:if>
-									<c:if test = "${iwriteList.size()>0}">	
 									<c:forEach var = "msg" items = "${iwriteList}">							
 										<tr>
 											<td><div style = "display:inline-block; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; width:500px">
@@ -157,12 +157,10 @@
 											</td>
 										</tr>
 									</c:forEach>	
-									</c:if>
+									
 									</tbody>
 								</table>
-								
 							</div>
-							
 							<form action="get_iwirteList" id = "pagingForm" method="get">
 								<div class="text-center">
 								<ul class="pagination pagination">
@@ -177,6 +175,7 @@
 								</ul>
 								</div>								
 							</form>
+							</c:if>
 						</div>
 					</div>
 					<hr>
