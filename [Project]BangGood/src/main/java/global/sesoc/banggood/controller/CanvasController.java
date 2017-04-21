@@ -27,16 +27,27 @@ public class CanvasController {
 	@Autowired
 	HttpSession session;
 	
+	// 평시 개인 평면도 연습용(방 등록 과정용 아님)
 	@RequestMapping(value="/saveCanvas", method = RequestMethod.POST)
 	public @ResponseBody int saveCanvas(Canvas canvas) {
+		int result = 0;
 		logger.info("서버 전송 내용: "+ canvas.toString());
-		int result = repository.save(canvas);
-		if(result == 1) {
-			logger.info("저장 성공");
+		String custid = (String) session.getAttribute("loginId");
+		if(custid == null) {
+			logger.info("로그인 후 캔버스 저장 가능");
+			result = -1;
 		} else {
-			logger.info("저장 실패");
+			//아이디 세팅
+			canvas.setCustid(custid);
+			//디비 저장
+			result = repository.save(canvas);
+			if(result == 1) {
+				logger.info("저장 성공");
+			} else {
+				logger.info("저장 실패");
+			}
 		}
-		return 0;
+		return result;
 	}
 	
 	@RequestMapping(value="/loadCanvas", method = RequestMethod.POST)

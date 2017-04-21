@@ -388,35 +388,68 @@
 			img.src = imgSource[selectedImage];
 		});
 
-		$("#btn-download").on("click", function(e) {
+		
+		function saveFloorplan (url) {
 			//다운로드 직전 최신화
 			redrawAll();
-
+			//저장 이름 지정
+			var saved_name = prompt("저장할 이름을 지정해주세요.", "BangGood");
+			
 			//파일 다운로드 기능
 			var dataURL = canvas.toDataURL("image/png");
 			var newdata = dataURL.replace(/^data:image\/png/, 'data:application/octet-stream');
 			$('a.downloadBtn').attr('download', 'floorplan.png').attr('href', newdata);
 
-			//세이브 기능
+			//데이터 collect
 			var iconArray = iconState.icons;
 			var lineArray = lines;
 			var data = { lines : JSON.stringify(lineArray),
-						 icons : JSON.stringify(iconArray) }
-			console.log(data);
-			$.ajax({
-				method : "POST",
-				url : "saveCanvas",
-				dataType : "JSON",
-				data : data,
-				success : function(result) {
-					if (result) {
-						alert("succeeded to save canvas");
-					}
-				},
-				error : function() {
-					alert("error");
+						 icons : JSON.stringify(iconArray),
+						 saved_name : saved_name };
+			
+			if(url == "insert_property2" ) {
+				console.log("asdf");
+				var $form = $('<form></form>');
+				$form.attr('action', url);
+				$form.attr('method', "POST");
+				$form.appendTo('body');
+				for(var key in data) {
+					var value = data[key];
+					$form.append($('<input type="hidden" value='+value+' name="'+key+'">'));
 				}
-			});
+				$form.submit();
+			} else { 
+				//서버 저장
+				$.ajax({
+					method : "POST",
+					url : url,
+					dataType : "JSON",
+					async : false,
+					data : data,
+					success : function(result) {
+						if (result == 1) {
+							alert("평면도 등록에 성공하셨습니다.");
+						} else if(result == "success") {
+							//등록 다음 단계 진행
+							href.location="insert_property3";
+						} else if(result == -1) {
+							alert("로그인 후 저장 가능합니다.");
+						} else {
+							alert("저장 실패. 현재 아이디를 찾을 수 없습니다.");
+						}
+					},
+					error : function() {
+						alert("서버 등록 실패. 다시 시도하여 주세요.");
+					}
+				});
+			}
+		}
+		$("#save_nextStage").on("click", function(){
+			saveFloorplan("insert_property2");
+		});
+		
+		$("#btn-download").on("click", function() {
+			saveFloorplan("saveCanvas");
 		});
 		
 		
@@ -946,7 +979,7 @@
          <div class="row ">
             <div class="col-md-2"></div>
             <div class="col-md-4">
-               <button href="insert_property2" type="submit"
+               <button id="save_nextStage" href="insert_property2" type="submit"
                   class="btn-u btn-block rounded insert_btn">다음단계</button>
             </div>
             <div class="col-md-4">

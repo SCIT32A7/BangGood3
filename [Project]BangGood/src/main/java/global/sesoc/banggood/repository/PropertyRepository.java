@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import global.sesoc.banggood.dao.CanvasDAO;
 import global.sesoc.banggood.dao.PropertyDAO;
 import global.sesoc.banggood.vo.Canvas;
 import global.sesoc.banggood.vo.Maintence;
@@ -20,13 +22,15 @@ public class PropertyRepository {
 	@Autowired
 	SqlSession query;
 	
-
+	@Autowired
+	CanvasRepository repository;
 	
 	// 매물 정보 디비에 삽입하는 메소드
 	public int insert_property(Property property, Option option, Maintence maintence,
 			Canvas canvas, ArrayList<Picture> pList){
 		int result = 0;
 		PropertyDAO pd = query.getMapper(PropertyDAO.class);
+		CanvasDAO cd = query.getMapper(CanvasDAO.class);
 		try {
 			result += pd.insert_property(property);  // 매물 정보 삽입
 			
@@ -40,6 +44,8 @@ public class PropertyRepository {
 			}
 			result += pd.insert_option(option);	// 옵션 내용 삽입
 			result += pd.insert_maintence(maintence);	// 관리비 포함내역 삽입
+			//평면도 내용 삽입
+			result += cd.save(canvas);
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

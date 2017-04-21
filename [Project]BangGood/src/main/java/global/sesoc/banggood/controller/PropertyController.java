@@ -62,9 +62,6 @@ public class PropertyController {
 		} else if (property.getProperty_type().equals("tworoom")){
 			property.setProperty_type("투룸");
 		}
-		System.out.println(property.toString());
-		System.out.println(option.toString());
-		System.out.println(maintence.toString());
 		model.addAttribute("property", property);
 		model.addAttribute("option", option);
 		model.addAttribute("maintence", maintence);
@@ -76,8 +73,14 @@ public class PropertyController {
 	public String insert_property2(@ModelAttribute("property") Property property,
 			@ModelAttribute("option") Option option, @ModelAttribute("maintence") Maintence maintence,
 			Canvas canvas, Model model) {
+		System.out.println("insert_property2");
+		System.out.println(canvas.toString());
+		//유저 데이터 저장
+		System.out.println(property.getCustid());
+		canvas.setCustid(property.getCustid());
+		
 		model.addAttribute("canvas", canvas);
-		return "insert_property2";
+		return "insert_property3";
 	}
 
 	// 방등록 3차, 평면도 및 사진 첨부하기

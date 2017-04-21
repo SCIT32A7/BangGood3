@@ -7,6 +7,7 @@
  		<typeAlias type="global.sesoc.banggood.vo.Customer" alias="Customer"/>
  		<typeAlias type="global.sesoc.banggood.vo.Message" alias="Message"/>
  		<typeAlias type="global.sesoc.banggood.vo.Property" alias="Property"/>
+ 		<typeAlias type="global.sesoc.banggood.vo.Picture" alias="Picture"/>
  		<typeAlias type="global.sesoc.banggood.vo.Option" alias="Option"/>
  		<typeAlias type="global.sesoc.banggood.vo.Maintence" alias="Maintence"/>
  		<typeAlias type="global.sesoc.banggood.vo.SearchBoard" alias="SearchBoard"/>
