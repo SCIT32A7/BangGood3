@@ -15,7 +15,6 @@ function init() {
 	fixed = fixLine(LW);
 	offsetReload();
 	lineEdgeStep = 300;
-	scale="원룸";
 	lineColor="black";
 	iconState = new IconState();
 	drawGrid(ctx, 'gray', Step); //그리드(캔버스객체값,색상,스텝)
@@ -941,16 +940,16 @@ function getLineLength (startXY, endXY, scale) {
 	var lengthRound= 0;
 	var px = Math.sqrt(Math.pow(endXY.x * 1 - startXY.x * 1, 2) + Math.pow(endXY.y * 1 - startXY.y * 1, 2));
 	switch(scale) {
-	case "원룸":
+	case "1": //원룸용 사이즈
 		length = px/9/10;
 		lengthRound = length.toFixed(2);
 		break;
-	case "투룸":
-		length = px/6/10;
+	case "2": //투룸용 사이즈
+		length = px/5/10;
 		lengthRound = length.toFixed(2);
 		break;
-	case "아파트":
-		length = px/3/10;
+	case "3": //아파트용 사이즈
+		length = px/2/10;
 		lengthRound = length.toFixed(2);
 		break;
 	}

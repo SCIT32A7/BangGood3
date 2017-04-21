@@ -242,6 +242,7 @@ body { background: #b3ecff; }
 	
 	$(function() {
 		init();
+		scale = prompt("<선 길이 축척 설정>\n어떤 방을 그리시나요?(숫자선택) 1:원룸, 2:투룸, 3:아파트");
 		
 		//offset 설정 함수
 		$(window).on("scroll", function(e) { offsetReload() });
@@ -428,12 +429,7 @@ body { background: #b3ecff; }
 				}
 			});
 		});
-		
-		//축적 얻어오기
-		$("#canvasScale").change(function() {
-			scale = getScale();
-		});
-
+	
 		//메뉴 인터페이스 단
 		//메뉴창 선 설정 
 		$("#select").change(function() {
@@ -772,12 +768,12 @@ body { background: #b3ecff; }
 			<option value="door">문</option>
 			<option value="window" selected="selected">창문</option>
 		</select>
-		Scale
+		<!-- Scale
 		<select id="canvasScale">
 			<option value="원룸" selected="selected">원룸</option>
 			<option value="투룸" >투룸</option>
 			<option value="아파트" >아파트</option>
-		</select>
+		</select> -->
 		<input type="button" value="clear" id="clearCanvas" />
 		<span>
 			<form action="loadCanvas" method="post" name="loadDataForm">
