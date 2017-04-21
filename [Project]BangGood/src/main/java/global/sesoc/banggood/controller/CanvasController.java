@@ -36,7 +36,6 @@ public class CanvasController {
 		} else {
 			logger.info("저장 실패");
 		}
-		
 		return 0;
 	}
 	

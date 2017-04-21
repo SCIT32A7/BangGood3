@@ -62,6 +62,9 @@ public class PropertyController {
 		} else if (property.getProperty_type().equals("tworoom")){
 			property.setProperty_type("투룸");
 		}
+		System.out.println(property.toString());
+		System.out.println(option.toString());
+		System.out.println(maintence.toString());
 		model.addAttribute("property", property);
 		model.addAttribute("option", option);
 		model.addAttribute("maintence", maintence);
