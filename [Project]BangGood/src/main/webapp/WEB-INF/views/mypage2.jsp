@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri = "http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->
 <!--[if !IE]><!-->
@@ -97,7 +98,7 @@
 				<div class="col-md-9">
 				<div class="g-pd-20">
 				<c:if test = "${myCart.size() == 0}">
-					<h2>관심목록이 습니다.</h2>
+					<h2>관심목록이 비어 있습니다.</h2>
 				</c:if>
 				<c:if test = "${myCart.size() > 0}">
 					<div class="headline">
@@ -107,7 +108,7 @@
 					<c:forEach var = "cart" items = "${myCart}">
 					<div class="row">
 						<div class="col-sm-5">
-							<img src="download?pic_name=${cart.pic_name}&pic_savename=${cart.pic_savename}">
+							<img class ="img-responsive"  src="download?pic_name=${cart.pic_name}&pic_savename=${cart.pic_savename}">
 						</div>
 						<div class="col-sm-5">
 							<h2>

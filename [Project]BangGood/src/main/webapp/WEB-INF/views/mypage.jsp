@@ -108,7 +108,7 @@
 					<c:forEach var = "property" items = "${pro_in_list}">
 					<div class="row">
 						<div class="col-sm-5">
-							<img src="download?pic_name=${property.pic_name}&pic_savename=${property.pic_savename}">
+							<img class ="img-responsive" src="download?pic_name=${property.pic_name}&pic_savename=${property.pic_savename}">
 						</div>
 						<div class="col-sm-5">
 							<h2>

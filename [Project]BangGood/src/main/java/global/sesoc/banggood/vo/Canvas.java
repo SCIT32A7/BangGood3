@@ -2,13 +2,13 @@ package global.sesoc.banggood.vo;
 
 public class Canvas {
 	private int datanum;
-	private String property_no;
+	private int property_no;
 	private String icons;
 	private String lines;
 	
 	public Canvas() {}
 
-	public Canvas(int datanum, String property_no, String icons, String lines) {
+	public Canvas(int datanum, int property_no, String icons, String lines) {
 		super();
 		this.datanum = datanum;
 		this.property_no = property_no;
@@ -24,11 +24,11 @@ public class Canvas {
 		this.datanum = datanum;
 	}
 
-	public String getProperty_no() {
+	public int getProperty_no() {
 		return property_no;
 	}
 
-	public void setProperty_no(String property_no) {
+	public void setProperty_no(int property_no) {
 		this.property_no = property_no;
 	}
 
@@ -53,5 +53,7 @@ public class Canvas {
 		return "Canvas [datanum=" + datanum + ", property_no=" + property_no + ", icons=" + icons + ", lines=" + lines
 				+ "]";
 	}
+
+	
 	
 }

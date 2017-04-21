@@ -5,7 +5,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import global.sesoc.banggood.dao.PropertyDAO;
-import global.sesoc.banggood.vo.Floorplan;
+import global.sesoc.banggood.vo.Canvas;
 import global.sesoc.banggood.vo.Maintence;
 import global.sesoc.banggood.vo.Option;
 import global.sesoc.banggood.vo.Picture;
@@ -20,28 +20,11 @@ public class PropertyRepository {
 	@Autowired
 	SqlSession query;
 	
-	// 매물 정보 디비에 삽입하는 메소드
-		public int insert_property(Property property, Option option, Maintence maintence){
-			int result = 0;
-			PropertyDAO pd = query.getMapper(PropertyDAO.class);
-			try {
-				result += pd.insert_property(property);
-				int property_no = pd.select_recently_property();
-				option.setProperty_no(property_no);
-				maintence.setProperty_no(property_no);
-				result += pd.insert_option(option);
-				result += pd.insert_maintence(maintence);
-				
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}		
-			return result;		
-		}
+
 	
-/*	// 매물 정보 디비에 삽입하는 메소드
+	// 매물 정보 디비에 삽입하는 메소드
 	public int insert_property(Property property, Option option, Maintence maintence,
-			Floorplan floorplan, ArrayList<Picture> pList){
+			Canvas canvas, ArrayList<Picture> pList){
 		int result = 0;
 		PropertyDAO pd = query.getMapper(PropertyDAO.class);
 		try {
@@ -49,7 +32,7 @@ public class PropertyRepository {
 			int property_no = pd.select_recently_property();
 			option.setProperty_no(property_no);
 			maintence.setProperty_no(property_no);
-			floorplan.setProperty_no(property_no);
+			canvas.setProperty_no(property_no);
 			for(int i=0;i<pList.size();i++){
 				pList.get(i).setProperty_no(property_no);
 			}
@@ -61,7 +44,7 @@ public class PropertyRepository {
 			e.printStackTrace();
 		}		
 		return result;		
-	}*/
+	}
 
 	// 검색 범위 자동완성을 위한 메소드
 	public ArrayList<String> search_point(String searchText) {

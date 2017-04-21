@@ -101,7 +101,6 @@ public class CustomerController {
 		ArrayList<Property_list> pro_in_list 
 		= cr.see_myinsert((String)session.getAttribute("loginId"));
 		model.addAttribute("pro_in_list", pro_in_list);
-		System.out.println("asdfasdf");
 		return "mypage";
 	}
 

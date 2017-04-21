@@ -1,17 +1,17 @@
 /* main */
-
 .main_head {
    position: relative;
 }
+
 .main_head:after {
-  width: 70px;
-  height: 10px;
-  position: absolute;
-  background: #f7b70b;
-  content: "";
-  top: 100px;
-  left: 50%;
-  margin-left: -35px;
+   width: 70px;
+   height: 10px;
+   position: absolute;
+   background: #f7b70b;
+   content: "";
+   top: 100px;
+   left: 50%;
+   margin-left: -35px;
 }
 
 .main_name {
@@ -35,6 +35,7 @@
    margin-left: auto;
    margin-right: auto;
 }
+
 .Carousel {
    width: 100%;
 }
@@ -86,52 +87,58 @@
    z-index: 9999;
 }
 /* search */
-.search{
-   width:350px;
-   margin-top:50px;
-   float:left;
+.search {
+   width: 350px;
+   margin-top: 50px;
+   float: left;
    position: absolute;
-   top:-2%;
+   top: -2%;
    left: 28%;
    z-index: 10000;
 }
-.search_container{
-   position:relative;
-   width:100%;
-   background:#ffff;
-   height:auto; !important;
-   height:100%;
-   min-height:100%
+
+.search_container {
+   position: relative;
+   width: 100%;
+   background: #ffff;
+   height: auto; ! important;
+   height: 100%;
+   min-height: 100%
 }
-.search_form{
-   float:left;
+
+.search_form {
+   float: left;
    font-size: 14px;
-    line-height: 1.42857143;
-    color: #555;
-    background-color: #fff;
-    background-image: none;
-    border: 1px solid #ccc;
-    border-radius: 4px !important;
-    padding:10px;
-   position:relative;
+   line-height: 1.42857143;
+   color: #555;
+   background-color: #fff;
+   background-image: none;
+   border: 1px solid #ccc;
+   border-radius: 4px !important;
+   padding: 10px;
+   position: relative;
 }
+
 .search_label {
-     font-weight: normal;
-    position: absolute;
-    top: 25%;
+   font-weight: normal;
+   position: absolute;
+   top: 25%;
 }
-.search_title{
-   background-color:#f7be22;
+
+.search_title {
+   background-color: #f7be22;
 }
+
 .searchbox2 {
-   float:left;
-   border-right:1px solid #f7be22;
+   float: left;
+   border-right: 1px solid #f7be22;
 }
-.search_table{
+
+.search_table {
    display: table;
-    border-collapse: separate;
-    border-spacing: 2px;
-    border-color: #f7be22;
+   border-collapse: separate;
+   border-spacing: 2px;
+   border-color: #f7be22;
 }
 /* searchboard */
 .searchboard_title {
@@ -174,13 +181,12 @@
    margin: auto;
    background-color: #f7be22;
    color: #fff;
-   margin-top:20px;
+   margin-top: 20px;
 }
 /* insert_property */
 .insert_head {
    position: relative;
 }
-
 
 .insert_name {
    color: #f7b70b;
@@ -193,7 +199,7 @@
    color: #000;
    text-transform: uppercase;
    font-size: 28px;
-   padding-bottom:10px;
+   padding-bottom: 10px;
 }
 
 .insert_text {
@@ -204,14 +210,22 @@
    margin-right: auto;
 }
 
-.insert_box_bg{
-background: rgb(244,237,231); /* Old browsers */
-background: -moz-linear-gradient(left, rgba(244,237,231,1) 1%, rgba(247,247,247,1) 51%, rgba(244,237,231,1) 100%); /* FF3.6-15 */
-background: -webkit-linear-gradient(left, rgba(244,237,231,1) 1%,rgba(247,247,247,1) 51%,rgba(244,237,231,1) 100%); /* Chrome10-25,Safari5.1-6 */
-background: linear-gradient(to right, rgba(244,237,231,1) 1%,rgba(247,247,247,1) 51%,rgba(244,237,231,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f4ede7', endColorstr='#f4ede7',GradientType=1 ); /* IE6-9 */
+.insert_box_bg {
+   background: rgb(244, 237, 231); /* Old browsers */
+   background: -moz-linear-gradient(left, rgba(244, 237, 231, 1) 1%,
+      rgba(247, 247, 247, 1) 51%, rgba(244, 237, 231, 1) 100%);
+   /* FF3.6-15 */
+   background: -webkit-linear-gradient(left, rgba(244, 237, 231, 1) 1%,
+      rgba(247, 247, 247, 1) 51%, rgba(244, 237, 231, 1) 100%);
+   /* Chrome10-25,Safari5.1-6 */
+   background: linear-gradient(to right, rgba(244, 237, 231, 1) 1%,
+      rgba(247, 247, 247, 1) 51%, rgba(244, 237, 231, 1) 100%);
+   /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f4ede7',
+      endColorstr='#f4ede7', GradientType=1); /* IE6-9 */
 }
-.insert_box_bg:after  {
+
+.insert_box_bg:after {
    width: 100%;
    height: 2px;
    position: absolute;
@@ -222,14 +236,13 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f4ede7', end
    margin-left: -35px;
 }
 
-
 /* message */
-.message_bg{
-   color:#fff;
+.message_bg {
+   color: #fff;
    background: #f7b70b;
    font-size: 18px;
    font-weight: bold;
-   padding:10px;
+   padding: 10px;
 }
 /* insert */
 .insert_label {
@@ -239,47 +252,59 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f4ede7', end
    top: 5px;
    font-weight: normal
 }
+
 .borderline {
    border-bottom: 0.5px solid #f7b70b
 }
+
 .insert_btn {
    height: 44px;
    font-weight: bold;
    font-size: 19px;
 }
 
-/* room view */
-.view_bg{
-   background-color:#fff;
-   border:1px solid #f7b70b;
+/* roomview */
+.view_bg {
+   background-color: #fff;
+   border: 1px solid #f7b70b;
    border-radius: 10px;
 }
-.view_title_bg{
-   background-color:#f7f7f7;
-   width:100%;
-}
-.view_title{
-   font-size:30px; 
-   font-weight: bold;
-}
-.view_title:after {
-    width: 250px;
-    height: 7px;
-    position: absolute;
-    background: #f7b70b;
-    content: "";
-    top: 54px;
-    left: 40%;
-    margin-left: -35px;
+
+.view_title_bg {
+   background-color: #f7f7f7;
+   width: 100%;
 }
 
-.bannerwrap{
-      width: 300px; margin: 50px auto; padding:20px; border: 1px solid #dcdcdc;
-   }
-.imgview {
-   width: 300px;
-   height: 387px;
-} 
+.view_title {
+   font-size: 30px;
+   font-weight: bold;
+}
+
+.view_title:after {
+   width: 250px;
+   height: 7px;
+   position: absolute;
+   background: #f7b70b;
+   content: "";
+   top: 54px;
+   left: 40%;
+   margin-left: -35px;
+}
+
+.view_option {
+   list-style: none;
+   float: left;
+}
+
+.view_option li {
+   float: left;
+   margin: 0 10px;
+}
+
+.view_option li p {
+   text-align: center;
+   font-size: 11px;
+}
 /* 마스크 */
 .imgview ul {
    position: relative;
@@ -289,8 +314,6 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f4ede7', end
 .imgview ul li {
    float: left;
 }
-
-
 
 .thumwrap {
    margin-top: 30px;
@@ -302,9 +325,18 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f4ede7', end
    margin-right: 1px;
    list-style: none;
 }
-.thumwrap ul li img{
-   width:60px;
-   height:60px;
+
+.thumwrap ul li img {
+   width: 60px;
+   height: 60px;
+}
+.inner {
+}
+.inner img{
+   width: 600px;
+   height: 300px;
+   margin: 0 auto;
+   display: block;
 }
 /*Pace loader*/
 .pace .pace-progress {
@@ -312,7 +344,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f4ede7', end
 }
 
 .pace .pace-progress-inner {
-    box-shadow: 0 0 10px #f7b70b, 0 0 5px #f7b70b;
+   box-shadow: 0 0 10px #f7b70b, 0 0 5px #f7b70b;
 }
 
 .pace .pace-activity {

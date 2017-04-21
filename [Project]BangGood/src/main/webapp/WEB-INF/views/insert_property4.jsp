@@ -83,7 +83,6 @@
 			gal = $(this).attr("src");
 			$(this).html(function(index, html) {
 				galout = "<a href='"+gal+"' data-lightbox='roadtrip'><img src='"+gal+"'/></a>";
-				alert(galout);
 				$(".inner").html(galout);
 			});
 		});
@@ -190,14 +189,7 @@
 							<li><img src="assets/img/icon/13.png"><p>무선인터넷</p></li>
 						</ul>
 					<h3 style="font-weight: bold">상세설명</h3>
-						<span>sㅇㄴㅇㄴㅇㅇㄴㅇ</span>
-					<h3 style="font-weight: bold">지역별 상대적 방 분석 평점 데이터</h3>
-						<div id="Nwagon"></div>
-						<pre>** 같은 지역(동, 면, 리)내 비교 분석 데이터 100점 만점 대비</pre>
-						<h4 id="field"></h4>
-						<span id="field_data"></span>
-					<h3>지역 실제 평균 데이터</h3>
-						<span id="avgData"></span>
+						<span>이런집이어딧어</span>
 					<h3 style="font-weight: bold">위치 및 주변 편의시설</h3>
 					<div class="margin-bottom-30"></div>
 			         
