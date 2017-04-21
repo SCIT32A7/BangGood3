@@ -5,8 +5,6 @@
 function init() {
 	canvas = $("#rightCanvas")[0];
 	ctx = canvas.getContext("2d");
-	menu = $("#leftCanvas")[0];
-	menuCtx = menu.getContext("2d");
 	mirror = $("#mirror");
 	select = $("#select");
 	fillColor = $("#fillColor");
@@ -157,8 +155,11 @@ function drawAllLines(lines) {
 	}
 	//교차점 생성
 	findIntersect();
-	if (updateTemp) {
+	if(updateTemp){
 		drawSelector(updateTemp);
+		if(updateTemp.type=="door"||updateTemp.type=="window"){
+			ObjectIcon(updateTemp,"select");
+		}
 	}
 //꼭지점,교차점 확인용
 /*for(var i=0; i<edge.length; i++){
@@ -651,10 +652,17 @@ function findNearestLine(mouseXY) {
 	var Temp = '';
 	var index = 0;
 	var beginXY, endXY, pt = 0;
+	objectTemp = null;
 	for (var i = 0; i < lines.length; i++) {
 		beginXY = { x : lines[i].coordinate.x0, y : lines[i].coordinate.y0 };
 		endXY = { x : lines[i].coordinate.x1, y : lines[i].coordinate.y1 };
-
+		if(lines[i].object){
+			for(var j=0;j<lines[i].object.length;j++){
+				var result = isObjectIcon(lines[i].object[j]);
+				if(result)objectTemp=lines[i].object[j];
+				//else objectTemp = null;
+			}
+		}
 		var xy = getCloseXYToMouse(beginXY, endXY, mouseXY);
 		var dx = mouseXY.x - xy.x;
 		var dy = mouseXY.y - xy.y;
@@ -959,12 +967,14 @@ function getLineLength (startXY, endXY, scale) {
 //Redo & Undo
 //Undo임시 저장 공간
 function inputUndo(temp, req) {
+	var temp = JSON.stringify(temp);
 	if (Undo.length < 15) {
-		Undo.push({data : temp,req : req});
+		Undo.push({data : JSON.parse(temp),req : req});
 	} else if (Undo.length >= 15) {
 		Undo.splice(0, 1);
 		Undo.push({data : temp,req : req});
 	}
+	//console.log(JSON.stringify(Undo));
 }
 
 //Undo임시 저장 공간에서 호출
@@ -973,8 +983,8 @@ function getUndo(data) {
 		removeData(data.data);
 	} else if (data.req == "delete") {
 		recreateData(data.data);
-	} else if (data.req == "object") {
-		removeData(data.data);
+	} else if (data.req == "move"){
+		moveData(data.data);
 	}
 }
 
@@ -984,10 +994,21 @@ function getRedo(data) {
 		recreateData(data.data);
 	} else if (data.req == "delete") {
 		removeData(data.data);
-	} else if (data.req == "object") {
-		recreateData(data.data);
+	} else if (data.req == "move"){
+		moveData(data.data);
 	}
 }
+
+function moveData(data){
+	var Temp = '';
+	var index = 0;
+	if(data.data.type=="door"||data.data.type=="window"){
+		Temp = (lines[data.data.index].object[data.index]);
+		lines[data.data.index].object[data.index]=data.data;
+		data.data = Temp;
+	}
+}
+
 //화면 상에서 드로우 된 객체를 지울때
 function removeData(data) {
 	if (data.type == "line") {
@@ -1002,12 +1023,14 @@ function removeData(data) {
 	} else if(data.type == "icon"){
 		iconState.removeIcon(data.data);
 		iconState.selection = null;
-	} else if(data.data.type=="door"||data.data.type=="window"){
-		array = lines[data.index].object;
+	} else if(data.type=="door"||data.type=="window"){
+		var array = lines[data.index].object;
 		for(var i=0;i<array.length;i++){
-			if(JSON.stringify(array[i])==JSON.stringify(data.data)){
+			//console.log(JSON.stringify(array[i]));
+			//console.log(JSON.stringify(data));
+			if(JSON.stringify(array[i])==JSON.stringify(data)){
 			  array.splice(i,1);
-			  lines[data.index].object = array;
+			  //lines[data.index].object = array;
 			}
 		}
 	}
@@ -1025,9 +1048,9 @@ function recreateData(data) {
 	} else if(data.type == "icon"){
 		iconState.addIcon(data.data);
 		iconState.selection = data.data;
-	} else if(data.data.type=="door"||data.data.type=="window"){
+	} else if(data.type=="door"||data.type=="window"){
 		if(lines[data.index].object){
-    		lines[data.index]['object'].push(data.data);
+    		lines[data.index]['object'].push(data);
 		}else {
 			lines[data.index] = [];
 		}
@@ -1040,6 +1063,14 @@ function selectLine() {
 	
 }
 
+//아이콘 선택
+function selectObjectIcon() {
+	updateTemp = objectTemp;
+	if(updateTemp){
+		ObjectIcon(updateTemp,"select");
+	}
+}
+
 function deleteRect(line) {
 	for (var i = 0; i < lines.length; i++) {
 		if (JSON.stringify(line.coordinate) == JSON.stringify(lines[i].coordinate)) {
@@ -1050,77 +1081,239 @@ function deleteRect(line) {
 	}
 }
 
-//삭제 true false
-function amp(DK, PK) {
-	//if(DK.x0);
+//수정
+function isObjectIcon(object){
+	var degree = object.degree;
+	var amp = 1;
+	if(object.a=='down'){
+		amp = -1;
+	}
+	var seta = pi / (180.0 / degree )
+	var x0 = object.x;
+	var y0 = object.y;
+	//console.log("x0 : "+x0);
+	var x1 = x0-(object.dist/2);
+	var y1 = y0-10;
+	var x2 = x0+(object.dist/2);
+	var y2 = y0+10;
+	if(object.type=='door'){
+		y1 = y0+object.dist-amp*(object.dist+5);
+		y2 = y0+object.dist+amp*(object.dist+5);
+	}
+	if(y1>y2){
+		var temp = y2;
+		y2=y1;
+		y1=temp;
+	}
+	if(x1>x2){
+		var temp = x2;
+		x2=x1;
+		x1=temp;
+	}
+	var mx = (crossXY.x-x0)*Math.cos(-seta)-(crossXY.y-y0)*Math.sin(-seta)+x0;
+	var my = (crossXY.x-x0)*Math.sin(-seta)+(crossXY.y-y0)*Math.cos(-seta)+y0;	
+	//console.log("mXY : "+mx+", "+my);
+	return (x1 <= mx) && (x2 >= mx) && (y1 <= my) && (y2 >= my);
 }
 
 function ObjectIcon(mouseXY,order){
+	var nearest = findNearestLine(XY);
+	if(nearest)XY = nearest;
 	var slope = '';
 	var xy,dx,dy = '';
-	var degree = count;
-	var a=0;
-	var set = 0;
+	var dist = count;
+	var locationX, locationY;
+	var a='';
+	var set = 1;
 	var stat='';
+	var alpha = 1.0;
+	var degree = 0;
 	if(order == "drawing"){
+		locationX = mouseXY.x, locationY = mouseXY.y;
 		stat = objectSelect;
 		var temp = '';
 		if(lineTemp){
-				if((XY.x+XY.y)>(crossXY.x+crossXY.y)){
-					a=0;
-					set = 0;
-				}else{
-					a=3.14;
-					set = 60;
-				}
-			//console.log(JSON.stringify(lineTemp.line));
-				if(lineTemp.type=='line'){
-				slope = getSlope({x:lineTemp.line.x0,y:lineTemp.line.y0},{x:lineTemp.line.x1,y:lineTemp.line.y1});
+			if(lineTemp.type=='line'){
+				
 				temp = lineTemp.line;
-				delete temp.type;
-				}else if(lineTemp.type.substr(0,4)=="rect"){
-  				//console.log(lineTemp.type);
-	  			if(lineTemp.type=='rect1'){slope = 0; temp=lineTemp.line1.coordinate}
-	  			if(lineTemp.type=='rect4'){slope = 0; temp=lineTemp.line4.coordinate}
-	  			if(lineTemp.type=='rect2'){slope = 1/0; temp=lineTemp.line2.coordinate}
-	  			if(lineTemp.type=='rect3'){slope = 1/0; temp=lineTemp.line3.coordinate}
+				degree = Math.atan2(lineTemp.line.y1-lineTemp.line.y0,lineTemp.line.x1-lineTemp.line.x0) * 180 / 3.1415;
+				//console.log(degree);
+				var mx1 = (crossXY.x-lineTemp.line.x0)*Math.cos(90)-(crossXY.y-lineTemp.line.y0)*Math.sin(90)+lineTemp.line.x0;
+				var my1 = (crossXY.x-lineTemp.line.x0)*Math.sin(0)+(crossXY.y-lineTemp.line.y0)*Math.cos(0)+lineTemp.line.y0;
+				var mx2 = (XY.x-lineTemp.line.x0)*Math.cos(90)-(XY.y-lineTemp.line.y0)*Math.sin(90)+lineTemp.line.x0;
+				var my2 = (XY.x-lineTemp.line.x0)*Math.sin(0)+(XY.y-lineTemp.line.y0)*Math.cos(0)+lineTemp.line.y0;
+				//console.log(mx1);
+				//console.log(mx2);
+				if(my1<my2)a="down";
+				else if(my1>my2)a="up";
+				else if(my1=my2){
+					if(mx1<mx2)a="down";
+					else if(mx1>mx2)a="up";
 				}
+				if(a == "down"){
+					degree = degree-180;
+				}
+				delete temp.type;
+			}else if(lineTemp.type.substr(0,4)=="rect"){
+					if((XY.x+XY.y)>(crossXY.x+crossXY.y)){
+						a="up";
+					}else{
+						a="down";
+					}
+  				//console.log(lineTemp.type);
+	  			if(lineTemp.type=='rect1'){
+	  				degree = 0; 
+	  				temp=lineTemp.line1.coordinate;
+	  				if(a == "up"){
+						degree = degree-180;
+					}
+	  			}
+	  			if(lineTemp.type=='rect4'){
+	  				degree = 0; temp=lineTemp.line4.coordinate;
+	  				if(a == "up"){
+						degree = degree-180;
+					}
+	  			}
+	  			if(lineTemp.type=='rect2'){
+	  				degree = 90; 
+	  				temp=lineTemp.line2.coordinate;
+	  				if(a == "down"){
+						degree = degree-180;
+					}
+	  			}
+	  			if(lineTemp.type=='rect3'){
+	  				degree = 90; 
+	  				temp=lineTemp.line3.coordinate;
+	  				if(a == "down"){
+						degree = degree-180;
+					}
+	  			}
 			}
-	  		if(clickE){
-		  		status='none';
-		  		var object = {x:mouseXY.x,y:mouseXY.y,slope:slope,a:a,set:set,type:stat,degree:degree};
-				/* var rutx = 3600/(1+Math.abs(slope));
-				var ax = Math.sqrt(rutx);
-				var ruty = 3600-rutx;
-				var ay = Math.sqrt(ruty); */ 
-		   		for(var i=0;i<lines.length;i++){
-			  		if(JSON.stringify(lines[i].coordinate)==JSON.stringify(temp)){
-				  		if(!lines[i].object){
-							  lines[i].object = [];
-				  		}
+			if(clickE && status=="object"){
+				var object = {x:locationX,y:locationY,a:a,set:set,type:stat,dist:dist,degree:degree,alpha:0.0};
+				//console.log("X0"+object.x);
+				for(var i=0;i<lines.length;i++){
+					if(JSON.stringify(lines[i].coordinate)==JSON.stringify(temp)){
+						if(!lines[i].object){
+							lines[i].object = [];
+						}
+						object.index = i;
 						lines[i]['object'].push(object);
-						inputUndo({data:object,index:i},"object");
-			  		}
-	  			} 
+						var Temp = object;
+						inputUndo(Temp,"create");
+					}
+				}
+				status = 'none';
 			}
+		}
 		}else if(order == "paint"){
 		//console.log(mouseXY);
-		slope = mouseXY.slope;
-		a = mouseXY.a;
-		set = mouseXY.set;
-		stat = mouseXY.type;
-		degree = mouseXY.degree;
-		}	
+			locationX = mouseXY.x; 
+			locationY = mouseXY.y;
+			a = mouseXY.a;
+			set = mouseXY.set;
+			stat = mouseXY.type;
+			dist = mouseXY.dist;
+			degree = mouseXY.degree;
+			alpha = mouseXY.alpha;
+		}else if(order == "select"){
+			locationX = mouseXY.x; 
+			locationY = mouseXY.y;
+			//if(lineTemp)lineTemp=null;
+			degree = mouseXY.degree;
+			a = mouseXY.a;
+			set = mouseXY.set;
+			stat = mouseXY.type;
+			dist = mouseXY.dist= count;
+			alpha = 1;
+			/*mouseXY.x = XY.x;
+			mouseXY.y = XY.y;*/
+			/*if(lineTemp){
+				if(lineTemp.type=='line'){
+					temp = lineTemp.line;
+					degree = Math.atan2(lineTemp.line.y1-lineTemp.line.y0,lineTemp.line.x1-lineTemp.line.x0) * 180 / 3.1415;
+				}
+			}*/
+		}else if(order == "move"){
+			locationX = XY.x;
+			locationY = XY.y;
+			if(nearest){
+				if(lineTemp){
+					if(lineTemp.type=='line'){
+						
+						temp = lineTemp.line;
+						degree = Math.atan2(lineTemp.line.y1-lineTemp.line.y0,lineTemp.line.x1-lineTemp.line.x0) * 180 / 3.1415;
+						//console.log(degree);
+						var mx1 = (crossXY.x-lineTemp.line.x0)*Math.cos(90)-(crossXY.y-lineTemp.line.y0)*Math.sin(90)+lineTemp.line.x0;
+						var my1 = (crossXY.x-lineTemp.line.x0)*Math.sin(0)+(crossXY.y-lineTemp.line.y0)*Math.cos(0)+lineTemp.line.y0;
+						var mx2 = (XY.x-lineTemp.line.x0)*Math.cos(90)-(XY.y-lineTemp.line.y0)*Math.sin(90)+lineTemp.line.x0;
+						var my2 = (XY.x-lineTemp.line.x0)*Math.sin(0)+(XY.y-lineTemp.line.y0)*Math.cos(0)+lineTemp.line.y0;
+						//console.log(mx1);
+						//console.log(mx2);
+						if(my1<my2)a="down";
+						else if(my1>my2)a="up";
+						else if(my1=my2){
+							if(mx1<mx2)a="down";
+							else if(mx1>mx2)a="up";
+						}
+						if(a == "down"){
+							degree = degree-180;
+						}
+						delete temp.type;
+					}else if(lineTemp.type.substr(0,4)=="rect"){
+							if((XY.x+XY.y)>(crossXY.x+crossXY.y)){
+								a="up";
+							}else{
+								a="down";
+							}
+		  				//console.log(lineTemp.type);
+			  			if(lineTemp.type=='rect1'){
+			  				degree = 0; 
+			  				temp=lineTemp.line1.coordinate;
+			  				if(a == "up"){
+								degree = degree-180;
+							}
+			  			}
+			  			if(lineTemp.type=='rect4'){
+			  				degree = 0; temp=lineTemp.line4.coordinate;
+			  				if(a == "up"){
+								degree = degree-180;
+							}
+			  			}
+			  			if(lineTemp.type=='rect2'){
+			  				degree = 90; 
+			  				temp=lineTemp.line2.coordinate;
+			  				if(a == "down"){
+								degree = degree-180;
+							}
+			  			}
+			  			if(lineTemp.type=='rect3'){
+			  				degree = 90; 
+			  				temp=lineTemp.line3.coordinate;
+			  				if(a == "down"){
+								degree = degree-180;
+							}
+			  			}
+					}
+				}
+				mouseXY.x = XY.x;
+				mouseXY.y = XY.y;
+				mouseXY.degree = degree;
+				/*mouseXY.dist = dist;
+				mouseXY.set = set;
+				mouseXY.a = a;*/
+			}
+		}
+	//console.log((Math.atan(slope)-a)*(180/3.14));
  	//console.log(slope);
 	/*Layer 0 - Code Starts Here*/
 	ctx.save();
 	ctx.beginPath();
 	ctx.strokeStyle="#f0f0f0";
 	ctx.lineWidth=1;
-	ctx.translate(mouseXY.x, mouseXY.y);
-	//ctx.rotate(Math.atan2(dy,dx));
-	ctx.rotate(Math.atan(slope)-a);
-	ctx.rect(0-set,-5,degree,10);
+	ctx.translate(locationX, locationY);
+	ctx.rotate(degree*Math.PI/180);
+	ctx.rect(-dist/2,-5,dist,10);
 	ctx.fillStyle = "#f0f0f0";
 	ctx.fill();
 	ctx.stroke();
@@ -1129,20 +1322,64 @@ function ObjectIcon(mouseXY,order){
 		ctx.beginPath();
 		ctx.strokeStyle="#333333";
 		ctx.lineWidth=1;
-		ctx.moveTo(degree-set,-5);
-		ctx.lineTo(degree-set,-degree-5);
+		ctx.moveTo(-dist/2,0);
+		ctx.lineTo(-dist/2,(dist+5));
 		ctx.stroke();
 		/*Layer 2 - Code Starts Here*/
 		ctx.beginPath();
 		ctx.strokeStyle="#333333";
 		ctx.lineWidth=1;
-		ctx.moveTo(degree-set,-degree-5);
-		ctx.quadraticCurveTo(0-set,-degree-5,0-set,-5);
+		ctx.moveTo(-dist/2,(dist+5));
+		ctx.quadraticCurveTo(dist/2,(dist+5),dist/2,0);
 		ctx.stroke();
- 	}
 		ctx.restore();
-	};
+		//objects selectline
+		ctx.save();
+		ctx.translate(locationX, locationY);
+		ctx.rotate(degree*Math.PI/180);
+		ctx.rect(-dist/2-5,-10,dist+10,(dist+20));
+		ctx.setLineDash([ 5, 3 ]);
+		ctx.strokeStyle="#333333";
+		ctx.lineWidth=0.5;
+		ctx.globalAlpha = alpha;
+		ctx.stroke();
+		ctx.restore();
+		return;
+ 	}
+	ctx.restore();
+	//objects selectline
+	ctx.save();
+	//ctx.beginPath();
+	ctx.translate(locationX, locationY);
+	//ctx.rotate(Math.atan2(dy,dx));
+	ctx.rotate(degree*Math.PI/180);
+	ctx.rect(-dist/2-5,-10,dist+10,20);
+	ctx.setLineDash([ 5, 3 ]);
+	ctx.strokeStyle="#333333";
+	ctx.lineWidth=0.5;
+	ctx.globalAlpha = alpha;
+	ctx.stroke();
+	ctx.restore();
+};
 
+//수정
+function moveTemp(req){
+	if(req=="object"){
+		var array = lines[updateTemp.index].object;
+		for(var i=0;i<array.length;i++){
+			if(JSON.stringify(updateTemp)==JSON.stringify(array[i])){
+				UndoTemp = {data : JSON.stringify(array[i]), index : i};
+			}
+		}
+	}else if(req=="objectUndo"){
+		var data = JSON.parse(UndoTemp.data);
+		var index = JSON.parse(UndoTemp.index);
+		inputUndo({data:data,index:index},"move");
+	}
+	if(req=="image"){
+		//console.log("imageSelect");
+	}
+}
 
 	function mouseXY(e) {
 		//client는 마우스의 좌표 - offset은 canvas의 좌표 즉 canvas안에서의 마우스의 좌표

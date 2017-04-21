@@ -44,7 +44,7 @@
    href="assets/plugins/font-awesome/css/font-awesome.min.css">
 <!-- 평면도 CSS -->
 <style type="text/css">
-body { background: #b3ecff; }
+
 .box { display: inline-flex; }
  
 #rightCanvas {
@@ -54,10 +54,10 @@ body { background: #b3ecff; }
 	border-radius: 8px;
 }
 
-#leftCanvas {
-	background: #66ffff;
+#menuSidebar {
+	background: #ffcc00;
 	border: thin solid gray;
-	cursor: pointer;
+	/* cursor: pointer; */
 	box-shadow: rgba(0, 0, 0, 0.5) 2px 2px 4px;
 	border-radius: 8px;
 }
@@ -140,9 +140,7 @@ body { background: #b3ecff; }
 <script>
 //Basic 변수 모음
 	var canvas;
-	var menu;
 	var ctx;
-	var menuCtx;
 	var backGround;
 	var select; //선 두깨
 	var fillColor; //채우기색
@@ -159,6 +157,9 @@ body { background: #b3ecff; }
 	var updateTemp = ''; //최근 수정한 값 임시 저장 공간
 	var Undo = [];
 	var Redo = [];
+	
+	var objectTemp = '';
+	var UndoTemp;
 	
 	var px; //선 길이
 	var scale; //축척
@@ -367,7 +368,7 @@ body { background: #b3ecff; }
 				clearCanvas();
 				inputUndo({data:icon,type:"icon"},"create");
 				iconState.addIcon(icon);
-				iconState.draw();
+				redrawAll();
 			}
 			img.src = imgSource[selectedImage];
 		});
@@ -379,7 +380,7 @@ body { background: #b3ecff; }
 			//파일 다운로드 기능
 			var dataURL = canvas.toDataURL("image/png");
 			var newdata = dataURL.replace(/^data:image\/png/, 'data:application/octet-stream');
-			$('a.button').attr('download', 'floorplan.png').attr('href', newdata);
+			$('a.downloadBtn').attr('download', 'floorplan.png').attr('href', newdata);
 
 			//세이브 기능
 			var iconArray = iconState.icons;
@@ -501,7 +502,7 @@ body { background: #b3ecff; }
 			//Esc
 			if (e.keyCode == KEYCODE.Esc) {
 				updateTemp = null;												//변경!!!
-				if (status == "line" || status == "rect" || status == "fill" || status == "image") {
+				if (status == "line" || status == "rect" || status == "object" || status == "image") {
 					status = 'none';
 					canvas.style.cursor = "Default";
 				} else if (status == "lineDrawing") {
@@ -538,7 +539,10 @@ body { background: #b3ecff; }
 					//console.log(JSON.stringify(Redo));
 					drawAllLines(lines);
 				}
+				updateTemp = null;
+				redrawAll();
 			}
+			
 			//Redo시 임시저장 공간의 마지막 부분을 호출하여 함수에 반환
 			else if (e.keyCode == KEYCODE.Y && CtrlKey) {
 				if (Redo.length > 0) {
@@ -547,7 +551,11 @@ body { background: #b3ecff; }
 					//console.log(JSON.stringify(Undo));
 					drawAllLines(lines);
 				}
+				updateTemp = null;
+				redrawAll();
 			}
+			
+			//수정
 			//Delete키 누를시 드로우드 객체 삭제 => Undo임시 저장 공간에 입력
 			else if (e.keyCode == KEYCODE.Delete) {
 				if (updateTemp) {
@@ -567,6 +575,17 @@ body { background: #b3ecff; }
 						inputUndo({data:iconState.selection,type:"icon"},"delete");
 						iconState.removeIcon(iconState.selection);
 						iconState.selection = null;
+					}else if (updateTemp.type == "door"||updateTemp.type == "window"){
+						inputUndo(updateTemp,"delete");
+						//console.log(JSON.stringify(updateTemp));
+						var array = lines[updateTemp.index].object;
+						//console.log(JSON.stringify(array));
+						for(var i=0;i<array.length;i++){
+							if(JSON.stringify(updateTemp) == JSON.stringify(array[i])){
+								array.splice(i,1);
+								//lines[updateTemp.index]['object'].push(array);
+							}
+						}
 					}
 				}
 				updateTemp = null;
@@ -600,6 +619,8 @@ body { background: #b3ecff; }
 			if (clickE) {
 				return; //클릭토글의 비정상 작동 제한
 			}
+			updateTemp = null;
+			redrawAll();
 			clickE = true;
 			if (status == "line") {
 				//XY = mouseXY(e);
@@ -610,19 +631,20 @@ body { background: #b3ecff; }
 				status = "rectDrawing";
 			} else if (status == "object") {
 				ObjectIcon(XY,"drawing");
-			} else if (nearest ||  status == 'none' ) {
-				console.log("none nearest");
+			} else if (objectTemp && status == 'none'){
+				//ObjectIcon(objectTemp,"select");
+				status = "objectSelect";
+				selectObjectIcon();
+				moveTemp("object");
+				redrawAll();
+			} else if (nearest && status == 'none') {
 				selectLine();
-			}
+				redrawAll();
+			} 
 			if (status == "none" || status == "image") {
-				console.log("none image");
-				//status = "image"; 
-				selectIcon(XY);
-				
+				if(selectIcon(XY))moveTemp("image");
 			} 
 			//선택자 행위
-			/* if(updateTemp){
-			} */
 			/////////
 			downXY = XY;
 			//status 확인
@@ -632,7 +654,11 @@ body { background: #b3ecff; }
 		//마우스를 땔시
 		$("#rightCanvas").on("mouseup", function(e) {
 			e.preventDefault();
-			//XY = mouseXY(e);
+			if((downXY.x+downXY.y)==(XY.x+XY.y)){
+				status = 'none';
+				clickE = false;
+				//return;
+			}
 			if (status == "image") {
 				iconState.dragging = false;
 				draggingResizer = -1;
@@ -650,10 +676,15 @@ body { background: #b3ecff; }
 				status = "fill"; //status값 원귀
 			//createLine(downXY,XY,'rectCreate');
 			}
-			//drawAllLines(lines);
-			////////
-			//edge=[];
+			else if(clickE && status == "objectSelect"){
+				if(updateTemp.type=='door'||updateTemp.type=='window'){
+					moveTemp("objectUndo");
+					updateTemp = null;
+					status = "none";
+				}
+			} 
 			clickE = false;
+			clickU = true;
 			//status 확인
 			$("#status").val("mouseup => "+status);
 		});
@@ -684,6 +715,10 @@ body { background: #b3ecff; }
 			}
 			if (status == "object") {
 				ObjectIcon(XY, "drawing");
+			}
+			if (clickE && status == "objectSelect") {
+				//console.log(updateTemp);
+				ObjectIcon(updateTemp, "move");
 			}
 			//line//
 			if (clickE && status == 'lineDrawing') { //그리는 도중의 status값 lineDrawing
@@ -719,7 +754,14 @@ body { background: #b3ecff; }
 			           seta +=5;
 			           iconState.selection.rotateTable = seta;
 			           redrawAll();
-		         }
+	   	      	 }else if(updateTemp.type=="door"||updateTemp.type=="window"){
+		        	 count = updateTemp.dist;
+	            	 if(count<80){
+	            		 count++;
+	            		 //console.log(count);
+	            	 }
+	            	 ObjectIcon(updateTemp,"select");
+	             }
 		     }else{
 		         //wheel = "dwon";
 			             if(status=="object"){
@@ -734,8 +776,15 @@ body { background: #b3ecff; }
 			            	 iconState.selection.rotateTable = seta;
 			            	 redrawAll();
 			             }
+			             else if(updateTemp.type=="door"||updateTemp.type=="window"){
+			            	 count = updateTemp.dist;
+			            	 if(count>30){
+			            		 count--;
+			            		 //console.log(count);
+			            	 }
+			            	 ObjectIcon(updateTemp,"select");
+			             }
 			         };
-			         console.log(seta);
 			         
 			    });
 	}); // 첫번째 ready end
@@ -743,93 +792,131 @@ body { background: #b3ecff; }
 </head>
 <body>
 	<div>
-		<input type="button" id="line" value="선그리기" /> 
-		<select id="select">
-			<option value="3" selected="selected">3</option>
-			<option value="5">5</option>
-		</select>
-		<select id="selectColor">
-			<option value="black" selected="selected">검정색</option>
-			<option value="grey">회색</option>
-		</select> 
-		<input type="button" id="rectangle" value="사각형" />
-		<select id="fillColor">
-			<option value="#FFFFFF" selected="selected">White</option>
-			<option value="black">Black</option>
-			<option value="yellow">Yellow</option>
-			<option value="#cc9966">whiteBrown</option>
-			<option value="#a6a6a6">Gray</option>
-		</select> <input type="button" value="라인스텝" /> <select id="lineStep">
-			<option value="70">미세</option>
-			<option value="300" selected="selected">보통</option>
-			<option value="700">확대</option>
-		</select> <input type="button" id="object" value="생성" /> 
-		<select id="objectBox">
-			<option value="door">문</option>
-			<option value="window" selected="selected">창문</option>
-		</select>
-		<!-- Scale
-		<select id="canvasScale">
-			<option value="원룸" selected="selected">원룸</option>
-			<option value="투룸" >투룸</option>
-			<option value="아파트" >아파트</option>
-		</select> -->
-		<input type="button" value="clear" id="clearCanvas" />
-		<span>
-			<form action="loadCanvas" method="post" name="loadDataForm">
-				<input type="text" name="datanum" id="datanum" />
-				<input type="button" value="불러오기" id="loadCanvasData"/>
-			</form>
-		</span>
-		<span>status<input type="text" id="status" /></span>
-		<div id="btn">
-			<input type="button" class="buttonImage" btn-num="singleBed" value="singleBed" />
-			<input type="button" class="buttonImage" btn-num="doubleBed" value="doubleBed" />
-			<input type="button" class="buttonImage" btn-num="toilet" value="toilet" /> 
-			<input type="button" class="buttonImage" btn-num="triBath" value="triBath" />
-			<input type="button" class="buttonImage" btn-num="rectBath" value="rectBath" />
-			<input type="button" class="buttonImage" btn-num="shower" value="shower" />
-			<input type="button" class="buttonImage" btn-num="washstand" value="washstand" />
-			<input type="button" class="buttonImage" btn-num="microwave" value="microwave" />
-			<input type="button" class="buttonImage" btn-num="oven" value="oven" />
-			<input type="button" class="buttonImage" btn-num="kitchenSink" value="kitchenSink" />
-			<input type="button" class="buttonImage" btn-num="singleDoorRefriger" value="singleDoorRefriger" />
-			<input type="button" class="buttonImage" btn-num="doubleDoorRefriger" value="doubleDoorRefriger" />
-			<input type="button" class="buttonImage" btn-num="desk" value="desk" />
-			<input type="button" class="buttonImage" btn-num="bookShelve" value="bookShelve" />
-			<input type="button" class="buttonImage" btn-num="shoeCloset" value="shoeCloset" />
-			<input type="button" class="buttonImage" btn-num="drum" value="drum" />
-			<input type="button" class="buttonImage" btn-num="door" value="door" />
-			<input type="button" class="buttonImage" btn-num="washingMachine" value="washingMachine" />
-			<input type="button" class="buttonImage" btn-num="airconditioner" value="airconditioner" />
-			<input type="button" class="buttonImage" btn-num="gasStove2" value="gasStove2" />
-			<input type="button" class="buttonImage" btn-num="gasStove4" value="gasStove4" />
-			<input type="button" class="buttonImage" btn-num="stoveVent" value="stoveVent" />
-			<input type="button" class="buttonImage" btn-num="vent" value="vent" />
-			<input type="button" class="buttonImage" btn-num="wardrobe" value="wardrobe" />
-			<input type="button" class="buttonImage" btn-num="tv" value="tv" />
-			<input type="button" class="buttonImage" btn-num="sofa1" value="sofa1" />
-			<input type="button" class="buttonImage" btn-num="sofa2" value="sofa2" />
-			<input type="button" class="buttonImage" btn-num="sofa4" value="sofa4" />
-			<input type="button" class="buttonImage" btn-num="diningTable" value="diningTable" />
-			<input type="button" class="buttonImage" btn-num="table1" value="table1" />
-			<input type="button" class="buttonImage" btn-num="table2" value="table2" />
-		</div>
-		<a href="#" class="button" id="btn-download" download="Floorplan.png">데이터 저장 및 이미지 다운로드</a>
+		[ 마우스 상태  ]<input type="text" id="status" />
+		<input type="button" value="초기화" id="clearCanvas" />
+		<a href="#" class="downloadBtn" id="btn-download" download="Floorplan.png">데이터 저장 및 이미지 다운로드</a>
+		<input type="text" name="datanum" id="datanum" />
+		<input type="button" value="평면도 불러오기" id="loadCanvasData" placeholder="평면도 번호를 입력해주세요."/>
 	</div>
-	<!-- 동서남북 아이콘 -->
-	<div class="box">
-		<!-- <div class="img"></div> -->
-		<canvas id="leftCanvas" width="250" height="650">
-    		Menu InterFacs
-  		</canvas>
-		<div style="position: relative">
+	<div class="row">
+		<div id="menuSidebar" class="col-sm-3" width="250" height="650" style="height:650px">
+			<div class="dashboardLink">
+			
+			</div>
+			<div class="tab_switcher">
+				<div class="draw">
+					<img alt="pencilTab" src="assets/img/icons/pencilTab.png" />
+					<img alt="furnitureTab" src="assets/img/icons/furnitureTab.png" />
+					<img alt="doorTab" src="assets/img/icons/doorTab.png" />
+				</div>
+					<div id="testdiv" style="display:none;">테스트!!!!!!!!!!!</div>
+					<input type="button" value="열기" onclick="$('#testdiv').show()" />
+					<input type="button" value="닫기" onclick="$('#testdiv').hide()" />
+				<div class="icons"></div>
+			</div>
+			<div class="tab">
+				<div class="pencil">
+					<div>
+						<select id="selectColor">
+							<option value="black" selected="selected">선 색상: 검정색</option>
+							<option value="grey">선 색상: 회색</option>
+						</select> 
+						<select id="select">
+							<option value="3" >얇은 선</option>
+							<option value="5" selected="selected">굵은 선</option>
+						</select>
+						<input type="button" id="line" value="선 그리기" /> 
+						<select id="fillColor">
+							<option value="#FFFFFF" selected="selected">방 색상: 화이트</option>
+							<option value="black">방 색상: 검정</option>
+							<option value="yellow">방 색상: 노랑</option>
+							<option value="#cc9966">방 색상: 황토색</option>
+							<option value="#a6a6a6">방 색상: 회색</option>
+						<input type="button" id="rectangle" value="방 그리기" />
+						</select>
+						<select id="lineStep">
+							<option value="50" selected="selected">미세</option>
+							<option value="300">보통</option>
+							<option value="700">둔감</option>
+						</select> 
+						<input type="button" value="민감도 조정" />
+					</div>
+				</div>
+				<div class="furnitures">
+					<div class="common">
+						<input type="button" class="buttonImage" btn-num="airconditioner" value="에어컨" />
+						<input type="button" class="buttonImage" btn-num="door" value="대문" />
+						<input type="button" class="buttonImage" btn-num="desk" value="책상" />
+						<input type="button" class="buttonImage" btn-num="bookShelve" value="책장" />
+						<input type="button" class="buttonImage" btn-num="wardrobe" value="옷장" />
+					</div>
+					<div class="room">
+						<input type="button" class="buttonImage" btn-num="singleBed" value="싱글침대" />
+						<input type="button" class="buttonImage" btn-num="doubleBed" value="더블침대" />
+						<input type="button" class="buttonImage" btn-num="tv" value="TV" />
+						<input type="button" class="buttonImage" btn-num="desk" value="책상" />
+						<input type="button" class="buttonImage" btn-num="wardrobe" value="옷장" />
+					</div>
+					<div calss="laundryRoom">
+						<input type="button" class="buttonImage" btn-num="drum" value="드럼" />
+						<input type="button" class="buttonImage" btn-num="washingMachine" value="통돌이" />
+					</div>
+					<div class="livingRoom">
+						<input type="button" class="buttonImage" btn-num="shoeCloset" value="신발장" />
+						<input type="button" class="buttonImage" btn-num="tv" value="TV" />
+						<input type="button" class="buttonImage" btn-num="sofa1" value="1단 소파" />
+						<input type="button" class="buttonImage" btn-num="sofa2" value="2단 소파" />
+						<input type="button" class="buttonImage" btn-num="sofa4" value="4단 소파" />
+						<input type="button" class="buttonImage" btn-num="diningTable" value="4인 식탁" />
+						<input type="button" class="buttonImage" btn-num="table1" value="바닥 식탁" />
+						<input type="button" class="buttonImage" btn-num="table2" value="의자 식탁" />
+					</div>
+					<div class="kitchen">
+						<input type="button" class="buttonImage" btn-num="microwave" value="전자레인지" />
+						<input type="button" class="buttonImage" btn-num="oven" value="오븐" />
+						<input type="button" class="buttonImage" btn-num="kitchenSink" value="싱크대" />
+						<input type="button" class="buttonImage" btn-num="singleDoorRefriger" value="일반 냉장고" />
+						<input type="button" class="buttonImage" btn-num="doubleDoorRefriger" value="양문형 냉장고" />
+						<input type="button" class="buttonImage" btn-num="gasStove2" value="2단 가스레인지" />
+						<input type="button" class="buttonImage" btn-num="gasStove4" value="4단 가스레인지" />
+						<input type="button" class="buttonImage" btn-num="stoveVent" value="부엌 환풍기" />
+					</div>
+					<div class="bathroom">
+						<input type="button" class="buttonImage" btn-num="vent" value="환풍기" />
+						<input type="button" class="buttonImage" btn-num="toilet" value="변기" /> 
+						<input type="button" class="buttonImage" btn-num="triBath" value="삼각형 욕조" />
+						<input type="button" class="buttonImage" btn-num="rectBath" value="사각형 욕조" />
+						<input type="button" class="buttonImage" btn-num="shower" value="샤워부스" />
+						<input type="button" class="buttonImage" btn-num="washstand" value="세면대" />
+					</div>
+				</div>
+				<div class="door">
+					<select id="objectBox">
+							<option value="door">문</option>
+							<option value="window" selected="selected">창문</option>
+					</select>
+					<input type="button" id="object" value="생성" /> 
+				</div>
+			</div>
+  		</div>
+		<div class="col-sm-9" style="position: relative">
 			<canvas id="rightCanvas" width="1000" height="650">
-      		FloorPlan Canvas
 	   	</canvas>
-			<img src="" id="mirror" class="canvas__mirror" width="1000"
-				height="650" />
+			<img src="" id="mirror" class="canvas__mirror" width="1000" height="650" />
 		</div>
+		<div class="margin-bottom-30"></div>
+         <div class="row ">
+            <div class="col-md-2"></div>
+            <div class="col-md-4">
+               <button href="insert_property2" type="submit"
+                  class="btn-u btn-block rounded insert_btn">다음단계</button>
+            </div>
+            <div class="col-md-4">
+               <button class="btn-u btn-block rounded insert_btn"
+                  style="background-color: #ccc">돌아가기</button>
+            </div>
+            <div class="col-md-2"></div>
+         </div>
 	</div>
 
 </body>
