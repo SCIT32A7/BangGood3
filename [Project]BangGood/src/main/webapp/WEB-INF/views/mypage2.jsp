@@ -97,7 +97,7 @@
 				<div class="col-md-9">
 				<div class="g-pd-20">
 				<c:if test = "${myCart.size() == 0}">
-					<h2>현재 등록하신 매물이 없습니다.</h2>
+					<h2>관심목록이 습니다.</h2>
 				</c:if>
 				<c:if test = "${myCart.size() > 0}">
 					<div class="headline">
