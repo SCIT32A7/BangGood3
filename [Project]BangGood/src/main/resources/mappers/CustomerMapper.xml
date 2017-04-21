@@ -32,7 +32,7 @@
 			(select property_no, custid, property_title, rent_type, property_inputdate,
 				property_hits, reply_count, property_like, deposit, month_fee		
 				from property pro where custid = #{custid}
-				and address like '%서울 강남구 삼성동%') pro,		
+				and address like '%서울 강남구%') pro,		
 			(select property_no, pic_name, pic_savename
 				from picture where pic_division = 'flan') pic
 		where pro.property_no = pic.property_no 
