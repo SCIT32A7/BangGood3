@@ -8,10 +8,6 @@ function init() {
 	menu = $("#leftCanvas")[0];
 	menuCtx = menu.getContext("2d");
 	mirror = $("#mirror");
-	//canvas.width = mirror.width = window.innerWidth;
-	//canvas.height = mirror.height = window.innerHeight;
-	//backGround = document.createElement("canvas").getContext("2d");
-	//buttonImage = $(".buttonImage"); //이미지 버튼
 	select = $("#select");
 	fillColor = $("#fillColor");
 	status = 'none';
@@ -20,17 +16,17 @@ function init() {
 	offsetReload();
 	lineEdgeStep = 300;
 	scale="원룸";
+	lineColor="black";
 	iconState = new IconState();
 	drawGrid(ctx, 'gray', Step); //그리드(캔버스객체값,색상,스텝)
 	color = colorSelect();
 	img = new Image();
 	//이미지 불러오기(그려내기)
 	img.onload = function() {
-		console.log("Asdf");
 		var width = img.width;
 		var height = img.height;
 		var icon = new Icon(img,949.7, 44.7, (width/1.5), (height/1.5), 0);
-		icon.src = "assets/img/icons/direction.png";//....................수정
+		icon.src = "assets/img/icons/direction.png";
 		iconState.addIcon(icon);
 		iconState.draw();
 	}
@@ -105,6 +101,11 @@ function fixLine(LW) {
 	return result;
 }
 
+//선 색 반환
+function selectLineColor() {
+	var result = $("#selectColor option:selected").val();
+	return result;
+}
 
 //채우기 색 반환
 function colorSelect() {
@@ -176,7 +177,7 @@ function linePaint(beginXY, endXY) {
 	ctx.lineTo(endXY.x, endXY.y);
 	ctx.closePath();
 	ctx.lineJoin = "round";
-	ctx.strokeStyle = "black";
+	ctx.strokeStyle = lineColor;
 	ctx.lineWidth = LW;
 	ctx.stroke();
 }
@@ -214,7 +215,7 @@ function rectPaint(beginXY, endXY) {
 		//화면상에 마우스를 따라다니는 라인
 		if (stat == 'drawing') {
 			if (status == 'lineDrawing') {
-				linePaint(beginXY, endXY);
+				linePaint(beginXY, endXY, lineColor);
 				var coordinate = {"x0" : beginXY.x, "y0" : beginXY.y, "x1" : endXY.x, "y1" : endXY.y};
 				var slope = getSlope(beginXY, endXY);
 				var line = { "coordinate" : coordinate, "slope" : slope };
@@ -233,7 +234,7 @@ function rectPaint(beginXY, endXY) {
 			linePaint(beginXY, endXY);
 			var coordinate = {"x0" : beginXY.x,"y0" : beginXY.y,"x1" : endXY.x,"y1" : endXY.y};
 			var slope = getSlope(beginXY, endXY);
-			var line = {"coordinate" : coordinate, "slope" : slope, "lineWidth" : ctx.lineWidth, "type" : "line", length : px+"m"};
+			var line = {"coordinate" : coordinate, "slope" : slope, "lineWidth" : ctx.lineWidth, "type" : "line", length : px+"m", lineColor:lineColor};
 			lines.push(line);
 			inputUndo(line, "create");
 		
@@ -294,7 +295,14 @@ function drawLine(line) {
 	ctx.lineTo(line.coordinate.x1, line.coordinate.y1);
 	ctx.closePath();
 	ctx.lineWidth = line.lineWidth;
-	ctx.stroke();
+	if(line.type == "line") {
+		ctx.save();
+		ctx.strokeStyle = line.lineColor;
+		ctx.stroke();
+		ctx.restore();
+	} else {
+		ctx.stroke();
+	}
 	//길이 텍스트 위치 선정
 	var x = (line.coordinate.x0 + line.coordinate.x1) / 2;
 	var y = (line.coordinate.y0 + line.coordinate.y1) / 2;

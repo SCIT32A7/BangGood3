@@ -162,6 +162,7 @@ body { background: #b3ecff; }
 	
 	var px; //선 길이
 	var scale; //축척
+	var lineColor;
 	var rectPx1;
 	var rectPx2;
 	var LW = ''; //LineWidth 선 두깨
@@ -438,6 +439,10 @@ body { background: #b3ecff; }
 		$("#select").change(function() {
 			LW = selector();
 			fixed = fixLine(LW);
+		});
+		
+		$("#selectColor").change(function() {
+			lineColor = selectLineColor();
 		});
 
 		//색
@@ -742,11 +747,16 @@ body { background: #b3ecff; }
 </head>
 <body>
 	<div>
-		<input type="button" id="line" value="선그리기" /> <select id="select">
+		<input type="button" id="line" value="선그리기" /> 
+		<select id="select">
 			<option value="3" selected="selected">3</option>
 			<option value="5">5</option>
-			<option value="10">10</option>
-		</select> <input type="button" id="rectangle" value="사각형" />
+		</select>
+		<select id="selectColor">
+			<option value="black" selected="selected">검정색</option>
+			<option value="grey">회색</option>
+		</select> 
+		<input type="button" id="rectangle" value="사각형" />
 		<select id="fillColor">
 			<option value="#FFFFFF" selected="selected">White</option>
 			<option value="black">Black</option>
