@@ -54,6 +54,7 @@
 	border-radius: 8px;
 }
 
+
 #menuSidebar {
 	background: #ffcc00;
 	border: thin solid gray;
@@ -69,6 +70,20 @@
 	top: 0;
 	z-index: -1;
 }
+
+#pencilTab, #furnitureTab, #doorTab  {
+	cursor: pointer;
+	-webkit-filter: grayscale(100%);
+	filter: grayscale(100%);
+	-webkit-transition: .3s ease-in-out;
+	transition: .3s ease-in-out;
+}
+
+#pencilTab:hover, #furnitureTab:hover, #doorTab:hover:hover  {
+	-webkit-filter: grayscale(0);
+	filter: grayscale(0);
+}
+
 </style>
 
 </head>
@@ -787,7 +802,29 @@
 			         };
 			         
 			    });
-	}); // 첫번째 ready end
+		
+		/* $("#pencilTab").on("click", function(){
+			console.log("test");
+			$(".pencil").hide();
+		}); */
+		$("#pencilTab").on("click", function(){
+			$(".furniture").hide();
+			$(".door").hide();
+			$(".pencil").show();
+		});
+		$("#furnitureTab").on("click", function(){
+			$(".pencil").hide();
+			$(".door").hide();
+			$(".furniture").show();
+		});
+		$("#doorTab").on("click", function(){
+			$(".pencil").hide();
+			$(".furniture").hide();
+			$(".door").show();
+			
+		});
+		
+	}); //  ready end
 </script>
 </head>
 <body>
@@ -803,19 +840,15 @@
 			<div class="dashboardLink">
 			
 			</div>
-			<div class="tab_switcher">
-				<div class="draw">
-					<img alt="pencilTab" src="assets/img/icons/pencilTab.png" />
-					<img alt="furnitureTab" src="assets/img/icons/furnitureTab.png" />
-					<img alt="doorTab" src="assets/img/icons/doorTab.png" />
+			<div id="tab_switcher">
+				<div class="tab_switcher">
+					<img id="pencilTab" alt="pencilTab" src="assets/img/icons/pencilTab.png" />
+					<img id="furnitureTab" alt="furnitureTab" src="assets/img/icons/furnitureTab.png" />
+					<img id="doorTab" alt="doorTab" src="assets/img/icons/doorTab.png" />
 				</div>
-					<div id="testdiv" style="display:none;">테스트!!!!!!!!!!!</div>
-					<input type="button" value="열기" onclick="$('#testdiv').show()" />
-					<input type="button" value="닫기" onclick="$('#testdiv').hide()" />
-				<div class="icons"></div>
 			</div>
-			<div class="tab">
-				<div class="pencil">
+			<div id="tab">
+				<div class="pencil" style="display:none;">
 					<div>
 						<select id="selectColor">
 							<option value="black" selected="selected">선 색상: 검정색</option>
@@ -832,8 +865,8 @@
 							<option value="yellow">방 색상: 노랑</option>
 							<option value="#cc9966">방 색상: 황토색</option>
 							<option value="#a6a6a6">방 색상: 회색</option>
-						<input type="button" id="rectangle" value="방 그리기" />
 						</select>
+						<input type="button" id="rectangle" value="방 그리기" />
 						<select id="lineStep">
 							<option value="50" selected="selected">미세</option>
 							<option value="300">보통</option>
@@ -842,8 +875,13 @@
 						<input type="button" value="민감도 조정" />
 					</div>
 				</div>
-				<div class="furnitures">
+				<div class="furniture" style="display:none;">
 					<div class="common">
+						<img alt="airconditioner" src="assets/img/icons/airconditioner.png" height="150" width="150"/>
+						<img alt="airconditioner" src="assets/img/icons/door.png" />
+						<img alt="airconditioner" src="assets/img/icons/desk.png" />
+						<img alt="airconditioner" src="assets/img/icons/bookShelve.png" />
+						<img alt="airconditioner" src="assets/img/icons/wardrobe.png" />
 						<input type="button" class="buttonImage" btn-num="airconditioner" value="에어컨" />
 						<input type="button" class="buttonImage" btn-num="door" value="대문" />
 						<input type="button" class="buttonImage" btn-num="desk" value="책상" />
@@ -890,7 +928,7 @@
 						<input type="button" class="buttonImage" btn-num="washstand" value="세면대" />
 					</div>
 				</div>
-				<div class="door">
+				<div class="door" style="display:none;">
 					<select id="objectBox">
 							<option value="door">문</option>
 							<option value="window" selected="selected">창문</option>
