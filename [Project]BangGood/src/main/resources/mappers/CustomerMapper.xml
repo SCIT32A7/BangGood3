@@ -20,8 +20,58 @@
 		where custid = #{custid}
 	</update>
 	
-	<!-- 탈퇴 -->
-	<delete id="customer_delete">
-		delete customer where custid = #{0} and password = #{1}
-	</delete>
+	<!-- 등록 목록 보기 -->
+	<select id="see_myinsert" parameterType="String" resultType="Property_list">
+		select
+			pro.property_no property_no, pro.property_title property_title, 
+			pro.rent_type rent_type, pro.property_inputdate property_inputdate,
+			pro.property_hits property_hits, pro.reply_count reply_count, 
+			pro.property_like property_like, pro.deposit deposit, pro.month_fee month_fee,
+			pic.pic_name pic_name, pic.pic_savename pic_savename 
+		from
+			(select property_no, custid, property_title, rent_type, property_inputdate,
+				property_hits, reply_count, property_like, deposit, month_fee		
+				from property pro where custid = #{custid}) pro,		
+			(select property_no, pic_name, pic_savename
+				from picture where pic_division = 'flan') pic
+		where pro.property_no = pic.property_no 
+		and pro.custid = #{custid}
+	</select>
+	
+	<!-- 장바구니 등록 -->
+	<insert id="insert_cart" parameterType="map">
+		insert into cart (cart_no, custid, property_no) 
+		values(seq_cart_no.nextval, #{custid}, #{property_no})
+	</insert>
+	
+	<!-- 장바구니 목록 보기 -->
+	<select id="see_myCart" parameterType="String" resultType="Property_list">
+		select
+			pic_pro.property_no property_no, pic_pro.property_title property_title, 
+			pic_pro.rent_type rent_type, pic_pro.custid custid, 
+			pic_pro.property_inputdate property_inputdate,
+			pic_pro.property_hits property_hits, pic_pro.reply_count reply_count, 
+			pic_pro.property_like property_like, pic_pro.deposit deposit,
+			pic_pro.month_fee month_fee,
+			pic_pro.pic_name pic_name, pic_pro.pic_savename pic_savename 
+		from
+			(select cart_no, property_no
+				from cart
+				where custid = #{custid}) cart,		
+			(select
+				pro.property_no property_no, pro.property_title property_title, 
+				pro.rent_type rent_type, pro.custid custid, 
+				pro.property_inputdate property_inputdate,
+				pro.property_hits property_hits, pro.reply_count reply_count, 
+				pro.property_like property_like, pro.deposit deposit, pro.month_fee month_fee,
+				pic.pic_name pic_name, pic.pic_savename pic_savename 
+			from
+				(select property_no, custid, property_title, rent_type, property_inputdate,
+					property_hits, reply_count, property_like, deposit, month_fee		
+					from property pro) pro,		
+				(select property_no, pic_name, pic_savename
+					from picture where pic_division = 'flan') pic 
+			where pro.property_no = pic.property_no) pic_pro 
+		where cart.property_no = pic_pro.property_no
+	</select>
 </mapper>

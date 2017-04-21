@@ -5,6 +5,7 @@ import java.util.Map;
 
 import global.sesoc.banggood.vo.Maintence;
 import global.sesoc.banggood.vo.Option;
+import global.sesoc.banggood.vo.Picture;
 import global.sesoc.banggood.vo.Property;
 import global.sesoc.banggood.vo.Property_map;
 import global.sesoc.banggood.vo.Property_search;
@@ -14,8 +15,7 @@ public interface PropertyDAO {
 	public int insert_property(Property property) throws Exception;  // 매물 등록
 	public int insert_option(Option option) throws Exception;  // 옵션 등록
 	public int insert_maintence(Maintence maintence) throws Exception;  // 관리비 등록
-	//public int insert_picture(Picture picture) throws Exception;  // 사진 등록
-	//public int insert_floorplan(Floorplan floorplan) throws Exception;  // 평면도 등록
+	public int insert_picture(Picture picture) throws Exception;  // 사진 등록
 
 	public int select_recently_property() throws Exception;  // 옵션과 관리비 내역 등록위해 최근 값 뽑아오기
 	

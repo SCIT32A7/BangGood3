@@ -1,6 +1,9 @@
 package global.sesoc.banggood.dao;
 
+import java.util.Map;
+
 import global.sesoc.banggood.vo.Customer;
+import global.sesoc.banggood.vo.Property_list;
 
 public interface CustomerDAO {
 	
@@ -13,7 +16,12 @@ public interface CustomerDAO {
 	// 회원정보 수정
 	public int customer_update(Customer customer) throws Exception;
 	
-	// 회원 탈퇴
-	public int customer_delete(String custid, String password) throws Exception; 
-
+	// 등록목록 보기
+	public Property_list see_myinsert(String custid) throws Exception;
+	
+	// 장바구니 등록
+	public int insert_cart(Map<String, Object> cartMap) throws Exception;
+	
+	//장바구니 보기
+	public Property_list see_myCart(String custid) throws Exception;
 }

@@ -30,7 +30,7 @@ public class HomeController {
 	// 첫 메인 화면
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home() {
-		return "index";
+		return "insert_property3";
 	}
 
 	@RequestMapping(value = "savephoto", method = RequestMethod.POST)
@@ -65,7 +65,7 @@ public class HomeController {
 					pic.setPic_division("main"); // 메인사진
 				}
 				if(i == 1){
-					pic.setPic_division("flan");	// 평면도
+					pic.setPic_division("plan");	// 평면도
 				}
 				if(i == 2){
 					pic.setPic_division("front");	// 입구

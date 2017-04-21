@@ -48,17 +48,6 @@ public class CustomerRepository {
 		}
 		return result;
 	}
-	
-	public int delete(String custid, String password){
-		CustomerDAO cd = query.getMapper(CustomerDAO.class);
-		int result = 0;
-		try {
-			result = cd.customer_delete(custid, password);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return result;
-	}
+
 	
 }

@@ -12,6 +12,7 @@
  		<typeAlias type="global.sesoc.banggood.vo.SearchBoard" alias="SearchBoard"/>
  		<typeAlias type="global.sesoc.banggood.vo.SearchReply" alias="SearchReply"/>
  		<typeAlias type="global.sesoc.banggood.vo.Property_map" alias="Property_map"/>
+ 		<typeAlias type="global.sesoc.banggood.vo.Property_list" alias="Property_list"/>
  		<typeAlias type="global.sesoc.banggood.vo.Property_search" alias="Property_search"/>
  		<typeAlias type="global.sesoc.banggood.vo.RadarChart" alias="RadarChart"/>
  		<typeAlias type="global.sesoc.banggood.vo.Canvas" alias="Canvas"/>
@@ -23,5 +24,6 @@
     <mapper resource="mappers/SearchBoardMapper.xml"/>
     <mapper resource="mappers/radarChartMapper.xml"/>
     <mapper resource="mappers/canvasMapper.xml"/>
+    
   </mappers>
 </configuration>

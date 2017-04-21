@@ -73,18 +73,6 @@ public class CustomerController {
 		return "redirect:/";
 	}
 
-	@RequestMapping(value = "customer_delete", method = RequestMethod.POST)
-	public String delete(String custid, String password, Model model) {
-		int result = cr.delete(custid, password);
-		String message = null;
-		if (result > 0) {
-			message = "success";
-		} else {
-			message = "fail";
-		}
-		model.addAttribute("result", message);
-		return "index";
-	}
 
 	@RequestMapping(value = "customer_update", method = RequestMethod.POST)
 	public String update(Customer customer, Model model) {

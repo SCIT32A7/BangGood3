@@ -13,7 +13,7 @@
 				</div>
 				<div class="row">
 				<div class="col-md-12 text-center">
-							<h3><span style="text-decoration: underline">OOO</span>님 회원가입 완료</h3>
+							<h3>회원가입 완료</h3>
 							<p>
 								이제부터 굿방의 시스템을 이용할 수 있습니다.
 							</p>
