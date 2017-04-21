@@ -154,16 +154,14 @@ table tr td {
 											<col style="width:35%">
 										</colgroup>
 										<tr class="borderline">
-											<th>매물 종류</th>
+											<th>방 종류</th>
 											<td colspan="3">
 												<input type="radio" name="property_type" value = "oneroom" style="position:relative; top:6px"><label class="insert_label">원룸</label>
 												<input type="radio" name="property_type" value = "tworoom" style="position:relative; top:6px"><label class="insert_label" >투룸</label>
-												<input type="radio" name="property_type" value = "officetel" style="position:relative; top:6px"><label class="insert_label">오피스텔</label>
-												<input type="radio" name="property_type" value = "apartment" style="position:relative; top:6px"><label class="insert_label">아파트</label>
 											</td>
 										</tr>
 										<tr class="borderline">
-											<th>방 종류</th>
+											<th>매물 종류</th>
 											<td colspan="3">
 											<input type="radio" name="rent_type" value = "year_rent" style="position:relative; top:6px">
 											<label class="insert_label">전세</label>

@@ -61,10 +61,6 @@ public class PropertyController {
 			property.setProperty_type("원룸");
 		} else if (property.getProperty_type().equals("tworoom")){
 			property.setProperty_type("투룸");
-		} else if (property.getProperty_type().equals("officetel")){
-			property.setProperty_type("오피스텔");
-		} else {
-			property.setProperty_type("아파트");
 		}
 		model.addAttribute("property", property);
 		model.addAttribute("option", option);
