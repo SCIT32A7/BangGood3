@@ -45,6 +45,13 @@
       #{cleaning}, #{waterfee}, #{gasfee}, #{electronic})   
    </insert>
    
+   <!-- 매물 사진 입력하기 -->
+   <insert id ="insert_picture" parameterType="Picture">
+   	insert into picture
+   	values
+   	(seq_pic_room_no.nextval, #{property_no}, #{pic_division}, #{pic_name}, #{pic_savename})   
+   </insert>
+   
    <!-- 주소내 모든 매물 검색 -->
    <select id="searchProperty" parameterType="Property_search"
       resultType="String">

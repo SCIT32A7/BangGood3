@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-
+<%@ taglib prefix="c" uri = "http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->
 <!--[if !IE]><!-->
@@ -123,7 +123,7 @@
 	<div class="view_title_bg">
 		<div class="container">
 			<div class="col-sm-12 text-center g-mt-40 g-mb-40">
-				<h1 class="view_title g-pb-20" style="color:#333">※초역세권. 저보증금 풀옵션 원룸. 교포분들께 딱맞는 원룸.</h1>
+				<h1 class="view_title g-pb-20" style="color:#333">${property.property_title}</h1>
 			</div>
 		</div>
 	
@@ -139,10 +139,9 @@
 				</div>
 				<div class="thumwrap">
 					<ul class="gallery">
-						<li><img src="assets/img/room/1.jpg"/></li>
-						<li><img src="assets/img/room/2.jpg"/></li>
-						<li><img src="assets/img/room/3.jpg"/></li>
-						<li><img src="assets/img/room/4.jpg"/></li>
+						<c:forEach var = "pic" items = "${picture}">
+							<li><img src="download?pic_name=${pic.pic_name}&pic_savename=${pic.pic_savename}"></li>
+						</c:forEach>
 					</ul>
 				</div>
 				
@@ -161,20 +160,29 @@
 									<th>반려동물</th>
 								</tr>
 								<tr>
-									<td>2억 2000</td>
-									<td>쓰리룸</td>
-									<td>3.00P</td>
-									<td>0만원</td>
-									<td></td>
-									<td>있음</td>
-									<td>가능</td>
-									<td>불가능</td>
+									<th>[ ${property.rent_type} ] ${property.deposit} / ${property.month_fee}</th>
+									<th>${property.property_type}</th>
+									<th>${property.roomsize}</th>
+									<th>${property.maintence_fee}</th>
+									<td>
+										무선인터넷 : <c:if test="${maintence.internet == 1}"> O </c:if><c:if test="${maintence.internet == 2}"> X </c:if><br>
+										케이블TV : <c:if test="${maintence.tvfee == 1}"> O </c:if><c:if test="${maintence.tvfee == 2}"> X </c:if><br>
+										청소비 : <c:if test="${maintence.cleaning == 1}"> O </c:if><c:if test="${maintence.cleaning == 2}"> X </c:if><br>
+										수도료 : <c:if test="${maintence.waterfee == 1}"> O </c:if><c:if test="${maintence.waterfee == 2}"> X </c:if><br>
+										가스비 : <c:if test="${maintence.gasfee == 1}"> O </c:if><c:if test="${maintence.gasfee == 2}"> X </c:if><br>
+										전기세 : <c:if test="${maintence.electronic == 1}"> O </c:if><c:if test="${maintence.electronic == 2}"> X </c:if>
+									</td>
+									<td><c:if test="${option.elevator == 1}"> 있음 </c:if><c:if test="${option.elevator == 2}"> 없음 </c:if></td>
+									<td><c:if test="${option.car == 1}"> 가능 </c:if><c:if test="${option.car == 2}"> 불가 </c:if></td>
+									<td><c:if test="${option.pet == 1}"> 가능 </c:if><c:if test="${option.pet == 2}"> 불가 </c:if></td>
 								</tr>
 							</table>
 					<div class="g-pt-20"></div>
 					<h3 style="font-weight: bold">옵션</h3>
 						<ul class="view_option">
-							<li><img src="assets/img/icon/1.png"><p>에어콘</p></li>
+							<c:if test="${option.elevator == 1}">
+								<li><img src="assets/img/icon/1.png"><p>에어콘</p></li>
+							</c:if>
 							<li><img src="assets/img/icon/2.png"><p>냉장고</p></li>
 							<li><img src="assets/img/icon/3.png"><p>세탁기</p></li>
 							<li><img src="assets/img/icon/4.png"><p>가스레인지</p></li>

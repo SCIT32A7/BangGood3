@@ -29,7 +29,9 @@ public class PropertyRepository {
 		PropertyDAO pd = query.getMapper(PropertyDAO.class);
 		try {
 			result += pd.insert_property(property);  // 매물 정보 삽입
+			
 			int property_no = pd.select_recently_property();
+			
 			option.setProperty_no(property_no);
 			maintence.setProperty_no(property_no);
 			canvas.setProperty_no(property_no);

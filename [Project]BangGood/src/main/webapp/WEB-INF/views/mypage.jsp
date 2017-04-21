@@ -116,12 +116,16 @@
 							</h2>
 							<ul class="list-unstyled list-inline blog-info-v2"
 								style="float: left">
-								<li>By: <a class="color-green" href="#">${property.custid}</a>
-								</li>
 								<li><i class="fa fa-clock-o"></i> ${property.property_inputdate}</li>
 							</ul>
-							<p style="float: left">							
-								[ ${property.isaccessible} ] <br>
+							<p style="float: left">	
+								<br>					
+								<c:if test = "${property.isaccessible == 'TRUE'}">
+									[ 광고 중 ] <br>
+								</c:if>
+								<c:if test = "${property.isaccessible == 'FALSE'}">
+									[ 허가 요청 중 ] <br>
+								</c:if>
 								 ${property.property_title}
 							</p>
 						</div>
@@ -144,6 +148,7 @@
 							</div>
 						</div>
 					</div>
+					<hr>
 					<hr>
 					</c:forEach>
 					<!--  end row -->	
