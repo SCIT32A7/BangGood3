@@ -19,10 +19,11 @@ public class Option {
 	private int shoecabinet = 2;
 	private int doorlock = 2;
 	private int wifi = 2;
+	private int total;
 
 	public Option(int property_no, int pet, int car, int elevator, int air_conditioner, int fridge, int washing_machine,
 			int gas_stove, int electric_stove, int microwave, int desk, int rack, int bed, int closet, int shoecabinet,
-			int doorlock, int wifi) {
+			int doorlock, int wifi, int total) {
 		super();
 		this.property_no = property_no;
 		this.pet = pet;
@@ -41,28 +42,7 @@ public class Option {
 		this.shoecabinet = shoecabinet;
 		this.doorlock = doorlock;
 		this.wifi = wifi;
-	}
-
-	public Option(int pet, int car, int elevator, int air_conditioner, int fridge, int washing_machine, int gas_stove,
-			int electric_stove, int microwave, int desk, int rack, int bed, int closet, int shoecabinet, int doorlock,
-			int wifi) {
-		super();
-		this.pet = pet;
-		this.car = car;
-		this.elevator = elevator;
-		this.air_conditioner = air_conditioner;
-		this.fridge = fridge;
-		this.washing_machine = washing_machine;
-		this.gas_stove = gas_stove;
-		this.electric_stove = electric_stove;
-		this.microwave = microwave;
-		this.desk = desk;
-		this.rack = rack;
-		this.bed = bed;
-		this.closet = closet;
-		this.shoecabinet = shoecabinet;
-		this.doorlock = doorlock;
-		this.wifi = wifi;
+		this.total = total;
 	}
 
 	public Option() {
@@ -205,13 +185,21 @@ public class Option {
 		this.wifi = wifi;
 	}
 
+	public int getTotal() {
+		return total;
+	}
+
+	public void setTotal(int total) {
+		this.total = total;
+	}
+
 	@Override
 	public String toString() {
 		return "Option [property_no=" + property_no + ", pet=" + pet + ", car=" + car + ", elevator=" + elevator
 				+ ", air_conditioner=" + air_conditioner + ", fridge=" + fridge + ", washing_machine=" + washing_machine
 				+ ", gas_stove=" + gas_stove + ", electric_stove=" + electric_stove + ", microwave=" + microwave
 				+ ", desk=" + desk + ", rack=" + rack + ", bed=" + bed + ", closet=" + closet + ", shoecabinet="
-				+ shoecabinet + ", doorlock=" + doorlock + ", wifi=" + wifi + "]";
+				+ shoecabinet + ", doorlock=" + doorlock + ", wifi=" + wifi + ", total=" + total + "]";
 	}
 
 }

@@ -13,8 +13,8 @@
       values 
       (seq_property_no.nextval, #{custid}, #{rent_type}, #{address}, 
       #{address_detail}, #{bulildingName}, #{floor}, #{property_type}, #{deposit}, 
-      #{month_fee}, #{maintence_fee}, #{built_year}, #{roomSize},
-      #{board_title}, #{board_text})   
+      #{month_fee}, #{maintence_fee}, #{built_year}, #{roomsize},
+      #{property_title}, #{property_text})   
    </insert>
    
    <!-- 가장 최근에 입력된 매물의 번호 가져오기 -->
@@ -29,12 +29,12 @@
       insert into roomoption
       (property_no, pet, car, elevator, air_conditioner, fridge, washing_machine,
       gas_stove, electric_stove, microwave, desk, rack, bed, closet, shoecabinet,
-      doorlock, wifi)
+      doorlock, wifi, total)
       values
       (#{property_no}, #{pet}, #{car}, #{elevator}, #{air_conditioner}, 
       #{fridge}, #{washing_machine}, #{gas_stove}, #{electric_stove}, 
       #{microwave}, #{desk}, #{rack}, #{bed}, #{closet}, #{shoecabinet},
-      #{doorlock}, #{wifi})   
+      #{doorlock}, #{wifi}, #{total})   
    </insert>
    
    <!-- 매물 관리비 포함내역 입력하기 -->

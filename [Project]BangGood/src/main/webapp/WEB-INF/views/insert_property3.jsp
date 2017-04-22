@@ -340,7 +340,7 @@ function photoRemove(num) {
          <div class="row ">
             <div class="col-md-2"></div>
             <div class="col-md-4">
-               <button href="insert_property2" type="submit"
+               <button type="submit"
                   class="btn-u btn-block rounded insert_btn">다음단계</button>
             </div>
             <div class="col-md-4">

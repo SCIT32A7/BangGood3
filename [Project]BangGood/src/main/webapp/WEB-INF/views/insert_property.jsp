@@ -197,7 +197,7 @@ table tr td {
 													<option value = "10">10층 이상</option>
 											</select></td>
 											<th style="padding-left: 18px">면적</th>
-											<td><input type="text" name ="roomSize" id = "roomSize" class="form-control rounded pull-left" style="width: 150px">
+											<td><input type="text" name ="roomsize" id = "roomsize" class="form-control rounded pull-left" style="width: 150px">
 												<label class="insert_label">평</label>
 											</td>
 										</tr>
@@ -338,13 +338,13 @@ table tr td {
 									<table style="width:100%">
 										<tr class="borderline">
 											<th>방 제목</th>
-											<td><input type="text" id="board_title" name = "board_title" class="form-control rounded pull-width" placeholder="예) 코엑스 5분거리 살기좋은 곳입니다.">
+											<td><input type="text" id="property_title" name = "property_title" class="form-control rounded pull-width" placeholder="예) 코엑스 5분거리 살기좋은 곳입니다.">
 											</td>
 										</tr>
 										<tr class="borderline">
 											<th>방 설명</th>
 											<td>
-											<textarea type="text" class="pull-width" id="board_text" name = "board_text" style="width: 100%; height: 250px" placeholder="방에 대한 설명을 써주세요."></textarea>
+											<textarea type="text" class="pull-width" id="property_text" name = "property_text" style="width: 100%; height: 250px" placeholder="방에 대한 설명을 써주세요."></textarea>
 											</td>
 										</tr>
 									</table>

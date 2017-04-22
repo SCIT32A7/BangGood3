@@ -74,11 +74,12 @@
       });
       
    }
-   $(function(){
-      
-   var gal;
-    var galout;
-  var  light = "data-lightbox='roadtrip'";
+
+   
+   $(function(){      
+  	 var gal;
+  	 var galout;
+ 	 var  light = "data-lightbox='roadtrip'";
       $(".gallery li img").on('click', function() {
          gal = $(this).attr("src");
          $(this).html(function(index, html) {
@@ -109,6 +110,7 @@
    <!--=== title Part ===-->
    <div class="container">
    <div class="container-fluid content g-mt-30">
+  	<form action = "insert_property4" method = "post">
       <div class="row">
          <div class="col-md-2"></div>
          <div class="col-md-8">
@@ -139,7 +141,7 @@
             </div>
             <div class="thumwrap">
                <ul class="gallery">
-                  <c:forEach var = "pic" items = "${picture}">
+                  <c:forEach var = "pic" items = "${up_picture}">
                      <li><img src="download?pic_name=${pic.pic_name}&pic_savename=${pic.pic_savename}"></li>
                   </c:forEach>
                </ul>
@@ -171,7 +173,7 @@
                            <td>
                               무선인터넷 : <c:if test="${maintence.internet == 1}"> O </c:if><c:if test="${maintence.internet == 2}"> X </c:if>
                               케이블TV : <c:if test="${maintence.tvfee == 1}"> O </c:if><c:if test="${maintence.tvfee == 2}"> X </c:if>
-                              청소비 : <c:if test="${maintence.cleaning == 1}"> O </c:if><c:if test="${maintence.cleaning == 2}"> X </c:if>
+                              청소비 : <c:if test="${maintence.cleaning == 1}"> O </c:if><c:if test="${maintence.cleaning == 2}"> X </c:if><br>
                               수도료 : <c:if test="${maintence.waterfee == 1}"> O </c:if><c:if test="${maintence.waterfee == 2}"> X </c:if>
                               가스비 : <c:if test="${maintence.gasfee == 1}"> O </c:if><c:if test="${maintence.gasfee == 2}"> X </c:if>
                               전기세 : <c:if test="${maintence.electronic == 1}"> O </c:if><c:if test="${maintence.electronic == 2}"> X </c:if>
@@ -252,7 +254,7 @@
       <div class="row g-pt-40">
                      <div class="col-md-2"></div>
                      <div class="col-md-4">
-                        <button href="insert_property4" type="submit"
+                        <button type="submit"
                            class="btn-u btn-block rounded insert_btn">방 등록</button>
                      </div>
                      <div class="col-md-4">
@@ -261,6 +263,7 @@
                      </div>
                      <div class="col-md-2"></div>
                   </div>
+       </from>
    </div>
    </div>
    <!--=== End Content Part ===-->

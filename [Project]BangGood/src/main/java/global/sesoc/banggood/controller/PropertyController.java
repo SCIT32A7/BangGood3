@@ -74,6 +74,12 @@ public class PropertyController {
 			property.setProperty_type("투룸");
 		}
 		model.addAttribute("property", property);
+		int total = option.getAir_conditioner() + option.getBed() + option.getCar() 
+					+ option.getCloset() + option.getDesk() + option.getDoorlock() + option.getElectric_stove()
+					+ option.getElevator() + option.getFridge() + option.getGas_stove() + option.getMicrowave()
+					+ option.getPet() + option.getRack() + option.getShoecabinet() +option.getWashing_machine()
+					+ option.getGas_stove();
+		option.setTotal(total);
 		model.addAttribute("option", option);
 		model.addAttribute("maintence", maintence);
 		return "insert_property2";
@@ -84,12 +90,8 @@ public class PropertyController {
 	public String insert_property2(@ModelAttribute("property") Property property,
 			@ModelAttribute("option") Option option, @ModelAttribute("maintence") Maintence maintence,
 			Canvas canvas, Model model) {
-		System.out.println("insert_property2");
-		System.out.println(canvas.toString());
-		//유저 데이터 저장
-		System.out.println(property.getCustid());
-		canvas.setCustid(property.getCustid());
-		
+
+		canvas.setCustid(property.getCustid());		
 		model.addAttribute("canvas", canvas);
 		return "insert_property3";
 	}
@@ -103,12 +105,6 @@ public class PropertyController {
 			MultipartFile uploadFile5, MultipartFile uploadFile6, MultipartFile uploadFile7,
 			MultipartFile uploadFile8, MultipartFile uploadFile9, MultipartFile uploadFile10,
 			MultipartFile uploadFile11, MultipartFile uploadFile12, Model model) {
-		System.out.println("메소드 입장");
-		
-		System.out.println("매물 : " +property.toString());
-		System.out.println("옵션 : " +option.toString());
-		System.out.println("관리비 : " +maintence.toString());
-		System.out.println("평면도: " +canvas.toString());
 		
 		ArrayList<MultipartFile> upload = new ArrayList<>();
 		upload.add(uploadFile1);
@@ -123,7 +119,6 @@ public class PropertyController {
 		upload.add(uploadFile10);
 		upload.add(uploadFile11);
 		upload.add(uploadFile12);
-		System.out.println("파트파일 저장");
 		
 		ArrayList<Picture> insert_pList = new ArrayList<>();
 		
@@ -157,9 +152,7 @@ public class PropertyController {
 				insert_pList.add(pic);
 			}
 		}
-		System.out.println("사진 저장");
 		model.addAttribute("up_picture", insert_pList);
-		System.out.println("사진 세션 삽입");
 		return "insert_property4";
 	}
 
