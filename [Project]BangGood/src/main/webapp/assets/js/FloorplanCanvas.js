@@ -1406,46 +1406,36 @@ function moveTemp(req){
 		return { x : mouseX - fixed, y : mouseY - fixed }
 	}
 
-//미우스 좌표값 반환 (객체의 위치 계산)
+	//미우스 좌표값 반환 (객체의 위치 계산)
 	function getCrossXY(e) {
 		var mouseX = parseInt(e.clientX - offsetX); //client는 마우스의 좌표 - offset은 canvas의 좌표 즉 canvas안에서의 마우스의 좌표
 		var mouseY = parseInt(e.clientY - offsetY);
 		return { x : mouseX - fixed, y : mouseY - fixed }
 	}
 
-//DB에 데이터 저장
-	function saveFloorplan (url) {
+	//다운로드 이미지
+	function downloadFloorplanPng(saved_name) {
 		//다운로드 직전 최신화
 		redrawAll();
-		//저장 이름 지정
-		var saved_name = prompt("저장할 이름을 지정해주세요.", "BangGood");
 		
 		//파일 다운로드 기능
 		var dataURL = canvas.toDataURL("image/png");
 		var newdata = dataURL.replace(/^data:image\/png/, 'data:application/octet-stream');
 		$('a.downloadBtn').attr('download', saved_name+'.png').attr('href', newdata);
-
+	}
+	
+	//DB에 데이터 저장
+	function saveFloorplan (on, url, saved_name) {
+		//다운로드 직전 최신화
+		redrawAll();
+		
 		//데이터 collect
 		var iconArray = iconState.icons;
 		var lineArray = lines;
 		var data = { lines : JSON.stringify(lineArray),
 					 icons : JSON.stringify(iconArray),
 					 saved_name : saved_name };
-		
-		if(url == "insert_property2" ) {
-			console.log("asdf");
-			var $form = $('<form></form>');
-			$form.attr('action', url);
-			$form.attr('method', "POST");
-			$form.appendTo('body');
-			for(var key in data) {
-				var value = data[key];
-				$form.append($('<input type="hidden" value='+value+' name="'+key+'">'));
-			}
-			$form.submit();
-		} 
-		
-		/*else { 
+		if(on) {
 			//서버 저장
 			$.ajax({
 				method : "POST",
@@ -1466,34 +1456,46 @@ function moveTemp(req){
 					alert("서버 등록 실패. 다시 시도하여 주세요.");
 				}
 			});
-		}*/
-	}	
-//DB에서 데이터 로드
-function loadUserData() {
-	var linesArray = [];
-	var iconsArray = [];
-	var datanum = $("#datanum").val();
-		
-	$.ajax({
-		method : "POST",
-		url : "loadCanvas",
-		data : { datanum : datanum },
-		async: false,
-		success : function(data) {
-			var lines = JSON.parse(data.lines);
-			var icons = JSON.parse(data.icons);
-			if(Object.keys(lines).length !== 0) {
-				linesArray = lines;
-			} 
-			if(Object.keys(icons).length !== 0) {
-				iconsArray = icons;
+		} else {
+			//방 등록과정 중 캔버스 서버 임시 저장
+			var $form = $('<form></form>');
+			$form.attr('action', url);
+			$form.attr('method', "POST");
+			$form.appendTo('body');
+			for(var key in data) {
+				var value = data[key];
+				$form.append($('<input type="hidden" value='+value+' name="'+key+'">'));
 			}
-		},
-		error : function() {
-			console.log("loadCanvas error occured");
-			init();
-		}
-	});
+			$form.submit();
+		} 
+	}	
 	
-	return {lines: linesArray, icons: iconsArray};
-}
+	//DB에서 데이터 로드
+	function loadUserData() {
+		var linesArray = [];
+		var iconsArray = [];
+		var datanum = $("#datanum").val();
+			
+		$.ajax({
+			method : "POST",
+			url : "loadCanvas",
+			data : { datanum : datanum },
+			async: false,
+			success : function(data) {
+				var lines = JSON.parse(data.lines);
+				var icons = JSON.parse(data.icons);
+				if(Object.keys(lines).length !== 0) {
+					linesArray = lines;
+				} 
+				if(Object.keys(icons).length !== 0) {
+					iconsArray = icons;
+				}
+			},
+			error : function() {
+				console.log("loadCanvas error occured");
+				init();
+			}
+		});
+		
+		return {lines: linesArray, icons: iconsArray};
+	}

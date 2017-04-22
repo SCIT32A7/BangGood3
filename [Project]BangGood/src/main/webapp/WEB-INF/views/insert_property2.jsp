@@ -71,7 +71,7 @@
 	z-index: -1;
 }
 
-#pencilTab, #furnitureTab, #doorTab  {
+#pencilTab, #furnitureTab, #updownloadTab  {
 	cursor: pointer;
 	-webkit-filter: grayscale(100%);
 	filter: grayscale(100%);
@@ -79,7 +79,7 @@
 	transition: .3s ease-in-out;
 }
 
-#pencilTab:hover, #furnitureTab:hover, #doorTab:hover:hover  {
+#pencilTab:hover, #furnitureTab:hover, #updownloadTab:hover  {
 	-webkit-filter: grayscale(0);
 	filter: grayscale(0);
 }
@@ -212,6 +212,8 @@
 	// 다운로드 관련
 	var mirror; //캔버스 반영 이미지 태그
 	var downloadBtn; //다운로드
+	var isDownloaded = false; //다운로드 유무 확인
+	var saved_name; //저장되는 이미지 이름 및 서버에 등록되는 이름
 	 
 	//이미지 관련 선언..........................
 	var buttonImage;
@@ -391,23 +393,21 @@
 		
 		
 		$("button#save_nextStage").on("click", function(){
-			console.log("as");
-			saveFloorplan("insert_property2");
-			/* console.log("asdf");
-			var $form = $('<form></form>');
-			$form.attr('action', "insert_property2");
-			$form.attr('method', "POST");
-			$form.appendTo('body');
-			for(var key in data) {
-				var value = data[key];
-				$form.append($('<input type="hidden" value='+value+' name="'+key+'">'));
+			if(isDownloaded) { //다음 페이지로 진행
+				saveFloorplan(false, "insert_property2");
+			} else { //다운로드 과정 자동 실행
+				alert("다운로드를 먼저 진행해주세요.");
+				/* var saved_name = prompt("저장할 이름을 지정해주세요.", "BangGood");
+				downloadFloorplanPng(saved_name); */
 			}
-			$form.submit(); */
 		});
 		
+		//이미지 다운로드
 		$("#btn-download").on("click", function() {
-			//saveFloorplan("insert_property2");
-			saveFloorplan("saveCanvas");
+			//저장 이름 지정
+			saved_name = prompt("저장할 이름을 지정해주세요.", "BangGood");
+			downloadFloorplanPng(saved_name);
+			isDownloaded = true;
 		});
 		
 		
@@ -796,18 +796,18 @@
 		
 		$("#pencilTab").on("click", function(){
 			$(".furniture").hide();
-			$(".door").hide();
+			$(".updownload").hide();
 			$(".pencil").show();
 		});
 		$("#furnitureTab").on("click", function(){
 			$(".pencil").hide();
-			$(".door").hide();
+			$(".updownload").hide();
 			$(".furniture").show();
 		});
-		$("#doorTab").on("click", function(){
+		$("#updownloadTab").on("click", function(){
 			$(".pencil").hide();
 			$(".furniture").hide();
-			$(".door").show();
+			$(".updownload").show();
 			
 		});
 		
@@ -818,9 +818,7 @@
 	<div>
 		[ 마우스 상태  ]<input type="text" id="status" />
 		<input type="button" value="초기화" id="clearCanvas" />
-		<a href="#" class="downloadBtn" id="btn-download" download="Floorplan.png">데이터 저장 및 이미지 다운로드</a>
-		<input type="text" name="datanum" id="datanum" />
-		<input type="button" value="평면도 불러오기" id="loadCanvasData" placeholder="평면도 번호를 입력해주세요."/>
+		
 	</div>
 	<div class="row">
 		<div id="menuSidebar" class="col-sm-3" width="250" height="650" style="height:650px">
@@ -831,7 +829,7 @@
 				<div class="tab_switcher">
 					<img id="pencilTab" alt="pencilTab" src="assets/img/icons/pencilTab.png" />
 					<img id="furnitureTab" alt="furnitureTab" src="assets/img/icons/furnitureTab.png" />
-					<img id="doorTab" alt="doorTab" src="assets/img/icons/doorTab.png" />
+					<img id="updownloadTab" alt="updownloadTab" src="assets/img/icons/updownloadTab.png" />
 				</div>
 			</div>
 			<div id="tab">
@@ -860,6 +858,11 @@
 							<option value="700">둔감</option>
 						</select> 
 						<input type="button" value="민감도 조정" />
+						<select id="objectBox">
+							<option value="door">문</option>
+							<option value="window" selected="selected">창문</option>
+						</select>
+						<input type="button" id="object" value="생성" />
 					</div>
 				</div>
 				<div class="furniture" style="display:none;">
@@ -915,12 +918,10 @@
 						<input type="button" class="buttonImage" btn-num="washstand" value="세면대" />
 					</div>
 				</div>
-				<div class="door" style="display:none;">
-					<select id="objectBox">
-							<option value="door">문</option>
-							<option value="window" selected="selected">창문</option>
-					</select>
-					<input type="button" id="object" value="생성" /> 
+				<div class="updownload" style="display:none;">
+					<input type="text" name="datanum" id="datanum" placeholder="평면도 번호를 입력해주세요." />
+					<input type="button" value="평면도 불러오기" id="loadCanvasData" />
+					<h4><a href="#" class="downloadBtn" id="btn-download" download="Floorplan.png">이미지 다운로드</a></h4>
 				</div>
 			</div>
   		</div>
