@@ -9,7 +9,7 @@
 		property_no,
 		</if>
 		custid, saved_name, icons, lines) 
-		VALUES (floorplan_datanum_seq.nextval, 
+		VALUES (seq_floorplan_datanum.nextval, 
 		<if test = "property_no != 0">
 		#{property_no}, 
 		</if>

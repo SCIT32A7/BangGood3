@@ -45,12 +45,93 @@
       #{cleaning}, #{waterfee}, #{gasfee}, #{electronic})   
    </insert>
    
+   <!-- 평면도 내용 입력 -->
+   
+   
+   
    <!-- 매물 사진 입력하기 -->
    <insert id ="insert_picture" parameterType="Picture">
    	insert into picture
    	values
    	(seq_pic_room_no.nextval, #{property_no}, #{pic_division}, #{pic_name}, #{pic_savename})   
    </insert>
+   
+   <!-- 매물 게시 중단 -->
+   <update id="stop_showing" parameterType="_int">
+  	 update property set issoldout = 'FALSE' where property_no = #{property_no}
+   </update>
+   
+   <!-- 매물 게시 재시작 -->
+   <update id="restart_showing" parameterType="_int">
+  	 update property set issoldout = 'TRUE' where property_no = #{property_no}
+   </update>
+   
+   <!--  매물 기본정보 수정 -->
+   <update id="update_property" parameterType="Property">
+    update property set rent_type = #{property_no}, address = #{address}, 
+    address_detail = #{address_detail}, building_name = #{building_name}, 
+    floor = #{floor}, property_type = #{property_type}, deposit = #{deposit},
+	month_fee = #{month_fee}, maintence_fee = #{maintence_fee}, built_year = #{built_year},
+    roomsize = #{roomsize}, property_title = #{property_title},
+    property_text = #{property_text}
+    where property_no = #{property_no}
+   </update>
+   
+   <!--  매물 옵션내용 수정 -->
+   <update id="update_option" parameterType="Option">
+   	update option set pet = #{pet}, car = #{car}, elevator = #{elevator}, 
+   	air_conditioner = #{air_conditioner}, fridge = #{fridge},
+   	washing_machine = #{washing_machine}, gas_stove = #{gas_stove},
+   	electric_stove = #{electric_stove}, microwave = #{microwave}, 
+    desk = #{desk}, rack = #{rack}, bed = #{bed}, 
+    closet = #{closet}, shoecabinet = #{shoecabinet},
+    doorlock = #{doorlock}, wifi = #{wifi}, total = #{total}
+    where property_no = #{property_no}
+   </update>
+   
+	<!--  매물 관리비내역 수정 -->
+   <update id="update_maintence" parameterType="Maintence">
+   	update maintence set internet = #{internet}, tvfee = #{tvfee},
+   	cleaning = #{cleaning}, waterfee = #{waterfee},
+   	gasfee = #{gasfee}, electronic = #{electronic} 	
+   	where property_no = #{property_no}
+   </update>
+  
+   <!--  매물 도면도 수정 -->
+  
+  
+  
+   <!--  매물 사진 수정 -->
+   <update id="update_picture" parameterType="Picture">
+   update picture set pic_division = #{pic_division}, 
+   pic_name = #{pic_name}, pic_savename = #{pic_savename}
+   where property_no = #{property_no}
+   </update>
+ 
+   <!--  매물 기본정보 보기 -->
+   <select id="select_property_property" parameterType="Property">
+   	select * from property where property_no = #{property_no}
+   </select>
+   
+   <!--  매물 옵션내용 보기 -->
+   <select id="select_property_option" parameterType="Option">
+   	select * from roomoption where property_no = #{property_no}
+   </select>
+   
+   <!--  매물 관리비내역 보기 -->
+   <select id="select_property_maintence" parameterType="Maintence">
+    select * from maintence where property_no = #{property_no}
+   </select>
+  
+   <!--  매물 도면도 보기 -->
+  
+  
+  
+  
+   <!--  매물 사진 보기 -->
+   <select id="select_property_picture" parameterType="Picture">
+   	select * from picture where property_no = #{property_no}
+   </select>
    
    <!-- 주소내 모든 매물 검색 -->
    <select id="searchProperty" parameterType="Property_search"
