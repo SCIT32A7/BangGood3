@@ -1423,7 +1423,7 @@ function moveTemp(req){
 		//파일 다운로드 기능
 		var dataURL = canvas.toDataURL("image/png");
 		var newdata = dataURL.replace(/^data:image\/png/, 'data:application/octet-stream');
-		$('a.downloadBtn').attr('download', 'floorplan.png').attr('href', newdata);
+		$('a.downloadBtn').attr('download', saved_name+'.png').attr('href', newdata);
 
 		//데이터 collect
 		var iconArray = iconState.icons;
@@ -1433,7 +1433,7 @@ function moveTemp(req){
 					 saved_name : saved_name };
 		
 		if(url == "insert_property2" ) {
-		/*	console.log("asdf");
+			console.log("asdf");
 			var $form = $('<form></form>');
 			$form.attr('action', url);
 			$form.attr('method', "POST");
@@ -1442,8 +1442,10 @@ function moveTemp(req){
 				var value = data[key];
 				$form.append($('<input type="hidden" value='+value+' name="'+key+'">'));
 			}
-			$form.submit();*/
-		} else { 
+			$form.submit();
+		} 
+		
+		/*else { 
 			//서버 저장
 			$.ajax({
 				method : "POST",
@@ -1457,14 +1459,14 @@ function moveTemp(req){
 					} else if(result == -1) {
 						alert("로그인 후 저장 가능합니다.");
 					} else {
-						alert("저장 실패. 현재 아이디를 찾을 수 없습니다.");
+						alert("저장 실패");
 					}
 				},
 				error : function() {
 					alert("서버 등록 실패. 다시 시도하여 주세요.");
 				}
 			});
-		}
+		}*/
 	}	
 //DB에서 데이터 로드
 function loadUserData() {

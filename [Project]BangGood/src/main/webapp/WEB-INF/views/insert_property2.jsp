@@ -406,6 +406,7 @@
 		});
 		
 		$("#btn-download").on("click", function() {
+			//saveFloorplan("insert_property2");
 			saveFloorplan("saveCanvas");
 		});
 		
