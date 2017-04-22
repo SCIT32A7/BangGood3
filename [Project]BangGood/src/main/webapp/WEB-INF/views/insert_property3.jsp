@@ -180,7 +180,7 @@ function photoRemove(num) {
          </div>
       </div>
       <div style="width:672px; margin:auto;">
-      <form action="insert_property4" method="post" enctype="multipart/form-data">
+      <form action="insert_property3" method="post" enctype="multipart/form-data">
          <table class="photo_line">
             <tr>
                <td>

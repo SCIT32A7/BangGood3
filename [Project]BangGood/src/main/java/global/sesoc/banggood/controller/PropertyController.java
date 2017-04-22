@@ -32,7 +32,7 @@ import global.sesoc.banggood.vo.Property_map;
 import global.sesoc.banggood.vo.Property_search;
 
 @Controller
-@SessionAttributes({ "property", "option", "maintence", "canvas", "picture" })
+@SessionAttributes({"property", "option", "maintence", "canvas", "up_picture"})
 public class PropertyController {
 
 	@Autowired
@@ -98,12 +98,17 @@ public class PropertyController {
 	@RequestMapping(value = "/insert_property3", method = RequestMethod.POST)
 	public String insert_property3(@ModelAttribute("property") Property property,
 			@ModelAttribute("option") Option option, @ModelAttribute("maintence") Maintence maintence,
-			@ModelAttribute("canvas") Canvas canvas, 
-			MultipartFile uploadFile1, MultipartFile uploadFile2, MultipartFile uploadFile3,
-			MultipartFile uploadFile4, MultipartFile uploadFile5, MultipartFile uploadFile6, MultipartFile uploadFile7,
+			@ModelAttribute("canvas") Canvas canvas, MultipartFile uploadFile1, 
+			MultipartFile uploadFile2, MultipartFile uploadFile3, MultipartFile uploadFile4,
+			MultipartFile uploadFile5, MultipartFile uploadFile6, MultipartFile uploadFile7,
 			MultipartFile uploadFile8, MultipartFile uploadFile9, MultipartFile uploadFile10,
 			MultipartFile uploadFile11, MultipartFile uploadFile12, Model model) {
-		System.out.println("1");
+		System.out.println("메소드 입장");
+		
+		System.out.println("매물 : " +property.toString());
+		System.out.println("옵션 : " +option.toString());
+		System.out.println("관리비 : " +maintence.toString());
+		System.out.println("평면도: " +canvas.toString());
 		
 		ArrayList<MultipartFile> upload = new ArrayList<>();
 		upload.add(uploadFile1);
@@ -118,15 +123,14 @@ public class PropertyController {
 		upload.add(uploadFile10);
 		upload.add(uploadFile11);
 		upload.add(uploadFile12);
-
+		System.out.println("파트파일 저장");
+		
 		ArrayList<Picture> insert_pList = new ArrayList<>();
 		
 		for (int i = 0; i < upload.size(); i++) {
-			String savedfile = null;
-			Picture pic = null;
 			if (!upload.get(i).isEmpty()) {
-				pic = new Picture();
-				savedfile = FileService.saveFile(upload.get(i), uploadPath);
+				Picture pic = new Picture();
+				String savedfile = FileService.saveFile(upload.get(i), uploadPath);
 				if(i == 0){
 					pic.setPic_division("main"); // 메인사진
 				}
@@ -153,9 +157,9 @@ public class PropertyController {
 				insert_pList.add(pic);
 			}
 		}
-		System.out.println("2");
-		model.addAttribute("picture", insert_pList);
-		System.out.println("3");
+		System.out.println("사진 저장");
+		model.addAttribute("up_picture", insert_pList);
+		System.out.println("사진 세션 삽입");
 		return "insert_property4";
 	}
 
@@ -163,9 +167,9 @@ public class PropertyController {
 	@RequestMapping(value = "/insert_property4", method = RequestMethod.POST)
 	public String insert_property4(@ModelAttribute("property") Property property,
 			@ModelAttribute("option") Option option, @ModelAttribute("maintence") Maintence maintence,
-			@ModelAttribute("canvas") Canvas canvas, @ModelAttribute("picture") ArrayList<Picture> pList,
+			@ModelAttribute("canvas") Canvas canvas, @ModelAttribute("up_picture") ArrayList<Picture> insert_pList,
 			Model model) {
-		int result = pr.insert_property(property, option, maintence, canvas, pList);
+		int result = pr.insert_property(property, option, maintence, canvas, insert_pList);
 		model.addAttribute("result", result);
 		return "insert_property4";
 	}
