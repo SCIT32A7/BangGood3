@@ -429,9 +429,6 @@
 					success : function(result) {
 						if (result == 1) {
 							alert("평면도 등록에 성공하셨습니다.");
-						} else if(result == "success") {
-							//등록 다음 단계 진행
-							href.location="insert_property3";
 						} else if(result == -1) {
 							alert("로그인 후 저장 가능합니다.");
 						} else {

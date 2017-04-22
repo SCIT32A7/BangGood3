@@ -46,6 +46,9 @@ public class PropertyRepository {
 			result += pd.insert_maintence(maintence);	// 관리비 포함내역 삽입
 			//평면도 내용 삽입
 			result += cd.save(canvas);
+			for(int i=0;i<pList.size();i++){
+				result += pd.insert_picture(pList.get(i));
+			}
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
