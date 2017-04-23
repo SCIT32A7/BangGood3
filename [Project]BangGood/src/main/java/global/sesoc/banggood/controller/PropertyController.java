@@ -167,10 +167,22 @@ public class PropertyController {
 		return "insert_property4";
 	}
 	
-	/*@RequestMapping(value = "/insert_property4", method = RequestMethod.GET)
-	public String insert_property4(){
-			return "insert_property4";
-	}*/
+	//매물 내용 상세읽기, 지도에서 클릭, 장바구니에서 클릭, 등록매물에서 클릭
+	@RequestMapping(value = "/read_property", method = RequestMethod.GET)
+	public String read_property(int property_no, Model model){
+		Property property = pr.select_Property(property_no);
+		System.out.println(property.toString());
+		Option option = pr.select_Option(property_no);
+		System.out.println(option.toString());
+		Maintence maintence = pr.select_Maintence(property_no);
+		System.out.println(maintence.toString());
+		ArrayList <Picture> pList = pr.select_Picture(property_no);
+		model.addAttribute("read_property", property);
+		model.addAttribute("read_option", option);
+		model.addAttribute("read_maintence", maintence);
+		model.addAttribute("read_picture", pList);
+		return "read_property";
+	}
 
 	// 검색 범위 자동완성을 위한 메소드
 	@RequestMapping(value = "/search_point", method = RequestMethod.GET)
@@ -193,6 +205,7 @@ public class PropertyController {
 	@RequestMapping(value = "/intoMap", method = RequestMethod.POST)
 	public @ResponseBody ArrayList<String> intoMap(Property_search search) {
 		ArrayList<String> pList = pr.intoMap(search);
+		System.out.println(pList.size());
 		return pList;
 	}
 
@@ -204,6 +217,7 @@ public class PropertyController {
 		return pm;
 	}
 	
+	// 디비의 사진을 불러오기 위한 메소드
 	@RequestMapping(value = "download", method = RequestMethod.GET)
 	public void fileDown(String pic_name, String pic_savename, HttpServletResponse response) {
 		// 파일을 받기위해 해당 게시글을 받아온다.

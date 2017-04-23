@@ -23,13 +23,13 @@ public class RadarChartController {
 	@Autowired
 	RadarChartRepository repository;
 
-	@RequestMapping(value = "/spiderChart", method = RequestMethod.GET)
+	@RequestMapping(value = "/radarChart", method = RequestMethod.GET)
 	public String listhome() {
 		return "radarChart";
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/radarChart", method = RequestMethod.GET)
+	@RequestMapping(value = "/loadChart", method = RequestMethod.GET)
 	public Map<String, RadarChart> singleRadarChart(int property_no) {
 		Map<String, RadarChart> resultMap = new HashMap<>();
 		int index = 0;

@@ -21,40 +21,92 @@ public class PropertyRepository {
 
 	@Autowired
 	SqlSession query;
-	
+
 	@Autowired
 	CanvasRepository repository;
-	
+
 	// 매물 정보 디비에 삽입하는 메소드
-	public int insert_property(Property property, Option option, Maintence maintence,
-			Canvas canvas, ArrayList<Picture> pList){
+	public int insert_property(Property property, Option option, Maintence maintence, Canvas canvas,
+			ArrayList<Picture> pList) {
 		int result = 0;
 		PropertyDAO pd = query.getMapper(PropertyDAO.class);
 		CanvasDAO cd = query.getMapper(CanvasDAO.class);
 		try {
-			result += pd.insert_property(property);  // 매물 정보 삽입
-			
+			result += pd.insert_property(property); // 매물 정보 삽입
+
 			int property_no = pd.select_recently_property();
-			
+
 			option.setProperty_no(property_no);
 			maintence.setProperty_no(property_no);
 			canvas.setProperty_no(property_no);
-			for(int i=0;i<pList.size();i++){
+			for (int i = 0; i < pList.size(); i++) {
 				pList.get(i).setProperty_no(property_no);
 			}
-			result += pd.insert_option(option);	// 옵션 내용 삽입
-			result += pd.insert_maintence(maintence);	// 관리비 포함내역 삽입
-			//평면도 내용 삽입
+			result += pd.insert_option(option); // 옵션 내용 삽입
+			result += pd.insert_maintence(maintence); // 관리비 포함내역 삽입
+			// 평면도 내용 삽입
 			result += cd.save(canvas);
-			for(int i=0;i<pList.size();i++){
+			for (int i = 0; i < pList.size(); i++) {
 				result += pd.insert_picture(pList.get(i));
 			}
-			
+
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}		
-		return result;		
+		}
+		return result;
+	}
+
+	// 매물 기본정보 불러오기
+	public Property select_Property(int property_no) {
+		PropertyDAO pd = query.getMapper(PropertyDAO.class);
+		Property read_property = null;
+		try {
+			read_property = pd.select_property_property(property_no);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return read_property;
+	}
+
+	// 매물 옵션 불러오기
+	public Option select_Option(int property_no) {
+		PropertyDAO pd = query.getMapper(PropertyDAO.class);
+		Option read_option = null;
+		try {
+			read_option = pd.select_property_option(property_no);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return read_option;
+	}
+
+	// 매물 관리비내역 불러오기
+	public Maintence select_Maintence(int property_no) {
+		PropertyDAO pd = query.getMapper(PropertyDAO.class);
+		Maintence read_maintence = null;
+		try {
+			read_maintence = pd.select_property_maintence(property_no);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return read_maintence;
+	}
+	
+	// 매물 사진정보 불러오기
+	public ArrayList<Picture> select_Picture(int property_no) {
+		PropertyDAO pd = query.getMapper(PropertyDAO.class);
+		ArrayList <Picture> read_picture = new ArrayList<>();
+		try {
+			read_picture = pd.select_property_picture(property_no);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return read_picture;
 	}
 
 	// 검색 범위 자동완성을 위한 메소드

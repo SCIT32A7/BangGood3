@@ -109,27 +109,22 @@
    </update>
  
    <!--  매물 기본정보 보기 -->
-   <select id="select_property_property" parameterType="Property">
+   <select id="select_property_property" resultType="Property" parameterType="_int">
    	select * from property where property_no = #{property_no}
    </select>
    
    <!--  매물 옵션내용 보기 -->
-   <select id="select_property_option" parameterType="Option">
+   <select id="select_property_option" resultType="Option" parameterType="_int">
    	select * from roomoption where property_no = #{property_no}
    </select>
    
    <!--  매물 관리비내역 보기 -->
-   <select id="select_property_maintence" parameterType="Maintence">
+   <select id="select_property_maintence" resultType="Maintence" parameterType="_int">
     select * from maintence where property_no = #{property_no}
-   </select>
-  
-   <!--  매물 도면도 보기 -->
-  
-  
-  
+   </select>  
   
    <!--  매물 사진 보기 -->
-   <select id="select_property_picture" parameterType="Picture">
+   <select id="select_property_picture" resultType="Picture" parameterType="_int">
    	select * from picture where property_no = #{property_no}
    </select>
    

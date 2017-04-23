@@ -112,7 +112,7 @@
 						</div>
 						<div class="col-sm-5">
 							<h2>
-								<a href="#">[ ${property.rent_type} ] ${property.deposit} / ${property.month_fee}</a>
+								<a href="read_property?property_no=${property.property_no}">[ ${property.rent_type} ] ${property.deposit} / ${property.month_fee}</a>
 							</h2>
 							<ul class="list-unstyled list-inline blog-info-v2"
 								style="float: left">
@@ -120,10 +120,10 @@
 							</ul>
 							<p style="float: left">	
 								<br>					
-								<c:if test = "${property.isaccessible == 'TRUE'}">
+								<c:if test = "${property.isaccessible == 'true'}">
 									[ 광고 중 ] <br>
 								</c:if>
-								<c:if test = "${property.isaccessible == 'FALSE'}">
+								<c:if test = "${property.isaccessible == 'false'}">
 									[ 허가 요청 중 ] <br>
 								</c:if>
 								 ${property.property_title}
