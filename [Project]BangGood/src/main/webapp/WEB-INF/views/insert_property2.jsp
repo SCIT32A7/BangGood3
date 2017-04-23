@@ -84,6 +84,10 @@
 	filter: grayscale(0);
 }
 
+.pencilContainer {
+	background:"#76c2af";
+}
+
 </style>
 
 </head>
@@ -834,7 +838,7 @@
 			</div>
 			<div id="tab">
 				<div class="pencil" style="display:none;">
-					<div>
+					<div class="pencilContainer">
 						<select id="selectColor">
 							<option value="black" selected="selected">선 색상: 검정색</option>
 							<option value="grey">선 색상: 회색</option>
@@ -852,6 +856,7 @@
 							<option value="#a6a6a6">방 색상: 회색</option>
 						</select>
 						<input type="button" id="rectangle" value="방 그리기" />
+						
 						<select id="lineStep">
 							<option value="50" selected="selected">미세</option>
 							<option value="300">보통</option>
@@ -867,7 +872,7 @@
 				</div>
 				<div class="furniture" style="display:none;">
 					<div class="common">
-						<img alt="airconditioner" src="assets/img/icons/airconditioner.png" height="150" width="150"/>
+						<img alt="airconditioner" src="assets/img/icons/sidebar/AirConditioner.jpg" />
 						<img alt="airconditioner" src="assets/img/icons/door.png" />
 						<img alt="airconditioner" src="assets/img/icons/desk.png" />
 						<img alt="airconditioner" src="assets/img/icons/bookShelve.png" />
