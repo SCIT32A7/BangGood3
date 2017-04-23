@@ -14,6 +14,7 @@ public class Property_list {
 	private int deposit;
 	private int month_fee;
 	private String isaccessible;
+	private String issoldout;
 	private String pic_name;
 	private String pic_savename;
 
@@ -117,6 +118,14 @@ public class Property_list {
 		this.isaccessible = isaccessible;
 	}
 
+	public String getIssoldout() {
+		return issoldout;
+	}
+
+	public void setIssoldout(String issoldout) {
+		this.issoldout = issoldout;
+	}
+
 	public String getPic_name() {
 		return pic_name;
 	}
@@ -139,7 +148,8 @@ public class Property_list {
 				+ property_title + ", rent_type=" + rent_type + ", custid=" + custid + ", property_inputdate="
 				+ property_inputdate + ", property_hits=" + property_hits + ", reply_count=" + reply_count
 				+ ", property_like=" + property_like + ", deposit=" + deposit + ", month_fee=" + month_fee
-				+ ", isaccessible=" + isaccessible + ", pic_name=" + pic_name + ", pic_savename=" + pic_savename + "]";
+				+ ", isaccessible=" + isaccessible + ", issoldout=" + issoldout + ", pic_name=" + pic_name
+				+ ", pic_savename=" + pic_savename + "]";
 	}
 
 }

@@ -112,7 +112,7 @@
 						</div>
 						<div class="col-sm-5">
 							<h2>
-								<a href="read_property?property_no=${property.property_no}">[ ${property.rent_type} ] ${property.deposit} / ${property.month_fee}</a>
+								<a href="read_property?property_no=${property.property_no}" target="_blank">[ ${property.rent_type} ] ${property.deposit} / ${property.month_fee}</a>
 							</h2>
 							<ul class="list-unstyled list-inline blog-info-v2"
 								style="float: left">
@@ -125,6 +125,12 @@
 								</c:if>
 								<c:if test = "${property.isaccessible == 'false'}">
 									[ 허가 요청 중 ] <br>
+								</c:if>
+								<c:if test = "${property.issoldout == 'true'}">
+									[ 거래 중 ] <br>
+								</c:if>
+								<c:if test = "${property.issoldout == 'false'}">
+									[ 거래 완료 ] <br>
 								</c:if>
 								 ${property.property_title}
 							</p>

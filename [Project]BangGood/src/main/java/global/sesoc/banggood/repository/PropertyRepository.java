@@ -108,6 +108,17 @@ public class PropertyRepository {
 		}
 		return read_picture;
 	}
+	
+	// 댓글 수 증가
+	public void add_hits(int property_no){
+		PropertyDAO pd = query.getMapper(PropertyDAO.class);
+		try {
+			pd.add_property_hits(property_no);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
 	// 검색 범위 자동완성을 위한 메소드
 	public ArrayList<String> search_point(String searchText) {

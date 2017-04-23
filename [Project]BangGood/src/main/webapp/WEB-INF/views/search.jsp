@@ -776,7 +776,8 @@
                            content +=         '<div class="desc">';
                            content +=            '<div class="ellipsis">'+property_map.property_title+'</div>';
                            content +=            '<div class="jibun ellipsis"></div>';
-                           content +=            '<div><a href="" target="_blank" class="link">내용보기</a></div>';
+                           content +=            '<div><a href="read_property?property_no='+property_map.property_no+'" target="_blank" class="link">내용보기</a></div>';
+                           content +=            '<div><a href="#" target="_blank" class="link">임시저장</a></div>';
                            content +=         '</div>';                  
                            content +=      '</div>';
                            content +=    '</div>';

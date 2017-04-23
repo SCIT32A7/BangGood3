@@ -26,6 +26,13 @@ public interface CustomerDAO {
 	// 장바구니 내용 삭제
 	public int delete_cart(int cart_no) throws Exception;
 	
+	
+	// 장바구니 등록 시 좋아요 수 증가
+	public int add_property_like(int property_no) throws Exception;
+		
+	// 장바구니 삭제 시 좋아요 수 감소
+	public int sub_property_like(int property_no) throws Exception;
+	
 	//장바구니 보기
 	public ArrayList<Property_list> see_myCart(String custid) throws Exception;
 }

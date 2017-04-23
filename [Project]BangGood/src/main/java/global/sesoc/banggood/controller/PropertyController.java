@@ -219,12 +219,10 @@ public class PropertyController {
 	//매물 내용 상세읽기, 지도에서 클릭, 장바구니에서 클릭, 등록매물에서 클릭
 	@RequestMapping(value = "/read_property", method = RequestMethod.GET)
 	public String read_property(int property_no, Model model){
+		pr.add_hits(property_no);
 		Property property = pr.select_Property(property_no);
-		System.out.println(property.toString());
 		Option option = pr.select_Option(property_no);
-		System.out.println(option.toString());
 		Maintence maintence = pr.select_Maintence(property_no);
-		System.out.println(maintence.toString());
 		ArrayList <Picture> pList = pr.select_Picture(property_no);
 		model.addAttribute("read_property", property);
 		model.addAttribute("read_option", option);

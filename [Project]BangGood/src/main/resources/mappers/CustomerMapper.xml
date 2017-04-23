@@ -28,12 +28,13 @@
 			pro.property_inputdate property_inputdate, pro.property_hits property_hits,
 			pro.reply_count reply_count, pro.property_like property_like, 
 			pro.deposit deposit, pro.month_fee month_fee,
-			pro.isaccessible isaccessible,
+			pro.isaccessible isaccessible, pro.issoldout issoldout,
 			pic.pic_name pic_name, pic.pic_savename pic_savename 
 		from
 			(select property_no, custid, property_title, rent_type, property_inputdate,
-				property_hits, reply_count, property_like, deposit, month_fee, isaccessible		
-				from property pro where custid = #{custid}) pro,		
+				property_hits, reply_count, property_like, deposit, month_fee,
+				isaccessible, issoldout		
+				from property where custid = #{custid}) pro,		
 			(select property_no, pic_name, pic_savename
 				from picture where pic_division = 'plan') pic
 		where pro.property_no = pic.property_no 
@@ -47,8 +48,18 @@
 	
 	<!-- 장바구니 내역 삭제 -->
 	<delete id="delete_cart" parameterType="_int">
-	 	delete cart where cart_no = #{cart_no}
+	 	delete cart where property_no = #{property_no}
 	</delete>
+	
+	 <!--  장바구나 등록시 좋아요 증가 -->
+   <update id="add_property_like" parameterType="_int">   
+   	update property set property_like = property_like+1 where property_no = #{property_no}
+   </update>   
+   
+   <!-- 좋아요 수 감소 -->
+   <update id="sub_property_like" parameterType="_int">   
+   	update property set property_like = property_like-1 where property_no = #{property_no}
+   </update>      
 	
 	<!-- 장바구니 목록 보기 -->
 	<select id="see_myCart" parameterType="String" resultType="Property_list">

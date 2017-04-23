@@ -47,7 +47,7 @@
 			<textarea type="text" id ="msg_text_c" name = "msg_text_c" 
 			class="pull-width" style="width: 100%; height: 205px"></textarea>
 			<div class="g-mt-20" style="float:right">
-				<a href="javascript:msg_send()" class="btn-u btn-block rounded g-ml-10" style="background-color: #f7be22; width: 120px;" >답장 하기</a> 
+				<a href="javascript:msg_send()" class="btn-u btn-block rounded g-ml-10" style="background-color: #f7be22; width: 120px;" >쪽지 쓰기</a> 
 				<a href="" onclick="msg_close()" class="btn-u btn-block rounded" style="background-color: #f7be22; width: 50px;">닫기</a>
 			</div>		
 		</div>

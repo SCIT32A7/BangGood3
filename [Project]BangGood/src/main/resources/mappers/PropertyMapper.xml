@@ -43,12 +43,8 @@
       (property_no, internet, tvfee, cleaning, waterfee, gasfee, electronic)
       values (#{property_no}, #{internet}, #{tvfee}, 
       #{cleaning}, #{waterfee}, #{gasfee}, #{electronic})   
-   </insert>
-   
-   <!-- 평면도 내용 입력 -->
-   
-   
-   
+   </insert>   
+  
    <!-- 매물 사진 입력하기 -->
    <insert id ="insert_picture" parameterType="Picture">
    	insert into picture
@@ -97,11 +93,7 @@
    	where property_no = #{property_no}
    </update>
   
-   <!--  매물 도면도 수정 -->
-  
-  
-  
-   <!--  매물 사진 수정 -->
+    <!--  매물 사진 수정 -->
    <update id="update_picture" parameterType="Picture">
    update picture set pic_division = #{pic_division}, 
    pic_name = #{pic_name}, pic_savename = #{pic_savename}
@@ -128,6 +120,21 @@
    	select * from picture where property_no = #{property_no}
    </select>
    
+   <!--  보기 시 조회수 증가 -->
+   <update id="add_property_hits" parameterType="_int">   
+   	update property set property_hits = property_hits+1 where property_no = #{property_no}
+   </update>   
+   
+   <!--  댓글 수 증가 -->
+   <update id="add_reply_count" parameterType="_int">   
+    update property set reply_count = reply_count+1 where property_no = #{property_no}
+   </update> 
+   
+   <!-- 댓글 수 감소 -->  
+   <update id="sub_reply_count" parameterType="_int">   
+    update property set reply_count = reply_count-1 where property_no = #{property_no}
+   </update>
+   
    <!-- 주소내 모든 매물 검색 -->
    <select id="searchProperty" parameterType="Property_search"
       resultType="String">
@@ -139,6 +146,7 @@
       and (deposit between #{deposit1} and #{deposit2})
       and (month_fee between #{month_fee1} and #{month_fee2})
       and isaccessible = 'true'
+      and issoldout = 'true'
       <if test="property_type != 'all'"> and property_type = #{property_type} </if>
       <if test="rent_type != 'all'"> and rent_type = #{rent_type} </if>
       <if test="floor != 0">

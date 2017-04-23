@@ -127,9 +127,9 @@ public class CustomerController {
 	}
 	
 	// 장바구니 내역 삭제
-	@RequestMapping(value = "/delete_cart", method = RequestMethod.POST)
-	public String delete_cart(int cart_no){
-		cr.delete_cart(cart_no);
+	@RequestMapping(value = "/delete_cart", method = RequestMethod.GET)
+	public String delete_cart(int property_no){
+		cr.delete_cart(property_no);
 		return "redirect:mypage2";
 	}
 

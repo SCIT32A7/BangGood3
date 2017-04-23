@@ -30,8 +30,16 @@ public interface PropertyDAO {
 	public Property select_property_property(int property_no) throws Exception; 
 	public Option select_property_option(int property_no) throws Exception;
 	public Maintence select_property_maintence(int property_no) throws Exception;
-	
 	public ArrayList<Picture> select_property_picture(int property_no) throws Exception;
+	
+	// 읽기 실행 시 조회수 증가
+	public int add_property_hits(int property_no) throws Exception;
+	
+	// 댓글 등록시 댓글 수 증가
+	public int add_reply_count(int property_no) throws Exception;
+	
+	// 댓글 삭제시 댓글 수 감소
+	public int sub_reply_count(int property_no) throws Exception;
 	
 	//매물정보 수정
 	public int update_property(Property property) throws Exception;  // 매물 수정

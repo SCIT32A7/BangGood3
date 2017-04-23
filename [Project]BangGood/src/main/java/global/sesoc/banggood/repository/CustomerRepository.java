@@ -72,6 +72,7 @@ public class CustomerRepository {
 		int result = 0;
 		try {
 			result =  cd.insert_cart(cartMap);
+			cd.add_property_like((int)cartMap.get("property_no"));			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -80,16 +81,15 @@ public class CustomerRepository {
 	}
 	
 	// 장바구니 내용 삭제
-	public int delete_cart(int cart_no){
+	public void delete_cart(int property_no){
 		CustomerDAO cd = query.getMapper(CustomerDAO.class);
-		int result = 0;
 		try {
-			result = cd.delete_cart(cart_no);
+			cd.delete_cart(property_no);
+			cd.sub_property_like(property_no);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return result;
 	}
 	//장바구니 보기
 	public ArrayList<Property_list> see_myCart(String custid){
