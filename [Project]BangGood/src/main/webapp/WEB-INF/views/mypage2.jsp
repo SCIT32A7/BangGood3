@@ -112,7 +112,7 @@
 						</div>
 						<div class="col-sm-5">
 							<h2>
-								<a href="#">[ ${cart.rent_type} ] ${cart.deposit} / ${cart.month_fee}</a>
+								<a href="read_property?property_no=${cart.property_no}">[ ${cart.rent_type} ] ${cart.deposit} / ${cart.month_fee}</a>
 							</h2>
 							<ul class="list-unstyled list-inline blog-info-v2"
 								style="float: left">
@@ -126,7 +126,7 @@
 						</div>
 						<div class="col-sm-2">
 							<button class="mypage_btn btn-u btn-block rounded">
-								<a href="#">삭제</a>
+								<a href="">삭제</a>
 							</button>
 							<div class="project-share">
 								<ul class="list-inline comment-list-v2 pull-right g-mt-100">

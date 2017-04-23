@@ -1,6 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri = "http://java.sun.com/jsp/jstl/core" %>
+<c:if test = "${not empty result}">
+	<script>
+		if(confirm('장바구니로 이동하시겠습니까?')){
+			location.href = "mypage2";
+		}else{
+			history.go(-1);
+		}
+	</script>
 
+</c:if>
 <!DOCTYPE html>
 <!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->
 <!--[if !IE]><!-->
@@ -277,8 +287,8 @@
                   
                   <hr>
                   <p class="g-mb-10">게시자 : <span>${read_property.custid}</span></p>
-                  <a href="#" class="btn-u btn-u-lg btn-block" type="button">메세지보내기</button></a>
-                  <a href="#" class="btn-u btn-u-lg btn-block" type="button">찜하기</button></a>
+                  <a href="javascript:msg_send()" class="btn-u btn-u-lg btn-block" type="button">메세지보내기</button></a>
+                  <a href="insert_cart?property_no=${read_property.property_no}" class="btn-u btn-u-lg btn-block" type="button">찜하기</button></a>
                </div>
             </div>
 				<!--=== End title right ===-->
@@ -338,6 +348,8 @@
 	var maxRadar;
 	var minRadar;
 	
+	
+	// 그래프 자료 받아오기
  	window.onload = function () {
 		$.ajax({
 			method:"get",
@@ -352,9 +364,6 @@
 		
 	} 
  	
- 	
-	
-	
 	// 사진 확대 및 전환을 위한 메소드
 	$(function(){		
 	var gal;
@@ -550,6 +559,14 @@
 	        el.className = 'on';
 	    } 
 	} 
+	
+	function msg_send() {
+		  window.open("message_send?sender="+${read_property.custid}, "", 'titlebar=no, scrollbars=yes, toolbar=no, location=no, resizable=no, status=no, menubar=yes, width=350, height=400, left=30%, top=40%');
+			this.close();
+	};
+	function msg_close(){
+		this.close();
+	}
 
 	</script>
 	

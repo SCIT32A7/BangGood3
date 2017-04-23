@@ -69,7 +69,7 @@
 				property_hits, reply_count, property_like, deposit, month_fee, isaccessible 		
 				from property pro) pro,		
 			(select property_no, pic_name, pic_savename
-				from picture where pic_division = 'flan') pic 
+				from picture where pic_division = 'plan') pic 
 		where cart.property_no = pro.property_no
 		and cart.property_no = pic.property_no
 	</select>

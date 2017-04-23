@@ -1,6 +1,8 @@
 package global.sesoc.banggood.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -114,8 +116,15 @@ public class CustomerController {
 		return "mypage2";
 	}
 	
-	// 장바구니 등록은 나중에 읽기 하면서 하자
-
+	@RequestMapping(value = "/insert_cart", method = RequestMethod.GET)
+	public String insert_cart(int property_no, Model model){
+		Map <String, Object> cart_info = new HashMap<>();
+		cart_info.put("custid", (String)session.getAttribute("loginId"));
+		cart_info.put("property_no", property_no);
+		int result = cr.insert_cart(cart_info);
+		model.addAttribute("result", result);
+		return "read_property";
+	}
 	
 	// 장바구니 내역 삭제
 	@RequestMapping(value = "/delete_cart", method = RequestMethod.POST)

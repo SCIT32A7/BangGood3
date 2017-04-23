@@ -55,9 +55,7 @@
 		<form id = "send_form">
 		<input type = "hidden" id = "receiver" name = "receiver">
 		<input type = "hidden" id = "msg_text" name = "msg_text">
-		</form>
-	
-			
+		</form>	
 		
 </body>
 </html>
