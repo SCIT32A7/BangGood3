@@ -84,6 +84,10 @@
 	filter: grayscale(0);
 }
 
+.pencilContainer {
+	background:"#76c2af";
+}
+
 </style>
 
 </head>
@@ -834,7 +838,7 @@
 			</div>
 			<div id="tab">
 				<div class="pencil" style="display:none;">
-					<div>
+					<div class="pencilContainer">
 						<select id="selectColor">
 							<option value="black" selected="selected">선 색상: 검정색</option>
 							<option value="grey">선 색상: 회색</option>
@@ -852,6 +856,7 @@
 							<option value="#a6a6a6">방 색상: 회색</option>
 						</select>
 						<input type="button" id="rectangle" value="방 그리기" />
+						
 						<select id="lineStep">
 							<option value="50" selected="selected">미세</option>
 							<option value="300">보통</option>
@@ -867,55 +872,49 @@
 				</div>
 				<div class="furniture" style="display:none;">
 					<div class="common">
-						<img alt="airconditioner" src="assets/img/icons/airconditioner.png" height="150" width="150"/>
-						<img alt="airconditioner" src="assets/img/icons/door.png" />
-						<img alt="airconditioner" src="assets/img/icons/desk.png" />
-						<img alt="airconditioner" src="assets/img/icons/bookShelve.png" />
-						<img alt="airconditioner" src="assets/img/icons/wardrobe.png" />
-						<input type="button" class="buttonImage" btn-num="airconditioner" value="에어컨" />
-						<input type="button" class="buttonImage" btn-num="door" value="대문" />
-						<input type="button" class="buttonImage" btn-num="desk" value="책상" />
-						<input type="button" class="buttonImage" btn-num="bookShelve" value="책장" />
-						<input type="button" class="buttonImage" btn-num="wardrobe" value="옷장" />
+						<img class="buttonImage" alt="airconditioner" src="assets/img/icons/sidebar/AirConditioner.jpg" btn-num="airconditioner"/>
+						<img class="buttonImage" alt="desk" src="assets/img/icons/sidebar/Desk.png" btn-num="desk" />
+						<img class="buttonImage" alt="bookShelve" src="assets/img/icons/sidebar/BookShelve.jpg" btn-num="bookShelve"/>
+						<img class="buttonImage" alt="wardrobe" src="assets/img/icons/sidebar/Wardrobe.jpg" btn-num="wardrobe" />
 					</div>
 					<div class="room">
-						<input type="button" class="buttonImage" btn-num="singleBed" value="싱글침대" />
-						<input type="button" class="buttonImage" btn-num="doubleBed" value="더블침대" />
-						<input type="button" class="buttonImage" btn-num="tv" value="TV" />
-						<input type="button" class="buttonImage" btn-num="desk" value="책상" />
-						<input type="button" class="buttonImage" btn-num="wardrobe" value="옷장" />
+						<img class="buttonImage" alt="singleBed" src="assets/img/icons/sidebar/SingleBed.jpg" btn-num="singleBed" />
+						<img class="buttonImage" alt="doubleBed" src="assets/img/icons/sidebar/DoubleBed.jpg" btn-num="doubleBed" />
+						<img class="buttonImage" alt="tv" src="assets/img/icons/sidebar/TV.jpg" btn-num="tv" />
+						<img class="buttonImage" alt="desk" src="assets/img/icons/sidebar/Desk.jpg" btn-num="desk" />
+						<img class="buttonImage" alt="wardrobe" src="assets/img/icons/sidebar/Wardrobe.jpg" btn-num="wardrobe" />
 					</div>
 					<div calss="laundryRoom">
-						<input type="button" class="buttonImage" btn-num="drum" value="드럼" />
-						<input type="button" class="buttonImage" btn-num="washingMachine" value="통돌이" />
+						<img class="buttonImage" alt="drum" src="assets/img/icons/sidebar/Drum.jpg" btn-num="drum" />
+						<img class="buttonImage" alt="washingMachine" src="assets/img/icons/sidebar/WashingMachine.jpg" btn-num="washingMachine" />
 					</div>
 					<div class="livingRoom">
-						<input type="button" class="buttonImage" btn-num="shoeCloset" value="신발장" />
-						<input type="button" class="buttonImage" btn-num="tv" value="TV" />
-						<input type="button" class="buttonImage" btn-num="sofa1" value="1단 소파" />
-						<input type="button" class="buttonImage" btn-num="sofa2" value="2단 소파" />
-						<input type="button" class="buttonImage" btn-num="sofa4" value="4단 소파" />
-						<input type="button" class="buttonImage" btn-num="diningTable" value="4인 식탁" />
-						<input type="button" class="buttonImage" btn-num="table1" value="바닥 식탁" />
-						<input type="button" class="buttonImage" btn-num="table2" value="의자 식탁" />
+						<img class="buttonImage" alt="shoeCloset" src="assets/img/icons/sidebar/ShoeCloset.jpg" btn-num="shoeCloset" />
+						<img class="buttonImage" alt="tv" src="assets/img/icons/sidebar/TV.jpg" btn-num="tv" />
+						<img class="buttonImage" alt="sofa1" src="assets/img/icons/sidebar/Sofa1.jpg" btn-num="sofa1" />
+						<img class="buttonImage" alt="sofa2" src="assets/img/icons/sidebar/Sofa2.jpg" btn-num="sofa2" />
+						<img class="buttonImage" alt="sofa4" src="assets/img/icons/sidebar/Sofa4.jpg" btn-num="sofa4" />
+						<img class="buttonImage" alt="diningTable" src="assets/img/icons/sidebar/DiningTable.jpg" btn-num="diningTable" />
+						<img class="buttonImage" alt="floorTable" src="assets/img/icons/sidebar/FloorTable.jpg" btn-num="table1" />
+						<img class="buttonImage" alt="chairTable" src="assets/img/icons/sidebar/ChairTable.jpg" btn-num="table2" />
 					</div>
 					<div class="kitchen">
-						<input type="button" class="buttonImage" btn-num="microwave" value="전자레인지" />
-						<input type="button" class="buttonImage" btn-num="oven" value="오븐" />
-						<input type="button" class="buttonImage" btn-num="kitchenSink" value="싱크대" />
-						<input type="button" class="buttonImage" btn-num="singleDoorRefriger" value="일반 냉장고" />
-						<input type="button" class="buttonImage" btn-num="doubleDoorRefriger" value="양문형 냉장고" />
-						<input type="button" class="buttonImage" btn-num="gasStove2" value="2단 가스레인지" />
-						<input type="button" class="buttonImage" btn-num="gasStove4" value="4단 가스레인지" />
-						<input type="button" class="buttonImage" btn-num="stoveVent" value="부엌 환풍기" />
+						<img class="buttonImage" alt="microwave" src="assets/img/icons/sidebar/Microwave.jpg" btn-num="microwave" />
+						<img class="buttonImage" alt="oven" src="assets/img/icons/sidebar/Oven.jpg" btn-num="oven" />
+						<img class="buttonImage" alt="kitchenSink" src="assets/img/icons/sidebar/KitchenSink.jpg" btn-num="kitchenSink" />
+						<img class="buttonImage" alt="singleDoorRefriger" src="assets/img/icons/sidebar/SingleDoorFridge.jpg" btn-num="singleDoorRefriger" />
+						<img class="buttonImage" alt="doubleDoorRefriger" src="assets/img/icons/sidebar/DoubleDoorFridge.jpg" btn-num="doubleDoorRefriger" />
+						<img class="buttonImage" alt="gasStove2" src="assets/img/icons/sidebar/GasStove2.jpg" btn-num="gasStove2" />
+						<img class="buttonImage" alt="gasStove4" src="assets/img/icons/sidebar/GasStove4.jpg" btn-num="gasStove4" />
+						<img class="buttonImage" alt="stoveVent" src="assets/img/icons/sidebar/StoveVent.jpg" btn-num="stoveVent" />
 					</div>
 					<div class="bathroom">
-						<input type="button" class="buttonImage" btn-num="vent" value="환풍기" />
-						<input type="button" class="buttonImage" btn-num="toilet" value="변기" /> 
-						<input type="button" class="buttonImage" btn-num="triBath" value="삼각형 욕조" />
-						<input type="button" class="buttonImage" btn-num="rectBath" value="사각형 욕조" />
-						<input type="button" class="buttonImage" btn-num="shower" value="샤워부스" />
-						<input type="button" class="buttonImage" btn-num="washstand" value="세면대" />
+						<img class="buttonImage" alt="vent" src="assets/img/icons/sidebar/Vent.jpg" btn-num="vent" />
+						<img class="buttonImage" alt="toilet" src="assets/img/icons/sidebar/Toilet.jpg" btn-num="toilet" />
+						<img class="buttonImage" alt="triBath" src="assets/img/icons/sidebar/TriBath.jpg" btn-num="triBath" />
+						<img class="buttonImage" alt="rectBath" src="assets/img/icons/sidebar/RectBath.jpg" btn-num="rectBath" />
+						<img class="buttonImage" alt="shower" src="assets/img/icons/sidebar/Shower.jpg" btn-num="shower" />
+						<img class="buttonImage" alt="washstand" src="assets/img/icons/sidebar/Washstand.jpg" btn-num="washstand" />
 					</div>
 				</div>
 				<div class="updownload" style="display:none;">
