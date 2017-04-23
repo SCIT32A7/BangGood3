@@ -74,15 +74,64 @@ public class PropertyController {
 			property.setProperty_type("투룸");
 		}
 		model.addAttribute("property", property);
-		int total = option.getAir_conditioner() + option.getBed() + option.getCar() 
-					+ option.getCloset() + option.getDesk() + option.getDoorlock() + option.getElectric_stove()
-					+ option.getElevator() + option.getFridge() + option.getGas_stove() + option.getMicrowave()
-					+ option.getPet() + option.getRack() + option.getShoecabinet() +option.getWashing_machine()
-					+ option.getGas_stove();
+		int total = this.getTotal(option);
 		option.setTotal(total);
 		model.addAttribute("option", option);
 		model.addAttribute("maintence", maintence);
 		return "insert_property2";
+	}
+	
+	public int getTotal(Option option){
+		int total=0; 
+		if(option.getAir_conditioner()==1){
+			total += 1;
+		}
+		if(option.getBed()==1){
+			total += 1;
+		}
+		if(option.getCar()==1){
+			total += 1;
+		}
+		if(option.getCloset()==1){
+			total += 1;
+		}
+		if(option.getDesk()==1){
+			total += 1;
+		}
+		if(option.getDoorlock()==1){
+			total += 1;
+		}
+		if(option.getElevator()==1){
+			total += 1;
+		}
+		if(option.getElectric_stove()==1){
+			total += 1;
+		}
+		if(option.getFridge()==1){
+			total += 1;
+		}
+		if(option.getGas_stove()==1){
+			total += 1;
+		}
+		if(option.getMicrowave()==1){
+			total += 1;
+		}
+		if(option.getPet()==1){
+			total += 1;
+		}
+		if(option.getRack()==1){
+			total += 1;
+		}
+		if(option.getShoecabinet()==1){
+			total += 1;
+		}
+		if(option.getWashing_machine()==1){
+			total += 1;
+		}
+		if(option.getGas_stove()==1){
+			total += 1;
+		}
+		return total;
 	}
 
 	// 방등록 2차, 평면도 그리기 페이지로 이동
