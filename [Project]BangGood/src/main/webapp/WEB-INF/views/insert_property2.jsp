@@ -121,6 +121,34 @@
 	
 }
 
+/* tooltip CSS */
+#undo {
+	display: inline-block;
+}
+#undo .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 100%;
+    left: 50%;
+    margin-left: -60px;
+    
+    /* Fade in tooltip - takes 1 second to go from 0% to 100% opac: */
+    opacity: 0;
+    transition: opacity 1s;
+}
+
+#undo:hover .tooltiptext  {
+    visibility: visible;
+    opacity: 1;
+}
+
 </style>
 
 </head>
@@ -157,10 +185,12 @@
              <button class="pull-left g-mr-50 btn-u btn-block rounded insert_btn"
                   style="background-color: #ccc; width:100px;">돌아가기</button>
  			<label for="undo">undo
-            	<input type="image"  id="undo" src="assets/img/icons/sidebar/undo.png"class="do_btn">
-            	</label>
-            	<input type="image"  id="redo" src="assets/img/icons/sidebar/redo.png"class="do_btn">
-            	<label for="redo">redo</label>
+            	<input type="image" id="undo" src="assets/img/icons/sidebar/undo.png"class="do_btn">
+ 				<span class="tooltiptext">되돌리기[단축키:Ctrl+z]</span>
+            </label>
+            	<input type="image" id="redo" src="assets/img/icons/sidebar/redo.png"class="do_btn">
+            <label for="redo">redo
+            </label>
            	<button id="save_nextStage" class="pull-right btn-u btn-block rounded insert_btn"
                   style="width:100px">
                   	다음단계</button> 
@@ -172,9 +202,9 @@
 			</div>
 			<div id="tab_switcher" class="tab_switcher">
 				<ul>
-					<li id="pencilTab" class="tab_switcher_img"> pencil<img alt="pencilTab" src="assets/img/icons/pencilTab.png" /></li>
-					<li id="furnitureTab" class="tab_switcher_img">furniture<img alt="furnitureTab" src="assets/img/icons/furnitureTab.png" /></li>
-					<li id="updownloadTab" class="tab_switcher_img">updownload<img alt="updownloadTab" src="assets/img/icons/updownloadTab.png"/></li>
+					<li id="pencilTab" class="tab_switcher_img">Pencil<img alt="pencilTab" src="assets/img/icons/pencilTab.png" /></li>
+					<li id="furnitureTab" class="tab_switcher_img">Furniture<img alt="furnitureTab" src="assets/img/icons/furnitureTab.png" /></li>
+					<li id="updownloadTab" class="tab_switcher_img">Up&Download<img alt="updownloadTab" src="assets/img/icons/updownloadTab.png"/></li>
 				</ul>
 				<div class="clearfix"></div>
 			</div>
@@ -562,9 +592,11 @@
 			if(isDownloaded) { //다음 페이지로 진행
 				saveFloorplan(false, "insert_property2");
 			} else { //다운로드 과정 자동 실행
-				alert("다운로드를 먼저 진행해주세요.");
-				/* var saved_name = prompt("저장할 이름을 지정해주세요.", "BangGood");
-				downloadFloorplanPng(saved_name); */
+				alert("다운로드가 먼저 진행됩니다.");
+				$("#updownloadTab").trigger("click");
+				//$("#btn-download").trigger("click");
+				//$("button#save_nextStage").trigger("click");
+				
 			}
 		});
 		
@@ -966,6 +998,28 @@
 			$(".furniture").hide();
 			$(".updownload").show();
 		});
+		
+		$("#redo").on("click", function() {
+			if (Redo.length > 0) {
+				getRedo(Redo[Redo.length - 1]);
+				Undo.push(Redo.pop());
+				//console.log(JSON.stringify(Undo));
+				drawAllLines(lines);
+			}
+			updateTemp = null;
+			redrawAll();
+		});
+		$("#undo").on("click", function() {
+			if (Undo.length > 0) {
+				getUndo(Undo[Undo.length - 1]);
+				Redo.push(Undo.pop());
+				//console.log(JSON.stringify(Redo));
+				drawAllLines(lines);
+			}
+			updateTemp = null;
+			redrawAll();
+		});
+	
 	});//  ready end
 
 </script>

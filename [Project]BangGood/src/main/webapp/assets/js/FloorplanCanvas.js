@@ -22,7 +22,7 @@ function init() {
 	img.onload = function() {
 		var width = img.width;
 		var height = img.height;
-		var icon = new Icon(img,949.7, 44.7, (width/1.5), (height/1.5), 0);
+		var icon = new Icon(img,1150, 44.7, (width/1.5), (height/1.5), 0);
 		icon.src = "assets/img/icons/direction.png";
 		iconState.addIcon(icon);
 		iconState.draw();
@@ -1195,7 +1195,7 @@ function drawingObject(order){
 		for(var i=0;i<lines.length;i++){
 			/*console.log(JSON.stringify(lines[i].coordinate));
 			console.log(JSON.stringify(temp));*/
-			if(JSON.stringify(lines[i].coordinate)==JSON.stringify(temp)){
+			if(JSON.stringify(lines[i].coordinate)==JSON.stringify(temp.line)){
 				if(!lines[i].object){
 					lines[i].object = [];
 				}
@@ -1225,7 +1225,7 @@ function findRectLine(rect){
 	if(rect.type=='rect3'){
 		temp=rect.line3.coordinate;
 	}
-	return temp;
+	return {line:temp};
 }
 //수정2
 //오브젝트 수정 objectTemp&&clickE
