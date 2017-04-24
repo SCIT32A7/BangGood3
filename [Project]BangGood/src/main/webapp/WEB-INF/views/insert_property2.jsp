@@ -74,9 +74,10 @@
 .pencilContainer {
 	background:"#76c2af";
 }
+
 .do_btn{
-	width:40px;
-	height:40px;
+	width:60px;
+	height:60px;
 }
 
 .tab_switcher{
@@ -105,6 +106,7 @@
 	-webkit-transition: .3s ease-in-out;
 	transition: .3s ease-in-out;
 }
+
 .tab_switcher_img img{
 	width:43px;
 	height:43px;
@@ -117,57 +119,8 @@
 	filter: grayscale(0);
 	margin-left:10px;
 }
-.furniture div img{
+.furniture div img {
 	margin-bottom:5px;
-	
-}
-
-/* tooltip CSS */
-
-/* Tooltip container */
-.tooltip {
-    position: relative;
-    display: inline-block;
-}
-
-/* Tooltip text */
-.tooltip .tooltiptext {
-    visibility: hidden;
-    width: 120px;
-    background-color: #555;
-    color: #fff;
-    text-align: center;
-    padding: 5px 0;
-    border-radius: 6px;
-
-    /* Position the tooltip text */
-    position: absolute;
-    z-index: 1;
-    bottom: 125%;
-    left: 50%;
-    margin-left: -60px;
-
-    /* Fade in tooltip */
-    opacity: 0;
-    transition: opacity 1s;
-}
-
-/* Tooltip arrow */
-.tooltip .tooltiptext::after {
-    content: "";
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    margin-left: -5px;
-    border-width: 5px;
-    border-style: solid;
-    border-color: #555 transparent transparent transparent;
-}
-
-/* Show the tooltip text when you mouse over the tooltip container */
-.tooltip:hover .tooltiptext {
-    visibility: visible;
-    opacity: 1;
 }
 
 </style>
@@ -203,20 +156,12 @@
       </div><!-- end row -->
       <div class="clearfix"></div>
  		<h3>
-             <button class="pull-left g-mr-50 btn-u btn-block rounded insert_btn"
-                  style="background-color: #ccc; width:100px;">돌아가기</button>
- 			<label for="undo">undo </label>
-            	<button type="image" id="undo" src="assets/img/icons/sidebar/undo.png" class="do_btn tooltipContainer" style="width:50px; height:50px">
- 					<em class="tooltiptext">되돌리기[단축키:Ctrl+z]</em>
- 				</button>
-           
- 
-            	<input type="image" id="redo" src="assets/img/icons/sidebar/redo.png"class="do_btn">
-            <label for="redo">redo
-            </label>
-           	<button id="save_nextStage" class="pull-right btn-u btn-block rounded insert_btn"
-                  style="width:100px">
-                  	다음단계</button> 
+            <button class="pull-left g-mr-50 btn-u btn-block rounded insert_btn" style="background-color: #ccc; width:100px;">돌아가기</button>
+           	<input type="image" id="undo" src="assets/img/icons/sidebar/undo.png" class="do_btn tab_switcher_img" data-toggle="tooltip" title="Undo 단축키 Ctrl+z">
+           	<input type="image" id="redo" src="assets/img/icons/sidebar/redo.png" class="do_btn tab_switcher_img" data-toggle="tooltip" title="Redo 단축키 Ctrl+y">
+            <input type="image" src="assets/img/icons/sidebar/Init.png" alt="초기화" id="clearCanvas" class="do_btn tab_switcher_img" data-toggle="tooltip" title="초기화"/>
+           	<input type="text" id="status" placeholder="마우스 상태 표시" readonly="readonly"/>
+           	<button id="save_nextStage" class="pull-right btn-u btn-block rounded insert_btn" style="width:100px"> 다음단계</button> 
  		</h3>
 	<div class="row">
 		<div id="menuSidebar" class="col-sm-2" width="250" style="height:650px">
@@ -236,8 +181,7 @@
 				<div class="pencil" style="display:none;  overflow: auto;">
 					<div class="pencilContainer">
 					  <div>
-					[ 마우스 상태  ]<input type="text" id="status" />
-					<input type="button" value="초기화" id="clearCanvas" />
+					
 					</div>
 						<select id="selectColor">
 							<option value="black" selected="selected">선 색상: 검정색</option>
@@ -248,6 +192,7 @@
 							<option value="5" selected="selected">굵은 선</option>
 						</select>
 						<input type="button" id="line" value="선 그리기" /> 
+						<br />
 						<select id="fillColor">
 							<option value="#FFFFFF" selected="selected">방 색상: 화이트</option>
 							<option value="black">방 색상: 검정</option>
@@ -255,17 +200,19 @@
 							<option value="#cc9966">방 색상: 황토색</option>
 							<option value="#a6a6a6">방 색상: 회색</option>
 						</select>
+						<br />
 						<input type="button" id="rectangle" value="방 그리기" />
-						
+						<br />
 						<select id="lineStep">
-							<option value="50" selected="selected">미세</option>
-							<option value="300">보통</option>
+							<option value="50" >미세</option>
+							<option value="300" selected="selected">보통</option>
 							<option value="700">둔감</option>
 						</select> 
 						<input type="button" value="민감도 조정" />
+						<br />
 						<select id="objectBox">
-							<option value="door">문</option>
-							<option value="window" selected="selected">창문</option>
+							<option value="door" selected="selected">문</option>
+							<option value="window">창문</option>
 						</select>
 						<input type="button" id="object" value="생성" />
 					</div>
@@ -366,7 +313,6 @@
 
    <!-- custom -->
    <script src="assets/js/custom.js"></script>
-   
    <!-- 평면도 기능 코드 -->
 
 <!-- <script type="text/javascript" src="assets/js/jquery-3.2.0.min.js"></script> -->
@@ -883,7 +829,7 @@
 			/////////
 			downXY = XY;
 			//status 확인
-			$("#status").val("mousedown => " + status);
+			$("#status").val("마우스 상태: " + status);
 		});
 
 		//마우스를 땔시
@@ -913,7 +859,7 @@
 			clickE = false;
 			clickU = true;
 			//status 확인
-			$("#status").val("mouseup => "+status);
+			$("#status").val("마우스 상태: " +status);
 		});
 
 		//마우스 이동시
@@ -963,7 +909,7 @@
 			}
 		////////
 			//status 확인
-			$("#status").val("mousemove =>" +status);
+			$("#status").val("마우스 상태: " +status);
 		});
 		
 		//마우스 휠 이벤트
@@ -1046,6 +992,7 @@
 	});//  ready end
 
 </script>
+
 </head>
 <body>
 	

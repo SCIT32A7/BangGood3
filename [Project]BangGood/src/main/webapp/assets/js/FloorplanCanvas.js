@@ -185,7 +185,7 @@ function linePaint(beginXY, endXY) {
 //사각형 페인트 메소드
 function rectPaint(beginXY, endXY) {
 	var tempXY1 = {x:endXY.x, y:beginXY.y};
-	rectPx1 = getLineLength(beginXY, tempXY1, scale); //....................................
+	rectPx1 = getLineLength(beginXY, tempXY1, scale);
 	var tempXY2 = {x:endXY.x, y:beginXY.y};
 	rectPx2 = getLineLength(tempXY2, endXY, scale);
 	
@@ -257,25 +257,25 @@ function rectPaint(beginXY, endXY) {
 		var beginXY1 = {x : cd1.x0,y : cd1.y0},
 			endXY1 = {x : cd1.x1,y : cd1.y1};
 		var slope1 = getSlope(beginXY1, endXY1);
-		var line1 = {"coordinate" : cd1,"slope" : slope1,"lineWidth" : LW,type : "rect1","color" : color};
+		var line1 = {"coordinate" : cd1,"slope" : slope1,"lineWidth" : LW,type : "rect1","color" : color, "length":rectPx1+"m"};
 
 		var cd2 = {"x0" : endXY.x,"y0" : beginXY.y,"x1" : endXY.x,"y1" : endXY.y};
 		var beginXY2 = {x : cd2.x0,y : cd2.y0},
 			endXY2 = {x : cd2.x1,y : cd2.y1};
 		var slope2 = getSlope(beginXY2, endXY2);
-		var line2 = {"coordinate" : cd2,"slope" : slope2,"lineWidth" : LW,type : "rect2","color" : color};
+		var line2 = {"coordinate" : cd2,"slope" : slope2,"lineWidth" : LW,type : "rect2","color" : color, "length":rectPx2+"m"};
 
 		var cd3 = {"x0" : beginXY.x,"y0" : beginXY.y,"x1" : beginXY.x,"y1" : endXY.y};
 		var beginXY3 = {x : cd3.x0,y : cd3.y0},
 			endXY3 = {x : cd3.x1,y : cd3.y1};
 		var slope3 = getSlope(beginXY3, endXY3);
-		var line3 = {"coordinate" : cd3,"slope" : slope3,"lineWidth" : LW,type : "rect3","color" : color};
+		var line3 = {"coordinate" : cd3,"slope" : slope3,"lineWidth" : LW,type : "rect3","color" : color, "length":rectPx1+"m"};
 
 		var cd4 = {"x0" : beginXY.x,"y0" : endXY.y,"x1" : endXY.x,"y1" : endXY.y};
 		var beginXY4 = {x : cd4.x0,y : cd4.y0},
 			endXY4 = {x : cd4.x1,y : cd4.y1};
 		var slope4 = getSlope(beginXY4, endXY4);
-		var line4 = {"coordinate" : cd4,"slope" : slope4,"lineWidth" : LW,type : "rect4","color" : color};
+		var line4 = {"coordinate" : cd4,"slope" : slope4,"lineWidth" : LW,type : "rect4","color" : color, "length":rectPx2+"m"};
 
 		return {line1 : line1, line2 : line2, line3 : line3, line4 : line4, type : "rect"};
 	}
