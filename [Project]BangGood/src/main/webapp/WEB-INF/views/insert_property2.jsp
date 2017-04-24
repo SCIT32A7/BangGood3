@@ -157,6 +157,7 @@
       <div class="clearfix"></div>
  		<h3>
             <button class="pull-left g-mr-50 btn-u btn-block rounded insert_btn" style="background-color: #ccc; width:100px;">돌아가기</button>
+           	<div id="image_container"> </div>
            	<input type="image" id="undo" src="assets/img/icons/sidebar/undo.png" class="do_btn tab_switcher_img" data-toggle="tooltip" title="Undo 단축키 Ctrl+z">
            	<input type="image" id="redo" src="assets/img/icons/sidebar/redo.png" class="do_btn tab_switcher_img" data-toggle="tooltip" title="Redo 단축키 Ctrl+y">
             <input type="image" src="assets/img/icons/sidebar/Init.png" alt="초기화" id="clearCanvas" class="do_btn tab_switcher_img" data-toggle="tooltip" title="초기화"/>

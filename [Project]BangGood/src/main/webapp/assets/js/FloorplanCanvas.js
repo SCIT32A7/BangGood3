@@ -1466,6 +1466,37 @@ function moveTemp(req){
 		} 
 	}	
 	
+	//DB에서 유저 평면도 이미지 데이터 로드
+	function loadUserDataFloorplanImageList() {
+		$.ajax({
+			url: "images.json",
+			type: "GET",
+			dataType:"json",
+			success : function(data) {
+				createImages(data);
+			}
+		})
+	}
+	
+	// JSON 포멧 데이터 처리
+	function createImages(objImageInfo) {
+		var images = objImageInfo.images;
+		var strDOM = "";
+		for(var i=0; i<images.length; i++) {
+			//n번째 이미지 정보 구하기
+			var image = images[i];
+			
+			//n번째 이미지 패널을 생성
+			strDOM += '<div class="image_panel">';
+			strDOM += '		'<img src="'+image.url+'">';
+			strDOM += '		'<p class="title">'+image.title+''</p>';
+			strDOM += ''</div>';
+		}
+		//이미지 컨테이너에 생성한 이미지 패널들을 추가하기
+		var $imageContainer = $('#image_container');
+			$imageContainer.append(strDOM);
+	}
+	
 	//DB에서 데이터 로드
 	function loadUserData() {
 		var linesArray = [];
@@ -1492,6 +1523,5 @@ function moveTemp(req){
 				init();
 			}
 		});
-		
 		return {lines: linesArray, icons: iconsArray};
 	}
