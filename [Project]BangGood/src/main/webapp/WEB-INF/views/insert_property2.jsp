@@ -673,10 +673,12 @@
 		$(window).keydown(function(e) {
 			//Esc
 			if (e.keyCode == KEYCODE.Esc) {
-				updateTemp = null;												//변경!!!
-				if (status == "line" || status == "rect" || status == "object" || status == "image") {
+				updateTemp = null;
+				if (status!="lineDrawing"&&status != "rectDrawing") {
 					status = 'none';
 					canvas.style.cursor = "Default";
+					iconState.removeIcon(iconState.selection);
+					iconState.selection = null;
 				} else if (status == "lineDrawing") {
 					clickE = false;
 					status = 'line';
@@ -801,20 +803,26 @@
 				XY = upXY;
 			} else if (status == "rect") {
 				status = "rectDrawing";
-			} else if (status == "object") {
-				ObjectIcon(XY,"drawing");
-			} else if (objectTemp && status == 'none'){
-				//ObjectIcon(objectTemp,"select");
-				status = "objectSelect";
+			} 
+			
+			if ((status == 'none'||status == 'objectSelect')&&objectTemp){
 				selectObjectIcon();
-				moveTemp("object");
+				status="objectSelect";
 				redrawAll();
-			} else if (nearest && status == 'none') {
+			}else if (status == "object"||status == 'objectSelect') {
+				drawingObject("create");
+				redrawAll();
+			}
+			else if (nearest && status == 'none') {
 				selectLine();
 				redrawAll();
 			} 
 			if (status == "none" || status == "image") {
-				if(selectIcon(XY))moveTemp("image");
+				if(selectIcon(XY)){
+					//status="image";
+					moveTemp("image");
+				}
+				redrawAll();
 			} 
 			//선택자 행위
 			/////////
@@ -827,8 +835,10 @@
 		$("#rightCanvas").on("mouseup", function(e) {
 			e.preventDefault();
 			if((downXY.x+downXY.y)==(XY.x+XY.y)){
-				status = 'none';
-				clickE = false;
+				if(status!="image"&&!objectTemp){
+					status = 'none';
+					clickE = false;
+				}
 				//return;
 			}
 			if (status == "image") {
@@ -844,16 +854,6 @@
 			} else if (clickE && status == 'rectDrawing') {
 				status = "rect"; //status값 원귀
 				createLine(downXY, XY, 'rectCreate');
-			} else if (clickE && status == 'filling') {
-				status = "fill"; //status값 원귀
-			//createLine(downXY,XY,'rectCreate');
-			}
-			else if(clickE && status == "objectSelect"){
-				if(updateTemp.type=='door'||updateTemp.type=='window'){
-					moveTemp("objectUndo");
-					updateTemp = null;
-					status = "none";
-				}
 			} 
 			clickE = false;
 			clickU = true;
@@ -885,15 +885,14 @@
 				iconCtrl(XY);
 				redrawAll();
 			}
-			if (status == "object") {
-				ObjectIcon(XY, "drawing");
+			else if (status == "object") {
+				drawingObject("draw");
 			}
-			if (clickE && status == "objectSelect") {
-				//console.log(updateTemp);
-				ObjectIcon(updateTemp, "move");
+			else if (clickE && status == "objectSelect") {
+				updateObject(updateTemp);
 			}
 			//line//
-			if (clickE && status == 'lineDrawing') { //그리는 도중의 status값 lineDrawing
+			else if (clickE && status == 'lineDrawing') { //그리는 도중의 status값 lineDrawing
 				//선 길이 출력 기능
 				px = getLineLength(downXY, XY, scale); //....................................
 				ctx.save();
@@ -903,7 +902,7 @@
 				createLine(downXY, XY, 'drawing');
 				ctx.restore();
 			}
-			if (clickE && status == 'rectDrawing') { //그리는 도중의 status값 lineDrawing
+			else if (clickE && status == 'rectDrawing') { //그리는 도중의 status값 lineDrawing
 				//iconState.valid = false;
 				createLine(downXY, XY, 'drawing');
 			}
@@ -917,49 +916,38 @@
 		$("#rightCanvas").on("mousewheel",function(e){
 			e.preventDefault();
 			var E = e.originalEvent.deltaY;
-	    	 redrawAll();
-	         if (E<0) {
+	    	redrawAll();
+	        console.log(status);
+	        if (E<0) {
 	             if(status=="object"){
 	            	 if(count<80) count++;
-		     		 ObjectIcon(XY,"drawing");
+	            	 drawingObject("draw");
+		     		 // ObjectIcon(XY,"drawing");
 	   	         } else if(status=="image" && iconState.selection ){
-			           seta +=5;
-			           iconState.selection.rotateTable = seta;
-			           redrawAll();
-	   	      	 }else if(updateTemp.type=="door"||updateTemp.type=="window"){
-		        	 count = updateTemp.dist;
-	            	 if(count<80){
-	            		 count++;
-	            		 //console.log(count);
-	            	 }
-	            	 ObjectIcon(updateTemp,"select");
+		             seta +=5;
+		             iconState.selection.rotateTable = seta;
+		             redrawAll();
+	   	      	 }else if(status=="object"||status=="objectSelect"&&(updateTemp.type=="door"||updateTemp.type=="window")){
+					 objectResizer(updateTemp,"up");
+	   	      		 
 	             }
-		     }else{
+		    }else{
 		         //wheel = "dwon";
-			             if(status=="object"){
-			            	 if(count>30){
-			            		 count--;
-			            		 console.log(count);
-			            	 }
-			     			 ObjectIcon(XY,"drawing");
-			             }
-			             else if(status=="image" && iconState.selection ){
-			            	 seta -=5;
-			            	 iconState.selection.rotateTable = seta;
-			            	 redrawAll();
-			             }
-			             else if(updateTemp.type=="door"||updateTemp.type=="window"){
-			            	 count = updateTemp.dist;
-			            	 if(count>30){
-			            		 count--;
-			            		 //console.log(count);
-			            	 }
-			            	 ObjectIcon(updateTemp,"select");
-			             }
-			         };
+	             if(status=="object"){
+	            	 if(count>30) count--;
+	            	 drawingObject("draw");
+	     			 //ObjectIcon(XY,"drawing");
+	             }
+	             else if(status=="image" && iconState.selection ){
+	            	 seta -=5;
+	            	 iconState.selection.rotateTable = seta;
+	            	 redrawAll();
+	             }else if(status=="object"||status=="objectSelect"&&(updateTemp.type=="door"||updateTemp.type=="window")){
+	            	 objectResizer(updateTemp,"down");
+	             }
+	        };
 			         
-			    });
-		
+	    });
 		$("#pencilTab").on("click", function(){
 			$("#tab").css("overflow","auto");
 			$(".furniture").hide();
@@ -977,11 +965,9 @@
 			$(".pencil").hide();
 			$(".furniture").hide();
 			$(".updownload").show();
-			
 		});
-		
-	}); //  ready end
-	
+	});//  ready end
+
 </script>
 </head>
 <body>
