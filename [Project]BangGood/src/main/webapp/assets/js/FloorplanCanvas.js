@@ -149,7 +149,7 @@ function drawAllLines(lines) {
 		if (lines[i].object) {
 			var array = lines[i].object;
 			for (var j = 0; j < array.length; j++) {
-				ObjectIcon(array[j], "paint");
+				ObjectIcon(array[j]);
 			}
 		}
 	}
@@ -1059,16 +1059,14 @@ function recreateData(data) {
 
 //라인 선택...........................
 function selectLine() {
-	updateTemp = lineTemp;
-	
+	if(!objectTemp){
+		updateTemp = lineTemp;
+	}
 }
 
 //아이콘 선택
 function selectObjectIcon() {
 	updateTemp = objectTemp;
-	if(updateTemp){
-		ObjectIcon(updateTemp,"select");
-	}
 }
 
 function deleteRect(line) {
@@ -1116,212 +1114,213 @@ function isObjectIcon(object){
 	return (x1 <= mx) && (x2 >= mx) && (y1 <= my) && (y2 >= my);
 }
 
-function ObjectIcon(mouseXY,order){
-	var nearest = findNearestLine(XY);
-	if(nearest)XY = nearest;
-	var slope = '';
-	var xy,dx,dy = '';
-	var dist = count;
-	var locationX, locationY;
-	var a='';
-	var set = 1;
-	var stat='';
-	var alpha = 1.0;
+//선택한 오브젝트가 속한 라인의 각도(기울기)값 구하기
+function findDegree(){
+	var temp = '',a = '';
 	var degree = 0;
-	if(order == "drawing"){
-		locationX = mouseXY.x, locationY = mouseXY.y;
-		stat = objectSelect;
-		var temp = '';
-		if(lineTemp){
-			if(lineTemp.type=='line'){
-				
-				temp = lineTemp.line;
-				degree = Math.atan2(lineTemp.line.y1-lineTemp.line.y0,lineTemp.line.x1-lineTemp.line.x0) * 180 / 3.1415;
-				//console.log(degree);
-				var mx1 = (crossXY.x-lineTemp.line.x0)*Math.cos(90)-(crossXY.y-lineTemp.line.y0)*Math.sin(90)+lineTemp.line.x0;
-				var my1 = (crossXY.x-lineTemp.line.x0)*Math.sin(0)+(crossXY.y-lineTemp.line.y0)*Math.cos(0)+lineTemp.line.y0;
-				var mx2 = (XY.x-lineTemp.line.x0)*Math.cos(90)-(XY.y-lineTemp.line.y0)*Math.sin(90)+lineTemp.line.x0;
-				var my2 = (XY.x-lineTemp.line.x0)*Math.sin(0)+(XY.y-lineTemp.line.y0)*Math.cos(0)+lineTemp.line.y0;
-				//console.log(mx1);
-				//console.log(mx2);
-				if(my1<my2)a="down";
-				else if(my1>my2)a="up";
-				else if(my1=my2){
-					if(mx1<mx2)a="down";
-					else if(mx1>mx2)a="up";
+	if(lineTemp){
+		if(lineTemp.type=='line'){
+			
+			temp = lineTemp.line;
+			degree = Math.atan2(temp.y1-temp.y0,temp.x1-temp.x0) * 180 / 3.1415;
+			//console.log(degree);
+			var mx1 = (crossXY.x-temp.x0)*Math.cos(90)-(crossXY.y-temp.y0)*Math.sin(90)+temp.x0;
+			var my1 = (crossXY.x-temp.x0)*Math.sin(0)+(crossXY.y-temp.y0)*Math.cos(0)+temp.y0;
+			var mx2 = (XY.x-temp.x0)*Math.cos(90)-(XY.y-temp.y0)*Math.sin(90)+temp.x0;
+			var my2 = (XY.x-temp.x0)*Math.sin(0)+(XY.y-temp.y0)*Math.cos(0)+temp.y0;
+			//마우스와 선의 위상차
+			//선의 회전값을 마우스에 대입하여 선과 마우스의 좌표선상의 영점을 일치시킨후 비교
+			if(my1<my2)a="down";
+			else if(my1>my2)a="up";
+			else if(my1=my2){
+				if(mx1<mx2)a="down";
+				else if(mx1>mx2)a="up";
+			}
+			if(a == "down"){
+				degree = degree-180;
+			}
+			delete temp.type;
+		}else if(lineTemp.type.substr(0,4)=="rect"){
+				if((XY.x+XY.y)>(crossXY.x+crossXY.y)){
+					a="up";
+				}else{
+					a="down";
 				}
-				if(a == "down"){
+				//console.log(lineTemp.type);
+  			if(lineTemp.type=='rect1'){
+  				degree = 0; 
+  				temp=lineTemp.line1.coordinate;
+  				if(a == "up"){
 					degree = degree-180;
 				}
-				delete temp.type;
-			}else if(lineTemp.type.substr(0,4)=="rect"){
-					if((XY.x+XY.y)>(crossXY.x+crossXY.y)){
-						a="up";
-					}else{
-						a="down";
-					}
-  				//console.log(lineTemp.type);
-	  			if(lineTemp.type=='rect1'){
-	  				degree = 0; 
-	  				temp=lineTemp.line1.coordinate;
-	  				if(a == "up"){
-						degree = degree-180;
-					}
-	  			}
-	  			if(lineTemp.type=='rect4'){
-	  				degree = 0; temp=lineTemp.line4.coordinate;
-	  				if(a == "up"){
-						degree = degree-180;
-					}
-	  			}
-	  			if(lineTemp.type=='rect2'){
-	  				degree = 90; 
-	  				temp=lineTemp.line2.coordinate;
-	  				if(a == "down"){
-						degree = degree-180;
-					}
-	  			}
-	  			if(lineTemp.type=='rect3'){
-	  				degree = 90; 
-	  				temp=lineTemp.line3.coordinate;
-	  				if(a == "down"){
-						degree = degree-180;
-					}
-	  			}
-			}
-			if(clickE && status=="object"){
-				var object = {x:locationX,y:locationY,a:a,set:set,type:stat,dist:dist,degree:degree,alpha:0.0};
-				//console.log("X0"+object.x);
-				for(var i=0;i<lines.length;i++){
-					if(JSON.stringify(lines[i].coordinate)==JSON.stringify(temp)){
-						if(!lines[i].object){
-							lines[i].object = [];
-						}
-						object.index = i;
-						lines[i]['object'].push(object);
-						var Temp = object;
-						inputUndo(Temp,"create");
-					}
+  			}
+  			if(lineTemp.type=='rect4'){
+  				degree = 0; temp=lineTemp.line4.coordinate;
+  				if(a == "up"){
+					degree = degree-180;
 				}
-				status = 'none';
+  			}
+  			if(lineTemp.type=='rect2'){
+  				degree = 90; 
+  				temp=lineTemp.line2.coordinate;
+  				if(a == "down"){
+					degree = degree-180;
+				}
+  			}
+  			if(lineTemp.type=='rect3'){
+  				degree = 90; 
+  				temp=lineTemp.line3.coordinate;
+  				if(a == "down"){
+					degree = degree-180;
+				}
+  			}
+		}
+	}
+	return {degree:degree,a:a};
+}
+//수정2
+function drawingObject(order){
+	//status = "objectDraw";
+	var table = findDegree();
+	var object = {x:XY.x,y:XY.y,a:table.a,type:objectSelect,dist:count,degree:table.degree,alpha:0.0};
+	if(order == "draw"){
+		object.alpha = 1.0;
+		ObjectIcon(object);
+	}
+	else if(order == "create"){
+		var temp = lineTemp;
+		object.alpha = 0.0;
+		if(lineTemp.type.substr(0,4)=="rect")temp = findRectLine(temp);
+		delete temp.type;
+		for(var i=0;i<lines.length;i++){
+			/*console.log(JSON.stringify(lines[i].coordinate));
+			console.log(JSON.stringify(temp));*/
+			if(JSON.stringify(lines[i].coordinate)==JSON.stringify(temp)){
+				if(!lines[i].object){
+					lines[i].object = [];
+				}
+				if(nearest){
+					object.index = i;
+					lines[i]['object'].push(object);
+					inputUndo(object,"create");
+				}
 			}
 		}
-		}else if(order == "paint"){
-		//console.log(mouseXY);
-			locationX = mouseXY.x; 
-			locationY = mouseXY.y;
-			a = mouseXY.a;
-			set = mouseXY.set;
-			stat = mouseXY.type;
-			dist = mouseXY.dist;
-			degree = mouseXY.degree;
-			alpha = mouseXY.alpha;
-		}else if(order == "select"){
-			locationX = mouseXY.x; 
-			locationY = mouseXY.y;
-			//if(lineTemp)lineTemp=null;
-			degree = mouseXY.degree;
-			a = mouseXY.a;
-			set = mouseXY.set;
-			stat = mouseXY.type;
-			dist = mouseXY.dist= count;
-			alpha = 1;
-			/*mouseXY.x = XY.x;
-			mouseXY.y = XY.y;*/
-			/*if(lineTemp){
-				if(lineTemp.type=='line'){
-					temp = lineTemp.line;
-					degree = Math.atan2(lineTemp.line.y1-lineTemp.line.y0,lineTemp.line.x1-lineTemp.line.x0) * 180 / 3.1415;
-				}
-			}*/
-		}else if(order == "move"){
-			locationX = XY.x;
-			locationY = XY.y;
-			if(nearest){
-				if(lineTemp){
-					if(lineTemp.type=='line'){
-						
-						temp = lineTemp.line;
-						degree = Math.atan2(lineTemp.line.y1-lineTemp.line.y0,lineTemp.line.x1-lineTemp.line.x0) * 180 / 3.1415;
-						//console.log(degree);
-						var mx1 = (crossXY.x-lineTemp.line.x0)*Math.cos(90)-(crossXY.y-lineTemp.line.y0)*Math.sin(90)+lineTemp.line.x0;
-						var my1 = (crossXY.x-lineTemp.line.x0)*Math.sin(0)+(crossXY.y-lineTemp.line.y0)*Math.cos(0)+lineTemp.line.y0;
-						var mx2 = (XY.x-lineTemp.line.x0)*Math.cos(90)-(XY.y-lineTemp.line.y0)*Math.sin(90)+lineTemp.line.x0;
-						var my2 = (XY.x-lineTemp.line.x0)*Math.sin(0)+(XY.y-lineTemp.line.y0)*Math.cos(0)+lineTemp.line.y0;
-						//console.log(mx1);
-						//console.log(mx2);
-						if(my1<my2)a="down";
-						else if(my1>my2)a="up";
-						else if(my1=my2){
-							if(mx1<mx2)a="down";
-							else if(mx1>mx2)a="up";
-						}
-						if(a == "down"){
-							degree = degree-180;
-						}
-						delete temp.type;
-					}else if(lineTemp.type.substr(0,4)=="rect"){
-							if((XY.x+XY.y)>(crossXY.x+crossXY.y)){
-								a="up";
-							}else{
-								a="down";
-							}
-		  				//console.log(lineTemp.type);
-			  			if(lineTemp.type=='rect1'){
-			  				degree = 0; 
-			  				temp=lineTemp.line1.coordinate;
-			  				if(a == "up"){
-								degree = degree-180;
-							}
-			  			}
-			  			if(lineTemp.type=='rect4'){
-			  				degree = 0; temp=lineTemp.line4.coordinate;
-			  				if(a == "up"){
-								degree = degree-180;
-							}
-			  			}
-			  			if(lineTemp.type=='rect2'){
-			  				degree = 90; 
-			  				temp=lineTemp.line2.coordinate;
-			  				if(a == "down"){
-								degree = degree-180;
-							}
-			  			}
-			  			if(lineTemp.type=='rect3'){
-			  				degree = 90; 
-			  				temp=lineTemp.line3.coordinate;
-			  				if(a == "down"){
-								degree = degree-180;
-							}
-			  			}
-					}
-				}
-				mouseXY.x = XY.x;
-				mouseXY.y = XY.y;
-				mouseXY.degree = degree;
-				/*mouseXY.dist = dist;
-				mouseXY.set = set;
-				mouseXY.a = a;*/
-			}
+		//status = 'none';
+	}
+	
+}
+//수정2
+function findRectLine(rect){
+	var temp;
+	if(rect.type=='rect1'){
+		temp=rect.line1.coordinate;
+	}
+	if(rect.type=='rect4'){
+		temp=rect.line4.coordinate;
+	}
+	if(rect.type=='rect2'){
+		temp=rect.line2.coordinate;
+	}
+	if(rect.type=='rect3'){
+		temp=rect.line3.coordinate;
+	}
+	return temp;
+}
+//수정2
+//오브젝트 수정 objectTemp&&clickE
+function updateObject(object){
+	var index = '';
+	for(var i=0;i<lines[object.index].object.length;i++){
+		if(JSON.stringify(object)==JSON.stringify(lines[object.index].object[i])){
+			index = i;
+			console.log("Ds");
 		}
-	//console.log((Math.atan(slope)-a)*(180/3.14));
- 	//console.log(slope);
+	}
+	var temp = {x:object.x,y:object.y,a:object.a,type:object.type,dist:object.dist,degree:object.degree,alpha:0.0};
+	temp.x = XY.x;
+	temp.y = XY.y;
+	var table = findDegree();
+	temp.degree = table.degree;
+	temp.a = table.a;
+	temp.alpha = 1.0;
+	ObjectIcon(temp);
+	//tamp
+	if(nearest){
+		//console.log(nearest);
+		lines[object.index].object[index].x = temp.x;
+		lines[object.index].object[index].y = temp.y;
+		lines[object.index].object[index].degree = temp.degree;
+		lines[object.index].object[index].a = temp.a;
+		lines[object.index].object[index].alpha = 0.0;
+	}
+	
+}
+//수정2
+//오브젝트 아이콘 크기수정
+function objectResizer(object,key){
+	var index = '';
+	for(var i=0;i<lines[object.index].object.length;i++){
+		if(JSON.stringify(object)==JSON.stringify(lines[object.index].object[i])){
+			index = i;
+		}
+	}
+	if(key=="up" && object.dist<80){
+		object.dist++;
+	}else if(key=="down" && object.dist>30){
+		object.dist--;
+	}
+	lines[object.index].object[i]=object;
+} 
+
+//수정2
+function ObjectIcon(object,select){
+	//var nearest = findNearestLine(XY);
+	//if(nearest)XY = nearest;
+	//var slope = '';
+	//var xy,dx,dy = '';
+	var dist = object.dist;
+	var locationX = object.x, 
+		locationY = object.y;
+	var a = object.a;
+	//var set = 1;
+	var type = object.type;
+	var alpha = object.alpha;
+	if(select=="select")alpha = 1.0;
+	var degree = object.degree;
 	/*Layer 0 - Code Starts Here*/
-	ctx.save();
-	ctx.beginPath();
-	ctx.strokeStyle="#f0f0f0";
-	ctx.lineWidth=1;
-	ctx.translate(locationX, locationY);
-	ctx.rotate(degree*Math.PI/180);
-	ctx.rect(-dist/2,-5,dist,10);
-	ctx.fillStyle = "#f0f0f0";
-	ctx.fill();
-	ctx.stroke();
- 	/*Layer 1 - Code Starts Here*/
- 	if(stat=="door"){
+	if(type=="window"){
+		ctx.save();
+		ctx.beginPath();
+		ctx.strokeStyle="#f0f0f0";
+		ctx.lineWidth=1;
+		ctx.translate(locationX, locationY);
+		ctx.rotate(degree*Math.PI/180);
+		ctx.rect(-dist/2,-5,dist,10);
+		ctx.fillStyle = "#f0f0f0";
+		ctx.fill();
+		ctx.stroke();
+		ctx.restore();
+		//objects selectline
+		ctx.save();
+		ctx.translate(locationX, locationY);
+		ctx.rotate(degree*Math.PI/180);
+		ctx.rect(-dist/2-5,-10,dist+10,20);
+		ctx.setLineDash([ 5, 3 ]);
+		ctx.strokeStyle="#333333";
+		ctx.lineWidth=0.5;
+		ctx.globalAlpha = alpha;
+		ctx.stroke();
+		ctx.restore();
+	}
+	/*Layer 1 - Code Starts Here*/
+	if(type=="door"){
+		ctx.save();
 		ctx.beginPath();
 		ctx.strokeStyle="#333333";
 		ctx.lineWidth=1;
+		ctx.translate(locationX, locationY);
+		ctx.rotate(degree*Math.PI/180);
 		ctx.moveTo(-dist/2,0);
 		ctx.lineTo(-dist/2,(dist+5));
 		ctx.stroke();
@@ -1331,6 +1330,18 @@ function ObjectIcon(mouseXY,order){
 		ctx.lineWidth=1;
 		ctx.moveTo(-dist/2,(dist+5));
 		ctx.quadraticCurveTo(dist/2,(dist+5),dist/2,0);
+		ctx.stroke();
+		ctx.restore();
+		//Layer 3
+		ctx.save();
+		ctx.beginPath();
+		ctx.strokeStyle="#f0f0f0";
+		ctx.lineWidth=1;
+		ctx.translate(locationX, locationY);
+		ctx.rotate(degree*Math.PI/180);
+		ctx.rect(-dist/2,-5,dist,10);
+		ctx.fillStyle = "#f0f0f0";
+		ctx.fill();
 		ctx.stroke();
 		ctx.restore();
 		//objects selectline
@@ -1344,22 +1355,7 @@ function ObjectIcon(mouseXY,order){
 		ctx.globalAlpha = alpha;
 		ctx.stroke();
 		ctx.restore();
-		return;
- 	}
-	ctx.restore();
-	//objects selectline
-	ctx.save();
-	//ctx.beginPath();
-	ctx.translate(locationX, locationY);
-	//ctx.rotate(Math.atan2(dy,dx));
-	ctx.rotate(degree*Math.PI/180);
-	ctx.rect(-dist/2-5,-10,dist+10,20);
-	ctx.setLineDash([ 5, 3 ]);
-	ctx.strokeStyle="#333333";
-	ctx.lineWidth=0.5;
-	ctx.globalAlpha = alpha;
-	ctx.stroke();
-	ctx.restore();
+	}
 };
 
 //수정
