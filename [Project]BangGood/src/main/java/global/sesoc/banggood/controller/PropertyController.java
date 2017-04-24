@@ -230,6 +230,20 @@ public class PropertyController {
 		model.addAttribute("read_picture", pList);
 		return "read_property";
 	}
+	
+	// 게시매물 광고 중단
+	@RequestMapping(value = "/stop_showing", method = RequestMethod.GET)
+	public String stop_showing(int property_no){
+		pr.stop_showing(property_no);
+		return "redirect:mypage";
+	}
+	
+	// 중단 중 매물 광고 개시
+	@RequestMapping(value = "/restart_showing", method = RequestMethod.GET)
+	public String restart_showing(int property_no){
+		pr.restart_showing(property_no);
+		return "redirect:mypage";
+	}
 
 	// 검색 범위 자동완성을 위한 메소드
 	@RequestMapping(value = "/search_point", method = RequestMethod.GET)

@@ -124,7 +124,12 @@ public class PropertyRepository {
 	public ArrayList<String> search_point(String searchText) {
 		ArrayList<String> adList = new ArrayList<>();
 		PropertyDAO pd = query.getMapper(PropertyDAO.class);
-		adList = pd.getPosition(searchText);
+		try {
+			adList = pd.getPosition(searchText);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return adList;
 	}
 
@@ -132,7 +137,13 @@ public class PropertyRepository {
 	public Position search_town(String searchaddress) {
 		Position position = new Position();
 		PropertyDAO pd = query.getMapper(PropertyDAO.class);
-		String town = pd.get_town(searchaddress);
+		String town = null;
+		try {
+			town = pd.get_town(searchaddress);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		position.setPosition_address(town);
 		return position;
 	}
@@ -141,7 +152,12 @@ public class PropertyRepository {
 	public ArrayList<String> intoMap(Property_search search) {
 		ArrayList<String> pList = new ArrayList<>();
 		PropertyDAO pd = query.getMapper(PropertyDAO.class);
-		pList = pd.searchProperty(search);
+		try {
+			pList = pd.searchProperty(search);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return pList;
 	}
 
@@ -149,8 +165,38 @@ public class PropertyRepository {
 	public Property_map property_map(String address) {
 		PropertyDAO pd = query.getMapper(PropertyDAO.class);
 		Property_map pm = null;
-		pm = pd.readProperty_map(address);
+		try {
+			pm = pd.readProperty_map(address);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return pm;
 	}
+	
+	// 게시 중단
+	public int stop_showing(int property_no){
+		PropertyDAO pd = query.getMapper(PropertyDAO.class);
+		int result = 0;
+		try {
+			result = pd.stop_showing(property_no);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
+	}
 
+	// 게시 재게
+	public int restart_showing(int property_no){
+		PropertyDAO pd = query.getMapper(PropertyDAO.class);
+		int result = 0;
+		try {
+			result = pd.restart_showing(property_no);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
+	}
 }

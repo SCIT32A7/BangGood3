@@ -1,358 +1,365 @@
 /* main */
 .main_head {
-	position: relative;
+   position: relative;
 }
 
 .main_head:after {
-	width: 70px;
-	height: 10px;
-	position: absolute;
-	background: #f7b70b;
-	content: "";
-	top: 100px;
-	left: 50%;
-	margin-left: -35px;
+   width: 70px;
+   height: 10px;
+   position: absolute;
+   background: #f7b70b;
+   content: "";
+   top: 100px;
+   left: 50%;
+   margin-left: -35px;
 }
 
 .main_name {
-	color: #f7b70b;
-	text-transform: uppercase;
-	font-size: 12px;
-	font-weight: bold;
+   color: #f7b70b;
+   text-transform: uppercase;
+   font-size: 12px;
+   font-weight: bold;
 }
 
 .main_title {
-	color: #000;
-	text-transform: uppercase;
-	font-size: 40px;
-	font-weight: bold;
+   color: #000;
+   text-transform: uppercase;
+   font-size: 40px;
+   font-weight: bold;
 }
 
 .main_text {
-	color: #999;
-	font-size: 16px;
-	max-width: 60%;
-	margin-left: auto;
-	margin-right: auto;
+   color: #999;
+   font-size: 16px;
+   max-width: 60%;
+   margin-left: auto;
+   margin-right: auto;
 }
 
 .Carousel {
-	width: 100%;
+   width: 100%;
 }
 
 .item {
-	width: 100%;
-	height: 370px;
-	background-color: #fff;
+   width: 100%;
+   height: 370px;
+   background-color: #fff;
 }
 
 .item h1 {
-	line-height: 400px;
-	text-align: center;
-	font-size: 40px;
-	color: white;
+   line-height: 400px;
+   text-align: center;
+   font-size: 40px;
+   color: white;
 }
 
 .floor_title {
-	text-transform: uppercase;
-	color: #333;
-	font-weight: bold;
-	font-size: 26px;
-	padding-top: 5px;
+   text-transform: uppercase;
+   color: #333;
+   font-weight: bold;
+   font-size: 26px;
+   padding-top: 5px;
 }
 
 .floor_sub {
-	font-size: 16px;
+   font-size: 16px;
 }
 
 .floor_text {
-	color: #333;
-	opacity: 0.8;
-	font-size: 16px;
-	max-width: 60%;
-	margin-left: auto;
-	margin-right: auto;
+   color: #333;
+   opacity: 0.8;
+   font-size: 16px;
+   max-width: 60%;
+   margin-left: auto;
+   margin-right: auto;
 }
 
 .floor-lg {
-	padding-top: 25px;
-	padding-bottom: 25px;
+   padding-top: 25px;
+   padding-bottom: 25px;
 }
 
 .owl-prev {
-	display: block;
-	width: 10px;
-	height: 10px;
-	background-color: red;
-	z-index: 9999;
+   display: block;
+   width: 10px;
+   height: 10px;
+   background-color: red;
+   z-index: 9999;
 }
 /* search */
 .search {
-	width: 350px;
-	margin-top: 50px;
-	float: left;
-	position: absolute;
-	top: -2%;
-	left: 28%;
-	z-index: 10000;
+   width: 350px;
+   margin-top: 50px;
+   float: left;
+   position: absolute;
+   top: -2%;
+   left: 28%;
+   z-index: 10000;
 }
 
 .search_container {
-	position: relative;
-	width: 100%;
-	background: #ffff;
-	height: auto; ! important;
-	height: 100%;
-	min-height: 100%
+   position: relative;
+   width: 100%;
+   background: #ffff;
+   height: auto; ! important;
+   height: 100%;
+   min-height: 100%
 }
 
 .search_form {
-	float: left;
-	font-size: 14px;
-	line-height: 1.42857143;
-	color: #555;
-	background-color: #fff;
-	background-image: none;
-	border: 1px solid #ccc;
-	border-radius: 4px !important;
-	padding: 10px;
-	position: relative;
+   float: left;
+   font-size: 14px;
+   line-height: 1.42857143;
+   color: #555;
+   background-color: #fff;
+   background-image: none;
+   border: 1px solid #ccc;
+   border-radius: 4px !important;
+   padding: 10px;
+   position: relative;
 }
 
 .search_label {
-	font-weight: normal;
-	position: absolute;
-	top: 25%;
+   font-weight: normal;
+   position: absolute;
+   top: 25%;
 }
 
 .search_title {
-	background-color: #f7be22;
+   background-color: #f7be22;
 }
 
 .searchbox2 {
-	float: left;
-	border-right: 1px solid #f7be22;
+   float: left;
+   border-right: 1px solid #f7be22;
 }
 
 .search_table {
-	display: table;
-	border-collapse: separate;
-	border-spacing: 2px;
-	border-color: #f7be22;
+   display: table;
+   border-collapse: separate;
+   border-spacing: 2px;
+   border-color: #f7be22;
 }
 /* searchboard */
 .searchboard_title {
-	text-align: center;
-	position: relative;
-	background: url(../img/bg/30.jpg) no-repeat center;
+   text-align: center;
+   position: relative;
+   background: url(../img/bg/30.jpg) no-repeat center;
 }
 
 .searchboard_title2 {
-	text-align: center;
-	position: relative;
-	background: url(../img/bg/25.jpg) no-repeat center;
+   text-align: center;
+   position: relative;
+   background: url(../img/bg/25.jpg) no-repeat center;
 }
 
 .searchboard_title-in {
-	padding: 80px 0;
-	position: relative;
+   padding: 80px 0;
+   position: relative;
 }
 
 .searchboard_title-in h1 {
-	color: #333;
-	text-transform: uppercase;
+   color: #333;
+   text-transform: uppercase;
 }
 /* mypage button */
 .mypage_btn {
-	background-color: #fff;
-	color: #333;
-	width: 80px;
-	border: 1px solid #f7be22;
-	margin-bottom: 5px;
+   background-color: #fff;
+   color: #333;
+   width: 80px;
+   border: 1px solid #f7be22;
+   margin-bottom: 5px;
 }
 
 .mypage_btn:hover {
-	background-color: #f7be22;
-	color: #fff;
+   background-color: #f7be22;
+   color: #fff;
 }
 
 .mypage_modify_btn {
-	width: 300px;
-	margin: auto;
-	background-color: #f7be22;
-	color: #fff;
-	margin-top: 20px;
+   width: 300px;
+   margin: auto;
+   background-color: #f7be22;
+   color: #fff;
+   margin-top: 20px;
 }
 /* insert_property */
 .insert_head {
-	position: relative;
+   position: relative;
 }
 
 .insert_name {
-	color: #f7b70b;
-	text-transform: uppercase;
-	font-size: 12px;
-	font-weight: bold;
+   color: #f7b70b;
+   text-transform: uppercase;
+   font-size: 12px;
+   font-weight: bold;
 }
 
 .insert_title {
-	color: #000;
-	text-transform: uppercase;
-	font-size: 28px;
-	padding-bottom: 10px;
+   color: #000;
+   text-transform: uppercase;
+   font-size: 28px;
+   padding-bottom: 10px;
 }
 
 .insert_text {
-	color: #999;
-	font-size: 16px;
-	max-width: 60%;
-	margin-left: auto;
-	margin-right: auto;
+   color: #999;
+   font-size: 16px;
+   max-width: 60%;
+   margin-left: auto;
+   margin-right: auto;
 }
 
 .insert_box_bg {
-	background: rgb(244, 237, 231); /* Old browsers */
-	background: -moz-linear-gradient(left, rgba(244, 237, 231, 1) 1%,
-		rgba(247, 247, 247, 1) 51%, rgba(244, 237, 231, 1) 100%);
-	/* FF3.6-15 */
-	background: -webkit-linear-gradient(left, rgba(244, 237, 231, 1) 1%,
-		rgba(247, 247, 247, 1) 51%, rgba(244, 237, 231, 1) 100%);
-	/* Chrome10-25,Safari5.1-6 */
-	background: linear-gradient(to right, rgba(244, 237, 231, 1) 1%,
-		rgba(247, 247, 247, 1) 51%, rgba(244, 237, 231, 1) 100%);
-	/* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f4ede7',
-		endColorstr='#f4ede7', GradientType=1); /* IE6-9 */
+   background: rgb(244, 237, 231); /* Old browsers */
+   background: -moz-linear-gradient(left, rgba(244, 237, 231, 1) 1%,
+      rgba(247, 247, 247, 1) 51%, rgba(244, 237, 231, 1) 100%);
+   /* FF3.6-15 */
+   background: -webkit-linear-gradient(left, rgba(244, 237, 231, 1) 1%,
+      rgba(247, 247, 247, 1) 51%, rgba(244, 237, 231, 1) 100%);
+   /* Chrome10-25,Safari5.1-6 */
+   background: linear-gradient(to right, rgba(244, 237, 231, 1) 1%,
+      rgba(247, 247, 247, 1) 51%, rgba(244, 237, 231, 1) 100%);
+   /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f4ede7',
+      endColorstr='#f4ede7', GradientType=1); /* IE6-9 */
 }
 
 .insert_box_bg:after {
-	width: 100%;
-	height: 2px;
-	position: absolute;
-	background: #f7b70b;
-	content: "";
-	top: 0px;
-	left: 3.3%;
-	margin-left: -35px;
+   width: 100%;
+   height: 2px;
+   position: absolute;
+   background: #f7b70b;
+   content: "";
+   top: 0px;
+   left: 3.3%;
+   margin-left: -35px;
 }
 
 /* message */
 .message_bg {
-	color: #fff;
-	background: #f7b70b;
-	font-size: 18px;
-	font-weight: bold;
-	padding: 10px;
+   color: #fff;
+   background: #f7b70b;
+   font-size: 18px;
+   font-weight: bold;
+   padding: 10px;
 }
 /* insert */
 .insert_label {
-	margin-left: 10px;
-	margin-right: 10px;
-	position: relative;
-	top: 5px;
-	font-weight: normal
+   margin-left: 10px;
+   margin-right: 10px;
+   position: relative;
+   top: 5px;
+   font-weight: normal
 }
 
 .borderline {
-	border-bottom: 0.5px solid #f7b70b
+   border-bottom: 0.5px solid #f7b70b
 }
 
 .insert_btn {
-	height: 44px;
-	font-weight: bold;
-	font-size: 19px;
+   height: 44px;
+   font-weight: bold;
+   font-size: 19px;
 }
 
 /* roomview */
 .view_bg {
-	background-color: #fff;
-	border: 1px solid #f7b70b;
-	border-radius: 10px;
+   background-color: #fff;
+   border: 1px solid #f7b70b;
+   border-radius: 10px;
 }
 
 .view_title_bg {
-	background-color: #f7f7f7;
-	width: 100%;
+   background-color: #f7f7f7;
+   width: 100%;
 }
 
 .view_title {
-	font-size: 30px;
-	font-weight: bold;
-}
-.view_span {
-	color: #f7be22;
-	font-size: 30px;
-	font-weight: normal
+   font-size: 30px;
+   font-weight: bold;
 }
 
 .view_title:after {
-	width: 250px;
-	height: 7px;
-	position: absolute;
-	background: #f7b70b;
-	content: "";
-	top: 54px;
-	left: 40%;
-	margin-left: -35px;
+   width: 250px;
+   height: 7px;
+   position: absolute;
+   background: #f7b70b;
+   content: "";
+   top: 54px;
+   left: 40%;
+   margin-left: -35px;
 }
 
 .view_option {
-	list-style: none;
-	float: left;
+   list-style: none;
+   float: left;
 }
 
 .view_option li {
-	float: left;
-	margin: 0 10px;
+   float: left;
+   margin: 0 10px;
 }
 
 .view_option li p {
-	text-align: center;
-	font-size: 11px;
+   text-align: center;
+   font-size: 11px;
 }
 /* 마스크 */
 .imgview ul {
-	position: relative;
-	left: 0;
+   position: relative;
+   left: 0;
 }
 
 .imgview ul li {
-	float: left;
+   float: left;
 }
 
 .thumwrap {
-	margin-top: 30px;
-	position: relative;
+   margin-top: 30px;
+   position: relative;
 }
 
 .thumwrap ul li {
-	float: left;
-	margin-right: 1px;
-	list-style: none;
+   float: left;
+   margin-right: 1px;
+   list-style: none;
 }
 
 .thumwrap ul li img {
-	width: 60px;
-	height: 60px;
+   width: 60px;
+   height: 60px;
 }
 .inner {
+	width:100%;
+	height:330px;
 }
+
 .inner img{
-	width: 600px;
-	height: 300px;
-	margin: 0 auto;
-	display: block;
+   width: 600px;
+   height: 300px;
+   margin: 0 auto;
+   display: block;
 }
 /*Pace loader*/
 .pace .pace-progress {
-	background: #f7b70b;
+   background: #f7b70b;
 }
 
 .pace .pace-progress-inner {
-	box-shadow: 0 0 10px #f7b70b, 0 0 5px #f7b70b;
+   box-shadow: 0 0 10px #f7b70b, 0 0 5px #f7b70b;
 }
 
 .pace .pace-activity {
-	border-top-color: #f7b70b;
-	border-left-color: #f7b70b;
+   border-top-color: #f7b70b;
+   border-left-color: #f7b70b;
+}
+/*  canvas */
+/* header */
+.login_user{
+	position:absolute;
+	top:0;
+	right:0;
+	padding:0 30px;
+	background-color:#f7f7f7;
 }

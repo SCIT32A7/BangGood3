@@ -50,7 +50,7 @@
 #rightCanvas {
 	background: #f0f0f5;
 	border: thin solid gray;
-	box-shadow: rgba(0, 0, 0, 0.5) 2px 2px 4px;
+	box-shadow: rgba(0, 0, 0, 0.5) 1px 0px 4px;
 	border-radius: 8px;
 }
 
@@ -58,34 +58,67 @@
 #menuSidebar {
 	background: #ffcc00;
 	border: thin solid gray;
-	/* cursor: pointer; */
-	box-shadow: rgba(0, 0, 0, 0.5) 2px 2px 4px;
+	box-shadow: rgba(0, 0, 0, 0.5) 1px 0px 4px;
 	border-radius: 8px;
 }
 
 .canvas__mirror {
-	height: 100%;
-	left: 0;
-	position: absolute;
-	top: 0;
-	z-index: -1;
+	height: 653px;
+    left: 14px;
+    position: absolute;
+    top: 0px;
+    z-index: -1;
 }
 
-#pencilTab, #furnitureTab, #updownloadTab  {
+.pencilContainer {
+	background:"#76c2af";
+}
+.do_btn{
+	width:40px;
+	height:40px;
+}
+
+.tab_switcher{
+    width: 100%;
+}
+.tab_switcher ul{
+	list-style: none;
+	padding:0;
+	margin-left:10px;
+}
+
+.tab_switcher ul li{
+	float:left;
+	width:100%;
+	text-align: center;
+	background:#fff;
+	height:50px;
+	margin-bottom:5px;
 	cursor: pointer;
+	font-size:19px;
+	border:1px solid #f7be22;
+}
+.tab_switcher_img{
 	-webkit-filter: grayscale(100%);
 	filter: grayscale(100%);
 	-webkit-transition: .3s ease-in-out;
 	transition: .3s ease-in-out;
 }
-
-#pencilTab:hover, #furnitureTab:hover, #updownloadTab:hover  {
-	-webkit-filter: grayscale(0);
-	filter: grayscale(0);
+.tab_switcher_img img{
+	width:43px;
+	height:43px;
+	margin-top:3px;
+	margin-left:5px;
 }
 
-.pencilContainer {
-	background:"#76c2af";
+.tab_switcher_img:hover{
+	-webkit-filter: grayscale(0);
+	filter: grayscale(0);
+	margin-left:10px;
+}
+.furniture div img{
+	margin-bottom:5px;
+	
 }
 
 </style>
@@ -104,7 +137,7 @@
    <%@ include file="login.jsp"%> 
    <!-- end menu -->
 
-   <div class="container-fluid content g-mt-30">
+   <div class="container-fluid g-mt-30">
       <div class="row">
       <div class="col-md-2"></div>
       <div class="col-md-8">
@@ -115,11 +148,140 @@
             </div>
          </div>
       </div><!-- 중간 맞추기col -->
+     
       <div class="col-md-2"></div>
          <!-- 전체 col2 -->
       </div><!-- end row -->
+      <div class="clearfix"></div>
+ 		<h3>
+             <button class="pull-left g-mr-50 btn-u btn-block rounded insert_btn"
+                  style="background-color: #ccc; width:100px;">돌아가기</button>
+ 			<label for="undo">undo
+            	<input type="image"  id="undo" src="assets/img/icons/sidebar/undo.png"class="do_btn">
+            	</label>
+            	<input type="image"  id="redo" src="assets/img/icons/sidebar/redo.png"class="do_btn">
+            	<label for="redo">redo</label>
+           	<button id="save_nextStage" class="pull-right btn-u btn-block rounded insert_btn"
+                  style="width:100px">
+                  	다음단계</button> 
+ 		</h3>
+	<div class="row">
+		<div id="menuSidebar" class="col-sm-2" width="250" style="height:650px">
+			<div class="dashboardLink">
+			
+			</div>
+			<div id="tab_switcher" class="tab_switcher">
+				<ul>
+					<li id="pencilTab" class="tab_switcher_img"> pencil<img alt="pencilTab" src="assets/img/icons/pencilTab.png" /></li>
+					<li id="furnitureTab" class="tab_switcher_img">furniture<img alt="furnitureTab" src="assets/img/icons/furnitureTab.png" /></li>
+					<li id="updownloadTab" class="tab_switcher_img">updownload<img alt="updownloadTab" src="assets/img/icons/updownloadTab.png"/></li>
+				</ul>
+				<div class="clearfix"></div>
+			</div>
+			
+			<div id="tab" style="height:450px;">
+				<div class="pencil" style="display:none;  overflow: auto;">
+					<div class="pencilContainer">
+					  <div>
+					[ 마우스 상태  ]<input type="text" id="status" />
+					<input type="button" value="초기화" id="clearCanvas" />
+					</div>
+						<select id="selectColor">
+							<option value="black" selected="selected">선 색상: 검정색</option>
+							<option value="grey">선 색상: 회색</option>
+						</select> 
+						<select id="select">
+							<option value="3" >얇은 선</option>
+							<option value="5" selected="selected">굵은 선</option>
+						</select>
+						<input type="button" id="line" value="선 그리기" /> 
+						<select id="fillColor">
+							<option value="#FFFFFF" selected="selected">방 색상: 화이트</option>
+							<option value="black">방 색상: 검정</option>
+							<option value="yellow">방 색상: 노랑</option>
+							<option value="#cc9966">방 색상: 황토색</option>
+							<option value="#a6a6a6">방 색상: 회색</option>
+						</select>
+						<input type="button" id="rectangle" value="방 그리기" />
+						
+						<select id="lineStep">
+							<option value="50" selected="selected">미세</option>
+							<option value="300">보통</option>
+							<option value="700">둔감</option>
+						</select> 
+						<input type="button" value="민감도 조정" />
+						<select id="objectBox">
+							<option value="door">문</option>
+							<option value="window" selected="selected">창문</option>
+						</select>
+						<input type="button" id="object" value="생성" />
+					</div>
+				</div>
+				<div class="furniture" style="display:none;overflow: auto;">
+					<div class="common">
+						<img class="buttonImage" alt="airconditioner" src="assets/img/icons/sidebar/AirConditioner.jpg" btn-num="airconditioner"/>
+						<img class="buttonImage" alt="desk" src="assets/img/icons/sidebar/Desk.jpg" btn-num="desk" />
+						<img class="buttonImage" alt="bookShelve" src="assets/img/icons/sidebar/BookShelve.jpg" btn-num="bookShelve"/>
+						<img class="buttonImage" alt="wardrobe" src="assets/img/icons/sidebar/Wardrobe.jpg" btn-num="wardrobe" />
+					</div>
+					<div class="room">
+						<img class="buttonImage" alt="singleBed" src="assets/img/icons/sidebar/SingleBed.jpg" btn-num="singleBed" />
+						<img class="buttonImage" alt="doubleBed" src="assets/img/icons/sidebar/DoubleBed.jpg" btn-num="doubleBed" />
+						<img class="buttonImage" alt="tv" src="assets/img/icons/sidebar/TV.jpg" btn-num="tv" />
+						<img class="buttonImage" alt="desk" src="assets/img/icons/sidebar/Desk.jpg" btn-num="desk" />
+						<img class="buttonImage" alt="wardrobe" src="assets/img/icons/sidebar/Wardrobe.jpg" btn-num="wardrobe" />
+					</div>
+					<div calss="laundryRoom">
+						<img class="buttonImage" alt="drum" src="assets/img/icons/sidebar/Drum.jpg" btn-num="drum" />
+						<img class="buttonImage" alt="washingMachine" src="assets/img/icons/sidebar/WashingMachine.jpg" btn-num="washingMachine" />
+					</div>
+					<div class="livingRoom">
+						<img class="buttonImage" alt="shoeCloset" src="assets/img/icons/sidebar/ShoeCloset.jpg" btn-num="shoeCloset" />
+						<img class="buttonImage" alt="tv" src="assets/img/icons/sidebar/TV.jpg" btn-num="tv" />
+						<img class="buttonImage" alt="sofa1" src="assets/img/icons/sidebar/Sofa1.jpg" btn-num="sofa1" />
+						<img class="buttonImage" alt="sofa2" src="assets/img/icons/sidebar/Sofa2.jpg" btn-num="sofa2" />
+						<img class="buttonImage" alt="sofa4" src="assets/img/icons/sidebar/Sofa4.jpg" btn-num="sofa4" />
+						<img class="buttonImage" alt="diningTable" src="assets/img/icons/sidebar/DiningTable.jpg" btn-num="diningTable" />
+						<img class="buttonImage" alt="floorTable" src="assets/img/icons/sidebar/FloorTable.jpg" btn-num="table1" />
+						<img class="buttonImage" alt="chairTable" src="assets/img/icons/sidebar/ChairTable.jpg" btn-num="table2" />
+					</div>
+					<div class="kitchen">
+						<img class="buttonImage" alt="microwave" src="assets/img/icons/sidebar/Microwave.jpg" btn-num="microwave" />
+						<img class="buttonImage" alt="oven" src="assets/img/icons/sidebar/Oven.jpg" btn-num="oven" />
+						<img class="buttonImage" alt="kitchenSink" src="assets/img/icons/sidebar/KitchenSink.jpg" btn-num="kitchenSink" />
+						<img class="buttonImage" alt="singleDoorRefriger" src="assets/img/icons/sidebar/SingleDoorFridge.jpg" btn-num="singleDoorRefriger" />
+						<img class="buttonImage" alt="doubleDoorRefriger" src="assets/img/icons/sidebar/DoubleDoorFridge.jpg" btn-num="doubleDoorRefriger" />
+						<img class="buttonImage" alt="gasStove2" src="assets/img/icons/sidebar/GasStove2.jpg" btn-num="gasStove2" />
+						<img class="buttonImage" alt="gasStove4" src="assets/img/icons/sidebar/GasStove4.jpg" btn-num="gasStove4" />
+						<img class="buttonImage" alt="stoveVent" src="assets/img/icons/sidebar/StoveVent.jpg" btn-num="stoveVent" />
+					</div>
+					<div class="bathroom">
+						<img class="buttonImage" alt="vent" src="assets/img/icons/sidebar/Vent.jpg" btn-num="vent" />
+						<img class="buttonImage" alt="toilet" src="assets/img/icons/sidebar/Toilet.jpg" btn-num="toilet" />
+						<img class="buttonImage" alt="triBath" src="assets/img/icons/sidebar/TriBath.jpg" btn-num="triBath" />
+						<img class="buttonImage" alt="rectBath" src="assets/img/icons/sidebar/RectBath.jpg" btn-num="rectBath" />
+						<img class="buttonImage" alt="shower" src="assets/img/icons/sidebar/Shower.jpg" btn-num="shower" />
+						<img class="buttonImage" alt="washstand" src="assets/img/icons/sidebar/Washstand.jpg" btn-num="washstand" />
+					</div>
+				</div>
+				<div class="updownload " style="display:none;overflow: auto;">
+					<input type="text" name="datanum" id="datanum" class="form-control rounded"placeholder="평면도 번호를 입력해주세요." />
+					<input type="button" class="btn-u btn-u--construction trim e_img2" value="평면도 불러오기" id="loadCanvasData" />
+					<h4><a href="#" class="downloadBtn" id="btn-download" download="Floorplan.png">이미지 다운로드</a></h4>
+				</div>
+			</div>
+  		</div>
+		<div class="col-sm-10" style="position: relative">
+			<canvas id="rightCanvas" width="1200" height="650">
+	   	</canvas>
+			<img src="" id="mirror" class="canvas__mirror" width="1200" height="650" />
+		</div>
+		<!-- end canvas -->
+	</div>
+   
    </div>
       <!-- container -->
+   
    </main>
    <!-- JS Global Compulsory -->
    <script src="assets/plugins/jquery/jquery.min.js"></script>
@@ -799,16 +961,19 @@
 			    });
 		
 		$("#pencilTab").on("click", function(){
+			$("#tab").css("overflow","auto");
 			$(".furniture").hide();
 			$(".updownload").hide();
 			$(".pencil").show();
 		});
 		$("#furnitureTab").on("click", function(){
+			$("#tab").css("overflow","scroll");
 			$(".pencil").hide();
 			$(".updownload").hide();
 			$(".furniture").show();
 		});
 		$("#updownloadTab").on("click", function(){
+			$("#tab").css("overflow","auto");
 			$(".pencil").hide();
 			$(".furniture").hide();
 			$(".updownload").show();
@@ -816,133 +981,11 @@
 		});
 		
 	}); //  ready end
+	
 </script>
 </head>
 <body>
-	<div>
-		[ 마우스 상태  ]<input type="text" id="status" />
-		<input type="button" value="초기화" id="clearCanvas" />
-		
-	</div>
-	<div class="row">
-		<div id="menuSidebar" class="col-sm-3" width="250" height="650" style="height:650px">
-			<div class="dashboardLink">
-			
-			</div>
-			<div id="tab_switcher">
-				<div class="tab_switcher">
-					<img id="pencilTab" alt="pencilTab" src="assets/img/icons/pencilTab.png" />
-					<img id="furnitureTab" alt="furnitureTab" src="assets/img/icons/furnitureTab.png" />
-					<img id="updownloadTab" alt="updownloadTab" src="assets/img/icons/updownloadTab.png" />
-				</div>
-			</div>
-			<div id="tab">
-				<div class="pencil" style="display:none;">
-					<div class="pencilContainer">
-						<select id="selectColor">
-							<option value="black" selected="selected">선 색상: 검정색</option>
-							<option value="grey">선 색상: 회색</option>
-						</select> 
-						<select id="select">
-							<option value="3" >얇은 선</option>
-							<option value="5" selected="selected">굵은 선</option>
-						</select>
-						<input type="button" id="line" value="선 그리기" /> 
-						<select id="fillColor">
-							<option value="#FFFFFF" selected="selected">방 색상: 화이트</option>
-							<option value="black">방 색상: 검정</option>
-							<option value="yellow">방 색상: 노랑</option>
-							<option value="#cc9966">방 색상: 황토색</option>
-							<option value="#a6a6a6">방 색상: 회색</option>
-						</select>
-						<input type="button" id="rectangle" value="방 그리기" />
-						
-						<select id="lineStep">
-							<option value="50" selected="selected">미세</option>
-							<option value="300">보통</option>
-							<option value="700">둔감</option>
-						</select> 
-						<input type="button" value="민감도 조정" />
-						<select id="objectBox">
-							<option value="door">문</option>
-							<option value="window" selected="selected">창문</option>
-						</select>
-						<input type="button" id="object" value="생성" />
-					</div>
-				</div>
-				<div class="furniture" style="display:none;">
-					<div class="common">
-						<img class="buttonImage" alt="airconditioner" src="assets/img/icons/sidebar/AirConditioner.jpg" btn-num="airconditioner"/>
-						<img class="buttonImage" alt="desk" src="assets/img/icons/sidebar/Desk.png" btn-num="desk" />
-						<img class="buttonImage" alt="bookShelve" src="assets/img/icons/sidebar/BookShelve.jpg" btn-num="bookShelve"/>
-						<img class="buttonImage" alt="wardrobe" src="assets/img/icons/sidebar/Wardrobe.jpg" btn-num="wardrobe" />
-					</div>
-					<div class="room">
-						<img class="buttonImage" alt="singleBed" src="assets/img/icons/sidebar/SingleBed.jpg" btn-num="singleBed" />
-						<img class="buttonImage" alt="doubleBed" src="assets/img/icons/sidebar/DoubleBed.jpg" btn-num="doubleBed" />
-						<img class="buttonImage" alt="tv" src="assets/img/icons/sidebar/TV.jpg" btn-num="tv" />
-						<img class="buttonImage" alt="desk" src="assets/img/icons/sidebar/Desk.jpg" btn-num="desk" />
-						<img class="buttonImage" alt="wardrobe" src="assets/img/icons/sidebar/Wardrobe.jpg" btn-num="wardrobe" />
-					</div>
-					<div calss="laundryRoom">
-						<img class="buttonImage" alt="drum" src="assets/img/icons/sidebar/Drum.jpg" btn-num="drum" />
-						<img class="buttonImage" alt="washingMachine" src="assets/img/icons/sidebar/WashingMachine.jpg" btn-num="washingMachine" />
-					</div>
-					<div class="livingRoom">
-						<img class="buttonImage" alt="shoeCloset" src="assets/img/icons/sidebar/ShoeCloset.jpg" btn-num="shoeCloset" />
-						<img class="buttonImage" alt="tv" src="assets/img/icons/sidebar/TV.jpg" btn-num="tv" />
-						<img class="buttonImage" alt="sofa1" src="assets/img/icons/sidebar/Sofa1.jpg" btn-num="sofa1" />
-						<img class="buttonImage" alt="sofa2" src="assets/img/icons/sidebar/Sofa2.jpg" btn-num="sofa2" />
-						<img class="buttonImage" alt="sofa4" src="assets/img/icons/sidebar/Sofa4.jpg" btn-num="sofa4" />
-						<img class="buttonImage" alt="diningTable" src="assets/img/icons/sidebar/DiningTable.jpg" btn-num="diningTable" />
-						<img class="buttonImage" alt="floorTable" src="assets/img/icons/sidebar/FloorTable.jpg" btn-num="table1" />
-						<img class="buttonImage" alt="chairTable" src="assets/img/icons/sidebar/ChairTable.jpg" btn-num="table2" />
-					</div>
-					<div class="kitchen">
-						<img class="buttonImage" alt="microwave" src="assets/img/icons/sidebar/Microwave.jpg" btn-num="microwave" />
-						<img class="buttonImage" alt="oven" src="assets/img/icons/sidebar/Oven.jpg" btn-num="oven" />
-						<img class="buttonImage" alt="kitchenSink" src="assets/img/icons/sidebar/KitchenSink.jpg" btn-num="kitchenSink" />
-						<img class="buttonImage" alt="singleDoorRefriger" src="assets/img/icons/sidebar/SingleDoorFridge.jpg" btn-num="singleDoorRefriger" />
-						<img class="buttonImage" alt="doubleDoorRefriger" src="assets/img/icons/sidebar/DoubleDoorFridge.jpg" btn-num="doubleDoorRefriger" />
-						<img class="buttonImage" alt="gasStove2" src="assets/img/icons/sidebar/GasStove2.jpg" btn-num="gasStove2" />
-						<img class="buttonImage" alt="gasStove4" src="assets/img/icons/sidebar/GasStove4.jpg" btn-num="gasStove4" />
-						<img class="buttonImage" alt="stoveVent" src="assets/img/icons/sidebar/StoveVent.jpg" btn-num="stoveVent" />
-					</div>
-					<div class="bathroom">
-						<img class="buttonImage" alt="vent" src="assets/img/icons/sidebar/Vent.jpg" btn-num="vent" />
-						<img class="buttonImage" alt="toilet" src="assets/img/icons/sidebar/Toilet.jpg" btn-num="toilet" />
-						<img class="buttonImage" alt="triBath" src="assets/img/icons/sidebar/TriBath.jpg" btn-num="triBath" />
-						<img class="buttonImage" alt="rectBath" src="assets/img/icons/sidebar/RectBath.jpg" btn-num="rectBath" />
-						<img class="buttonImage" alt="shower" src="assets/img/icons/sidebar/Shower.jpg" btn-num="shower" />
-						<img class="buttonImage" alt="washstand" src="assets/img/icons/sidebar/Washstand.jpg" btn-num="washstand" />
-					</div>
-				</div>
-				<div class="updownload" style="display:none;">
-					<input type="text" name="datanum" id="datanum" placeholder="평면도 번호를 입력해주세요." />
-					<input type="button" value="평면도 불러오기" id="loadCanvasData" />
-					<h4><a href="#" class="downloadBtn" id="btn-download" download="Floorplan.png">이미지 다운로드</a></h4>
-				</div>
-			</div>
-  		</div>
-		<div class="col-sm-9" style="position: relative">
-			<canvas id="rightCanvas" width="1000" height="650">
-	   	</canvas>
-			<img src="" id="mirror" class="canvas__mirror" width="1000" height="650" />
-		</div>
-		<div class="margin-bottom-30"></div>
-         <div class="row ">
-            <div class="col-md-2"></div>
-            <div class="col-md-4">
-               <button id="save_nextStage"
-                  class="btn-u btn-block rounded insert_btn">다음단계</button>
-            </div>
-            <div class="col-md-4">
-               <button class="btn-u btn-block rounded insert_btn"
-                  style="background-color: #ccc">돌아가기</button>
-            </div>
-            <div class="col-md-2"></div>
-         </div>
-	</div>
+	
 
 </body>
 </html>

@@ -142,9 +142,16 @@
 							<button class="mypage_btn btn-u btn-block rounded">
 								<a href="#">파일 변경</a>
 							</button>
-							<button class="mypage_btn btn-u btn-block rounded">
-								<a href="#">삭제</a>
-							</button>
+							<c:if test = "${property.issoldout == 'true'}">
+								<button class="mypage_btn btn-u btn-block rounded">
+									<a href="javascript:check_stopShowing(${property.property_no})">게시 중지</a>
+								</button>
+							</c:if>
+							<c:if test = "${property.issoldout == 'false'}">
+								<button class="mypage_btn btn-u btn-block rounded">
+									<a href="javascript:check_restartShowing(${property.property_no})">게시 재시작</a>
+								</button>
+							</c:if>
 							<div class="project-share">
 								<ul class="list-inline comment-list-v2 pull-right g-mt-100">
 									<li><i class="fa fa-eye"></i>${property.property_hits}</li>
@@ -193,5 +200,18 @@
 
 		<!-- custom -->
 		<script src="assets/js/custom.js"></script>
+		<script type="text/javascript">
+		function check_stopShowing(num){
+			if(confirm('해당 매물의 광고를 중단하시겠습니까?')){
+				location.href = "stop_showing?property_no="+num;
+			}
+		}
+		
+		function check_restartShowing(num){
+			if(confirm('해당 매물의 광고를 다시 시작하시겠습니까?')){
+				location.href = "restart_showing?property_no="+num;
+			}
+		}
+		</script>
 </body>
 </html>

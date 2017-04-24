@@ -49,15 +49,15 @@ public interface PropertyDAO {
 	public int update_picture(Picture picture) throws Exception;  // 사진 삭제 후 재등록
 
 	//조건조회
-	public ArrayList<String> searchProperty(Property_search search);
+	public ArrayList<String> searchProperty(Property_search search) throws Exception;
 	
 	// 지도 상에서 매물 정보 띄우기
-	public Property_map readProperty_map(String address);
+	public Property_map readProperty_map(String address) throws Exception;
 	
 	// 주소 자동완성을 위한 메소드
-	public ArrayList<String> getPosition(String searchText);
+	public ArrayList<String> getPosition(String searchText) throws Exception;
 	
 	// 마을의 중심 좌표를 위한 메소드
-	public String get_town(String searchaddress);
+	public String get_town(String searchaddress) throws Exception;
 
 }

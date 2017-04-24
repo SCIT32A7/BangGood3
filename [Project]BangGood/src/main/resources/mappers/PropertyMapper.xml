@@ -54,12 +54,12 @@
    
    <!-- 매물 게시 중단 -->
    <update id="stop_showing" parameterType="_int">
-  	 update property set issoldout = 'FALSE' where property_no = #{property_no}
+  	 update property set issoldout = 'false' where property_no = #{property_no}
    </update>
    
    <!-- 매물 게시 재시작 -->
    <update id="restart_showing" parameterType="_int">
-  	 update property set issoldout = 'TRUE' where property_no = #{property_no}
+  	 update property set issoldout = 'true' where property_no = #{property_no}
    </update>
    
    <!--  매물 기본정보 수정 -->

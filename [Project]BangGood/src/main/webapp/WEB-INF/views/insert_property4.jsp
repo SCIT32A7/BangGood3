@@ -47,50 +47,17 @@
 <script type="text/javascript" src="assets/plugins/jquery/jquery-3.2.0.min.js"></script>
 <link rel="stylesheet" href="assets/css/Nwagon.css" type="text/css">
 <!-- photo -->
-<link rel="stylesheet" href="assets/css/lightbox.min.css" type="text/css">
-
-   <style>
-
-   
-   </style>
-   <script>
-   var property_no = 160088;
-   var selectedRadar;
-   var avgRadar;
-   var percentRadar;
-   var maxRadar;
-   var minRadar;
-   
-   window.onload = function () {
-      $.ajax({
-         method:"get",
-         url:"loadChart",
-         async: false,
-         data: {property_no: property_no},
-         success: getRadarChartData,
-         error: function() {
-            alert("조회 실패");
-         }
-      });
-      
-   }
-
-   
-   $(function(){      
-  	 var gal;
-  	 var galout;
- 	 var  light = "data-lightbox='roadtrip'";
-      $(".gallery li img").on('click', function() {
-         gal = $(this).attr("src");
-         $(this).html(function(index, html) {
-            galout = "<a href='"+gal+"' data-lightbox='roadtrip'><img src='"+gal+"'/></a>";
-            $(".inner").html(galout);
-         });
-      });
-
-   });
-   </script>
-   
+<link rel="stylesheet" href="assets/css/lightbox.css" type="text/css">
+	
+	<style>
+		table tr td, table tr th
+		{
+			text-align:center;
+		}
+		table tr td{
+			background-color:#f7f7f7;
+		}
+	</style>
 </head>
 
 
@@ -137,8 +104,16 @@
             <!--=== title left ===-->
             <div class="col-sm-8 view_bg g-mb-30">
             <div class="inner g-mt-30">
-               <img src="assets/img/room/1.jpg" data-lightbox="roadtrip"/>
+            	
+               <c:forEach var = "pic" items = "${up_picture}">
+                	<a  href="download?pic_name=${up_picture[0].pic_name}&pic_savename=${up_picture[0].pic_savename}" data-lightbox='roadtrip'>
+                     <img style="position: absolute;left:11.5%;" src="download?pic_name=${pic.pic_name}&pic_savename=${pic.pic_savename}">
+            		</a>
+            	</c:forEach>
+            	<div class="clearfix"></div>
+            	
             </div>
+            
             <div class="thumwrap">
                <ul class="gallery">
                   <c:forEach var = "pic" items = "${up_picture}">
@@ -148,20 +123,23 @@
             </div>
             
          <!--=== title info ===-->
+         <div class="clearfix"></div>
                <div class="g-pt-20 g-pb-20 clearfix"></div>
                   <h3 style="font-weight: bold">방정보</h3>
                      <table class="table">
+                     	<colgroup>
+							<col width="20%">
+							<col width="20%">
+							<col width="20%">
+							<col width="20%">
+							<col width="20%">
+						</colgroup>
                         <tr>
-                           <th>보증금/월세</th>
-                           <th>방 종류</th>
-                           <th>방 크기</th>
-                           <th>층</th>
-                           <th>건축연도</th>
-                           <th>관리비</th>
-                           <th>관리비포함항목</th>
-                           <th>엘레베이터</th>
-                           <th>주차</th>
-                           <th>반려동물</th>
+                           <td>보증금/월세</td>
+                           <td>방 종류</td>
+                           <td>방 크기</td>
+                           <td>층</td>
+                           <td>건축연도</td>
                         </tr>
                         <tr>
                            <th>${property.deposit} / ${property.month_fee}</th>
@@ -169,18 +147,37 @@
                            <th>${property.roomsize}</th>
                            <th>${property.floor}</th>
                            <th>${property.built_year}</th>
+                        </tr>
+                     </table>
+               <div class="g-pt-20"></div>
+              	 <table class="table">
+                     	<colgroup>
+							<col width="15%">
+							<col width="35%">
+							<col width="15%">
+							<col width="15%">
+							<col width="15%">
+						</colgroup>
+                        <tr>
+                           <td>관리비</td>
+                           <td>관리비포함항목</td>
+                           <td>엘레베이터</td>
+                           <td>주차</td>
+                           <td>반려동물</td>
+                        </tr>
+                        <tr>
                            <th>${property.maintence_fee}</th>
-                           <td>
+                           <th>
                               무선인터넷 : <c:if test="${maintence.internet == 1}"> O </c:if><c:if test="${maintence.internet == 2}"> X </c:if>
                               케이블TV : <c:if test="${maintence.tvfee == 1}"> O </c:if><c:if test="${maintence.tvfee == 2}"> X </c:if>
                               청소비 : <c:if test="${maintence.cleaning == 1}"> O </c:if><c:if test="${maintence.cleaning == 2}"> X </c:if><br>
                               수도료 : <c:if test="${maintence.waterfee == 1}"> O </c:if><c:if test="${maintence.waterfee == 2}"> X </c:if>
                               가스비 : <c:if test="${maintence.gasfee == 1}"> O </c:if><c:if test="${maintence.gasfee == 2}"> X </c:if>
                               전기세 : <c:if test="${maintence.electronic == 1}"> O </c:if><c:if test="${maintence.electronic == 2}"> X </c:if>
-                           </td>
-                           <td><c:if test="${option.elevator == 1}"> 있음 </c:if><c:if test="${option.elevator == 2}"> 없음 </c:if></td>
-                           <td><c:if test="${option.car == 1}"> 가능 </c:if><c:if test="${option.car == 2}"> 불가 </c:if></td>
-                           <td><c:if test="${option.pet == 1}"> 가능 </c:if><c:if test="${option.pet == 2}"> 불가 </c:if></td>
+                           </th>
+                           <th><c:if test="${option.elevator == 1}"> 있음 </c:if><c:if test="${option.elevator == 2}"> 없음 </c:if></th>
+                           <th><c:if test="${option.car == 1}"> 가능 </c:if><c:if test="${option.car == 2}"> 불가 </c:if></th>
+                           <th><c:if test="${option.pet == 1}"> 가능 </c:if><c:if test="${option.pet == 2}"> 불가 </c:if></th>
                         </tr>
                      </table>
                <div class="g-pt-20"></div>
@@ -226,9 +223,9 @@
                         <li><img src="assets/img/icon/13.png"><p>무선인터넷</p></li>
                      </c:if>
                   </ul>
+                <div class="clearfix g-pt-20"></div>
                <h3 style="font-weight: bold">상세설명</h3>
-                  <span>${property.property_text}</span>
-               <h3 style="font-weight: bold">위치 및 주변 편의시설</h3>
+                  <span style="white-space: pre-wrap;">${property.property_text}</span>
                <div class="margin-bottom-30"></div>
                   
             </div>
@@ -240,8 +237,9 @@
                   <p class="g-mb-10">${property.address} ${property.bulildingName} ${property.address_detail}</p>
                   
                   <hr>
-                  <b class="g-mb-10">게시자 : <span>${property.custid}</span></b>
-                  <a href="#" class="btn-u btn-u-lg btn-block" type="button">메세지보내기</button></a>
+                  <p class="g-mb-10">게시자 : <span>${loginCustomer.custid}</span></p>
+                  <p class="g-mb-10">연락처 : <span>${loginCustomer.phone}</span></p>
+                  <p class="g-mb-10">이메일 : <span>${loginCustomer.email}</span></p>
                </div>
             </div>
             <!--=== End title right ===-->
@@ -263,7 +261,7 @@
                      </div>
                      <div class="col-md-2"></div>
                   </div>
-       </from>
+	</form>
    </div>
    </div>
    <!--=== End Content Part ===-->
@@ -305,7 +303,21 @@
    <script type="text/javascript" src="assets/js/radar.js"></script>
    <script type="text/javascript" src="assets/js/Nwagon.js"></script>
    <!-- photo -->
-   <script type="text/javascript" src="assets/js/lightbox-plus-jquery.min.js"></script>
-   
+   <script type="text/javascript" src="assets/js/lightbox.js"></script>
+      <script>
+   $(function(){      
+  	 var gal;
+  	 var galout;
+ 	 var light = "data-lightbox='roadtrip'";
+ 	 var picList ="${up_picture}";
+      $(".gallery li img").on('click', function() {
+         gal = $(this).attr("src");
+         $(this).html(function(index, html) {
+            galout = "<a href='"+gal+"' data-lightbox='roadtrip'><img src='"+gal+"'/></a>";
+            $(".inner").html(galout);
+         });
+      });
+   });
+   </script>
 </body>
 </html>

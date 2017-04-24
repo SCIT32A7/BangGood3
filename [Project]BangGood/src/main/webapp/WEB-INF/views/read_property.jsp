@@ -297,7 +297,16 @@
               	  <c:if test = "${loginId == read_property.custid}">
                  	 <a href="#" class="btn-u btn-u-lg btn-block" type="button">매물 수정</button></a>
                  	 <a href="#" class="btn-u btn-u-lg btn-block" type="button">파일 변경</button></a>
-                 	 <a href="#" class="btn-u btn-u-lg btn-block" type="button">게시 중지</button></a>
+                 	 <c:if test = "${read_property.issoldout == 'true'}">
+						<button class="btn-u btn-u-lg btn-block">
+							<a href="javascript:check_stopShowing(${read_property.property_no})">게시 중지</a>
+						</button>
+					 </c:if>
+					 <c:if test = "${read_property.issoldout == 'false'}">
+						<button class="btn-u btn-u-lg btn-block">
+							<a href="javascript:check_restartShowing(${read_property.property_no})">게시 재시작</a>
+						</button>
+					 </c:if>
               	  </c:if>
                </div>
             </div>
@@ -570,12 +579,24 @@
 	    } 
 	} 
 	
+	//메시지 창 열기
 	function msg_send() {
 		  window.open("message_send?sender="+${read_property.custid}, "", 'titlebar=no, scrollbars=yes, toolbar=no, location=no, resizable=no, status=no, menubar=yes, width=350, height=400, left=30%, top=40%');
-			this.close();
 	};
-	function msg_close(){
-		this.close();
+
+	// 광고 중단 여부 재확인 메소드
+	function check_stopShowing(num){
+		if(confirm('해당 매물의 광고를 중단하시겠습니까?')){
+			location.href = "stop_showing?property_no="+num;
+		}
+	}
+	
+	
+	// 광고 개시 여부 재확인 메소드
+	function check_restartShowing(num){
+		if(confirm('해당 매물의 광고를 다시 시작하시겠습니까?')){
+			location.href = "restart_showing?property_no="+num;
+		}
 	}
 
 	</script>

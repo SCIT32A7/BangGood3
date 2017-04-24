@@ -120,7 +120,7 @@ table tr td {
 										
 										</td>
 										<td>
-										<img id="coverimg" src="assets/img/main/img22.jpg" style="width:300px; height:250px;">
+										<img id="coverimg" src="assets/img/blank.png">
 										<div id="map" style="width:300px;height:250px;margin-top:10px;display:none">
 										</div>
 										</td>
