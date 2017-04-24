@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <!DOCTYPE html>
 <!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->
@@ -122,29 +123,49 @@
 }
 
 /* tooltip CSS */
-#undo {
-	display: inline-block;
+
+/* Tooltip container */
+.tooltip {
+    position: relative;
+    display: inline-block;
 }
-#undo .tooltiptext {
+
+/* Tooltip text */
+.tooltip .tooltiptext {
     visibility: hidden;
     width: 120px;
-    background-color: black;
+    background-color: #555;
     color: #fff;
     text-align: center;
-    border-radius: 6px;
     padding: 5px 0;
+    border-radius: 6px;
+
+    /* Position the tooltip text */
     position: absolute;
     z-index: 1;
-    bottom: 100%;
+    bottom: 125%;
     left: 50%;
     margin-left: -60px;
-    
-    /* Fade in tooltip - takes 1 second to go from 0% to 100% opac: */
+
+    /* Fade in tooltip */
     opacity: 0;
     transition: opacity 1s;
 }
 
-#undo:hover .tooltiptext  {
+/* Tooltip arrow */
+.tooltip .tooltiptext::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #555 transparent transparent transparent;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.tooltip:hover .tooltiptext {
     visibility: visible;
     opacity: 1;
 }
@@ -184,10 +205,12 @@
  		<h3>
              <button class="pull-left g-mr-50 btn-u btn-block rounded insert_btn"
                   style="background-color: #ccc; width:100px;">돌아가기</button>
- 			<label for="undo">undo
-            	<input type="image" id="undo" src="assets/img/icons/sidebar/undo.png"class="do_btn">
- 				<span class="tooltiptext">되돌리기[단축키:Ctrl+z]</span>
-            </label>
+ 			<label for="undo">undo </label>
+            	<button type="image" id="undo" src="assets/img/icons/sidebar/undo.png" class="do_btn tooltipContainer" style="width:50px; height:50px">
+ 					<em class="tooltiptext">되돌리기[단축키:Ctrl+z]</em>
+ 				</button>
+           
+ 
             	<input type="image" id="redo" src="assets/img/icons/sidebar/redo.png"class="do_btn">
             <label for="redo">redo
             </label>
@@ -601,7 +624,7 @@
 		});
 		
 		//이미지 다운로드
-		$("#btn-download").on("click", function() {
+		$("#btn-download").click( function() {
 			//저장 이름 지정
 			saved_name = prompt("저장할 이름을 지정해주세요.", "BangGood");
 			downloadFloorplanPng(saved_name);
