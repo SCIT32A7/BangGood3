@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 
 import global.sesoc.banggood.repository.PropertyRepository;
@@ -211,9 +212,10 @@ public class PropertyController {
 	public String insert_property4(@ModelAttribute("property") Property property,
 			@ModelAttribute("option") Option option, @ModelAttribute("maintence") Maintence maintence,
 			@ModelAttribute("canvas") Canvas canvas, @ModelAttribute("up_picture") ArrayList<Picture> insert_pList,
-			Model model) {
+			Model model, SessionStatus status) {
 		int result = pr.insert_property(property, option, maintence, canvas, insert_pList);
 		model.addAttribute("result", result);
+		status.setComplete();
 		return "insert_property4";
 	}
 
@@ -230,6 +232,30 @@ public class PropertyController {
 		model.addAttribute("read_maintence", maintence);
 		model.addAttribute("read_picture", pList);
 		return "read_property";
+	}
+	
+	// 매물 기본정보 수정을 위해 정보 물러오기
+	@RequestMapping(value = "/select_property_data", method = RequestMethod.GET)
+	public String select_property1(int property_no, Model model){
+		Property property = pr.select_Property(property_no);
+		Option option = pr.select_Option(property_no);
+		Maintence maintence = pr.select_Maintence(property_no);
+		model.addAttribute("select_property", property);
+		model.addAttribute("select_option", option);
+		model.addAttribute("select_maintence", maintence);
+		return "update_property";
+	}
+	
+	// 매물 기본정보 수정
+	@RequestMapping(value = "/update_property_data", method = RequestMethod.POST)
+	public String update_property1(int property_no, Property property, Option option, Maintence maintence, Model model){
+		property.setProperty_no(property_no);
+		option.setProperty_no(property_no);
+		maintence.setProperty_no(property_no);
+		pr.update_Property(property);
+		pr.update_Option(option);
+		pr.update_Maintence(maintence);	
+		return "redirect:read_property?property_no="+property_no;
 	}
 
 	// 게시매물 광고 중단
@@ -339,33 +365,32 @@ public class PropertyController {
 		int result = pr.insert_propertyReply(prRe);
 		return result;
 	}
-	
+
 	// 댓글 출력을 위한 메소드
 	@ResponseBody
 	@RequestMapping(value = "/get_propertyReply", method = RequestMethod.POST)
-	public ArrayList<propertyReply> get_propertyReply(int property_no){
+	public ArrayList<propertyReply> get_propertyReply(int property_no) {
 		ArrayList<propertyReply> prList = new ArrayList<>();
 		prList = pr.get_propertyReply(property_no);
 		return prList;
 	}
-	
+
 	// 댓글 삭제를 위한 메소드
-	   @ResponseBody
-	   @RequestMapping(value = "/delete_propertyReply", method = RequestMethod.POST)
-	   public int delete_propertyReply(int property_reply_no, int property_no){
-	      int result = 0;
-	      propertyReply dpr = pr.select_propertyReply(property_reply_no); // 오늘입력
-	      result = pr.delete_propertyReply(property_reply_no, property_no);
-	      String uploadPath = "/replyFile";
-	      
-	      if(result==1){ // 오늘 입력
-	         String fullpath = uploadPath + "/" +dpr.getPic_savename();
-	         FileService.deleteFile(fullpath);
-	      }
-	      return result;
-	   }
-	
-	
+	@ResponseBody
+	@RequestMapping(value = "/delete_propertyReply", method = RequestMethod.POST)
+	public int delete_propertyReply(int property_reply_no, int property_no) {
+		int result = 0;
+		propertyReply dpr = pr.select_propertyReply(property_reply_no); // 오늘입력
+		result = pr.delete_propertyReply(property_reply_no, property_no);
+		String uploadPath = "/replyFile";
+
+		if (result == 1) { // 오늘 입력
+			String fullpath = uploadPath + "/" + dpr.getPic_savename();
+			FileService.deleteFile(fullpath);
+		}
+		return result;
+	}
+
 	// 댓글 사진을 불러오기 위한 메소드
 	@RequestMapping(value = "reply_download", method = RequestMethod.GET)
 	public void reply_download(String pic_name, String pic_savename, HttpServletResponse response) {

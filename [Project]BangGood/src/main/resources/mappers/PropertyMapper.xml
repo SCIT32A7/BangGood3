@@ -12,7 +12,7 @@
       roomsize, property_title, property_text)
       values 
       (seq_property_no.nextval, #{custid}, #{rent_type}, #{address}, 
-      #{address_detail}, #{bulildingName}, #{floor}, #{property_type}, #{deposit}, 
+      #{address_detail}, #{buildingname}, #{floor}, #{property_type}, #{deposit}, 
       #{month_fee}, #{maintence_fee}, #{built_year}, #{roomsize},
       #{property_title}, #{property_text})   
    </insert>
@@ -64,8 +64,7 @@
    
    <!--  매물 기본정보 수정 -->
    <update id="update_property" parameterType="Property">
-    update property set rent_type = #{property_no}, address = #{address}, 
-    address_detail = #{address_detail}, building_name = #{building_name}, 
+    update property set rent_type = #{rent_type}, building_name = #{buildingname}, 
     floor = #{floor}, property_type = #{property_type}, deposit = #{deposit},
 	month_fee = #{month_fee}, maintence_fee = #{maintence_fee}, built_year = #{built_year},
     roomsize = #{roomsize}, property_title = #{property_title},
@@ -75,7 +74,7 @@
    
    <!--  매물 옵션내용 수정 -->
    <update id="update_option" parameterType="Option">
-   	update option set pet = #{pet}, car = #{car}, elevator = #{elevator}, 
+   	update roomoption set pet = #{pet}, car = #{car}, elevator = #{elevator}, 
    	air_conditioner = #{air_conditioner}, fridge = #{fridge},
    	washing_machine = #{washing_machine}, gas_stove = #{gas_stove},
    	electric_stove = #{electric_stove}, microwave = #{microwave}, 
@@ -102,7 +101,13 @@
  
    <!--  매물 기본정보 보기 -->
    <select id="select_property_property" resultType="Property" parameterType="_int">
-   	select * from property where property_no = #{property_no}
+   	select property_no, custid, rent_type, address, 
+   	address_detail, building_name buildingname, 
+    floor, property_type, deposit, month_fee, maintence_fee, built_year,
+    roomsize, isaccessible, issoldout, property_title, property_text,
+    property_inputdate, property_hits, reply_count, property_like 
+    from property
+    where property_no = #{property_no}
    </select>
    
    <!--  매물 옵션내용 보기 -->

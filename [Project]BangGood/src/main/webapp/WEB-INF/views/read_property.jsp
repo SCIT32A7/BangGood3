@@ -285,7 +285,7 @@
             <div class="col-sm-3 view_bg g-ml-10">
                <div class="g-padding-20">
                   <h3 style="font-weight: bold">${read_property.rent_type} / ${read_property.property_type} <span style="color:#f7be22; font-size:30px; font-weight: normal">65/65</span></h3>
-                  <p class="g-mb-10">${read_property.address}번지 ${read_property.bulildingName} ${read_property.address_detail}</p>
+                  <p class="g-mb-10">${read_property.address}번지 ${read_property.buildingname} ${read_property.address_detail}</p>
                   
                   <hr>
 
@@ -295,7 +295,7 @@
                  	 <a href="insert_cart?property_no=${read_property.property_no}" class="btn-u btn-u-lg btn-block" type="button">찜하기</button></a>
               	  </c:if>
               	  <c:if test = "${loginId == read_property.custid}">
-                 	 <a href="#" class="btn-u btn-u-lg btn-block" type="button">매물 수정</button></a>
+                 	 <a href="select_property_data?property_no=${read_property.property_no}" class="btn-u btn-u-lg btn-block" type="button">매물 수정</button></a>
                  	 <a href="#" class="btn-u btn-u-lg btn-block" type="button">파일 변경</button></a>
                  	 <c:if test = "${read_property.issoldout == 'true'}">
 						<button class="btn-u btn-u-lg btn-block">

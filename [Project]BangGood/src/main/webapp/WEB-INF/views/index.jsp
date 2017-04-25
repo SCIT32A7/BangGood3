@@ -46,6 +46,7 @@
 		<!-- 메인 글씨 -->
 		<!-- CSS Customization -->
 		<link rel="stylesheet" href="assets/css/custom.css">
+		<link rel="stylesheet" href="assets/css/hs.css">
 		<link rel="stylesheet" href="assets/plugins/font-awesome/css/font-awesome.min.css">
 	</head>
 
@@ -96,12 +97,12 @@
 				</div>
 			</section>
 			<!-- End Promo Block -->
-
-			<!-- floor -->
+<!-- 
+			floor
 			<section id="floor">
 				<div class="container g-pt-80">
 					<div class="main_head text-center g-mb-60">
-						<span class="main_name g-dp-block g-mb-20">search</span>
+						<span class="main_name g-dp-block g-mb-20">SEARCH</span>
 						<h1 class="main_title font-main g-mb-60">도면도 찾기</h1>
 						<p class="main_text">
 							방긋에서는 도면도로 찾기시스템을 제공하고있습니다.
@@ -109,81 +110,124 @@
 					</div>
 				</div>
 
-				<div class="container-fluid with-bg with-bg--2 no-padding">
-					<div class="color-overlay"></div>
+				<div class="container-fluid floor_owl" style="background:#f7be22">
 					<div class="container floor-lg g-pt-90">
-						<!-- Owl Carousel v3-->
-						<div class="owl-carousel owl-theme controls-v3">
+						<div class="owl-carousel owl-theme">
 							<div class="item text-center">
 								<a href="#">
 								<div>
-									<h2 class="floor_title font-main ">2층 월세</h2>
+									<h2 class="floor_title">2층 월세</h2>
 									<h4 class="floor_sub">서울 강남구 코엑스</h4>
 									<p class="floor_text"><img src="assets/img/room1.png">
 									</p>
-								</div></a>
+								</div>
+								</a>
 							</div>
 							<div class="item text-center">
 								<a href="#">
 								<div>
-									<h2 class="floor_title font-main ">2층 월세</h2>
+									<h2 class="floor_title">2층 월세</h2>
+									<h4 class="floor_sub">서울 강남구 코엑스</h4>
 									<p class="floor_text"><img src="assets/img/room1.png">
 									</p>
-								</div></a>
+								</div>
+								</a>
 							</div>
 							<div class="item text-center">
 								<a href="#">
 								<div>
-									<h2 class="floor_title font-main ">2층 월세</h2>
+									<h2 class="floor_title">2층 월세</h2>
+									<h4 class="floor_sub">서울 강남구 코엑스</h4>
 									<p class="floor_text"><img src="assets/img/room1.png">
 									</p>
-								</div></a>
+								</div>
+								</a>
 							</div>
-						</div>
-						<div>
-							<span><a href="#"><img src="assets/img/prev.png"></a></span>
 						</div>
 					</div>
 				</div>
 			</section>
-			<!-- End floor -->
-			
-			<!-- footer -->
-			<div class="container-fluid" style="background-color: #f7be22;">
-				<div class="footer text-center">
-					<div class="row">
-						<!-- About Us -->
-						<div class="col-md-12">
-							<div class="heading-footer">
-								<h2>굿방</h2>
-							</div>
-							<p>
-								Lorem ipsum dolor sit amet,
-								<br>
-								consectetur adipiscing elit.
-								<br>
-								Duis blandit ut metus a commodo. Pellentesque congue
-								<br>
-								tellus
-								sed enim sollicitudin, id blandit mauris eleifend.
-							</p>
-							<br>
-						</div>
-						<!-- End About Us -->
+			End floor -->
+			<section id="theme">
+				<div class="container g-mt-80 g-mb-50">
+					<div class="main_head text-center ">
+						<span class="main_name g-dp-block g-mb-20">테마 검색</span>
+						<h1 class="main_title font-main g-mb-60">THEMA SEARCH</h1>
 					</div>
 				</div>
+				<div class="container-fluid no-column-space">
+				
+					<div class="row ">
+						<div class="col-md-6 main_theme">
+						<div class="best-service best-service-1 text-center">
+							<div class="valign__middle">
+								<h2 class="best-service__title font-main g-mb-20">Painting</h2>
+								<a href="#" class="btn-u btn-u--construction trim"><i class="g-mr-10 fa btn-u__fa fa-arrow-right"></i> Read more</a>
+							</div>
+						</div>
+						</div>
 
-				<div class="copyright text-center">
-					<div class="container">
-						<ul class="list-inline terms-menu">
-							<li class="silver">
-								Copyright © 2014 - All Rights Reserved
-							</li>
-						</ul>
+						<div class="col-md-6">
+						<div class="best-service best-service-2 text-center" >
+							<div class="valign__middle">
+								<h2 class="best-service__title font-main g-mb-20">Painting</h2>
+								<a href="#" class="btn-u btn-u--construction trim"><i class="g-mr-10 fa btn-u__fa fa-arrow-right"></i> Read more</a>
+							</div>
+						</div>
 					</div>
+					</div>
+					<div class="row">
+					<div class="col-md-6">
+						<div class="best-service best-service-3 text-center">
+							<div class="valign__middle">
+								<h2 class="best-service__title font-main g-mb-20">Painting</h2>
+								<a href="#" class="btn-u btn-u--construction trim"><i class="g-mr-10 fa btn-u__fa fa-arrow-right"></i> Read more</a>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-md-6">
+						<div class="best-service best-service-4 text-center">
+							<div class="valign__middle">
+								<h2 class="best-service__title font-main g-mb-20">Painting</h2>
+								<a href="#" class="btn-u btn-u--construction trim"><i class="g-mr-10 fa btn-u__fa fa-arrow-right"></i> Read more</a>
+							</div>
+						</div>
+					</div>
+				</div>
+				</div>
+			</section>
+			<section id="information">
+				<div class="container g-mt-80 g-mb-50">
+					<div class="main_head text-center ">
+						<span class="main_name g-dp-block g-mb-20">OUR SERVICES</span>
+						<h1 class="main_title font-main">WHAT WE CAN DO</h1>
+					</div>
+				</div>
+			</section>
+			<!-- end theme -->
+			<div class="container-fluid content">
+				<div class="row">
+					<div class="col-md-2"></div>
+					<div class="col-md-8">
+						<div class="col-sm-4">
+							<img src="assets/img/bg/17.jpg" width="300" height="200">
+							<p>굿방ㅇㅇㅇㅎㅇㅇㅎㅇㅎ</p>
+						</div>
+						<div class="col-sm-4">
+							<img src="assets/img/bg/13.jpg" width="300" height="200">
+							<p>굿방ㅇㅇㅇㅎㅇㅇㅎㅇㅎ</p>
+						</div>
+						<div class="col-sm-4">
+							<img src="assets/img/bg/14.jpg" width="300" height="200">
+							<p>굿방ㅇㅇㅇㅎㅇㅇㅎㅇㅎ</p>
+						</div>
+					</div>
+					<div class="col-md-2"></div>
 				</div>
 			</div>
-
+			<!-- footer -->
+			<%@ include file="footer.jsp"%> 
 			<!-- end footer -->
 		</main>
 
@@ -194,26 +238,15 @@
 
 		<!-- JS Implementing Plugins -->
 		<script src="assets/plugins/smoothScroll.js"></script>
-		<!-- 스크럴 -->
-		<script src="assets/plugins/jquery.easing.min.js"></script>
-		<!-- 애니메이션 -->
 		<script src="assets/plugins/pace/pace.min.js"></script>
-		<script src="assets/plugins/owl-carousel2/owl.carousel.min.js"></script>
-		<script src="assets/plugins/sky-forms-pro/skyforms/js/jquery.form.min.js"></script>
-		<script src="assets/plugins/sky-forms-pro/skyforms/js/jquery.validate.min.js"></script>
-		<script src="assets/plugins/cube-portfolio/cubeportfolio/js/jquery.cubeportfolio.min.js"></script>
+		
 		<script src="assets/plugins/modernizr.js"></script><!-- 브라우저 호환성 -->
 		<script src="assets/plugins/backstretch/jquery.backstretch.min.js"></script>
-
 		<!-- JS Page Level-->
 		<script src="assets/js/one.app.js"></script>
-		<script src="assets/js/cube-portfolio.js"></script>
-		<script src="assets/js/contact.js"></script>
 		<script src="assets/js/promo.js"></script>
-		
 		<!-- custom -->
 		<script src="assets/js/custom.js"></script>
-		<script src="assets/js/custom2.js"></script>
-
+		<script src="assets/plugins/owl-carousel2/owl.carousel.min.js"></script>
 	</body>
 </html>

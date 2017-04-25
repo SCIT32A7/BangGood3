@@ -137,7 +137,7 @@
 						</div>
 						<div class="col-sm-2">
 							<button class="mypage_btn btn-u btn-block rounded">
-								<a href="#">매물 수정</a>
+								<a href="select_property_data?property_no=${property.property_no}">매물 수정</a>
 							</button>
 							<button class="mypage_btn btn-u btn-block rounded">
 								<a href="#">파일 변경</a>

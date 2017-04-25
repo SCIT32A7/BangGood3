@@ -1,7 +1,5 @@
 package global.sesoc.banggood.vo;
 
-import java.util.ArrayList;
-
 public class Property {
 
 	private int property_no;
@@ -9,7 +7,7 @@ public class Property {
 	private String rent_type;
 	private String address;
 	private String address_detail;
-	private String bulildingName;
+	private String buildingname;
 	private int floor;
 	private String property_type;
 	private int deposit;
@@ -70,12 +68,12 @@ public class Property {
 		this.address_detail = address_detail;
 	}
 
-	public String getBulildingName() {
-		return bulildingName;
+	public String getBuildingname() {
+		return buildingname;
 	}
 
-	public void setBulildingName(String bulildingName) {
-		this.bulildingName = bulildingName;
+	public void setBuildingname(String buildingname) {
+		this.buildingname = buildingname;
 	}
 
 	public int getFloor() {
@@ -201,8 +199,8 @@ public class Property {
 	@Override
 	public String toString() {
 		return "Property [property_no=" + property_no + ", custid=" + custid + ", rent_type=" + rent_type + ", address="
-				+ address + ", address_detail=" + address_detail + ", bulildingName=" + bulildingName + ", floor="
-				+ floor + ", property_type=" + property_type + ", deposit=" + deposit + ", month_fee=" + month_fee
+				+ address + ", address_detail=" + address_detail + ", buildingname=" + buildingname + ", floor=" + floor
+				+ ", property_type=" + property_type + ", deposit=" + deposit + ", month_fee=" + month_fee
 				+ ", maintence_fee=" + maintence_fee + ", built_year=" + built_year + ", roomsize=" + roomsize
 				+ ", isaccessible=" + isaccessible + ", issoldout=" + issoldout + ", property_title=" + property_title
 				+ ", property_text=" + property_text + ", property_inputdate=" + property_inputdate + ", property_hits="

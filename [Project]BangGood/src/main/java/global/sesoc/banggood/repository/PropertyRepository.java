@@ -71,6 +71,19 @@ public class PropertyRepository {
 		return read_property;
 	}
 
+	// 매물 기본정보 업데이트
+	public int update_Property(Property property) {
+		PropertyDAO pd = query.getMapper(PropertyDAO.class);
+		int result = 0;
+		try {
+			result = pd.update_property(property);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
+	}
+
 	// 매물 옵션 불러오기
 	public Option select_Option(int property_no) {
 		PropertyDAO pd = query.getMapper(PropertyDAO.class);
@@ -84,6 +97,19 @@ public class PropertyRepository {
 		return read_option;
 	}
 
+	// 매물 옵션 업데이트
+	public int update_Option(Option option) {
+		PropertyDAO pd = query.getMapper(PropertyDAO.class);
+		int result = 0;
+		try {
+			result = pd.update_option(option);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
+	}
+
 	// 매물 관리비내역 불러오기
 	public Maintence select_Maintence(int property_no) {
 		PropertyDAO pd = query.getMapper(PropertyDAO.class);
@@ -95,6 +121,19 @@ public class PropertyRepository {
 			e.printStackTrace();
 		}
 		return read_maintence;
+	}
+
+	// 매물 관리비 업데이트
+	public int update_Maintence(Maintence maintence) {
+		PropertyDAO pd = query.getMapper(PropertyDAO.class);
+		int result = 0;
+		try {
+			result = pd.update_maintence(maintence);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
 	}
 
 	// 매물 사진정보 불러오기

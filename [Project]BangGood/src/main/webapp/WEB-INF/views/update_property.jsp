@@ -79,58 +79,15 @@ table tr td {
 	<div class="container-fluid content g-mt-30">
 		<div class="row">
 		<div class="col-md-2"></div>
-		<form action = "insert_property" method = "post">
+		<form action = "update_property_data" method = "post">
 		<div class="col-md-8">
 			<div class="headline">
-				<h2 style="font-size: 28px;">방 등록</h2>
+				<h2 style="font-size: 28px;">방 기본정보 수정</h2>
 				<div class="pull-right">
 					<h1>Step1</h1>
 				</div>
 			</div>
-			<!-- place -->
-			<div class="container-fluid g-pt-30 ">
-				<div class="insert_head pull-left">
-					<h1 class="insert_title font-main">
-						<i class="fa fa-map-marker insert_name"></i>위치정보
-					</h1>
-				</div>
-				<div class="clearfix"></div>
-				<div class="row">
-					<div class="col-md-12  insert_box_bg">
-						<div>
-							<!-- <form method="" action=""> -->
-								<table>
-										<colgroup>
-											<col style="width:15%">
-											<col>
-											<col style="width:22%">
-										</colgroup>
-									<tr class="borderline" style="font-size:10px;">
-										<th>주소</th>
-										<td>
-										
-										<div class="g-mb-30">
-										<input type="button" onclick="sample5_execDaumPostcode()" class="btn-u btn-block rounded insert_btn" 
-										value="주소검색" style="width:105px; margin-left:5px; float:left;height:35px;">
-										<label class="insert_label" style="font-size:12px">검색버튼을 눌러주세요.</label>										
-										</div>
-										<input type="text" id="sample5_roadAddress" class="form-control rounded g-mb-5" readonly="readonly">
-										<input type="text" id="sample5_jibunAddress" name = "address" class="form-control rounded  g-mb-10" readonly="readonly">
-										<input type="text" class="form-control rounded" name = "address_detail" style="height:75px;" placeholder="상세주소를 입력해주세요." required="required">
-										
-										</td>
-										<td>
-										<img id="coverimg" src="assets/img/blank.png">
-										<div id="map" style="width:300px;height:250px;margin-top:10px;display:none">
-										</div>
-										</td>
-									</tr>
-								</table>
-							<!-- </form> -->
-						</div>
-					</div>
-				</div>
-				<!-- end place -->
+
 				<!-- map -->
 				<!-- end map -->
 				<div class="margin-bottom-50"></div>
@@ -145,7 +102,6 @@ table tr td {
 				<div class="row ">
 						<div class="col-md-12 insert_box_bg ">
 							<div>
-							<!-- 	<form method="" action=""> -->
 									<table style="width:100%">
 										<colgroup>
 											<col style="width:15%">
@@ -156,27 +112,36 @@ table tr td {
 										<tr class="borderline">
 											<th>방 종류</th>
 											<td colspan="3">
-												<input type="radio" name="property_type" value = "oneroom" style="position:relative; top:6px"><label class="insert_label">원룸</label>
-												<input type="radio" name="property_type" value = "tworoom" style="position:relative; top:6px"><label class="insert_label" >투룸</label>
+												<input type="radio" name="property_type" value = "원룸" 
+												style="position:relative; top:6px" ${select_property.property_type == '원룸' ? 'checked' : ''}>
+												<label class="insert_label">원룸</label>
+												<input type="radio" name="property_type" value = "투룸" 
+												style="position:relative; top:6px" ${select_property.property_type == '투룸' ? 'checked' : ''}>
+												<label class="insert_label" >투룸</label>
 											</td>
 										</tr>
 										<tr class="borderline">
 											<th>매물 종류</th>
 											<td colspan="3">
-											<input type="radio" name="rent_type" value = "year_rent" style="position:relative; top:6px">
+											<input type="radio" name="rent_type" value = "전세"
+											 style="position:relative; top:6px" ${select_property.rent_type == '전세' ? 'checked' : ''}>
 											<label class="insert_label">전세</label>
-											<input type="radio" name="rent_type" value = "month_rent" style="position:relative; top:6px">
+											<input type="radio" name="rent_type" value = "월세"
+											 style="position:relative; top:6px" ${select_property.rent_type == '월세' ? 'checked' : ''}>
 											<label class="insert_label">월세</label>
+											<input type="hidden" name ="property_no" id="property_no" value = "${select_property.property_no}">
 											</td>
 										</tr>
 										<tr class="borderline">
 											<th>보증금 <br>/ 전세금</th>
 											<td style="border-right: 1px solid #f7b70b">
-											<input type="text" name = "deposit" id = "deposit" class="form-control rounded pull-left" style="width: 150px;"> 
+											<input type="text" name = "deposit" id = "deposit" class="form-control rounded pull-left"
+											 style="width: 150px;" value = "${select_property.deposit}"> 
 											<label class="insert_label">만원</label>
 											</td>
 											<th style="padding-left: 18px">월세</th>
-											<td><input type="text" name ="month_fee" id = "month_fee" class="form-control rounded pull-left" style="width: 150px">
+											<td><input type="text" name ="month_fee" id = "month_fee" class="form-control rounded pull-left"
+											 style="width: 150px" value = "${select_property.month_fee}">
 												<label class="insert_label">만원</label>
 											</td>
 										</tr>
@@ -184,31 +149,34 @@ table tr td {
 											<th>건물층수</th>
 											<td style="border-right: 1px solid #f7b70b">
 											<select id="floor" name = "floor" class="form-control" style="">
-													<option value = "-1">반지하</option>
-													<option value = "1" selected="selected">1층</option>
-													<option value = "2">2층</option>
-													<option value = "3">3층</option>
-													<option value = "4">4층</option>
-													<option value = "5">5층</option>
-													<option value = "6">6층</option>
-													<option value = "7">7층</option>
-													<option value = "8">8층</option>
-													<option value = "9">9층</option>
-													<option value = "10">10층 이상</option>
+													<option value = "-1" ${select_property.floor == '-1' ? 'selected':''}>반지하</option>
+													<option value = "1" ${select_property.floor == '1' ? 'selected':''}>1층</option>
+													<option value = "2" ${select_property.floor == '2' ? 'selected':''}>2층</option>
+													<option value = "3" ${select_property.floor == '3' ? 'selected':''}>3층</option>
+													<option value = "4" ${select_property.floor == '4' ? 'selected':''}>4층</option>
+													<option value = "5" ${select_property.floor == '5' ? 'selected':''}>5층</option>
+													<option value = "6" ${select_property.floor == '6' ? 'selected':''}>6층</option>
+													<option value = "7" ${select_property.floor == '7' ? 'selected':''}>7층</option>
+													<option value = "8" ${select_property.floor == '8' ? 'selected':''}>8층</option>
+													<option value = "9" ${select_property.floor == '9' ? 'selected':''}>9층</option>
+													<option value = "10" ${select_property.floor == '10' ? 'selected':''}>10층 이상</option>
 											</select></td>
 											<th style="padding-left: 18px">면적</th>
-											<td><input type="text" name ="roomsize" id = "roomsize" class="form-control rounded pull-left" style="width: 150px">
+											<td><input type="text" name ="roomsize" id = "roomsize" class="form-control rounded pull-left"
+											 style="width: 150px" value = "${select_property.roomsize}">
 												<label class="insert_label">평</label>
 											</td>
 										</tr>
 										<tr class="borderline">
 											<th>건축연도</th>
 											<td  style="border-right: 1px solid #f7b70b">
-											<input type="text" name = "built_year" id = "built_year" class="form-control rounded pull-left" style="width: 150px;"> 
+											<input type="text" name = "built_year" id = "built_year" class="form-control rounded pull-left"
+											 style="width: 150px;" value = "${select_property.built_year}"> 
 											<label class="insert_label">년</label>
 											</td>
 											<th style="padding-left: 18px">건물명</th>
-											<td><input type="text" name ="buildingname" id = "buildingname" class="form-control rounded pull-left" style="width: 150px">
+											<td><input type="text" name ="buildingname" id = "buildingname" class="form-control rounded pull-left"
+											 style="width: 150px" value = "${select_property.buildingname}">
 											</td>
 										</tr>
 									</table>
@@ -228,7 +196,6 @@ table tr td {
 				<div class="row ">
 					<div class="col-md-12 insert_box_bg ">
 						<div>
-							<!-- <form method="" action=""> -->
 								<table style="width:100%">
 										<colgroup>
 											<col style="width: 15%">
@@ -239,87 +206,112 @@ table tr td {
 										<tr class="borderline">
 										<th rowspan="2">관리비</th>
 										<td colspan="3">
-										<input type="text" id = "maintence_fee" name = "maintence_fee" class="form-control rounded pull-left" style="width: 150px">
+										<input type="text" id = "maintence_fee" name = "maintence_fee" class="form-control rounded pull-left"
+										 style="width: 150px" value = "${select_property.maintence_fee}">
 										<label class="insert_label">만원</label>
 										</td>
 									</tr>
 									<tr class="borderline">
 										<td colspan="3">
-											<input type="checkbox" name="internet" value="1" style="position:relative; top:6px">
+											<input type="checkbox" name="internet" value="1" 
+											style="position:relative; top:6px" ${select_maintence.internet == '1' ? 'checked' : ''}>
 											<label class="insert_label">인터넷</label>
-											<input type="checkbox" name="tvfee" value="1" style="position:relative; top:6px">
+											<input type="checkbox" name="tvfee" value="1"
+											 style="position:relative; top:6px" ${select_maintence.tvfee == '1' ? 'checked' : ''}>
 											<label class="insert_label">케이블</label>
-											<input type="checkbox" name="cleaning" value="1" style="position:relative; top:6px">
+											<input type="checkbox" name="cleaning" value="1"
+											 style="position:relative; top:6px" ${select_maintence.cleaning == '1' ? 'checked' : ''}>
 											<label class="insert_label">청소비</label>
-											<input type="checkbox" name="waterfee" value="1" style="position:relative; top:6px">
+											<input type="checkbox" name="waterfee" value="1"
+											 style="position:relative; top:6px" ${select_maintence.waterfee == '1' ? 'checked' : ''}>
 											<label class="insert_label">수도세</label>
-											<input type="checkbox" name="gasfee" value="1" style="position:relative; top:6px">
+											<input type="checkbox" name="gasfee" value="1"
+											 style="position:relative; top:6px" ${select_maintence.gasfee == '1' ? 'checked' : ''}>
 											<label class="insert_label">가스비</label>
-											<input type="checkbox" name="electronic" value="1" style="position:relative; top:6px">
+											<input type="checkbox" name="electronic" value="1"
+											 style="position:relative; top:6px" ${select_maintence.electronic == '1' ? 'checked' : ''}>
 											<label class="insert_label">전기세</label>
 										</td>
 									</tr>
 									<tr class="borderline">
 										<th>주차여부</th>
 										<td colspan="3">
-											<input type="radio" name="car" value = "1" style="position:relative; top:6px">
+											<input type="radio" name="car" value = "1"
+											 style="position:relative; top:6px" ${select_option.car == '1' ? 'checked' : ''}>
 											<label class="insert_label">가능</label>
-											<input type="radio" name="car" value = "2" style="position:relative; top:6px">
+											<input type="radio" name="car" value = "2"
+											 style="position:relative; top:6px" ${select_option.car == '2' ? 'checked' : ''}>
 											<label class="insert_label">불가능</label>
 										</td>
 									</tr>
 									<tr class="borderline">
 										<th>엘레베이터</th>
 										<td colspan="3">
-											<input type="radio" name="elevator" value = "1" style="position:relative; top:6px">
+											<input type="radio" name="elevator" value = "1" 
+											style="position:relative; top:6px" ${select_option.elevator == '1' ? 'checked' : ''}>
 											<label class="insert_label">있음</label>
-											<input type="radio" name="elevator" value = "2" style="position:relative; top:6px">
+											<input type="radio" name="elevator" value = "2" 
+											style="position:relative; top:6px" ${select_option.elevator == '2' ? 'checked' : ''}>
 											<label class="insert_label">없음</label>
 										</td>
 									</tr>
 									<tr class="borderline">
 										<th>반려동물</th>
 										<td colspan="3">
-											<input type="radio" name="pet" value = "1" style="position:relative; top:6px">
+											<input type="radio" name="pet" value = "1" 
+											style="position:relative; top:6px" ${select_option.pet == '1' ? 'checked' : ''}>
 											<label class="insert_label">가능</label>
-											<input type="radio" name="pet" value = "2" style="position:relative; top:6px">
+											<input type="radio" name="pet" value = "2" 
+											style="position:relative; top:6px" ${select_option.pet == '2' ? 'checked' : ''}>
 											<label class="insert_label">불가능</label>
 										</td>
 									</tr>
 									<tr class="borderline">
 										<th>옵션항목</th>
 										<td colspan="3">
-											<input type="checkbox" name="air_conditioner" value="1" style="position:relative; top:6px">
+											<input type="checkbox" name="air_conditioner" value="1" 
+											style="position:relative; top:6px" ${select_option.air_conditioner == '1' ? 'checked' : ''}>
 											<label class="insert_label">에어콘</label>
-											<input type="checkbox" name="fridge" value="1" style="position:relative; top:6px">
+											<input type="checkbox" name="fridge" value="1" 
+											style="position:relative; top:6px" ${select_option.fridge == '1' ? 'checked' : ''}>
 											<label class="insert_label">냉장고</label>
-											<input type="checkbox" name="washing_machine" value="1" style="position:relative; top:6px">
+											<input type="checkbox" name="washing_machine" value="1" 
+											style="position:relative; top:6px" ${select_option.washing_machine == '1' ? 'checked' : ''}>
 											<label class="insert_label">세탁기</label>
-											<input type="checkbox" name="gas_stove" value="1" style="position:relative; top:6px">
+											<input type="checkbox" name="gas_stove" value="1" 
+											style="position:relative; top:6px" ${select_option.gas_stove == '1' ? 'checked' : ''}>
 											<label class="insert_label">가스레인지</label>
-											<input type="checkbox" name="electric_stove" value="1" style="position:relative; top:6px">
+											<input type="checkbox" name="electric_stove" value="1" 
+											style="position:relative; top:6px" ${select_option.electric_stove == '1' ? 'checked' : ''}>
 											<label class="insert_label">인덕션</label>
-											<input type="checkbox" name="microwave" value="1" style="position:relative; top:6px">
+											<input type="checkbox" name="microwave" value="1" 
+											style="position:relative; top:6px" ${select_option.microwave == '1' ? 'checked' : ''}>
 											<label class="insert_label">전자레인지</label>
 											<br>
-											<input type="checkbox" name="desk" value="1" style="position:relative; top:6px">
+											<input type="checkbox" name="desk" value="1" 
+											style="position:relative; top:6px" ${select_option.desk == '1' ? 'checked' : ''}>
 											<label class="insert_label">책상</label>
-											<input type="checkbox" name="rack" value="1" style="position:relative; top:6px">
+											<input type="checkbox" name="rack" value="1" 
+											style="position:relative; top:6px" ${select_option.rack == '1' ? 'checked' : ''}>
 											<label class="insert_label">선반</label>
-											<input type="checkbox" name="bed" value="1" style="position:relative; top:6px">
+											<input type="checkbox" name="bed" value="1" 
+											style="position:relative; top:6px" ${select_option.bed == '1' ? 'checked' : ''}>
 											<label class="insert_label">침대</label>
-											<input type="checkbox" name="closet" value="1" style="position:relative; top:6px">
+											<input type="checkbox" name="closet" value="1" 
+											style="position:relative; top:6px" ${select_option.closet == '1' ? 'checked' : ''}>
 											<label class="insert_label">옷장</label>
-											<input type="checkbox" name="shoecabinet" value="1" style="position:relative; top:6px">
+											<input type="checkbox" name="shoecabinet" 
+											value="1" style="position:relative; top:6px" ${select_option.shoecabinet == '1' ? 'checked' : ''}>
 											<label class="insert_label">신발장</label>
-											<input type="checkbox" name="doorlock" value="1" style="position:relative; top:6px">
+											<input type="checkbox" name="doorlock" 
+											value="1" style="position:relative; top:6px" ${select_option.doorlock == '1' ? 'checked' : ''}>
 											<label class="insert_label">도어락</label>
-											<input type="checkbox" name="wifi" value="1" style="position:relative; top:6px">
+											<input type="checkbox" name="wifi" value="1" 
+											style="position:relative; top:6px" ${select_option.wifi == '1' ? 'checked' : ''}>
 											<label class="insert_label">무선인터넷</label>
 										</td>
 									</tr>
 								</table>
-							<!-- </form> -->
 						</div>
 					</div>
 				</div>
@@ -338,17 +330,18 @@ table tr td {
 									<table style="width:100%">
 										<tr class="borderline">
 											<th>방 제목</th>
-											<td><input type="text" id="property_title" name = "property_title" class="form-control rounded pull-width" placeholder="예) 코엑스 5분거리 살기좋은 곳입니다.">
+											<td><input type="text" id="property_title" name = "property_title"
+											 class="form-control rounded pull-width" value = "${select_property.property_title}">
 											</td>
 										</tr>
 										<tr class="borderline">
 											<th>방 설명</th>
 											<td>
-											<textarea type="text" class="pull-width" id="property_text" name = "property_text" style="width: 100%; height: 250px" placeholder="방에 대한 설명을 써주세요."></textarea>
+											<textarea type="text" class="pull-width" id="property_text" name = "property_text"
+											 style="width: 100%; height: 250px">${select_property.property_text}</textarea>
 											</td>
 										</tr>
 									</table>
-								<!-- </form> -->
 							</div>
 						</div>
 					</div>
@@ -361,12 +354,7 @@ table tr td {
 					<div class="col-md-2"></div>
 					<div class="col-md-4">
 						<button type="submit" class="btn-u btn-block rounded insert_btn">
-						다음단계
-						</button>
-					</div>
-					<div class="col-md-4">
-						<button class="btn-u btn-block rounded insert_btn" style="background-color:#ccc" onClick = "location.href='./'">
-						돌아가기
+						매물 정보 변경
 						</button>
 					</div>
 					<div class="col-md-2"></div>
