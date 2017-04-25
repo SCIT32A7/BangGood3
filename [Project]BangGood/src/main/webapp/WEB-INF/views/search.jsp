@@ -33,12 +33,6 @@
 <link rel="stylesheet" href="assets/css/one.style.css">
 
 <!-- CSS Implementing Plugins -->
-<link rel="stylesheet"
-   href="assets/plugins/owl-carousel2/assets/owl.carousel.css">
-<link rel="stylesheet"
-   href="assets/plugins/owl-carousel/owl-carousel/owl.theme.css">
-<link rel="stylesheet"
-   href="assets/plugins/hover-effects/css/custom-hover-effects.css">
 <link rel="stylesheet" href="assets/plugins/pace/pace-flash.css">
 <!-- CSS Theme -->
 <link rel="stylesheet" href="assets/css/construction.style.css">
@@ -47,8 +41,6 @@
 <!-- 메인 글씨 -->
 <!-- CSS Customization -->
 <link rel="stylesheet" href="assets/css/custom.css">
-<link rel="stylesheet"
-   href="assets/plugins/font-awesome/css/font-awesome.min.css">
 <style type="text/css">
 
 .table tbody tr td {
@@ -68,7 +60,22 @@
     .info .img {position: absolute;top: 6px;left: 5px;width: 73px;height: 71px;border: 1px solid #ddd;color: #888;overflow: hidden;}
     .info:after {content: '';position: absolute;margin-left: -12px;left: 50%;bottom: 0;width: 22px;height: 12px;background: url('http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png')}
     .info .link {color: #5085BB;}
-
+   #addresstext{
+   z-index:100000;
+   }
+   
+      .ui-autocomplete {
+         max-height: 100px;
+         overflow-y: auto;
+         /* prevent horizontal scrollbar */
+         overflow-x: hidden;
+      }
+      /* IE 6 doesn't support max-height
+         * we use height instead, but this forces the menu to always be this tall
+         */
+      * html .ui-autocomplete {
+         height: 100px;
+      }
 </style>
 
 
@@ -272,26 +279,9 @@
    <link rel="stylesheet" href="/resources/demos/style.css">
    <style>
    
-      .ui-autocomplete {
-         max-height: 100px;
-         overflow-y: auto;
-         /* prevent horizontal scrollbar */
-         overflow-x: hidden;
-      }
-      /* IE 6 doesn't support max-height
-         * we use height instead, but this forces the menu to always be this tall
-         */
-      * html .ui-autocomplete {
-         height: 100px;
-      }
    </style>
-   <script src="assets/plugins/jquery/jquery.min.js"></script>
-   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
-   <!-- google map -->
    <script type="text/javascript"
-      src="//apis.daum.net/maps/maps3.js?apikey=8af91664dfbd610fb326b81f6ed2ca57&libraries=services"></script>
-   
+    src="//apis.daum.net/maps/maps3.js?apikey=8af91664dfbd610fb326b81f6ed2ca57&libraries=services"></script>
    <script type="text/javascript">      
       var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
       var options = { //지도를 생성할 때 필요한 기본 옵션
@@ -830,34 +820,16 @@
    
    
    </script>
-   <!-- custom -->
-
-
-   <!-- JS Implementing Plugins -->
-   <script src="assets/plugins/smoothScroll.js"></script>
-   <!-- 스크럴 -->
-   <script src="assets/plugins/jquery.easing.min.js"></script>
-   <!-- 애니메이션 -->
-   <script src="assets/plugins/pace/pace.min.js"></script>
-   <script src="assets/plugins/owl-carousel2/owl.carousel.min.js"></script>
-   <script
-      src="assets/plugins/sky-forms-pro/skyforms/js/jquery.form.min.js"></script>
-   <script
-      src="assets/plugins/sky-forms-pro/skyforms/js/jquery.validate.min.js"></script>
-   <script
-      src="assets/plugins/cube-portfolio/cubeportfolio/js/jquery.cubeportfolio.min.js"></script>
-   <script src="assets/plugins/modernizr.js"></script>
-   <!-- 브라우저 호환성 -->
-   <script src="assets/plugins/backstretch/jquery.backstretch.min.js"></script>
-
-   <!-- JS Page Level-->
-   <script src="assets/js/one.app.js"></script>
-   <script src="assets/js/plugins/cube-portfolio.js"></script>
-   <script src="assets/js/forms/contact.js"></script>
-   <script src="assets/js/plugins/promo.js"></script>
+      
+   <!-- JS Global Compulsory -->
+   
+   <script src="assets/plugins/jquery/jquery.min.js"></script>
+   <script src="assets/plugins/jquery/jquery-migrate.min.js"></script>
+   <script src="assets/plugins/bootstrap/js/bootstrap.js"></script>
 
    <!-- custom -->
    <script src="assets/js/custom.js"></script>
+   
 
 </body>
 </html>

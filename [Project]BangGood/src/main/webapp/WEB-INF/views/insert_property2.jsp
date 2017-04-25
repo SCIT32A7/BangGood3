@@ -46,7 +46,6 @@
 
 <!-- 평면도 CSS -->
 <style type="text/css">
-
 .box { display: inline-flex; }
  
 #rightCanvas {
@@ -125,6 +124,25 @@
 }
 
 </style>
+ <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="/resources/demos/style.css">
+  <style>
+  .custom-combobox {
+    position: relative;
+    display: inline-block;
+  }
+  .custom-combobox-toggle {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin-left: -1px;
+    padding: 0;
+  }
+  .custom-combobox-input {
+    margin: 0;
+    padding: 5px 10px;
+  }
+  </style>
 
 </head>
 
@@ -267,7 +285,34 @@
 					</div>
 				</div>
 				<div class="updownload " style="display:none;overflow: auto;">
-					<input type="text" name="datanum" id="datanum" class="form-control rounded" onfocus="loadUserFloorplanList('${loginId}');" placeholder="평면도 번호를 입력."/>
+					<input type="text" name="datanum" id="datanum" class="form-control rounded" placeholder="평면도 번호를 입력."/>
+					<!-- <div class="ui-widget">
+						<select id="combobox" class="datanum">
+						    <option value="">선택하세요</option>
+						    <option value="ActionScript">ActionScript</option>
+						    <option value="AppleScript">AppleScript</option>
+						    <option value="Asp">Asp</option>
+						    <option value="BASIC">BASIC</option>
+						    <option value="C">C</option>
+						    <option value="C++">C++</option>
+						    <option value="Clojure">Clojure</option>
+						    <option value="COBOL">COBOL</option>
+						    <option value="ColdFusion">ColdFusion</option>
+						    <option value="Erlang">Erlang</option>
+						    <option value="Fortran">Fortran</option>
+						    <option value="Groovy">Groovy</option>
+						    <option value="Haskell">Haskell</option>
+						    <option value="Java">Java</option>
+						    <option value="JavaScript">JavaScript</option>
+						    <option value="Lisp">Lisp</option>
+						    <option value="Perl">Perl</option>
+						    <option value="PHP">PHP</option>
+						    <option value="Python">Python</option>
+						    <option value="Ruby">Ruby</option>
+						    <option value="Scala">Scala</option>
+						    <option value="Scheme">Scheme</option>
+						  </select>
+					  </div> -->
 					<input type="button" class="btn-u btn-u--construction trim e_img2" value="평면도 불러오기" id="loadCanvasData" />
 					<a href="#" class="downloadBtn" id="btn-download" download="Floorplan.png">
 						<input type="image" src="assets/img/icons/sidebar/Download-button.png" style="width:200px; height:100px;">
@@ -322,6 +367,8 @@
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <!-- <script type="text/javascript" src="assets/js/jquery-3.2.0.min.js"></script> -->
 <script type="text/javascript" src="assets/js/FloorplanCanvas.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script type="text/javascript" src= "assets/js/autocomplete.js"></script>
 <script>
 //Basic 변수 모음
 	var canvas;
@@ -612,6 +659,22 @@
 				}
 			});
 		});
+		
+		//
+		$("#datanum").on("focus", function() {
+			var availableList = loadUserFloorplanList("${loginId}");
+			//유저 개인 평면도 리스트 오토 컴플릿.
+			var selectTag = "<select id='combobox'>";
+				selectTag += "<option value=''>선택하세요</option>";
+			for(var index in availableList) {
+				selectTag += "<option value='"+availableList[index].DATANUM+"'>"+availableList[index].DATANUM+availableList[index].SAVED_NAME+"</option>";
+			}
+			$( ".ui-widget" ).html();
+		
+			$( "#combobox" ).combobox();
+		    $( "#toggle" ).on( "click", function() {
+		    $( "#combobox" ).toggle(); */
+	    });
 	
 		//메뉴 인터페이스 단
 		//메뉴창 선 설정 
@@ -987,6 +1050,7 @@
 			updateTemp = null;
 			redrawAll();
 		});
+		
 		$("#undo").on("click", function() {
 			if (Undo.length > 0) {
 				getUndo(Undo[Undo.length - 1]);

@@ -221,6 +221,7 @@ function regist(){
 		success : function(resp) {
 			if(resp == 1){ 
 				$("#searchreply_text").val("");
+				$("#replyFile").val(""); 
 				init();
 			}
 			else alert('댓글 등록 실패');

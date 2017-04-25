@@ -96,11 +96,11 @@ public class PropertyRepository {
 		}
 		return read_maintence;
 	}
-	
+
 	// 매물 사진정보 불러오기
 	public ArrayList<Picture> select_Picture(int property_no) {
 		PropertyDAO pd = query.getMapper(PropertyDAO.class);
-		ArrayList <Picture> read_picture = new ArrayList<>();
+		ArrayList<Picture> read_picture = new ArrayList<>();
 		try {
 			read_picture = pd.select_property_picture(property_no);
 		} catch (Exception e) {
@@ -109,9 +109,9 @@ public class PropertyRepository {
 		}
 		return read_picture;
 	}
-	
+
 	// 조회수 증가
-	public void add_hits(int property_no){
+	public void add_hits(int property_no) {
 		PropertyDAO pd = query.getMapper(PropertyDAO.class);
 		try {
 			pd.add_property_hits(property_no);
@@ -174,9 +174,9 @@ public class PropertyRepository {
 		}
 		return pm;
 	}
-	
+
 	// 게시 중단
-	public int stop_showing(int property_no){
+	public int stop_showing(int property_no) {
 		PropertyDAO pd = query.getMapper(PropertyDAO.class);
 		int result = 0;
 		try {
@@ -189,7 +189,7 @@ public class PropertyRepository {
 	}
 
 	// 게시 재게
-	public int restart_showing(int property_no){
+	public int restart_showing(int property_no) {
 		PropertyDAO pd = query.getMapper(PropertyDAO.class);
 		int result = 0;
 		try {
@@ -200,9 +200,9 @@ public class PropertyRepository {
 		}
 		return result;
 	}
-	
+
 	// 댓글 입력
-	public int insert_propertyReply(propertyReply pr){
+	public int insert_propertyReply(propertyReply pr) {
 		System.out.println(pr);
 		PropertyDAO pd = query.getMapper(PropertyDAO.class);
 		int result = 0;
@@ -215,9 +215,9 @@ public class PropertyRepository {
 		}
 		return result;
 	}
-	
+
 	// 댓글 출력
-	public ArrayList<propertyReply> get_propertyReply(int property_no){
+	public ArrayList<propertyReply> get_propertyReply(int property_no) {
 		PropertyDAO pd = query.getMapper(PropertyDAO.class);
 		ArrayList<propertyReply> prList = new ArrayList<>();
 		try {
@@ -228,11 +228,11 @@ public class PropertyRepository {
 		}
 		return prList;
 	}
-	
+
 	// 댓글 삭제
-	public int delete_propertyReply(int property_reply_no, int property_no){
+	public int delete_propertyReply(int property_reply_no, int property_no) {
 		PropertyDAO pd = query.getMapper(PropertyDAO.class);
-		int result=0;
+		int result = 0;
 		try {
 			result = pd.delete_propertyReply(property_reply_no);
 			pd.sub_reply_count(property_no);
@@ -242,5 +242,18 @@ public class PropertyRepository {
 		}
 		return result;
 	}
-	
+
+	// 댓글 불러오기
+	public propertyReply select_propertyReply(int property_reply_no) {
+		PropertyDAO pd = query.getMapper(PropertyDAO.class);
+		propertyReply pr = null;
+		try {
+			pr = pd.select_propertyReply(property_reply_no);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return pr;
+	}
+
 }

@@ -350,13 +350,20 @@ public class PropertyController {
 	}
 	
 	// 댓글 삭제를 위한 메소드
-	@ResponseBody
-	@RequestMapping(value = "/delete_propertyReply", method = RequestMethod.POST)
-	public int delete_propertyReply(int property_reply_no, int property_no){
-		int result = 0;
-		result = pr.delete_propertyReply(property_reply_no, property_no);
-		return result;
-	}
+	   @ResponseBody
+	   @RequestMapping(value = "/delete_propertyReply", method = RequestMethod.POST)
+	   public int delete_propertyReply(int property_reply_no, int property_no){
+	      int result = 0;
+	      propertyReply dpr = pr.select_propertyReply(property_reply_no); // 오늘입력
+	      result = pr.delete_propertyReply(property_reply_no, property_no);
+	      String uploadPath = "/replyFile";
+	      
+	      if(result==1){ // 오늘 입력
+	         String fullpath = uploadPath + "/" +dpr.getPic_savename();
+	         FileService.deleteFile(fullpath);
+	      }
+	      return result;
+	   }
 	
 	
 	// 댓글 사진을 불러오기 위한 메소드

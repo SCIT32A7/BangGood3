@@ -1409,6 +1409,8 @@ function moveTemp(req){
 		return { x : mouseX - fixed, y : mouseY - fixed }
 	}
 
+	//다운로드 업로드 관련 메소드 모음............................................................................
+	
 	//다운로드 이미지
 	function downloadFloorplanPng(saved_name) {
 		//다운로드 직전 최신화
@@ -1468,30 +1470,28 @@ function moveTemp(req){
 		} 
 	}	
 	
-	/*//DB에서 유저 평면도 리스트 로드
+	//DB에서 유저 평면도 리스트 로드
 	function loadUserFloorplanList(custid) {
 		console.log("asdf");
 		var availableList = [];
 		$.ajax({
 			url: "loadUserDataList",
 			type: "POST",
-			async: false,
 			data: {custid : custid},
 			success : function(list) {
-				for(var index in list) {
+				console.log(JSON.stringify(list));
+				/*for(var index in list) {
 					var datanum = list[index].DATANUM;
 					var saved_name = list[index].SAVED_NAME;
 					console.log(datanum +" "+saved_name);
 					var temp = "저장 번호: "+ datanum + " 저장명: "+ saved_name;
 					availableList.push(temp);
-				}
+				}*/
+				return list;
 			}
 		});
-		//유저 개인 평면도 리스트 오토 컴플릿
-		$( "#datanum" ).autocomplete({
-		      source: availableList;
-		});
-	}*/
+		/*return availableList;*/
+	}
 	
 	/*// JSON 포멧 데이터 처리
 	function createImages(objImageInfo) {

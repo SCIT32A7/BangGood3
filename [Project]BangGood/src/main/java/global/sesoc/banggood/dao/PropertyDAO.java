@@ -67,6 +67,9 @@ public interface PropertyDAO {
 	// 댓글 삭제
 	public int delete_propertyReply(int property_reply_no) throws Exception;
 	
+	// 댓글 하나 찾기 --
+	public propertyReply select_propertyReply(int property_reply_no) throws Exception;
+	
 	// 댓글 삭제시 댓글 수 감소
 	public int sub_reply_count(int property_no) throws Exception;
 }

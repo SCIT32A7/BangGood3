@@ -243,4 +243,8 @@
 	 delete propertyreply where property_reply_no = #{property_reply_no}
 	</delete>
 
+   <!-- 댓글 소환, 댓글 삭제 시 사진을 삭제하기 위해 필요 -->
+   <select id="select_propertyReply" parameterType="_int" resultType="propertyReply">
+   select * from propertyreply where property_reply_no = #{property_reply_no}
+   </select>
 </mapper>
