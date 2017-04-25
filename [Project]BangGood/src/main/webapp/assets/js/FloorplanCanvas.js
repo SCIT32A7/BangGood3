@@ -1428,8 +1428,10 @@ function moveTemp(req){
 		//데이터 collect
 		var iconArray = iconState.icons;
 		var lineArray = lines;
+		var objectArray = []; // 임시
 		var data = { lines : JSON.stringify(lineArray),
 					 icons : JSON.stringify(iconArray),
+					 objects : JSON.stringify(objectArray),
 					 saved_name : saved_name };
 		if(on) {
 			//서버 저장
@@ -1466,17 +1468,30 @@ function moveTemp(req){
 		} 
 	}	
 	
-	//DB에서 유저 평면도 이미지 데이터 로드
-	function loadUserDataFloorplanImageList() {
+	/*//DB에서 유저 평면도 리스트 로드
+	function loadUserFloorplanList(custid) {
+		console.log("asdf");
+		var availableList = [];
 		$.ajax({
-			url: "images.json",
-			type: "GET",
-			dataType:"json",
-			success : function(data) {
-				createImages(data);
+			url: "loadUserDataList",
+			type: "POST",
+			async: false,
+			data: {custid : custid},
+			success : function(list) {
+				for(var index in list) {
+					var datanum = list[index].DATANUM;
+					var saved_name = list[index].SAVED_NAME;
+					console.log(datanum +" "+saved_name);
+					var temp = "저장 번호: "+ datanum + " 저장명: "+ saved_name;
+					availableList.push(temp);
+				}
 			}
-		})
-	}
+		});
+		//유저 개인 평면도 리스트 오토 컴플릿
+		$( "#datanum" ).autocomplete({
+		      source: availableList;
+		});
+	}*/
 	
 	/*// JSON 포멧 데이터 처리
 	function createImages(objImageInfo) {
@@ -1497,10 +1512,12 @@ function moveTemp(req){
 			$imageContainer.append(strDOM);
 	}*/
 	
+	
 	//DB에서 데이터 로드
 	function loadUserData() {
-		var linesArray = [];
-		var iconsArray = [];
+		var lineArray = [];
+		var iconArray = [];
+		var objectArray = [];
 		var datanum = $("#datanum").val();
 			
 		$.ajax({
@@ -1511,11 +1528,15 @@ function moveTemp(req){
 			success : function(data) {
 				var lines = JSON.parse(data.lines);
 				var icons = JSON.parse(data.icons);
+				var objects = JSON.parse(data.objects);
 				if(Object.keys(lines).length !== 0) {
-					linesArray = lines;
+					lineArray = lines;
 				} 
 				if(Object.keys(icons).length !== 0) {
-					iconsArray = icons;
+					iconArray = icons;
+				}
+				if(Object.keys(objects).length !== 0) {
+					objectArray = objects;
 				}
 			},
 			error : function() {
@@ -1523,5 +1544,5 @@ function moveTemp(req){
 				init();
 			}
 		});
-		return {lines: linesArray, icons: iconsArray};
+		return {lines: lineArray, icons: iconArray, objects: objectArray};
 	}

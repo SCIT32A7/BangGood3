@@ -43,6 +43,7 @@
 <link rel="stylesheet" href="assets/css/custom.css">
 <link rel="stylesheet"
    href="assets/plugins/font-awesome/css/font-awesome.min.css">
+
 <!-- 평면도 CSS -->
 <style type="text/css">
 
@@ -266,7 +267,7 @@
 					</div>
 				</div>
 				<div class="updownload " style="display:none;overflow: auto;">
-					<input type="text" name="datanum" id="datanum" class="form-control rounded"placeholder="평면도 번호를 입력해주세요." />
+					<input type="text" name="datanum" id="datanum" class="form-control rounded" onfocus="loadUserFloorplanList('${loginId}');" placeholder="평면도 번호를 입력."/>
 					<input type="button" class="btn-u btn-u--construction trim e_img2" value="평면도 불러오기" id="loadCanvasData" />
 					<a href="#" class="downloadBtn" id="btn-download" download="Floorplan.png">
 						<input type="image" src="assets/img/icons/sidebar/Download-button.png" style="width:200px; height:100px;">
@@ -290,6 +291,7 @@
    <script src="assets/plugins/jquery/jquery.min.js"></script>
    <script src="assets/plugins/jquery/jquery-migrate.min.js"></script>
    <script src="assets/plugins/bootstrap/js/bootstrap.js"></script>
+   
 
    <!-- JS Implementing Plugins -->
    <script src="assets/plugins/smoothScroll.js"></script>
@@ -317,7 +319,7 @@
    <!-- custom -->
    <script src="assets/js/custom.js"></script>
    <!-- 평면도 기능 코드 -->
-
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <!-- <script type="text/javascript" src="assets/js/jquery-3.2.0.min.js"></script> -->
 <script type="text/javascript" src="assets/js/FloorplanCanvas.js"></script>
 <script>
@@ -562,7 +564,7 @@
 		
 		$("button#save_nextStage").on("click", function(){
 			if(isDownloaded) { //다음 페이지로 진행
-				saveFloorplan(false, "insert_property2");
+				saveFloorplan(false, "insert_property2", saved_name);
 			} else { //다운로드 과정 자동 실행
 				alert("다운로드가 먼저 진행됩니다.");
 				$("#updownloadTab").trigger("click");
@@ -580,15 +582,19 @@
 			isDownloaded = true;
 		});
 		
-		
 		//데이터베이스에서 데이터 로드 하기
 		$("#loadCanvasData").on("click", function() {
+			clearCanvas();
 			var result = loadUserData();
 			console.log("loadData 0414: "+result);
 			
 			//로드된 선 데이터 삽입
 			lines = result.lines;
 			console.log("loadData 라인 길이:"+ lines.length);
+			
+			//로드된 선 오브젝트(문, 창문) 삽입
+			object = result.objects;
+			console.log("loadData 오브젝트 길이:"+ objects.length);
 			
 			//로드된 아이콘 데이터 삽입
 			var loadedIcons = result.icons;

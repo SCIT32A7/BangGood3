@@ -1,5 +1,8 @@
 package global.sesoc.banggood.repository;
 
+import java.util.ArrayList;
+import java.util.Map;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -36,5 +39,16 @@ public class CanvasRepository {
 			e.printStackTrace();
 		}
 		return canvas;
+	}
+	
+	public ArrayList<Map<String, Object>> selectUserDataList(String custid) {
+		ArrayList<Map<String, Object>> list = new ArrayList<>();
+		CanvasDAO dao = sqlSession.getMapper(CanvasDAO.class);
+		try {
+			list = dao.selectUserDataList(custid);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
 	}
 }

@@ -7,10 +7,12 @@ public class Canvas {
 	private String saved_name;
 	private String icons;
 	private String lines;
+	private String objects;
 	
 	public Canvas() {}
 
-	public Canvas(int datanum, int property_no, String custid, String saved_name, String icons, String lines) {
+	public Canvas(int datanum, int property_no, String custid, String saved_name, String icons, String lines,
+			String objects) {
 		super();
 		this.datanum = datanum;
 		this.property_no = property_no;
@@ -18,6 +20,7 @@ public class Canvas {
 		this.saved_name = saved_name;
 		this.icons = icons;
 		this.lines = lines;
+		this.objects = objects;
 	}
 
 	public int getDatanum() {
@@ -68,10 +71,18 @@ public class Canvas {
 		this.lines = lines;
 	}
 
+	public String getObjects() {
+		return objects;
+	}
+
+	public void setObjects(String objects) {
+		this.objects = objects;
+	}
+
 	@Override
 	public String toString() {
 		return "Canvas [datanum=" + datanum + ", property_no=" + property_no + ", custid=" + custid + ", saved_name="
-				+ saved_name + ", icons=" + icons + ", lines=" + lines + "]";
+				+ saved_name + ", icons=" + icons + ", lines=" + lines + ", objects=" + objects + "]";
 	}
-	
+
 }

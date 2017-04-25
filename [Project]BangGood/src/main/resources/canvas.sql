@@ -16,5 +16,7 @@ CREATE TABLE floorplan
 	-- 저장된 아이콘 데이터
 	icons clob,
 	-- 저장된 선 데이터
-	lines clob
+	lines clob,
+	-- 창문 및 문 데이터
+	objects clob
 ); 

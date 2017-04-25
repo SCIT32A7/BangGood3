@@ -24,7 +24,8 @@
          <div class="menu-container">
                     
             <c:if test ="${not empty loginId}">
-               <span>${loginId} 님 어서오세요.</span>
+               <span style="position:absolute; top:-8px; right:0; border:1px solid #f7be22; padding:2px 30px;">
+               ${loginId}님 로그인 중</span>
             </c:if> 
          
             <ul class="nav navbar-nav">            

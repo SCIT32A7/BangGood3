@@ -8,14 +8,17 @@
 		<if test = "property_no != 0">
 		property_no,
 		</if>
-		custid, saved_name, icons, lines) 
+		custid, saved_name, icons, lines, objects) 
 		VALUES (seq_floorplan_datanum.nextval, 
 		<if test = "property_no != 0">
 		#{property_no}, 
 		</if>
-		#{custid}, #{saved_name}, #{icons}, #{lines})
+		#{custid}, #{saved_name}, #{icons}, #{lines}, #{objects})
 	</insert>
 	<select id="select" parameterType="Integer" resultType="Canvas">
 		SELECT * FROM floorplan WHERE datanum = #{datanum}
+	</select>
+	<select id="selectUserDataList" parameterType="String" resultType="Map">
+		SELECT datanum, saved_name FROM floorplan WHERE custid = #{custid}
 	</select>
 </mapper>

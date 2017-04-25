@@ -168,7 +168,7 @@ var num = $("#boardnum").val();
 // 처음에 댓글 리스트 불러오기
 $(function (){
 	$("#searchreply_insert").on('click', regist);	
-	init(num);
+	init();
 });
 
 // 댓글 리스트 호출 함수
@@ -217,9 +217,9 @@ function regist(){
 			"searchreply" : searchreply,
 			"searchBoard_no" : num
 		},
+		async : false,
 		success : function(resp) {
 			if(resp == 1){ 
-				alert('댓글등록');
 				$("#searchreply_text").val("");
 				init();
 			}
@@ -235,9 +235,7 @@ function replyDel(){
 	if(id != reply_id){
 		alert('작성자만 삭제 가능합니다.')
 		return false;
-	}
-	
-	
+	}	
 	var replynum = $(this).attr("data-sno");
 	$.ajax({
 		method : "post",
@@ -246,6 +244,7 @@ function replyDel(){
 			"searchReply_no" : replynum,
 			"searchBoard_no" : num
 		},
+		async : false,
 		success : init
 	});
 }

@@ -1,6 +1,9 @@
 package global.sesoc.banggood.controller;
 
 
+import java.util.ArrayList;
+import java.util.Map;
+
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -11,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import global.sesoc.banggood.dao.CanvasDAO;
 import global.sesoc.banggood.repository.CanvasRepository;
 import global.sesoc.banggood.vo.Canvas;
 
@@ -61,6 +65,17 @@ public class CanvasController {
 			logger.info("로드 실패");
 		}
 		return result;
+	}
+	
+	@RequestMapping(value="/loadUserDataList", method = RequestMethod.POST)
+	public @ResponseBody ArrayList<Map<String, Object>> selectUserDataList(String custid) {
+		ArrayList<Map<String, Object>> list = null;
+		try {
+			list = repository.selectUserDataList(custid);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
 	}
 	
 	@RequestMapping(value = "/insert_property2", method = RequestMethod.GET)

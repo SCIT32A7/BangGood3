@@ -155,7 +155,7 @@
                         <tr>
                            <th>${read_property.deposit} 만원 / ${read_property.month_fee} 만원</th>
                            <th>${read_property.property_type}</th>
-                           <th>${read_property.roomsize} 제곱비터</th>
+                           <th>${read_property.roomsize} 제곱미터</th>
                            <th>${read_property.floor} 층</th>
                            <th>${read_property.built_year} 년</th>
                         </tr>
@@ -319,6 +319,22 @@
 	<div class="clearfix"></div>
 	<!--=== End Content Part ===-->
 	</main>
+	
+	<!-- 댓글 시작 -->
+	<div id ="property_reply">	
+		<form id = "replyform" action = "insert_propertyReply" method = "post" enctype="multipart/form-data">
+			<input type = "text" id ="propertyreply_text" name = "propertyreply_text">
+			<input type = "submit" id ="click_reply" value = "댓글입력">
+			<input type="file" id = "replyFile" name="replyFile" accept=".gif, .jpg, .png">
+       	    <input type ="hidden" id = "property_no" name = "property_no" value = "${read_property.property_no}">
+		</form>
+		<div class="clearfix margin-bottom-20"></div>
+		<span id = "replyArea"></span>
+	</div>
+	
+	<!-- 댓글 끝 -->
+	
+	
 	<!-- JS Global Compulsory -->
 	
 	<script src="assets/plugins/jquery/jquery.min.js"></script>
@@ -355,18 +371,19 @@
 	<script type="text/javascript" src="assets/js/Nwagon.js"></script>
 	<!-- photo -->
 	<script type="text/javascript" src="assets/js/lightbox-plus-jquery.min.js"></script>
-	
+	<script type="text/javascript" src="assets/js/jquery.form.js"></script>
 	
 	<script type="text/javascript"
       src="//apis.daum.net/maps/maps3.js?apikey=8af91664dfbd610fb326b81f6ed2ca57&libraries=services"></script>
-	<script>
+	
+	<script>	
+	var id = "${loginId}";
 	var property_no = "${read_property.property_no}";
 	var selectedRadar;
 	var avgRadar;
 	var percentRadar;
 	var maxRadar;
-	var minRadar;
-	
+	var minRadar;	
 	
 	// 그래프 자료 받아오기
  	window.onload = function () {
@@ -380,8 +397,85 @@
 				alert("조회 실패");
 			}
 		});
-		
 	} 
+	
+	
+	// 댓글 관련 메소드  
+	// 화면 뜨자마자 댓글 리스트 불러오기
+	$(function(){
+		$("#click_reply").on('click', insert_reply);
+		init();		
+	})
+	
+	// 댓글리스트 받기
+	function init() {
+		$.ajax({
+			method : "post",
+			url : "get_propertyReply",
+			dataType : "json",
+			data : {			
+				"property_no" : property_no
+			},
+			success : output
+		});
+	}
+	
+	// 댓글 리스트 출력 함수
+	function output(resp) {
+	var data = '<table>';
+	$.each(resp, function(index, item){
+		data += '<tr class="reviewtr">';
+		data += '	<td class="name" style="padding-right:30px; color:#ccc">' + item.custid + '</td>';
+		data += '	<td class="text" style="width:50%">' + item.propertyreply_text + '<br>';
+		data += ' 	<img src="reply_download?pic_name='+item.pic_name+'&pic_savename='+item.pic_savename+'"></td>';
+		data += '	<td class="regdate">' + item.propertyreply_inputdate + '</td>';
+		data += '	<td><input type="button" class="delbtn btn-u btn-block rounded g-mb-5" style="background-color:#f7be22";" reply_id="'+item.custid+'" reply_no="'+item.property_reply_no+'"value="삭제" /></td>';
+		data += '</tr>';
+	});
+		data += '</table>';	
+		$("#replyArea").html(data);
+		$(".delbtn").on('click', replyDel);
+		$("#propertyreply_text").val("");
+		$("#replyFile").val("");
+	}
+
+	// 댓글입력 함수	
+	function insert_reply(){	
+		var replytext = $("#propertyreply_text").val();
+		if(replytext.length == 0){
+			alert('댓글을 입력해주세요');
+			return false;
+		}		
+		if(confirm('댓글을 입력하시겠습니까?')){			
+			$("#replyform").ajaxForm({
+				async : false,
+				success : function(resp){
+					init();			
+				}
+			});
+		}
+	}
+	
+	//댓글 삭제 함수
+	function replyDel(){
+		var reply_id = $(this).attr("reply_id");
+		if(id != reply_id){
+			alert('작성자만 삭제 가능합니다.')
+			return false;
+		}		
+		var replynum = $(this).attr("reply_no");
+		$.ajax({
+			method : "post",
+			url : "delete_propertyReply",
+			data : {
+				"property_reply_no" : replynum,
+				"property_no" : property_no
+			},
+			async : false,
+			success : init()
+		});
+	}	
+	
  	
 	// 사진 확대 및 전환을 위한 메소드
 	$(function(){		
@@ -600,6 +694,5 @@
 	}
 
 	</script>
-	
 </body>
 </html>
