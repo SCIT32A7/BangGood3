@@ -186,7 +186,7 @@
 	<div class="row">
 		<div id="menuSidebar" class="col-sm-2" width="250" style="height:650px">
 			<div class="dashboardLink">
-			
+				
 			</div>
 			<div id="tab_switcher" class="tab_switcher">
 				<ul>
@@ -200,7 +200,7 @@
 			<div id="tab" style="height:450px;">
 				<div class="pencil" style="display:none;  overflow: auto;">
 					<div class="pencilContainer">
-					  <div>
+					<div>
 					
 					</div>
 						<select id="selectColor">
@@ -285,34 +285,12 @@
 					</div>
 				</div>
 				<div class="updownload " style="display:none;overflow: auto;">
-					<input type="text" name="datanum" id="datanum" class="form-control rounded" placeholder="평면도 번호를 입력."/>
-					<!-- <div class="ui-widget">
-						<select id="combobox" class="datanum">
-						    <option value="">선택하세요</option>
-						    <option value="ActionScript">ActionScript</option>
-						    <option value="AppleScript">AppleScript</option>
-						    <option value="Asp">Asp</option>
-						    <option value="BASIC">BASIC</option>
-						    <option value="C">C</option>
-						    <option value="C++">C++</option>
-						    <option value="Clojure">Clojure</option>
-						    <option value="COBOL">COBOL</option>
-						    <option value="ColdFusion">ColdFusion</option>
-						    <option value="Erlang">Erlang</option>
-						    <option value="Fortran">Fortran</option>
-						    <option value="Groovy">Groovy</option>
-						    <option value="Haskell">Haskell</option>
-						    <option value="Java">Java</option>
-						    <option value="JavaScript">JavaScript</option>
-						    <option value="Lisp">Lisp</option>
-						    <option value="Perl">Perl</option>
-						    <option value="PHP">PHP</option>
-						    <option value="Python">Python</option>
-						    <option value="Ruby">Ruby</option>
-						    <option value="Scala">Scala</option>
-						    <option value="Scheme">Scheme</option>
-						  </select>
-					  </div> -->
+					<!-- <input type="text" name="datanum" id="datanum" class="form-control rounded" placeholder="평면도 번호를 입력."/> -->
+					<div class="ui-widget" id="datanum">
+						<select id='combobox'>
+				
+						</select>
+					</div>
 					<input type="button" class="btn-u btn-u--construction trim e_img2" value="평면도 불러오기" id="loadCanvasData" />
 					<a href="#" class="downloadBtn" id="btn-download" download="Floorplan.png">
 						<input type="image" src="assets/img/icons/sidebar/Download-button.png" style="width:200px; height:100px;">
@@ -660,20 +638,18 @@
 			});
 		});
 		
-		//
-		$("#datanum").on("focus", function() {
+		//데이터 불러오기 콤보 박스
+		$( "#combobox" ).combobox();
+		$( "#combobox" ).on("change", function(){
 			var availableList = loadUserFloorplanList("${loginId}");
 			//유저 개인 평면도 리스트 오토 컴플릿.
-			var selectTag = "<select id='combobox'>";
-				selectTag += "<option value=''>선택하세요</option>";
+			var	selectTag = "<option value=''>선택하세요</option>";
 			for(var index in availableList) {
-				selectTag += "<option value='"+availableList[index].DATANUM+"'>"+availableList[index].DATANUM+availableList[index].SAVED_NAME+"</option>";
+				selectTag += "<option value='"+availableList[index].DATANUM+"'>"+"데이터 번호: "+availableList[index].DATANUM+" "+"이름: "+availableList[index].SAVED_NAME+"</option>";
 			}
-			$( ".ui-widget" ).html();
-		
+			console.log(selectTag);
+			$( "#combobox" ).html(selectTag);
 			$( "#combobox" ).combobox();
-		    $( "#toggle" ).on( "click", function() {
-		    $( "#combobox" ).toggle(); */
 	    });
 	
 		//메뉴 인터페이스 단

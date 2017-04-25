@@ -22,7 +22,7 @@ function init() {
 	img.onload = function() {
 		var width = img.width;
 		var height = img.height;
-		var icon = new Icon(img,1150, 44.7, (width/1.5), (height/1.5), 0);
+		var icon = new Icon(img, 1150, 44.7, (width/1.5), (height/1.5), 0);
 		icon.src = "assets/img/icons/direction.png";
 		iconState.addIcon(icon);
 		iconState.draw();
@@ -1490,7 +1490,6 @@ function moveTemp(req){
 				return list;
 			}
 		});
-		/*return availableList;*/
 	}
 	
 	/*// JSON 포멧 데이터 처리
