@@ -284,7 +284,7 @@
             <!--=== title right ===-->
             <div class="col-sm-3 view_bg g-ml-10">
                <div class="g-padding-20">
-                  <h3 style="font-weight: bold">${read_property.rent_type} / ${read_property.property_type} <span style="color:#f7be22; font-size:30px; font-weight: normal">65/65</span></h3>
+                  <h3 style="font-weight: bold">${read_property.rent_type} / ${read_property.property_type} <span style="color:#f7be22; font-size:30px; font-weight: normal">${read_property.deposit}/${read_property.month_fee}</span></h3>
                   <p class="g-mb-10">${read_property.address}번지 ${read_property.buildingname} ${read_property.address_detail}</p>
                   
                   <hr>

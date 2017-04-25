@@ -22,6 +22,7 @@ public class RadarChartRepository {
 		radarChartDAO dao = session.getMapper(radarChartDAO.class);
 		try {
 			result = dao.selectSingleRadarData(property_no);
+			System.out.println("result "+ result);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

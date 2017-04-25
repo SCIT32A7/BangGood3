@@ -5,8 +5,8 @@
 <mapper namespace="global.sesoc.banggood.dao.radarChartDAO">   
 	<select id="selectSingleRadarData" parameterType="Integer" resultType="RadarChart">
 		SELECT p.address, p.rent_type, p. property_type, p.deposit, p.month_fee, p.maintence_fee, p.roomsize, r.total
-		FROM property p, maintence m, roomoption r
-		WHERE p.property_no = m.property_no and m.property_no = r.property_no 
+		FROM property p, roomoption r
+		WHERE p.property_no = r.property_no 
 		AND p.property_no = #{property_no}
 	</select>
 	<select id="selectAverageRadarData" parameterType="Map" resultType="Map">
@@ -15,8 +15,8 @@
 			   max(p.maintence_fee) maxmaintence, min(p.maintence_fee) minmaintence, round(sum(p.maintence_fee)/count(*),1) avgmaintence, 
 			   max(p.roomsize) maxroomsize, min(p.roomsize) minroomsize, round(sum(p.roomsize)/count(*),1) avgroomsize, 
 			   round(sum(r.total)/count(*),1) avgoption
-		FROM property p, maintence m, roomoption r
-		WHERE p.property_no = m.property_no and m.property_no = r.property_no
+		FROM property p, roomoption r
+		WHERE p.property_no = r.property_no
 		AND p.address like '%'||#{address}||'%'
 		AND p.rent_type = #{rent_type}
 		AND p.property_type = #{property_type}

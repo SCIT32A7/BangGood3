@@ -826,7 +826,7 @@
    <script src="assets/plugins/jquery/jquery.min.js"></script>
    <script src="assets/plugins/jquery/jquery-migrate.min.js"></script>
    <script src="assets/plugins/bootstrap/js/bootstrap.js"></script>
-
+   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
    <!-- custom -->
    <script src="assets/js/custom.js"></script>
    
