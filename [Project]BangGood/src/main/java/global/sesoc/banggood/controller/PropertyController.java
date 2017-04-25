@@ -16,6 +16,7 @@ import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
@@ -30,9 +31,10 @@ import global.sesoc.banggood.vo.Position;
 import global.sesoc.banggood.vo.Property;
 import global.sesoc.banggood.vo.Property_map;
 import global.sesoc.banggood.vo.Property_search;
+import global.sesoc.banggood.vo.propertyReply;
 
 @Controller
-@SessionAttributes({"property", "option", "maintence", "canvas", "up_picture"})
+@SessionAttributes({ "property", "option", "maintence", "canvas", "up_picture" })
 public class PropertyController {
 
 	@Autowired
@@ -40,8 +42,6 @@ public class PropertyController {
 
 	@Autowired
 	HttpSession session;
-	
-	final String uploadPath = "/imageFile";
 
 	// 매물맵으로 이동
 	@RequestMapping(value = "/search", method = RequestMethod.GET)
@@ -54,23 +54,23 @@ public class PropertyController {
 	public String insert_propertyform(Model model) {
 		return "insert_property";
 	}
-	
+
 	// 방등록 1차, 방 정보 및 옵션 저장
 	@RequestMapping(value = "/insert_property", method = RequestMethod.POST)
 	public String insert_property(Property property, Option option, Maintence maintence, Model model) {
 		String custid = (String) session.getAttribute("loginId");
 		property.setCustid(custid);
-		String [] addressArray = property.getAddress().split(" :");
+		String[] addressArray = property.getAddress().split(" :");
 		property.setAddress(addressArray[1]);
 		if (property.getRent_type().equals("year_rent")) {
 			property.setRent_type("전세");
 		} else {
 			property.setRent_type("월세");
 		}
-		
-		if (property.getProperty_type().equals("oneroom")){
+
+		if (property.getProperty_type().equals("oneroom")) {
 			property.setProperty_type("원룸");
-		} else if (property.getProperty_type().equals("tworoom")){
+		} else if (property.getProperty_type().equals("tworoom")) {
 			property.setProperty_type("투룸");
 		}
 		model.addAttribute("property", property);
@@ -80,55 +80,55 @@ public class PropertyController {
 		model.addAttribute("maintence", maintence);
 		return "insert_property2";
 	}
-	
-	public int getTotal(Option option){
-		int total=0; 
-		if(option.getAir_conditioner()==1){
+
+	public int getTotal(Option option) {
+		int total = 0;
+		if (option.getAir_conditioner() == 1) {
 			total += 1;
 		}
-		if(option.getBed()==1){
+		if (option.getBed() == 1) {
 			total += 1;
 		}
-		if(option.getCar()==1){
+		if (option.getCar() == 1) {
 			total += 1;
 		}
-		if(option.getCloset()==1){
+		if (option.getCloset() == 1) {
 			total += 1;
 		}
-		if(option.getDesk()==1){
+		if (option.getDesk() == 1) {
 			total += 1;
 		}
-		if(option.getDoorlock()==1){
+		if (option.getDoorlock() == 1) {
 			total += 1;
 		}
-		if(option.getElevator()==1){
+		if (option.getElevator() == 1) {
 			total += 1;
 		}
-		if(option.getElectric_stove()==1){
+		if (option.getElectric_stove() == 1) {
 			total += 1;
 		}
-		if(option.getFridge()==1){
+		if (option.getFridge() == 1) {
 			total += 1;
 		}
-		if(option.getGas_stove()==1){
+		if (option.getGas_stove() == 1) {
 			total += 1;
 		}
-		if(option.getMicrowave()==1){
+		if (option.getMicrowave() == 1) {
 			total += 1;
 		}
-		if(option.getPet()==1){
+		if (option.getPet() == 1) {
 			total += 1;
 		}
-		if(option.getRack()==1){
+		if (option.getRack() == 1) {
 			total += 1;
 		}
-		if(option.getShoecabinet()==1){
+		if (option.getShoecabinet() == 1) {
 			total += 1;
 		}
-		if(option.getWashing_machine()==1){
+		if (option.getWashing_machine() == 1) {
 			total += 1;
 		}
-		if(option.getGas_stove()==1){
+		if (option.getGas_stove() == 1) {
 			total += 1;
 		}
 		return total;
@@ -137,10 +137,10 @@ public class PropertyController {
 	// 방등록 2차, 평면도 그리기 페이지로 이동
 	@RequestMapping(value = "/insert_property2", method = RequestMethod.POST)
 	public String insert_property2(@ModelAttribute("property") Property property,
-			@ModelAttribute("option") Option option, @ModelAttribute("maintence") Maintence maintence,
-			Canvas canvas, Model model) {
+			@ModelAttribute("option") Option option, @ModelAttribute("maintence") Maintence maintence, Canvas canvas,
+			Model model) {
 
-		canvas.setCustid(property.getCustid());		
+		canvas.setCustid(property.getCustid());
 		model.addAttribute("canvas", canvas);
 		return "insert_property3";
 	}
@@ -149,12 +149,11 @@ public class PropertyController {
 	@RequestMapping(value = "/insert_property3", method = RequestMethod.POST)
 	public String insert_property3(@ModelAttribute("property") Property property,
 			@ModelAttribute("option") Option option, @ModelAttribute("maintence") Maintence maintence,
-			@ModelAttribute("canvas") Canvas canvas, MultipartFile uploadFile1, 
-			MultipartFile uploadFile2, MultipartFile uploadFile3, MultipartFile uploadFile4,
-			MultipartFile uploadFile5, MultipartFile uploadFile6, MultipartFile uploadFile7,
-			MultipartFile uploadFile8, MultipartFile uploadFile9, MultipartFile uploadFile10,
+			@ModelAttribute("canvas") Canvas canvas, MultipartFile uploadFile1, MultipartFile uploadFile2,
+			MultipartFile uploadFile3, MultipartFile uploadFile4, MultipartFile uploadFile5, MultipartFile uploadFile6,
+			MultipartFile uploadFile7, MultipartFile uploadFile8, MultipartFile uploadFile9, MultipartFile uploadFile10,
 			MultipartFile uploadFile11, MultipartFile uploadFile12, Model model) {
-		
+
 		ArrayList<MultipartFile> upload = new ArrayList<>();
 		upload.add(uploadFile1);
 		upload.add(uploadFile2);
@@ -168,33 +167,35 @@ public class PropertyController {
 		upload.add(uploadFile10);
 		upload.add(uploadFile11);
 		upload.add(uploadFile12);
-		
+
+		String uploadPath = "/imageFile";
+
 		ArrayList<Picture> insert_pList = new ArrayList<>();
-		
+
 		for (int i = 0; i < upload.size(); i++) {
 			if (!upload.get(i).isEmpty()) {
 				Picture pic = new Picture();
 				String savedfile = FileService.saveFile(upload.get(i), uploadPath);
-				if(i == 0){
+				if (i == 0) {
 					pic.setPic_division("main"); // 메인사진
 				}
-				if(i == 1){
-					pic.setPic_division("plan");	// 평면도
+				if (i == 1) {
+					pic.setPic_division("plan"); // 평면도
 				}
-				if(i == 2){
-					pic.setPic_division("front");	// 입구
+				if (i == 2) {
+					pic.setPic_division("front"); // 입구
 				}
-				if(i == 3){
-					pic.setPic_division("room");	// 방
+				if (i == 3) {
+					pic.setPic_division("room"); // 방
 				}
-				if(i == 4){
-					pic.setPic_division("kitchen");  // 싱크대
+				if (i == 4) {
+					pic.setPic_division("kitchen"); // 싱크대
 				}
-				if(i == 5){
-					pic.setPic_division("bathroom");	//화장실
+				if (i == 5) {
+					pic.setPic_division("bathroom"); // 화장실
 				}
-				if(i >=6 && i <=11){
-					pic.setPic_division("normal");	//나머지 사진들
+				if (i >= 6 && i <= 11) {
+					pic.setPic_division("normal"); // 나머지 사진들
 				}
 				pic.setPic_name(upload.get(i).getOriginalFilename());
 				pic.setPic_savename(savedfile);
@@ -215,32 +216,32 @@ public class PropertyController {
 		model.addAttribute("result", result);
 		return "insert_property4";
 	}
-	
-	//매물 내용 상세읽기, 지도에서 클릭, 장바구니에서 클릭, 등록매물에서 클릭
+
+	// 매물 내용 상세읽기, 지도에서 클릭, 장바구니에서 클릭, 등록매물에서 클릭
 	@RequestMapping(value = "/read_property", method = RequestMethod.GET)
-	public String read_property(int property_no, Model model){
+	public String read_property(int property_no, Model model) {
 		pr.add_hits(property_no);
 		Property property = pr.select_Property(property_no);
 		Option option = pr.select_Option(property_no);
 		Maintence maintence = pr.select_Maintence(property_no);
-		ArrayList <Picture> pList = pr.select_Picture(property_no);
+		ArrayList<Picture> pList = pr.select_Picture(property_no);
 		model.addAttribute("read_property", property);
 		model.addAttribute("read_option", option);
 		model.addAttribute("read_maintence", maintence);
 		model.addAttribute("read_picture", pList);
 		return "read_property";
 	}
-	
+
 	// 게시매물 광고 중단
 	@RequestMapping(value = "/stop_showing", method = RequestMethod.GET)
-	public String stop_showing(int property_no){
+	public String stop_showing(int property_no) {
 		pr.stop_showing(property_no);
 		return "redirect:mypage";
 	}
-	
+
 	// 중단 중 매물 광고 개시
 	@RequestMapping(value = "/restart_showing", method = RequestMethod.GET)
-	public String restart_showing(int property_no){
+	public String restart_showing(int property_no) {
 		pr.restart_showing(property_no);
 		return "redirect:mypage";
 	}
@@ -277,10 +278,13 @@ public class PropertyController {
 		pm = pr.property_map(address);
 		return pm;
 	}
-	
-	// 디비의 사진을 불러오기 위한 메소드
+
+	// 매물 사진을 불러오기 위한 메소드
 	@RequestMapping(value = "download", method = RequestMethod.GET)
 	public void fileDown(String pic_name, String pic_savename, HttpServletResponse response) {
+
+		String uploadPath = "/imageFile";
+
 		// 파일을 받기위해 해당 게시글을 받아온다.
 		String originalfile = pic_name;
 		// 사용자가 다운로드 받기 위해 response 객체의 해드를 조작한다.
@@ -305,8 +309,90 @@ public class PropertyController {
 			e.printStackTrace();
 		} finally {
 			try {
-				if (filein != null) filein.close();
-				if (fileout != null) fileout.close();
+				if (filein != null)
+					filein.close();
+				if (fileout != null)
+					fileout.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	// 매물댓글 입력
+	@ResponseBody
+	@RequestMapping(value = "/insert_propertyReply", method = RequestMethod.POST)
+	public int insert_propertyReply(int property_no, String propertyreply_text,
+			@RequestParam(value = "replyFile", defaultValue = "") MultipartFile replyFile) {
+
+		String uploadPath = "/replyFile";
+		propertyReply prRe = new propertyReply();
+		String custid = (String) session.getAttribute("loginId");
+		prRe.setCustid(custid);
+		prRe.setProperty_no(property_no);
+		prRe.setPropertyreply_text(propertyreply_text);
+		if (!replyFile.isEmpty()) {
+			String savedfile = FileService.saveFile(replyFile, uploadPath);
+			prRe.setPic_name(replyFile.getOriginalFilename());
+			prRe.setPic_savename(savedfile);
+		}
+		int result = pr.insert_propertyReply(prRe);
+		return result;
+	}
+	
+	// 댓글 출력을 위한 메소드
+	@ResponseBody
+	@RequestMapping(value = "/get_propertyReply", method = RequestMethod.POST)
+	public ArrayList<propertyReply> get_propertyReply(int property_no){
+		ArrayList<propertyReply> prList = new ArrayList<>();
+		prList = pr.get_propertyReply(property_no);
+		return prList;
+	}
+	
+	// 댓글 삭제를 위한 메소드
+	@ResponseBody
+	@RequestMapping(value = "/delete_propertyReply", method = RequestMethod.POST)
+	public int delete_propertyReply(int property_reply_no, int property_no){
+		int result = 0;
+		result = pr.delete_propertyReply(property_reply_no, property_no);
+		return result;
+	}
+	
+	
+	// 댓글 사진을 불러오기 위한 메소드
+	@RequestMapping(value = "reply_download", method = RequestMethod.GET)
+	public void reply_download(String pic_name, String pic_savename, HttpServletResponse response) {
+
+		String uploadPath = "/replyFile";
+
+		// 파일을 받기위해 해당 게시글을 받아온다.
+		String originalfile = pic_name;
+		// 사용자가 다운로드 받기 위해 response 객체의 해드를 조작한다.
+		try {
+			response.setHeader("Content-Disposition",
+					"attachment;filename=" + URLEncoder.encode(originalfile, "UTF-8"));
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		String fullpath = uploadPath + "/" + pic_savename;
+		ServletOutputStream fileout = null;
+		FileInputStream filein = null;
+		try {
+			filein = new FileInputStream(fullpath);
+			fileout = response.getOutputStream();
+			// Spring에서 제공하는 유틸리티
+			FileCopyUtils.copy(filein, fileout);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				if (filein != null)
+					filein.close();
+				if (fileout != null)
+					fileout.close();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

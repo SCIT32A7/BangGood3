@@ -3,7 +3,6 @@ $(function() {
 	var checkStatus = 'no';
 	
 	App.init();
-	ContactForm.initContactForm();
 
 	/* join */
 	$("#joinBtn1").click(function() {

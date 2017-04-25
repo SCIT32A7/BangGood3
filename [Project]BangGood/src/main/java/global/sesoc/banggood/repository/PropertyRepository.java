@@ -15,6 +15,7 @@ import global.sesoc.banggood.vo.Position;
 import global.sesoc.banggood.vo.Property;
 import global.sesoc.banggood.vo.Property_map;
 import global.sesoc.banggood.vo.Property_search;
+import global.sesoc.banggood.vo.propertyReply;
 
 @Repository
 public class PropertyRepository {
@@ -109,7 +110,7 @@ public class PropertyRepository {
 		return read_picture;
 	}
 	
-	// 댓글 수 증가
+	// 조회수 증가
 	public void add_hits(int property_no){
 		PropertyDAO pd = query.getMapper(PropertyDAO.class);
 		try {
@@ -199,4 +200,47 @@ public class PropertyRepository {
 		}
 		return result;
 	}
+	
+	// 댓글 입력
+	public int insert_propertyReply(propertyReply pr){
+		System.out.println(pr);
+		PropertyDAO pd = query.getMapper(PropertyDAO.class);
+		int result = 0;
+		try {
+			result = pd.insert_propertyReply(pr);
+			pd.add_reply_count(pr.getProperty_no());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
+	// 댓글 출력
+	public ArrayList<propertyReply> get_propertyReply(int property_no){
+		PropertyDAO pd = query.getMapper(PropertyDAO.class);
+		ArrayList<propertyReply> prList = new ArrayList<>();
+		try {
+			prList = pd.get_propertyReply(property_no);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return prList;
+	}
+	
+	// 댓글 삭제
+	public int delete_propertyReply(int property_reply_no, int property_no){
+		PropertyDAO pd = query.getMapper(PropertyDAO.class);
+		int result=0;
+		try {
+			result = pd.delete_propertyReply(property_reply_no);
+			pd.sub_reply_count(property_no);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
 }

@@ -268,7 +268,9 @@
 				<div class="updownload " style="display:none;overflow: auto;">
 					<input type="text" name="datanum" id="datanum" class="form-control rounded"placeholder="평면도 번호를 입력해주세요." />
 					<input type="button" class="btn-u btn-u--construction trim e_img2" value="평면도 불러오기" id="loadCanvasData" />
-					<h4><a href="#" class="downloadBtn" id="btn-download" download="Floorplan.png">이미지 다운로드</a></h4>
+					<a href="#" class="downloadBtn" id="btn-download" download="Floorplan.png">
+						<input type="image" src="assets/img/icons/sidebar/Download-button.png" style="width:200px; height:100px;">
+					</a>
 				</div>
 			</div>
   		</div>

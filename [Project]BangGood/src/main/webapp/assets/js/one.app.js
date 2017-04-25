@@ -12,11 +12,6 @@ var App = function() {
 
 	// Bootstrap
 	function handleBootstrap() {
-		/* Bootstrap Carousel */
-		jQuery('.carousel').carousel({
-			interval: 15000,
-			pause: 'hover'
-		});
 
 		/* Tooltips */
 		jQuery('.tooltips').tooltip();
@@ -26,11 +21,6 @@ var App = function() {
 		jQuery('.tooltips-destroy').tooltip('destroy');
 
 		/* Popovers */
-		jQuery('.popovers').popover();
-		jQuery('.popovers-show').popover('show');
-		jQuery('.popovers-hide').popover('hide');
-		jQuery('.popovers-toggle').popover('toggle');
-		jQuery('.popovers-destroy').popover('destroy');
 	}
 
 	// Equal Height Columns
@@ -145,7 +135,6 @@ var App = function() {
 			event.preventDefault();
 		});
 
-		var $scrollspy = $('body').scrollspy({target: '.one-page-nav-scrolling', offset: $offset+2});
 
 		// Collapse Navbar When It's Clickicked
 		$(window).scroll(function() {

@@ -1478,7 +1478,7 @@ function moveTemp(req){
 		})
 	}
 	
-	// JSON 포멧 데이터 처리
+	/*// JSON 포멧 데이터 처리
 	function createImages(objImageInfo) {
 		var images = objImageInfo.images;
 		var strDOM = "";
@@ -1495,7 +1495,7 @@ function moveTemp(req){
 		//이미지 컨테이너에 생성한 이미지 패널들을 추가하기
 		var $imageContainer = $('#image_container');
 			$imageContainer.append(strDOM);
-	}
+	}*/
 	
 	//DB에서 데이터 로드
 	function loadUserData() {

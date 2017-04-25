@@ -10,6 +10,7 @@ import global.sesoc.banggood.vo.Picture;
 import global.sesoc.banggood.vo.Property;
 import global.sesoc.banggood.vo.Property_map;
 import global.sesoc.banggood.vo.Property_search;
+import global.sesoc.banggood.vo.propertyReply;
 
 public interface PropertyDAO {	
 	//등록
@@ -35,12 +36,6 @@ public interface PropertyDAO {
 	// 읽기 실행 시 조회수 증가
 	public int add_property_hits(int property_no) throws Exception;
 	
-	// 댓글 등록시 댓글 수 증가
-	public int add_reply_count(int property_no) throws Exception;
-	
-	// 댓글 삭제시 댓글 수 감소
-	public int sub_reply_count(int property_no) throws Exception;
-	
 	//매물정보 수정
 	public int update_property(Property property) throws Exception;  // 매물 수정
 	public int update_option(Option option) throws Exception;  // 옵션 수정
@@ -59,5 +54,19 @@ public interface PropertyDAO {
 	
 	// 마을의 중심 좌표를 위한 메소드
 	public String get_town(String searchaddress) throws Exception;
+	
+	// 매물 댓글 입력
+	public int insert_propertyReply(propertyReply pr) throws Exception;
+	
+	// 매물 댓글 내역 불러오기
+	public ArrayList<propertyReply> get_propertyReply(int property_no) throws Exception;
 
+	// 댓글 등록시 댓글 수 증가
+	public int add_reply_count(int property_no) throws Exception;
+	
+	// 댓글 삭제
+	public int delete_propertyReply(int property_reply_no) throws Exception;
+	
+	// 댓글 삭제시 댓글 수 감소
+	public int sub_reply_count(int property_no) throws Exception;
 }

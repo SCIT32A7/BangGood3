@@ -15,6 +15,7 @@
  		<typeAlias type="global.sesoc.banggood.vo.Property_map" alias="Property_map"/>
  		<typeAlias type="global.sesoc.banggood.vo.Property_list" alias="Property_list"/>
  		<typeAlias type="global.sesoc.banggood.vo.Property_search" alias="Property_search"/>
+ 		<typeAlias type="global.sesoc.banggood.vo.propertyReply" alias="propertyReply"/>
  		<typeAlias type="global.sesoc.banggood.vo.RadarChart" alias="RadarChart"/>
  		<typeAlias type="global.sesoc.banggood.vo.Canvas" alias="Canvas"/>
  	</typeAliases>

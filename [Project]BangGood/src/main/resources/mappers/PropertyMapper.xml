@@ -207,5 +207,40 @@
       select
       position_address from position where searchtext = #{searchaddress}
    </select>
+   
+   <!-- 댓글 입력 -->
+	<insert id="insert_propertyReply" parameterType="propertyReply">
+	insert into propertyreply
+	 (property_reply_no, custid, propertyreply_text, property_no
+	  <if test = "pic_name != null and pic_savename != null">
+	 	 , pic_name, pic_savename
+	  </if>
+	  )
+	values
+	 (seq_propertyreply_no.nextval, #{custid}, #{propertyreply_text},
+	  #{property_no}
+	  <if test = "pic_name != null and pic_savename != null">
+	 	 , #{pic_name}, #{pic_savename}
+	   </if>
+	  )
+	</insert>
+	
+	<!-- 댓글 조회 -->
+	<select id="get_propertyReply" parameterType="_int" resultType="propertyReply">
+	 select property_reply_no, custid,
+	 case
+		when to_char(propertyreply_inputdate,'YY-MM-DD') = to_char(sysdate, 'YY-MM-DD') 
+		then to_char(propertyreply_inputdate,'HH24:MI:SS') 
+		else to_char(propertyreply_inputdate,'YY-MM-DD') 
+	 end as propertyreply_inputdate,
+	 propertyreply_text, property_no, pic_name, pic_savename
+	 from propertyreply where property_no = #{property_no}
+	 order by propertyreply_inputdate desc
+	</select>
+	
+	<!-- 댓글 삭제 -->
+	<delete id="delete_propertyReply" parameterType="_int">
+	 delete propertyreply where property_reply_no = #{property_reply_no}
+	</delete>
 
 </mapper>
