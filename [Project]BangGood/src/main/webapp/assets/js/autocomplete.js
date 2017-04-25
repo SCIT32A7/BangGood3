@@ -66,7 +66,15 @@
             wasOpen = input.autocomplete( "widget" ).is( ":visible" );
           })
           .on( "click", function() {
-            input.trigger( "focus" );
+        	var availableList = loadUserFloorplanList(custid); 
+        	//유저 개인 평면도 리스트 오토 컴플릿.
+			var	selectTag = "<option value=''>선택하세요</option>";
+			for(var index in availableList) {
+				console.log("for");
+				selectTag += "<option value='"+availableList[index].DATANUM+"'>"+"No."+availableList[index].DATANUM+" "+"이름: "+availableList[index].SAVED_NAME+"</option>";
+			}
+			$( "#combobox" ).html(selectTag);
+        	input.trigger( "focus" );
  
             // Close if already visible
             if ( wasOpen ) {
@@ -132,8 +140,4 @@
       }
     });
  
-    $( "#combobox" ).combobox();
-    $( "#toggle" ).on( "click", function() {
-      $( "#combobox" ).toggle();
-    });
   } );

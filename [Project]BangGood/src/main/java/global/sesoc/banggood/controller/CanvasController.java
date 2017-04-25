@@ -56,7 +56,6 @@ public class CanvasController {
 	
 	@RequestMapping(value="/loadCanvas", method = RequestMethod.POST)
 	public @ResponseBody Canvas loadCanvas(int datanum) {
-		logger.info(datanum+"");
 		Canvas result = repository.select(datanum);
 		logger.info("데이터 로드 결과: "+result.toString());
 		if(result != null) {
@@ -69,6 +68,7 @@ public class CanvasController {
 	
 	@RequestMapping(value="/loadUserDataList", method = RequestMethod.POST)
 	public @ResponseBody ArrayList<Map<String, Object>> selectUserDataList(String custid) {
+		System.out.println(custid);
 		ArrayList<Map<String, Object>> list = null;
 		try {
 			list = repository.selectUserDataList(custid);

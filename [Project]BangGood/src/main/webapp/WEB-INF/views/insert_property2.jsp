@@ -83,6 +83,7 @@
 .tab_switcher{
     width: 100%;
 }
+
 .tab_switcher ul{
 	list-style: none;
 	padding:0;
@@ -100,6 +101,7 @@
 	font-size:19px;
 	border:1px solid #f7be22;
 }
+
 .tab_switcher_img{
 	-webkit-filter: grayscale(100%);
 	filter: grayscale(100%);
@@ -180,6 +182,9 @@
            	<input type="image" id="undo" src="assets/img/icons/sidebar/undo.png" class="do_btn tab_switcher_img" data-toggle="tooltip" title="Undo 단축키 Ctrl+z">
            	<input type="image" id="redo" src="assets/img/icons/sidebar/redo.png" class="do_btn tab_switcher_img" data-toggle="tooltip" title="Redo 단축키 Ctrl+y">
             <input type="image" src="assets/img/icons/sidebar/Init.png" alt="초기화" id="clearCanvas" class="do_btn tab_switcher_img" data-toggle="tooltip" title="초기화"/>
+           	<a href="#" class="tab_switcher_img" id="canvasDownload" >
+				<input type="image" src="assets/img/icons/sidebar/Download-button.png" style="width:100px; height:50px;">
+			</a>
            	<input type="text" id="status" placeholder="마우스 상태 표시" readonly="readonly"/>
            	<button id="save_nextStage" class="pull-right btn-u btn-block rounded insert_btn" style="width:100px"> 다음단계</button> 
  		</h3>
@@ -192,7 +197,7 @@
 				<ul>
 					<li id="pencilTab" class="tab_switcher_img">Pencil<img alt="pencilTab" src="assets/img/icons/pencilTab.png" /></li>
 					<li id="furnitureTab" class="tab_switcher_img">Furniture<img alt="furnitureTab" src="assets/img/icons/furnitureTab.png" /></li>
-					<li id="updownloadTab" class="tab_switcher_img">Up&Download<img alt="updownloadTab" src="assets/img/icons/updownloadTab.png"/></li>
+					<li id="updownloadTab" class="tab_switcher_img">Load Floorplan<img alt="updownloadTab" src="assets/img/icons/updownloadTab.png"/></li>
 				</ul>
 				<div class="clearfix"></div>
 			</div>
@@ -281,20 +286,16 @@
 						<img class="buttonImage" alt="triBath" src="assets/img/icons/sidebar/TriBath.jpg" btn-num="triBath" />
 						<img class="buttonImage" alt="rectBath" src="assets/img/icons/sidebar/RectBath.jpg" btn-num="rectBath" />
 						<img class="buttonImage" alt="shower" src="assets/img/icons/sidebar/Shower.jpg" btn-num="shower" />
-						<img class="buttonImage" alt="washstand" src="assets/img/icons/sidebar/Washstand.jpg" btn-num="washstand" />
+						<img class="buttonImage" alt="washstand" src="assets/img/icons/sidebar/WashStand.jpg" btn-num="washstand" />
 					</div>
 				</div>
 				<div class="updownload " style="display:none;overflow: auto;">
-					<!-- <input type="text" name="datanum" id="datanum" class="form-control rounded" placeholder="평면도 번호를 입력."/> -->
 					<div class="ui-widget" id="datanum">
 						<select id='combobox'>
-				
+						<!-- 옵션 동적 생성 부분 -->
 						</select>
 					</div>
 					<input type="button" class="btn-u btn-u--construction trim e_img2" value="평면도 불러오기" id="loadCanvasData" />
-					<a href="#" class="downloadBtn" id="btn-download" download="Floorplan.png">
-						<input type="image" src="assets/img/icons/sidebar/Download-button.png" style="width:200px; height:100px;">
-					</a>
 				</div>
 			</div>
   		</div>
@@ -356,6 +357,7 @@
 	var fillColor; //채우기색
 	var status; //
 	var areaNames = []; //방 용도 이름 텍스트 저장
+	var custid = '${loginId}';
 
 	// Line 변수 모음 
 	var object = [];
@@ -591,27 +593,34 @@
 			if(isDownloaded) { //다음 페이지로 진행
 				saveFloorplan(false, "insert_property2", saved_name);
 			} else { //다운로드 과정 자동 실행
-				alert("다운로드가 먼저 진행됩니다.");
+				alert("이미지 다운로드를 먼저 진행해주세요.");
 				$("#updownloadTab").trigger("click");
-				//$("#btn-download").trigger("click");
+				//$("#canvasDownload").trigger("click");
 				//$("button#save_nextStage").trigger("click");
 				
 			}
 		});
 		
+		
+		
 		//이미지 다운로드
-		$("#btn-download").click( function() {
+		$("#canvasDownload").click( function() {
 			//저장 이름 지정
 			saved_name = prompt("저장할 이름을 지정해주세요.", "BangGood");
-			downloadFloorplanPng(saved_name);
-			isDownloaded = true;
+			if(saved_name == null) {
+				isDownloaded = false;
+				$('#canvasDownload').attr('href', '#').removeAttr('download');
+			} else {
+				downloadFloorplanPng(saved_name);
+				isDownloaded = true;
+			}
 		});
 		
 		//데이터베이스에서 데이터 로드 하기
 		$("#loadCanvasData").on("click", function() {
 			clearCanvas();
 			var result = loadUserData();
-			console.log("loadData 0414: "+result);
+			console.log("loadData: "+JSON.stringify(result));
 			
 			//로드된 선 데이터 삽입
 			lines = result.lines;
@@ -619,7 +628,7 @@
 			
 			//로드된 선 오브젝트(문, 창문) 삽입
 			object = result.objects;
-			console.log("loadData 오브젝트 길이:"+ objects.length);
+			console.log("loadData 오브젝트 길이:"+ object.length);
 			
 			//로드된 아이콘 데이터 삽입
 			var loadedIcons = result.icons;
@@ -633,25 +642,15 @@
 					var updatedIcon = insertLoadedValueToIcon(icon, img, temp);
 					iconState.addIcon(updatedIcon);
 					redrawAll();
-					console.log("img onload => "+ JSON.stringify(iconState.icons));
 				}
 			});
 		});
 		
 		//데이터 불러오기 콤보 박스
 		$( "#combobox" ).combobox();
-		$( "#combobox" ).on("change", function(){
-			var availableList = loadUserFloorplanList("${loginId}");
-			//유저 개인 평면도 리스트 오토 컴플릿.
-			var	selectTag = "<option value=''>선택하세요</option>";
-			for(var index in availableList) {
-				selectTag += "<option value='"+availableList[index].DATANUM+"'>"+"데이터 번호: "+availableList[index].DATANUM+" "+"이름: "+availableList[index].SAVED_NAME+"</option>";
-			}
-			console.log(selectTag);
-			$( "#combobox" ).html(selectTag);
-			$( "#combobox" ).combobox();
-	    });
-	
+		
+		
+		
 		//메뉴 인터페이스 단
 		//메뉴창 선 설정 
 		$("#select").change(function() {
