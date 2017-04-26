@@ -239,14 +239,16 @@
                	<div style="width:100%; border:1px solid #f7be22; border-radius: 4px">
                   <span style="white-space: pre-wrap; ">${read_property.property_text}</span>             
                	</div>
-               <h3 style="font-weight: bold">지역별 상대적 방 분석 평점 데이터</h3>
+               	<br />
+               <h3 id="chartTitle" style="font-weight: bold"></h3>
+               <pre id="subTitle"></pre>
                <div id="Nwagon" style="float:left; margin:20px"></div>
-                  <div class="full-left">
-                     <p>** 같은 지역(동, 면, 리)내 비교 분석 데이터 100점 만점 대비</p>
-                     <h4 id="field"></h4>
-                        <span id="field_data"></span>
-               <h3>지역 실제 평균 데이터</h3>
+               <h3>지역 실제 평균</h3>
                   <span id="avgData" ></span>
+                  <div class="full-left">
+                     <div ></div>
+                     <h3 id="field"></h3>
+                        <span id="field_data"></span>
                </div>
                <div class="margin-bottom-30"></div> 
               	<div class="map_wrap">
@@ -383,7 +385,9 @@
 	var avgRadar;
 	var percentRadar;
 	var maxRadar;
-	var minRadar;	
+	var minRadar;
+	var searchArea;
+	var roomNoTotal;
 	
 	// 그래프 자료 받아오기
  	window.onload = function () {
@@ -394,7 +398,7 @@
 			data: {"property_no" : property_no},
 			success: getRadarChartData,
 			error: function() {
-				alert("조회 실패");
+				console.log("비교 분석 차트 조회 실패");
 			}
 		});
 	} 

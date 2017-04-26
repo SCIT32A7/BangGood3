@@ -299,9 +299,7 @@
    <!-- custom -->
    <script src="assets/js/custom.js"></script>
    <script src="assets/plugins/fancybox/source/jquery.fancybox.pack.js"></script>
-   <!-- graph -->
-   <script type="text/javascript" src="assets/js/radar.js"></script>
-   <script type="text/javascript" src="assets/js/Nwagon.js"></script>
+
    <!-- photo -->
    <script type="text/javascript" src="assets/js/lightbox.js"></script>
       <script>

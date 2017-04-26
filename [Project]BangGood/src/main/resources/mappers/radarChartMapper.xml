@@ -14,7 +14,8 @@
 			   max(p.month_fee) maxmonth, min(p.month_fee) minmonth, round(sum(p.month_fee)/count(*),1) avgmonth, 
 			   max(p.maintence_fee) maxmaintence, min(p.maintence_fee) minmaintence, round(sum(p.maintence_fee)/count(*),1) avgmaintence, 
 			   max(p.roomsize) maxroomsize, min(p.roomsize) minroomsize, round(sum(p.roomsize)/count(*),1) avgroomsize, 
-			   round(sum(r.total)/count(*),1) avgoption
+			   round(sum(r.total)/count(*),1) avgoption,
+			   count(*) roomnototal
 		FROM property p, roomoption r
 		WHERE p.property_no = r.property_no
 		AND p.address like '%'||#{address}||'%'

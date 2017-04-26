@@ -4,6 +4,7 @@ public class RadarChart {
 	private String address;
 	private String rent_type;
 	private String property_type;
+	private int roomNoTotal; //검색된 방 총 개수
 	private Double deposit;
 	private Double month_fee;
 	private Double maintence_fee;
@@ -12,6 +13,20 @@ public class RadarChart {
 	
 	public RadarChart() {
 		// TODO Auto-generated constructor stub
+	}
+
+	public RadarChart(String address, String rent_type, String property_type, int roomNoTotal, Double deposit,
+			Double month_fee, Double maintence_fee, Double roomsize, Double total) {
+		super();
+		this.address = address;
+		this.rent_type = rent_type;
+		this.property_type = property_type;
+		this.roomNoTotal = roomNoTotal;
+		this.deposit = deposit;
+		this.month_fee = month_fee;
+		this.maintence_fee = maintence_fee;
+		this.roomsize = roomsize;
+		this.total = total;
 	}
 
 	public RadarChart(Double deposit, Double month_fee, Double maintence_fee, Double roomsize, Double total) {
@@ -87,11 +102,19 @@ public class RadarChart {
 		this.total = total;
 	}
 
+	public int getRoomNoTotal() {
+		return roomNoTotal;
+	}
+
+	public void setRoomNoTotal(int roomNoTotal) {
+		this.roomNoTotal = roomNoTotal;
+	}
+
 	@Override
 	public String toString() {
 		return "RadarChart [address=" + address + ", rent_type=" + rent_type + ", property_type=" + property_type
 				+ ", deposit=" + deposit + ", month_fee=" + month_fee + ", maintence_fee=" + maintence_fee
-				+ ", roomsize=" + roomsize + ", total=" + total + "]";
+				+ ", roomsize=" + roomsize + ", total=" + total + ", roomNoTotal=" + roomNoTotal + "]";
 	}
-	
+
 }

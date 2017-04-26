@@ -30,9 +30,9 @@ public class RadarChartController {
 
 	@ResponseBody
 	@RequestMapping(value = "/loadChart", method = RequestMethod.GET)
-	public Map<String, RadarChart> singleRadarChart(int property_no) {
+	public Map<String, Object> singleRadarChart(int property_no) {
 		System.out.println(property_no);
-		Map<String, RadarChart> resultMap = new HashMap<>();
+		Map<String, Object> resultMap = new HashMap<>();
 		int index = 0;
 		RadarChart selected = repository.selectSingleRadarData(property_no);
 		if(selected == null) {
@@ -52,25 +52,25 @@ public class RadarChartController {
 			}
 			//주소 동, 읍, 리 단위로 끊어내기
 			String searchArea = address.substring(0, index);
-			System.out.println("검색 지역"+searchArea);
+			resultMap.put("searchArea", searchArea);
 			Map<String, String> condition = new HashMap<>();
 			condition.put("address", searchArea);
 			condition.put("rent_type", selected.getRent_type());
 			condition.put("property_type", selected.getProperty_type());
+			
 
 			Map<String, Object> average = repository.selectAverageRadartData(condition);
 			if(average == null) {
 				logger.info("평균 데이터 로드 실패");
 			} else {
 				logger.info("평균 데이터 로드 성공");
-				for (Object b : average.values()) {
-					System.out.println("평균 sQL"+b.toString());
-				}
 				Map<String, RadarChart> dataMap = getAnalysisData(selected, average);
+				int roomNoTotal = Integer.parseInt(String.valueOf(average.get("ROOMNOTOTAL")));
 				resultMap.put("percentRadar", dataMap.get("percentRadar"));
 				resultMap.put("avgRadar", dataMap.get("avgRadar"));
 				resultMap.put("maxRadar", dataMap.get("maxRadar"));
 				resultMap.put("minRadar", dataMap.get("minRadar"));
+				resultMap.put("roomNoTotal", roomNoTotal);
 				
 			}
 		}
@@ -91,6 +91,7 @@ public class RadarChartController {
 		Double minroomsize = Double.parseDouble(String.valueOf(avg.get("MINROOMSIZE")));
 		Double maxoption = 16.0;
 		Double minoption = 0.0;
+		
 		map.put("maxRadar", new RadarChart(maxdeposit, maxmonth, maxmaintence, maxroomsize, maxoption));
 		map.put("minRadar", new RadarChart(mindeposit, minmonth, minmaintence, minroomsize, minoption));
 		
