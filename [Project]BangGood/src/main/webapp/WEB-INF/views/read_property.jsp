@@ -396,7 +396,9 @@
 			url:"loadChart",
 			async: false,
 			data: {"property_no" : property_no},
-			success: getRadarChartData,
+			success: function(map) {
+				getRadarChartData(map, "${read_property.rent_type}", "${read_property.property_type}");
+			},
 			error: function() {
 				console.log("비교 분석 차트 조회 실패");
 			}

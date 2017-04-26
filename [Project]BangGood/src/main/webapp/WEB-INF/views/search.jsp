@@ -41,48 +41,215 @@
 <!-- 메인 글씨 -->
 <!-- CSS Customization -->
 <link rel="stylesheet" href="assets/css/custom.css">
+<link rel="stylesheet" href="assets/plugins/font-awesome/css/font-awesome.min.css">
+ <!-- 자동완성 -->
+   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+   <link rel="stylesheet" href="/resources/demos/style.css">
 <style type="text/css">
 
-.table tbody tr td {
-   height: 30px;
+.mapwrap {
+	position: absolute;
+	left: 0;
+	bottom: 40px;
+	width: 300px;
+	height: 201px;
+	margin-left: -144px;
+	text-align: left;
+	overflow: hidden;
+	font-size: 12px;
+	font-family: 'Malgun Gothic', dotum, '돋움', sans-serif;
+	line-height: 1.5;
 }
-    .wrap {position: absolute;left: 0;bottom: 40px;width: 288px;height: 132px;margin-left: -144px;text-align: left;overflow: hidden;font-size: 12px;font-family: 'Malgun Gothic', dotum, '돋움', sans-serif;line-height: 1.5;}
-    .wrap * {padding: 0;margin: 0;}
-    .wrap .info {width: 286px;height: 120px;border-radius: 5px;border-bottom: 2px solid #ccc;border-right: 1px solid #ccc;overflow: hidden;background: #fff;}
-    .wrap .info:nth-child(1) {border: 0;box-shadow: 0px 1px 2px #888;}
-    .info .title {padding: 5px 0 0 10px;height: 30px;background: #eee;border-bottom: 1px solid #ddd;font-size: 18px;font-weight: bold;}
-    .info .close {position: absolute;top: 10px;right: 10px;color: #888;width: 17px;height: 17px;background: url('http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/overlay_close.png');}
-    .info .close:hover {cursor: pointer;}
-    .info .body {position: relative;overflow: hidden;}
-    .info .desc {position: relative;margin: 13px 0 0 90px;height: 75px;}
-    .desc .ellipsis {overflow: hidden;text-overflow: ellipsis;white-space: nowrap;}
-    .desc .jibun {font-size: 11px;color: #888;margin-top: -2px;}
-    .info .img {position: absolute;top: 6px;left: 5px;width: 73px;height: 71px;border: 1px solid #ddd;color: #888;overflow: hidden;}
-    .info:after {content: '';position: absolute;margin-left: -12px;left: 50%;bottom: 0;width: 22px;height: 12px;background: url('http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png')}
-    .info .link {color: #5085BB;}
-   #addresstext{
-   z-index:100000;
-   }
-   
-      .ui-autocomplete {
-         max-height: 100px;
-         overflow-y: auto;
-         /* prevent horizontal scrollbar */
-         overflow-x: hidden;
-      }
-      /* IE 6 doesn't support max-height
+
+
+.mapwrap .info {
+	width: 300px;
+	height: 170px;
+	border-radius: 5px;
+	border-bottom: 2px solid #ccc;
+	border-right: 1px solid #ccc;
+	overflow: hidden;
+	background: #fff;
+}
+
+.mapwrap .info:nth-child(1) {
+	border: 0;
+	box-shadow: 0px 1px 2px #888;
+}
+
+.info .title {
+	padding: 2px 0 0 10px;
+	height: 30px;
+	background: #f7be22;
+	font-size: 18px;
+	font-weight: bold;
+}
+
+.info .close {
+	position: absolute;
+	top: 7px;
+	right: 10px;
+	color: #888;
+	width: 17px;
+	height: 17px;
+	background:
+		url('http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/overlay_close.png');
+}
+
+.info .close:hover {
+	cursor: pointer;
+}
+
+.info .body {
+	position: relative;
+	overflow: hidden;
+}
+
+.info .desc {
+	margin: 7px 0 0 0;
+	height: 110px;
+}
+
+.desc .ellipsis {
+	font-size: 15px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.ellipsis_hit{
+position:absolute;
+bottom:3px;
+right:5px;
+overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+.desc .jibun {
+float:left;
+	font-size: 11px;
+	color: #888;
+	margin-top: -2px;
+}
+
+.info .img {
+float:left;
+	width: 150px;
+	height: 150px;
+	border: 1px solid #ddd;
+	color: #888;
+	overflow: hidden;
+}
+
+.info:after {
+	content: '';
+	position: absolute;
+	margin-left: -12px;
+	left: 50%;
+	bottom: 0;
+	width: 22px;
+	height: 12px;
+	background:
+		url('http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png')
+}
+
+.info .link {
+	color: #f78ab0;
+}
+
+#addresstext {
+	z-index: 100000;
+}
+
+.ui-autocomplete {
+	max-height: 100px;
+	overflow-y: auto;
+	z-index: 10000;
+	/* prevent horizontal scrollbar */
+	overflow-x: hidden;
+}
+/* IE 6 doesn't support max-height
          * we use height instead, but this forces the menu to always be this tall
          */
-      * html .ui-autocomplete {
-         height: 100px;
-      }
-</style>
+* html .ui-autocomplete {
+	height: 100px;
+}
 
+label {
+	font-size: 14px;
+	font-weight: bold;
+	line-height: 0.5;
+	cursor: pointer;
+	display: inline-block;
+	padding: 14px 0px 5px 29px;
+	position: relative;
+	whitespace: no-wrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	-webkit-transition: all .15s ease;
+	transition: all .15s ease;
+	top: 0px;
+}
+
+}
+label:first-of-type {
+	border: 0;
+}
+
+label:before {
+	content: "";
+	position: absolute;
+	left: 1rem;
+	top: 1rem;
+	width: 16px;
+	height: 16px;
+	border-radius: 50%;
+	border: .2rem solid #ccc;
+}
+
+/**
+ * How it should look when checked
+ */
+input:checked+label:before {
+	border-color: white;
+	border: none;
+	background: #f7be22;
+}
+
+/**
+ * How it should look when disabled
+ */
+input:disabled+label {
+	background: #efefef;
+	color: rgba(0, 0, 0, 0.5);
+	cursor: not-allowed;
+}
+
+input:disabled+label:hover {
+	border-color: rgba(0, 0, 0, 0.1);
+}
+
+input:disabled+label:before {
+	border-color: white;
+	background: white;
+}
+
+input[type=radio], input[type=checkbox] {
+	display: none;
+}
+
+.option_menu .active {
+	background-position: right 5px;
+}
+</style>
+<script type="text/javascript">
+$(function() {
+    send_data();
+ });
+</script>
 
 </head>
 
 <body id="body" data-spy="scroll" data-target=".one-page-header"
-   class="demo-lightbox-gallery font-main promo-padding-top">
+   class="demo-lightbox-gallery font-main promo-padding-top"style="height:100%;">
    <main class="wrapper"> <!-- header --> 
    <%@ include   file="header.jsp"%> <!-- end header --> 
    <!-- menu -->
@@ -99,7 +266,7 @@
       
       <div class="clearfix"></div>
    <!-- end searchbox -->
-    <div style="margin-top:18px"></div>
+    <div style="margin-top:10px"></div>
     <div class="search_container">
     <div class="searchbox2 col-sm-2" id="searchbox2">
        
@@ -109,18 +276,22 @@
                <tbody>
                   <tr>
                      <td>
-                        <label for="property">전세</label>
-                        <input type="radio" name="property" id ="year_rent" class="insert_label">
-                        <label for="property" class="g-ml-10">월세</label>
-                        <input type="radio" name="property" id ="month_rent" class="insert_label">         
+                        
+                        <input type="radio" name="property" id ="year_rent" >
+                        <label for="year_rent">전세</label>
+                        
+                        <input type="radio" name="property" id ="month_rent" class="insert_label">   
+                        <label for="month_rent" class="g-ml-10">월세</label>
                      </td>
                   </tr>
                   <tr>
                      <td>
-                        <label for="rent_type">원룸</label>
-                        <input type="radio" name="rent_type" id ="oneroom">         
-                        <label for="rent_type" class="g-ml-10">투룸</label>
-                        <input type="radio" name="rent_type" id ="tworoom">         
+                       
+                        <input type="radio" name="rent_type" id ="oneroom">
+                         <label for="oneroom">원룸</label>         
+                        
+                        <input type="radio" name="rent_type" id ="tworoom"> 
+                        <label for="tworoom" class="g-ml-10">투룸</label>        
                      </td>
                   </tr>
                  <tr>
@@ -196,7 +367,7 @@
                   </tr>
                   <tr>
                      <td>
-                        <p style="display:inline; text-left">층수</p>
+                        <p style="display:inline;">층수</p>
                          <select class="form-control" id="floor" style="display:inline; width:46%">
                              <option selected="selected" value = "0">-----</option>
                              <option value="1">1~3층</option>
@@ -207,59 +378,75 @@
                      </td>
                   <tr>
                   <tr>
-                     <td>
-                        <p>추가옵션</p>
-                        <label for="maintence_fee">관리비 없음</label>
-                        <input type="checkbox" name="maintence_fee" id = "maintence_fee" value="">      
-                        <br>   
-                        <label for="car">주차 가능</label>
+                     <td class="addoption ">
+                        <h4 style="background:#f7be22; color:#fff">추가옵션 <i class="	fa fa-caret-down"></i></h4>
+                        <div class="option_menu text-left">
+                        <input type="checkbox" name="maintence_fee" id = "maintence_fee" value=""> 
+                        <label for="maintence_fee">관리비 없음</label>     
+                        
                         <input type="checkbox" name="car" id = "car" value="">
-                        <br>
-                        <label for="elevator">엘리베이터</label>
+                        <label for="car">주차 가능</label>
+                        
                         <input type="checkbox" name="elevator" id = "elevator" value="">
-                        <br>         
-                        <label for="pet">애완동물</label>
+                         <label for="elevator">엘리베이터</label>
+                        
                         <input type="checkbox" name="pet" id = "pet" value="">
-                        <br>
-                        <label for="newbulid">신축</label>
+                        <label for="pet">애완동물</label>
+                        
                         <input type="checkbox" name="newbulid" id = "newbuild" value="">
+                        <label for="newbuild">신축</label>
+                        </div>
                      </td>
                   </tr>
                   <tr>
-                     <td>
-                        <p>가구옵션</p>
-                        <label for="newbulid">에어컨</label>
-                        <input type="checkbox" name="newbulid" id = "air_conditioner" value="">         
-                        <label for="option">냉장고</label>
+                     <td class="addoption2">
+                        <h4 style="background:#f7be22; color:#fff">가구옵션<i class="	fa fa-caret-down"></i></h4>
+                        <div class="option_menu2 text-left">
+                        <input type="checkbox" name="newbulid" id = "air_conditioner" value="">
+                         <label for="air_conditioner">에어컨</label>  
+                               
+                       
                         <input type="checkbox" name="option" id = "fridge" value="">
-                        <br>
-                        <label for="option">세탁기</label>
-                        <input type="checkbox" name="option" id = "washing_machine" value="">         
-                        <label for="option">가스렌지</label>
-                        <input type="checkbox" name="option" id = "gas_stove" value="">
-                        <br>
-                        <label for="option">인덕션</label>
-                        <input type="checkbox" name="option" id = "electric_stove" value="">         
-                        <label for="option">전자레인지</label>
-                        <input type="checkbox" name="option" id = "microwave" value="">
-                        <br>
-                        <label for="option">책상</label>
-                        <input type="checkbox" name="option" id = "desk" value="">         
-                        <label for="option">선반</label>
-                        <input type="checkbox" name="option" id = "rack" value="">
-                        <label for="option">침대</label>
-                        <input type="checkbox" name="option" id = "bed" value="">
-                        <br>
-                        <label for="option">옷장</label>
-                        <input type="checkbox" name="option" id = "closet" value="">
-                        <label for="option">신발장</label>
-                        <input type="checkbox" name="option" id = "shoecabinet" value="">   
-                        <br>      
-                        <label for="option">도어락</label>
-                        <input type="checkbox" name="option" id = "doorlock" value="">
+                         <label for="fridge">냉장고</label>
                         
-                        <label for="option">무선인터넷</label>
-                        <input type="checkbox" name="option" id = "wifi" value="">         
+                        
+                        <input type="checkbox" name="option" id = "washing_machine" value="">
+                        <label for="washing_machine">세탁기</label>         
+                        
+                        <input type="checkbox" name="option" id = "gas_stove" value="">
+                        <label for="gas_stove">가스렌지</label>
+                        
+                        
+                        <input type="checkbox" name="option" id = "electric_stove" value="">         
+                        <label for="electric_stove">인덕션</label>
+                        
+                        <input type="checkbox" name="option" id = "microwave" value="">
+                        <label for="microwave">전자레인지</label>
+                        
+                        <input type="checkbox" name="option" id = "desk" value="">  
+                        <label for="desk">책상</label>
+                               
+                        <input type="checkbox" name="option" id = "rack" value="">
+                        <label for="rack">선반</label>
+                        
+                        <input type="checkbox" name="option" id = "bed" value="">
+                        <label for="bed">침대</label>
+                        
+                        <input type="checkbox" name="option" id = "closet" value="">
+                        <label for="closet">옷장</label>
+                        
+                        
+                        <input type="checkbox" name="option" id = "shoecabinet" value=""> 
+                        <label for="shoecabinet">신발장</label>
+                          
+                        <input type="checkbox" name="option" id = "doorlock" value="">
+                        <label for="doorlock">도어락</label>
+                        
+                       
+                        <input type="checkbox" name="option" id = "wifi" value="">  
+                         <label for="wifi">무선인터넷</label>
+                         
+                        </div>       
                      </td>
                   </tr>
                      
@@ -268,20 +455,13 @@
          </div>
     </div>
     <div class="col-sm-10" style="margin:0; padding:0;">
-   <div id="map" class="map" style="height:1000px;width: 100%;float:left;"></div>
+   <div id="map" class="map" style="width:100%; height:677px; float:left;"></div>
    </div>
    </div>
    </main>
 
-   <!-- 자동완성 -->
-   <link rel="stylesheet"
-      href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-   <link rel="stylesheet" href="/resources/demos/style.css">
-   <style>
-   
-   </style>
-   <script type="text/javascript"
-    src="//apis.daum.net/maps/maps3.js?apikey=8af91664dfbd610fb326b81f6ed2ca57&libraries=services"></script>
+  
+  <script type="text/javascript" src="//apis.daum.net/maps/maps3.js?apikey=8af91664dfbd610fb326b81f6ed2ca57&libraries=services"></script>
    <script type="text/javascript">      
       var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
       var options = { //지도를 생성할 때 필요한 기본 옵션
@@ -330,10 +510,12 @@
       var doorlock = 0;
       var wifi = 0;   
       
-      
-      $(function() {
-         send_data();
-      });
+   /*  //eunji_
+  	$(function(){
+  	var height = $(window).height();
+  	$("#map").css("height",height+"px");
+  	
+  	}); */
       
    
       $(function() {         
@@ -753,7 +935,7 @@
                      success : function(resp) {                              
                            property_map = resp;
                            var overlayTitle = " [ "+property_map.rent_type+" ] "+ property_map.deposit+"/"+property_map.month_fee;
-                           content = '<div class="wrap">';
+                           content = '<div class="mapwrap">';
                            content +=   '<div class="info">';
                            content +=      '<div class="title">';
                            content +=         overlayTitle
@@ -761,19 +943,20 @@
                            content +=      '</div>';
                            content +=      '<div class="body">'
                            content +=         '<div class="img">';
-                           content +=            '<img src="download?pic_name='+property_map.pic_name+'&pic_savename='+property_map.pic_savename+'" width="73" height="71">';
+                           content +=            '<img src="download?pic_name='+property_map.pic_name+'&pic_savename='+property_map.pic_savename+'" width="150" height="140">';
                            content +=         '</div>';
-                           content +=         '<div class="desc">';
-                           content +=            '<div class="ellipsis">'+property_map.property_title+'</div>';
-                           content +=            '<div class="ellipsis">'+property_map.property_hits+'/'+property_map.reply_count+'/'+property_map.property_like+'</div>';
+                           content +=         '<div class="desc g-ml-5">';
+                           content +=            '<h3 class="ellipsis"><a href="#">'+property_map.property_title+'</a></h3>';
                            content +=            '<div class="jibun ellipsis"></div>';
-                           content +=            '<div><a href="read_property?property_no='+property_map.property_no+'" target="_blank" class="link">내용보기</a></div>';
-                           content +=            '<div><a href="#" target="_blank" class="link">임시저장</a></div>';
+                           content +=            '<div><a href="#" target="_blank" class="link"><i class="fa fa-heart"></i>책갈피</a></div>';
+                           content +=            '<div class="info_label"><span class="label label-success g-ml-10 rounded">신축</span></div>';
+                           content +=            '<div><a href="read_property?property_no='+property_map.property_no+'" target="_blank" class="link">자세히보기</a></div>';
+                           content +=            '<p class="ellipsis_hit"> <i class="fa fa-eye"></i>' +property_map.property_hits+ '  <i class="fa fa-comments"></i>'+property_map.reply_count+'  <i class="fa fa-heart"></i>'+property_map.property_like+'</p>';
                            content +=         '</div>';                  
                            content +=      '</div>';
                            content +=    '</div>';
                            content += '</div>';
-                           
+                         
                            overlay = new daum.maps.CustomOverlay({
                                content: content,
                                map: map,
@@ -818,8 +1001,20 @@
          markers[i].setMap(map);
       }            
    }
-   
-   
+   // eunji_버튼 css
+   $(function(){
+		$(".option_menu").hide();
+		$(".option_menu2").hide();
+		$(".addoption h4").click(function(){
+	        $(".option_menu").slideToggle("slow");
+	        $(".addoption h4 i").toggleClass('fa-caret-up');
+	    });
+		$(".addoption2 h4").click(function(){
+	        $(".option_menu2").slideToggle("slow");
+	        $(".addoption2 h4 i").toggleClass('fa-caret-up');
+	    });
+	});
+ 
    </script>
       
    <!-- JS Global Compulsory -->
@@ -830,7 +1025,7 @@
    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
    <!-- custom -->
    <script src="assets/js/custom.js"></script>
-   
+    
 
 </body>
 </html>

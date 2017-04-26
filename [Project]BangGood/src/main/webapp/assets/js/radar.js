@@ -1,7 +1,7 @@
 /**
  * 
  */
-	function getRadarChartData(map) {
+	function getRadarChartData(map, rent_type, property_type) {
 		console.log("map => "+ JSON.stringify(map));
 		selectedRadar = map.selectedRadar;
 		avgRadar = map.avgRadar;
@@ -10,8 +10,8 @@
 		minRadar = map.minRadar;
 		searchArea = map.searchArea;
 		roomNoTotal = map.roomNoTotal;
-		
-		var chartName = searchArea+" 지역 동일 전월세 및 룸 타입 기준 비교 분석 데이터("+roomNoTotal+"곳)";
+		  
+		var chartName = "[ "+searchArea+"] "+rent_type+"와 "+property_type+" 형태의 동일 타입 비교 분석 데이터(총 "+roomNoTotal+"곳)";
 		var	chartSubName = "그래프 점수:"+searchArea+"지역 최고값과 최저가 기준 100점 만점";
 		$("#chartTitle").html(chartName);
 		$("#subTitle").html(chartSubName);

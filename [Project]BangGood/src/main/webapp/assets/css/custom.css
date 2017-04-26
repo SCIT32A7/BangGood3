@@ -156,7 +156,8 @@
    width: 100%;
    background: #ffff;
    height: auto; ! important;
-   height: 100%;
+   height: 680px;
+   overflow:auto;
    min-height: 100%
 }
 
