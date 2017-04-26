@@ -75,24 +75,24 @@
 	<!--=== End Breadcrumbs v2 ===--> <!--=== Content Part ===-->
 	<div class="container content">
 		<div class="headline">
-			<h2>광고 중인 매물</h2>	
+			<h2>대기 중 매물</h2>	
 			<form id = "pagingForm" method="get" class="g-dp-inline pull-right" style="vertical-align: middle;">
+
 				<input type="text" name="searchid" id="searchid" style="width:170px;" value = "${searchid}"
 				class="g-mr-10" placeholder="아이디를 입력해주세요.">
 				<button class="btn-u btn-block rounded" style=" width: 80px;">
 					<a href="javascript:pagingForSubmit(1)"><i class="fa fa-search"></i>검색</a>
 				</button>
-				<button class="btn-u btn-block rounded" style=" width:100px;display:inline-block">
-						<a href="admin_waiting_property">미게시매물</a>	
+				<button class="btn-u btn-block rounded" style=" width:80px;display:inline-block; background: #333">
+						<a href="admin_property">전체매물</a>	
 				</button>
-				<button class="btn-u btn-block rounded" id = "stop_showing"
-				style=" width:80px;display:inline-block; background: #333">
-					<a href="javascript:stop_showing()">게시 중지</a>
-				</button>
+
+			<button class="btn-u btn-block rounded" style=" width:80px; display:inline-block; background: #333">
+						<a href="javascript:restart_showing()">재게시</a>	
+			</button>
 			<input type = "hidden" name = "page" id = "page">
-			<input type = "hidden" name = "stopList" id = "stopList">
+			<input type = "hidden" name = "restartList" id = "restartList">
 			</form>
-			
 		</div>
 		<!-- Tab pannel 4 -->
 
@@ -192,7 +192,8 @@
 	<!-- custom -->
 	<script src="assets/js/custom.js"></script>
 <script type="text/javascript">
-	//페이지 메소드
+	
+	
 	function pagingForSubmit(currentPage){
 		var form = document.getElementById("pagingForm");
 		var page = document.getElementById("page");
@@ -200,9 +201,8 @@
 		form.action = "admin_property";
 		form.submit();
 	}
-	
-	// 여러 매물 개시 중단시키기
-	function stop_showing(){		
+	// 여러 매물 다시 게시하기
+	function restart_showing(){		
 		var checkList = Array();
 		var i=0;
 		var list = document.getElementsByName("subCheck");
@@ -210,7 +210,7 @@
 			if (list[a].checked){
 				checkList[i] = list[a].value;
 				i++;		        
-		    }
+	 		}
 		}
 		if(i == 0){
 			alert('광고를 중단하실 매물을 선택해주세요.');
@@ -218,16 +218,15 @@
 		}
 		if(confirm('해당 매물의 광고를 재게하시겠습니까?')){
 			var form = document.getElementById("pagingForm");
-			var stopList = document.getElementById("stopList");
-			stopList.value = checkList;
-			form.action = "stop_showing_propertys";
+			var restartList = document.getElementById("restartList");
+			restartList.value = checkList;
+			form.action = "restart_showing_propertys";
 			form.submit();
 		}
 	}
 	
+	$(function(){
 	
-	// 전체 클릭
-	$(function(){	
 		$("#checkedAll").click(function(){
 			if($('#checkedAll').prop('checked')){
 				$('input[name=subCheck]:checkbox').each(function(){
@@ -239,6 +238,7 @@
 				});
 			}
 		});
+		
 	});
 	</script>
 </body>

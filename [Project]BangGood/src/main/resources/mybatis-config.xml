@@ -26,6 +26,6 @@
     <mapper resource="mappers/SearchBoardMapper.xml"/>
     <mapper resource="mappers/radarChartMapper.xml"/>
     <mapper resource="mappers/canvasMapper.xml"/>
-    
+    <mapper resource="mappers/AdminMapper.xml"/>
   </mappers>
 </configuration>

@@ -162,7 +162,7 @@
             <when test="floor == 10"> and floor >= 10 </when>
          </choose>
       </if>
-      <if test="maintence_fee != 'all'"> and maintence_fee is null </if>
+      <if test="maintence_fee != 'all'"> and maintence_fee = 0 </if>
       <if test="newbuild != 'all'">and built_year > 2014</if>
       ) pro,
       (select property_no from roomoption

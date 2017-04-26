@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="global.sesoc.banggood.dao.AdminDAO">
+<!-- 전체 매물 목록 호출 -->
+<select id="select_property" resultType="Property" parameterType="map">
+	select * from 
+	(select rownum r, pro.*
+	from (select property_no, custid, rent_type, deposit, month_fee,
+			case
+				when to_char(property_inputdate,'YY-MM-DD') = to_char(sysdate, 'YY-MM-DD') 
+				then to_char(property_inputdate,'HH24:MI:SS') 
+				else to_char(property_inputdate,'YY-MM-DD') 
+			end as property_inputdate, property_title 
+			from property 
+			where isaccessible = 'true'
+			<if test = "searchid != null">
+			and custid like '%'||#{searchid}||'%'
+			</if>
+			) pro			
+   		 order by property_inputdate desc
+	)  where r between #{firstText} and #{lastText}
+</select>
+
+<!-- 전체 매물 갯수 구하기 -->
+<select id="count_property" resultType="_int" parameterType="map">
+	select count(*) from property 
+	where isaccessible = 'true'
+	<if test = "searchid != null">
+		and custid like '%'||#{searchid}||'%'
+	</if>
+</select>
+
+<!-- 대기 중 매물 목록 호출 -->
+<select id="select_waiting_property" resultType="Property" parameterType="map">
+ 	select * from 
+	(select rownum r, pro.*
+	from (select property_no, custid, rent_type, deposit, month_fee,
+			case
+				when to_char(property_inputdate,'YY-MM-DD') = to_char(sysdate, 'YY-MM-DD') 
+				then to_char(property_inputdate,'HH24:MI:SS') 
+				else to_char(property_inputdate,'YY-MM-DD') 
+			end as property_inputdate, property_title 
+			from property 
+			where isaccessible = 'false'
+			<if test = "searchid != null">
+			and custid like '%'||#{searchid}||'%'
+			</if>
+			) pro			
+   		 order by property_inputdate desc
+	)  where r between #{firstText} and #{lastText}
+</select>
+
+<!-- 대기 중 매물 갯수 구하기 -->
+<select id="count_waiting_property" resultType="_int" parameterType="map">
+	select count(*) from property where isaccessible = 'false'
+	<if test = "searchid != null">
+		and custid like '%'||#{searchid}||'%'
+	</if>
+</select>
+
+<!-- 매물 개시 중단하기 -->
+<update id="stop_showing" parameterType="int">
+	update property set isaccessible = 'false' where property_no=#{property_no}
+</update>
+
+<!-- 매물 개시 다시하기 -->
+<update id="restart_showing" parameterType="int">
+	update property set isaccessible = 'true' where property_no=#{property_no}
+</update>
+
+</mapper>
+

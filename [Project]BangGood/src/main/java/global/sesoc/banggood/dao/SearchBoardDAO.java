@@ -33,7 +33,7 @@ public interface SearchBoardDAO {
 	public int addReplyCount(int searchBoard_no) throws Exception;
 	
 	// 댓글 갯수 감소
-	public int	subReplyCount(int searchBoard_no) throws Exception;
+	public int subReplyCount(int searchBoard_no) throws Exception;
 
 	// 문의게시판 댓글입력
 	public int insert_searchReply(SearchReply sr) throws Exception;

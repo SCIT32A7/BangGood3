@@ -41,17 +41,11 @@ public class RadarChartController {
 			logger.info("선택 데이터 로드 성공");
 			logger.info(selected.toString());
 			resultMap.put("selectedRadar", selected);
-
-			String address = selected.getAddress();
-			for(int i = 0; i<10; i++) {
-				String num = i+"";
-				index = address.indexOf(num);
-				if(index != -1) {
-					break;
-				}
-			}
+			
 			//주소 동, 읍, 리 단위로 끊어내기
-			String searchArea = address.substring(0, index);
+			String address = selected.getAddress();
+			String searchArea = getSearchedArea(address);
+			
 			resultMap.put("searchArea", searchArea);
 			Map<String, String> condition = new HashMap<>();
 			condition.put("address", searchArea);
@@ -75,6 +69,40 @@ public class RadarChartController {
 			}
 		}
 		return resultMap;
+	}
+	
+	public String getSearchedArea(String address) {
+		String result = "";
+		String[] temp1 = address.split("-");
+		String[] temp2 = temp1[0].split(" ");
+		
+		for(String a: temp2) {
+			System.out.println(a);
+		}
+		System.out.println("temp2사이즈 "+temp2.length);
+		int index = 0;
+		for(int i=1; i<temp2.length; i++){
+			if(isNumeric(temp2[i])) {
+				System.out.println("index "+i);
+				index = i;
+				break;
+			}
+		}
+		System.out.println("index "+index);
+		for(int i=1; i<index; i++) {
+			result += temp2[i]+" ";
+		}
+		System.out.println("111111=>"+result);
+		return result;
+	}
+	
+	public static boolean isNumeric(String sample) {
+		try{
+			Double.parseDouble(sample);
+		} catch(NumberFormatException e) {
+			return false;
+		}
+		return true;
 	}
 	
 	public Map<String, RadarChart> getAnalysisData(RadarChart radar, Map<String, Object> avg) {
