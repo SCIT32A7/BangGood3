@@ -125,6 +125,8 @@
 	margin-bottom:5px;
 }
 
+
+
 </style>
  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <link rel="stylesheet" href="/resources/demos/style.css">
@@ -182,10 +184,16 @@
            	<input type="image" id="undo" src="assets/img/icons/sidebar/undo.png" class="do_btn tab_switcher_img" data-toggle="tooltip" title="Undo 단축키 Ctrl+z">
            	<input type="image" id="redo" src="assets/img/icons/sidebar/redo.png" class="do_btn tab_switcher_img" data-toggle="tooltip" title="Redo 단축키 Ctrl+y">
             <input type="image" src="assets/img/icons/sidebar/Init.png" alt="초기화" id="clearCanvas" class="do_btn tab_switcher_img" data-toggle="tooltip" title="초기화"/>
-           	<a href="#" class="tab_switcher_img" id="canvasDownload" >
+           	<input type="image" src="assets/img/icons/sidebar/Eraser.png" alt="선택삭제" id="deleteCanvasObject" class="do_btn tab_switcher_img" 
+           		data-toggle="tooltip" title="선택삭제  단축키: ESC+대상클릭+delete"/>
+           	<input type="image" src="assets/img/icons/sidebar/Rotation.png" alt="아이콘 회전" id="iconRotation" class="do_btn tab_switcher_img" data-toggle="tooltip" title="아이콘 회전 단축키:마우스 Wheel"/>
+           	<input type="image" src="assets/img/icons/sidebar/SelectorMode.png" alt="선택자 모드" id="SelectorMode" class="do_btn tab_switcher_img" data-toggle="tooltip" title="선택자 모드 단축키:ESC"/>
+           	<input type="image" src="assets/img/icons/sidebar/Shift.png" alt="직선그리기" id="shiftMode" class="do_btn tab_switcher_img" data-toggle="tooltip" title="직선 단축키:Shift 누른 상태 유지"/>
+           	<input type="image" src="assets/img/icons/sidebar/Ctrl.png" alt="이어그리기" id="ctrlMode" class="do_btn tab_switcher_img" data-toggle="tooltip" title="선 이어그리기 단축키:Ctrl 누른 상태 유지"/>
+           	<a href="#" class="tab_switcher_img" id="canvasDownload" class="do_btn tab_switcher_img" data-toggle="tooltip" title="평면도 이미지 다운로드">
 				<input type="image" src="assets/img/icons/sidebar/Download-button.png" style="width:100px; height:50px;">
 			</a>
-           	<input type="text" id="status" placeholder="마우스 상태 표시" readonly="readonly"/>
+           	<input type="text" id="status" placeholder="마우스 상태" readonly="readonly"/>
            	<button id="save_nextStage" class="pull-right btn-u btn-block rounded insert_btn" style="width:100px"> 다음단계</button> 
  		</h3>
 	<div class="row">
@@ -220,13 +228,19 @@
 						<br />
 						<select id="fillColor">
 							<option value="#FFFFFF" selected="selected">방 색상: 화이트</option>
-							<option value="black">방 색상: 검정</option>
-							<option value="yellow">방 색상: 노랑</option>
-							<option value="#cc9966">방 색상: 황토색</option>
-							<option value="#a6a6a6">방 색상: 회색</option>
+							<option value="black">내부 색상: 검정</option>
+							<option value="yellow">내부 색상: 노랑</option>
+							<option value="#cc9966">내부 색상: 황토색</option>
+							<option value="#a6a6a6">내부 색상: 회색</option>
 						</select>
 						<br />
-						<input type="button" id="rectangle" value="방 그리기" />
+						<input type="button" id="rectangle" value="사각형 그리기" />
+						<br />
+						<select id="objectBox">
+							<option value="door" selected="selected">문</option>
+							<option value="window">창문</option>
+						</select>
+						<input type="button" id="object" value="생성" />
 						<br />
 						<select id="lineStep">
 							<option value="50" >미세</option>
@@ -234,12 +248,6 @@
 							<option value="700">둔감</option>
 						</select> 
 						<input type="button" value="민감도 조정" />
-						<br />
-						<select id="objectBox">
-							<option value="door" selected="selected">문</option>
-							<option value="window">창문</option>
-						</select>
-						<input type="button" id="object" value="생성" />
 					</div>
 				</div>
 				<div class="furniture" style="display:none;overflow: auto;">
@@ -345,10 +353,10 @@
    <!-- 평면도 기능 코드 -->
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <!-- <script type="text/javascript" src="assets/js/jquery-3.2.0.min.js"></script> -->
-<script type="text/javascript" src="assets/js/FloorplanCanvas.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<script type="text/javascript" src= "assets/js/autocomplete.js"></script>
-<script>
+	<script type="text/javascript" src="assets/js/FloorplanCanvas.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<script type="text/javascript" src= "assets/js/autocomplete.js"></script>
+	<script>
 //Basic 변수 모음
 	var canvas;
 	var ctx;
@@ -648,8 +656,6 @@
 		
 		//데이터 불러오기 콤보 박스
 		$( "#combobox" ).combobox();
-		
-		
 		
 		//메뉴 인터페이스 단
 		//메뉴창 선 설정 
@@ -994,8 +1000,8 @@
 	            	 objectResizer(updateTemp,"down");
 	             }
 	        };
-			         
 	    });
+		
 		$("#pencilTab").on("click", function(){
 			$("#tab").css("overflow","auto");
 			$(".furniture").hide();
@@ -1014,7 +1020,6 @@
 			$(".furniture").hide();
 			$(".updownload").show();
 		});
-		
 		$("#redo").on("click", function() {
 			if (Redo.length > 0) {
 				getRedo(Redo[Redo.length - 1]);
@@ -1025,7 +1030,6 @@
 			updateTemp = null;
 			redrawAll();
 		});
-		
 		$("#undo").on("click", function() {
 			if (Undo.length > 0) {
 				getUndo(Undo[Undo.length - 1]);
@@ -1036,7 +1040,127 @@
 			updateTemp = null;
 			redrawAll();
 		});
-	
+		
+		$("#shiftMode").on("click", function(){
+			if(ShiftKey == true) {
+				ShiftKey = false;
+				$("#shiftMode").attr("class", "do_btn tab_switcher_img");
+			} else {
+				ShiftKey = true;
+				$("#shiftMode").removeAttr("class").attr("class", "do_btn");
+			}
+		});
+		
+		$("#ctrlMode").on("click", function(e){
+			if(CtrlKey == true) {
+				CtrlKey = false;
+				upXY='';
+	            //status="line";
+	            keyEvent = 'none';
+				$("#ctrlMode").attr("class", "do_btn tab_switcher_img");
+			} else {
+				CtrlKey = true;
+				if (status == 'line') {
+					e.preventDefault();
+					keyEvent = 'straight';
+				} else if (status == 'lineDrawing') {
+					e.preventDefault();
+					keyEvent = 'straight';
+				}
+				$("#ctrlMode").removeAttr("class").attr("class", "do_btn");
+			}
+			
+			
+		});
+		
+		$("#SelectorMode").on("click", function() {
+			updateTemp = null;
+			if (status!="lineDrawing"&&status != "rectDrawing") {
+				status = 'none';
+				canvas.style.cursor = "Default";
+				iconState.removeIcon(iconState.selection);
+				iconState.selection = null;
+			} else if (status == "lineDrawing") {
+				clickE = false;
+				status = 'line';
+			} else if (status == "rectDrawing") {
+				clickE = false;
+				status = 'rect';
+			}
+			updateTemp = null;
+			iconState.selection = null;
+			drawAllLines(lines);
+		});
+		$("#iconRotation").on("click", function(e) {
+			e.preventDefault();
+			var E = e.originalEvent.deltaY;
+	    	redrawAll();
+	        console.log(status);
+	        if (E<0) {
+	             if(status=="object"){
+	            	 if(count<80) count++;
+	            	 drawingObject("draw");
+		     		 // ObjectIcon(XY,"drawing");
+	   	         } else if(status=="image" && iconState.selection ){
+		             seta +=5;
+		             iconState.selection.rotateTable = seta;
+		             redrawAll();
+	   	      	 }else if(status=="object"||status=="objectSelect"&&(updateTemp.type=="door"||updateTemp.type=="window")){
+					 objectResizer(updateTemp,"up");
+	   	      		 
+	             }
+		    }else{
+		         //wheel = "dwon";
+	             if(status=="object"){
+	            	 if(count>30) count--;
+	            	 drawingObject("draw");
+	     			 //ObjectIcon(XY,"drawing");
+	             }
+	             else if(status=="image" && iconState.selection ){
+	            	 seta -=5;
+	            	 iconState.selection.rotateTable = seta;
+	            	 redrawAll();
+	             }else if(status=="object"||status=="objectSelect"&&(updateTemp.type=="door"||updateTemp.type=="window")){
+	            	 objectResizer(updateTemp,"down");
+	             }
+	        };
+		});
+		$("#deleteCanvasObject").on("click", function() {
+				if (updateTemp) {
+					if (updateTemp.type == "line") {
+						var coord = { x0 : updateTemp.line.x0, y0 : updateTemp.line.y0,
+							x1 : updateTemp.line.x1, y1 : updateTemp.line.y1 };
+						for (var i = 0; i < lines.length; i++) {
+							if (JSON.stringify(coord) == JSON.stringify(lines[i].coordinate)) {
+								inputUndo(lines[i], "delete");
+								lines.splice(i, 1);
+							}
+						}
+					} else if (updateTemp.type.substr(0, 4) == "rect") {
+						//console.log(JSON.stringify(updateTemp.line1));
+						deleteRect(updateTemp.line1);
+					} else if (updateTemp.type == "icon") {
+						inputUndo({data:iconState.selection,type:"icon"},"delete");
+						iconState.removeIcon(iconState.selection);
+						iconState.selection = null;
+					}else if (updateTemp.type == "door"||updateTemp.type == "window"){
+						inputUndo(updateTemp,"delete");
+						//console.log(JSON.stringify(updateTemp));
+						var array = lines[updateTemp.index].object;
+						//console.log(JSON.stringify(array));
+						for(var i=0;i<array.length;i++){
+							if(JSON.stringify(updateTemp) == JSON.stringify(array[i])){
+								array.splice(i,1);
+								//lines[updateTemp.index]['object'].push(array);
+							}
+						}
+					}
+				}
+				updateTemp = null;
+				redrawAll();
+			//edge=[];
+		});
+		
 	});//  ready end
 
 </script>
