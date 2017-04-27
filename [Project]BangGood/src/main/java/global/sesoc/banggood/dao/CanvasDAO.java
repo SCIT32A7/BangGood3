@@ -9,4 +9,5 @@ public interface CanvasDAO {
 	public int save(Canvas canvas) throws Exception;
 	public Canvas select(int datanum) throws Exception;
 	public ArrayList<Map<String, Object>> selectUserDataList(String custid) throws Exception;
+	public Canvas loadCanvasForUpdate(String property_no) throws Exception;
 }

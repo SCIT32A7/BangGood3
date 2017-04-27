@@ -55,20 +55,20 @@
 
 	<div class="searchboard_title g-mb-20">
 		<div class="searchboard_title-in">
-			<h1>게시판</h1>
+			<h1> Customer Q&A </h1>
 		</div>
 	</div>
 	<div class="container content profile" style="height:500px;">
 			<div class="headline">
-				<h2>메세지</h2>
+				<h2>고객 요청</h2>
 				<div class="pull-right">
 					<button class="btn-u btn-block rounded"
 						style="background-color: #f7be22; width: 130px;">
-						<a href="get_iwriteList"></i>보낸 쪽지함</a>
+						<a href="admin_writeList"></i>답변 내역 보기</a>
 					</button>
 					<button class="btn-u btn-block rounded"
 						style="background-color: #f7be22; width: 130px;">
-						<a href="javascript:msg_write()"></i>메세지 작성</a>
+						<a href="javascript:msg_write()"></i>답변하기</a>
 					</button>
 				</div>
 			</div>
@@ -76,7 +76,7 @@
 			<div class="row">
 				<div class="col-sm-12">
 				<c:if test = "${messageList.size()==0}">
-						쪽지함이 비어있습니다.
+						고객요청함이 비어있습니다.
 				</c:if>
 				<c:if test = "${messageList.size()>0}">	
 					<div class="table-responsive">
@@ -163,6 +163,22 @@
 
 		<!-- custom -->
 		<script src="assets/js/custom.js"></script>
+		<script type="text/javascript">
+		function msg_open(number) {
+			  window.open("message?msg_no="+number, "", 'titlebar=no, scrollbars=yes, toolbar=no, location=no, resizable=no, status=no, menubar=yes, width=350, height=420, left=30%, top=40%');
+		};
+		
+		function msg_write() {
+			  window.open("message_write", "", 'titlebar=no, scrollbars=yes, toolbar=no, location=no, resizable=no, status=no, menubar=yes, width=350, height=400, left=30%, top=40%');
+		};
+		
+		function pagingForSubmit(currentPage){
+			var form = document.getElementById("pagingForm")
+			var page = document.getElementById("page");
+			page.value = currentPage;
+			form.submit();
+		}
+		</script>
 		
 </body>
 </html>

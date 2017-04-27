@@ -51,4 +51,15 @@ public class CanvasRepository {
 		}
 		return list;
 	}
+	
+	public Canvas loadCanvasForUpdate(String property_no) {
+		Canvas update = null;
+		CanvasDAO dao = sqlSession.getMapper(CanvasDAO.class);
+		try {
+			update = dao.loadCanvasForUpdate(property_no);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return update;
+	}
 }

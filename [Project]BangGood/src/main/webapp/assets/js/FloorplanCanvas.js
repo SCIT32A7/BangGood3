@@ -1423,7 +1423,7 @@ function moveTemp(req){
 	}
 	
 	//DB에 데이터 저장
-	function saveFloorplan (on, url, saved_name) {
+	function saveFloorplan (on, url, saved_name, scale) {
 		//다운로드 직전 최신화
 		redrawAll();
 		
@@ -1434,6 +1434,7 @@ function moveTemp(req){
 		var data = { lines : JSON.stringify(lineArray),
 					 icons : JSON.stringify(iconArray),
 					 objects : JSON.stringify(objectArray),
+					 scale : scale,
 					 saved_name : saved_name };
 		if(on) {
 			//서버 저장
@@ -1490,6 +1491,7 @@ function moveTemp(req){
 		var lineArray = [];
 		var iconArray = [];
 		var objectArray = [];
+		var scale = 0;
 		var datanum = $("#combobox").val();
 		alert(datanum);	
 		$.ajax({
@@ -1501,6 +1503,7 @@ function moveTemp(req){
 				var lines = JSON.parse(data.lines);
 				var icons = JSON.parse(data.icons);
 				var objects = JSON.parse(data.objects);
+				var scale = data.scale;
 				if(Object.keys(lines).length !== 0) {
 					lineArray = lines;
 				} 
@@ -1516,5 +1519,5 @@ function moveTemp(req){
 				init();
 			}
 		});
-		return {lines: lineArray, icons: iconArray, objects: objectArray};
+		return {lines: lineArray, icons: iconArray, objects: objectArray, scale: scale};
 	}

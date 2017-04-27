@@ -42,6 +42,7 @@
                 <li class="page-scroll move"><a href="search">지도 현황</a></li>
                 <li class="page-scroll"><a href="admin_property">매물관리</a></li>
                 <li class="page-scroll"><a href="searchboard">게시글 관리</a></li>
+                <li class="page-scroll"><a href="admin_messageList">고객 요청</a></li>
                 <li class="page-scroll"><a href="#">회원 관리</a></li>
                 <li class="page-scroll"><a href="logout">로그아웃</a></li>  
           	  </c:if>                           

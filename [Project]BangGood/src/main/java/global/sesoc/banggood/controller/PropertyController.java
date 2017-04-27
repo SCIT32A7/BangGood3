@@ -49,7 +49,7 @@ public class PropertyController {
 	public String search() {
 		return "search";
 	}
-	
+
 	// 테마검색
 	@RequestMapping(value = "/themeSearch", method = RequestMethod.GET)
 	public String search(String keyword, Model model) {
@@ -150,6 +150,7 @@ public class PropertyController {
 
 		canvas.setCustid(property.getCustid());
 		model.addAttribute("canvas", canvas);
+		System.out.println("미들 체크 "+canvas.toString());
 		return "insert_property3";
 	}
 
@@ -231,20 +232,38 @@ public class PropertyController {
 	public String read_property(int property_no, Model model) {
 		pr.add_hits(property_no);
 		Property property = pr.select_Property(property_no);
-		System.out.println("게시여부 : "+property.getIsaccessible());
+		System.out.println("게시여부 : " + property.getIsaccessible());
 		Option option = pr.select_Option(property_no);
 		Maintence maintence = pr.select_Maintence(property_no);
-		ArrayList<Picture> pList = pr.select_Picture(property_no);
+		ArrayList<Picture> dbList = pr.select_Picture(property_no);
+		ArrayList<Picture> pList = new ArrayList<>();
+		for (int i = 0; i < dbList.size(); i++) {
+			if (dbList.get(i).getPic_division().equals("main")) {
+				pList.add(0, dbList.get(i));
+			} else if (dbList.get(i).getPic_division().equals("plan")) {
+				pList.add(1, dbList.get(i));
+			} else if (dbList.get(i).getPic_division().equals("front")) {
+				pList.add(2, dbList.get(i));
+			} else if (dbList.get(i).getPic_division().equals("room")) {
+				pList.add(3, dbList.get(i));
+			} else if (dbList.get(i).getPic_division().equals("kitchen")) {
+				pList.add(4, dbList.get(i));
+			} else if (dbList.get(i).getPic_division().equals("bathroom")) {
+				pList.add(5, dbList.get(i));
+			} else {
+				pList.add(6, dbList.get(i));
+			}			
+		}
 		model.addAttribute("read_property", property);
 		model.addAttribute("read_option", option);
 		model.addAttribute("read_maintence", maintence);
 		model.addAttribute("read_picture", pList);
 		return "read_property";
 	}
-	
+
 	// 매물 기본정보 수정을 위해 정보 물러오기
 	@RequestMapping(value = "/select_property_data", method = RequestMethod.GET)
-	public String select_property1(int property_no, Model model){
+	public String select_property1(int property_no, Model model) {
 		Property property = pr.select_Property(property_no);
 		Option option = pr.select_Option(property_no);
 		Maintence maintence = pr.select_Maintence(property_no);
@@ -253,17 +272,44 @@ public class PropertyController {
 		model.addAttribute("select_maintence", maintence);
 		return "update_property";
 	}
-	
+
 	// 매물 기본정보 수정
 	@RequestMapping(value = "/update_property_data", method = RequestMethod.POST)
-	public String update_property1(int property_no, Property property, Option option, Maintence maintence, Model model){
+	public String update_property1(int property_no, Property property, Option option, Maintence maintence,
+			Model model) {
 		property.setProperty_no(property_no);
 		option.setProperty_no(property_no);
 		maintence.setProperty_no(property_no);
 		pr.update_Property(property);
 		pr.update_Option(option);
-		pr.update_Maintence(maintence);	
-		return "redirect:read_property?property_no="+property_no;
+		pr.update_Maintence(maintence);
+		return "redirect:read_property?property_no=" + property_no;
+	}
+	
+	// 이미지  파일 수정을 위해 사진 불러오기
+	@RequestMapping(value ="/select_property_file", method = RequestMethod.GET)
+	public String select_property3(int property_no, Model model){
+		ArrayList<Picture> dbList = pr.select_Picture(property_no);
+		ArrayList<Picture> pList = new ArrayList<>();
+		for (int i = 0; i < dbList.size(); i++) {
+			if (dbList.get(i).getPic_division().equals("main")) {
+				pList.add(0, dbList.get(i));
+			} else if (dbList.get(i).getPic_division().equals("plan")) {
+				pList.add(1, dbList.get(i));
+			} else if (dbList.get(i).getPic_division().equals("front")) {
+				pList.add(2, dbList.get(i));
+			} else if (dbList.get(i).getPic_division().equals("room")) {
+				pList.add(3, dbList.get(i));
+			} else if (dbList.get(i).getPic_division().equals("kitchen")) {
+				pList.add(4, dbList.get(i));
+			} else if (dbList.get(i).getPic_division().equals("bathroom")) {
+				pList.add(5, dbList.get(i));
+			} else {
+				pList.add(6, dbList.get(i));
+			}			
+		}
+		model.addAttribute("picture", pList);
+		return "update_picture";
 	}
 
 	// 게시매물 광고 중단

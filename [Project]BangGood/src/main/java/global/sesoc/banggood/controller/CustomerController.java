@@ -115,6 +115,7 @@ public class CustomerController {
 		return "mypage2";
 	}
 	
+	// 매물 장바구니에 삽입
 	@RequestMapping(value = "/insert_cart", method = RequestMethod.GET)
 	public String insert_cart(int property_no, Model model){
 		Map <String, Object> cart_info = new HashMap<>();

@@ -3,6 +3,7 @@ package global.sesoc.banggood.vo;
 public class Canvas {
 	private int datanum;
 	private int property_no;
+	private int scale;
 	private String custid;
 	private String saved_name;
 	private String icons;
@@ -11,11 +12,12 @@ public class Canvas {
 	
 	public Canvas() {}
 
-	public Canvas(int datanum, int property_no, String custid, String saved_name, String icons, String lines,
-			String objects) {
+	public Canvas(int datanum, int property_no, int scale, String custid, String saved_name, String icons,
+			String lines, String objects) {
 		super();
 		this.datanum = datanum;
 		this.property_no = property_no;
+		this.scale = scale;
 		this.custid = custid;
 		this.saved_name = saved_name;
 		this.icons = icons;
@@ -37,6 +39,14 @@ public class Canvas {
 
 	public void setProperty_no(int property_no) {
 		this.property_no = property_no;
+	}
+
+	public int getScale() {
+		return scale;
+	}
+
+	public void setScale(int scale) {
+		this.scale = scale;
 	}
 
 	public String getCustid() {
@@ -81,8 +91,8 @@ public class Canvas {
 
 	@Override
 	public String toString() {
-		return "Canvas [datanum=" + datanum + ", property_no=" + property_no + ", custid=" + custid + ", saved_name="
-				+ saved_name + ", icons=" + icons + ", lines=" + lines + ", objects=" + objects + "]";
+		return "Canvas [datanum=" + datanum + ", property_no=" + property_no + ", scale=" + scale + ", custid=" + custid
+				+ ", saved_name=" + saved_name + ", icons=" + icons + ", lines=" + lines + ", objects=" + objects + "]";
 	}
 
 }

@@ -140,7 +140,10 @@
 								<a href="select_property_data?property_no=${property.property_no}">매물 수정</a>
 							</button>
 							<button class="mypage_btn btn-u btn-block rounded">
-								<a href="#">파일 변경</a>
+								<a href="updateCanvas?property_no=${property.property_no}">평면도 변경</a>
+							</button>
+							<button class="mypage_btn btn-u btn-block rounded">
+								<a href="select_property_file?property_no=${property.property_no}">파일 변경</a>
 							</button>
 							<c:if test = "${property.issoldout == 'true'}">
 								<button class="mypage_btn btn-u btn-block rounded">

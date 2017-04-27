@@ -467,15 +467,32 @@
 	
 	$(function() {
 		init();
-		var isNotProperlySelected = true;
-		while(isNotProperlySelected) {
-			var check = prompt("<선 길이 축척 설정>\n (숫자 선택) 1. 원룸 사이즈, 2. 투룸 사이즈, 3. 쓰리룸 사이즈 (숫자 선택)");
-			if(check == 1 || check ==2 || check ==3) {
-				scale = check;
-				isNotProperlySelected = false;
+		
+		var temp = '${updateCanvas}';
+		var updateCanvas = JSON.parse(JSON.stringify(temp));
+		alert(updateCanvas.lines);
+		//로드된 선 데이터 삽입
+		lines = updateCanvas.lines;
+		console.log("loadData 라인 길이:"+ lines.length);
+		
+		//로드된 선 오브젝트(문, 창문) 삽입
+		object = updateCanvas.objects;
+		console.log("loadData 오브젝트 길이:"+ object.length);
+		
+		//로드된 아이콘 데이터 삽입
+		var loadedIcons = updateCanvas.icons;
+		console.log("loadData 아이콘 길이: "+loadedIcons.length);
+
+		[].forEach.call(loadedIcons, function(temp) {
+			var icon = new Icon();
+			var img = new Image();
+			img.src = temp.src;
+			img.onload = function() {
+				var updatedIcon = insertLoadedValueToIcon(icon, img, temp);
+				iconState.addIcon(updatedIcon);
+				redrawAll();
 			}
-		}
-		alert(scale);
+		});
 		
 		
 		//offset 설정 함수

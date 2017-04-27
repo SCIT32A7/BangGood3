@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
    pageEncoding="UTF-8"%>
-
+<%@ taglib prefix="c" uri ="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->
 <!--[if !IE]><!-->
@@ -376,19 +376,23 @@ input[type=radio], input[type=checkbox] {
                      <td class="addoption ">
                         <h4 style="background:#f7be22; color:#fff">추가옵션 <i class="	fa fa-caret-down"></i></h4>
                         <div class="option_menu text-left">
-                        <input type="checkbox" name="maintence_fee" id = "maintence_fee" value=""> 
+                        <input type="checkbox" name="maintence_fee" id = "maintence_fee" value="" 
+                        ${keyword == 'maintence_fee' ? 'checked' : ''}> 
                         <label for="maintence_fee">관리비 없음</label>     
                         
-                        <input type="checkbox" name="car" id = "car" value="">
+                        <input type="checkbox" name="car" id = "car" value="" 
+                        ${keyword == 'car' ? 'checked' : ''}>
                         <label for="car">주차 가능</label>
                         
                         <input type="checkbox" name="elevator" id = "elevator" value="">
                          <label for="elevator">엘리베이터</label>
                         
-                        <input type="checkbox" name="pet" id = "pet" value="">
+                        <input type="checkbox" name="pet" id = "pet" value="" 
+                         ${keyword == 'pet' ? 'checked' : ''}>
                         <label for="pet">애완동물</label>
                         
-                        <input type="checkbox" name="newbulid" id = "newbuild" value="">
+                        <input type="checkbox" name="newbulid" id = "newbuild" value="" 
+                         ${keyword == 'newbuild' ? 'checked' : ''}>
                         <label for="newbuild">신축</label>
                         </div>
                      </td>
@@ -489,6 +493,9 @@ input[type=radio], input[type=checkbox] {
       var month_fee2 = 9999;
       var floor = 0;
       var maintence_fee = "all";
+      if (keyword == 'maintence_fee'){
+    	  maintence_fee = 1;
+      }
       var newbuild = "all";
       if (keyword == 'newbuild'){
     	  newbuild = 'new';
@@ -502,9 +509,6 @@ input[type=radio], input[type=checkbox] {
     	  car = 1;
       }
       var elevator = 0;
-      if (keyword == 'elevator'){
-    	  elevator = 1;
-      }
       var air_conditioner = 0;
       var fridge = 0;
       var washing_machine = 0;
@@ -529,6 +533,8 @@ input[type=radio], input[type=checkbox] {
   	
   	
   	$(function() {
+  		
+  		alert(keyword);
   	    send_data();
   	 });   
   	

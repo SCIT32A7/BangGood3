@@ -1,6 +1,5 @@
 package global.sesoc.banggood.controller;
 
-
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -18,8 +17,6 @@ import global.sesoc.banggood.dao.CanvasDAO;
 import global.sesoc.banggood.repository.CanvasRepository;
 import global.sesoc.banggood.vo.Canvas;
 
-
-
 @Controller
 public class CanvasController {
 	
@@ -31,7 +28,7 @@ public class CanvasController {
 	@Autowired
 	HttpSession session;
 	
-	// 평시 개인 평면도 연습용(방 등록 과정용 아님)
+	
 	@RequestMapping(value="/saveCanvas", method = RequestMethod.POST)
 	public @ResponseBody int saveCanvas(Canvas canvas) {
 		int result = 0;
@@ -76,6 +73,14 @@ public class CanvasController {
 			e.printStackTrace();
 		}
 		return list;
+	}
+	
+	@RequestMapping(value = "/updateCanvas", method = RequestMethod.GET)
+	public String updateCanvas(String property_no) {
+		Canvas result = repository.loadCanvasForUpdate(property_no);
+		System.out.println("updateCanvas "+result.toString());
+		session.setAttribute("updateCanvas", result);
+		return "updateFloorplan";
 	}
 	
 	@RequestMapping(value = "/insert_property2", method = RequestMethod.GET)

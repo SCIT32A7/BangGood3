@@ -18,5 +18,7 @@ CREATE TABLE floorplan
 	-- 저장된 선 데이터
 	lines clob,
 	-- 창문 및 문 데이터
-	objects clob
+	objects clob,
+	-- 축척 데이터
+	scale varchar2(2) not null
 ); 

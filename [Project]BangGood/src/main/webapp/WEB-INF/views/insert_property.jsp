@@ -105,20 +105,7 @@ input:checked+label:before {
 /**
  * How it should look when disabled
  */
-input:disabled+label {
-	background: #efefef;
-	color: rgba(0, 0, 0, 0.5);
-	cursor: not-allowed;
-}
 
-input:disabled+label:hover {
-	border-color: rgba(0, 0, 0, 0.1);
-}
-
-input:disabled+label:before {
-	border-color: white;
-	background: white;
-}
 
 input[type=radio], input[type=checkbox] {
 	display: none;

@@ -17,7 +17,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import global.sesoc.banggood.repository.AdminRepository;
+import global.sesoc.banggood.repository.MessageRepository;
 import global.sesoc.banggood.util.PageNavigator;
+import global.sesoc.banggood.vo.Message;
 import global.sesoc.banggood.vo.Property;
 import global.sesoc.banggood.vo.SearchBoard;
 
@@ -31,6 +33,9 @@ public class AdminController {
 	
 	@Autowired
 	AdminRepository ar;
+	
+	@Autowired
+	MessageRepository mr;
 	
 	// 전체 매물을 산출하기 위한 메소드
 	@RequestMapping(value = "admin_property", method = RequestMethod.GET)
@@ -126,5 +131,58 @@ public class AdminController {
 		restartList.add(property_no);
 		ar.restart_showing(restartList);
 		return "redirect:read_property?property_no="+property_no;
+	}
+	
+	//관리지 메시지함 열기
+	@RequestMapping(value = "admin_messageList", method = RequestMethod.GET)
+	public String get_messageList( 
+			@RequestParam(value = "page", defaultValue = "1") int page, 
+			Model model) {
+		int countPerPage = 15; // 페이지 당 글 수
+		int pagePerGroup = 10; // 페이지 그룹에 표시되는 그룹 수	
+		
+		String custid = (String) session.getAttribute("loginId");
+		
+		int total = mr.getCount(custid); // 전체 글 갯수 가져오기
+		
+		PageNavigator navi = new PageNavigator(countPerPage, pagePerGroup, page, total);
+		
+		Map<String, Object> search = new HashMap<>();
+		search.put("custid", custid);
+		search.put("firstText", navi.getStartRecord() + 1);
+		search.put("lastText", countPerPage + (navi.getCurrentPage() - 1) * countPerPage);
+				
+		
+		ArrayList <Message> mList = mr.getMessage(search);
+		model.addAttribute("navi", navi);
+		model.addAttribute("messageList", mList);
+		return "admin_message";
+	}	
+	
+	// 관리자 답변함 열기
+	@RequestMapping(value = "admin_writeList", method = RequestMethod.GET)
+	public String get_iwirteList(@RequestParam(value = "page", defaultValue = "1") int page, 
+			Model model) {
+		
+		int countPerPage = 15; // 페이지 당 글 수
+		int pagePerGroup = 10; // 페이지 그룹에 표시되는 그룹 수	
+		
+		String custid = (String) session.getAttribute("loginId");
+		
+		int total = mr.get_iwriteCount(custid); // 전체 글 갯수 가져오기
+		
+		PageNavigator navi = new PageNavigator(countPerPage, pagePerGroup, page, total);
+		
+		Map<String, Object> search = new HashMap<>();
+		search.put("custid", custid);
+		search.put("firstText", navi.getStartRecord() + 1);
+		search.put("lastText", countPerPage + (navi.getCurrentPage() - 1) * countPerPage);
+				
+		
+		ArrayList <Message> mList = mr.get_iwriteList(search);
+		model.addAttribute("navi", navi);
+		model.addAttribute("iwriteList", mList);
+		
+		return "admin_writeList";
 	}
 }

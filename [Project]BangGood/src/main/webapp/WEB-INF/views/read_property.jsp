@@ -312,6 +312,7 @@
               	  </c:if>
               	  <c:if test = "${loginId == read_property.custid}">
                  	 <a href="select_property_data?property_no=${read_property.property_no}" class="btn-u btn-u-lg btn-block" type="button">매물 수정</button></a>
+                 	 <a href="#" class="btn-u btn-u-lg btn-block" type="button">평면도 변경</button></a>
                  	 <a href="#" class="btn-u btn-u-lg btn-block" type="button">파일 변경</button></a>
                  	 <c:if test = "${read_property.issoldout == 'true'}">
 						<button class="btn-u btn-u-lg btn-block">
