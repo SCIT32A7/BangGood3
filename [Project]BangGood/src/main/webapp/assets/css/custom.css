@@ -1,3 +1,4 @@
+
 /* main */
 .main_head {
    position: relative;
@@ -307,7 +308,11 @@
    top: 5px;
    font-weight: normal
 }
-
+.insert_label2 {
+   position: relative;
+   top: 6px;
+   font-weight: normal
+}
 .borderline {
    border-bottom: 0.5px solid #f7b70b
 }
@@ -422,3 +427,6 @@
 	padding:0 30px;
 	background-color:#f7f7f7;
 }
+/* btn style */
+
+

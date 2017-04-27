@@ -61,6 +61,72 @@ table tr td {
 }
 
 
+label {
+	font-size: 14px;
+	line-height: 0.5;
+	cursor: pointer;
+	display: inline-block;
+	padding: 14px 0px 5px 29px;
+	position: relative;
+	whitespace: no-wrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	-webkit-transition: all .15s ease;
+	transition: all .15s ease;
+	top: 0px;
+	font-weight: normal;
+}
+
+}
+label:first-of-type {
+	border: 0;
+}
+
+label:before {
+	content: "";
+	position: absolute;
+	left: 1rem;
+	top: 1rem;
+	width: 16px;
+	height: 16px;
+	border-radius: 50%;
+	border: .2rem solid #ccc;
+}
+
+/**
+ * How it should look when checked
+ */
+input:checked+label:before {
+	border-color: white;
+	border: none;
+	background: #f7be22;
+}
+
+/**
+ * How it should look when disabled
+ */
+input:disabled+label {
+	background: #efefef;
+	color: rgba(0, 0, 0, 0.5);
+	cursor: not-allowed;
+}
+
+input:disabled+label:hover {
+	border-color: rgba(0, 0, 0, 0.1);
+}
+
+input:disabled+label:before {
+	border-color: white;
+	background: white;
+}
+
+input[type=radio], input[type=checkbox] {
+	display: none;
+}
+
+.option_menu .active {
+	background-position: right 5px;
+}
 </style>
 </head>
 
@@ -76,7 +142,7 @@ table tr td {
 	<%@ include file="login.jsp"%> 
 	<!-- end menu -->
 
-	<div class="container-fluid content g-mt-30">
+	<div class="container-fluid content view_title_bg">
 		<div class="row">
 		<div class="col-md-2"></div>
 		<form action = "insert_property" method = "post">
@@ -112,7 +178,7 @@ table tr td {
 										<div class="g-mb-30">
 										<input type="button" onclick="sample5_execDaumPostcode()" class="btn-u btn-block rounded insert_btn" 
 										value="주소검색" style="width:105px; margin-left:5px; float:left;height:35px;">
-										<label class="insert_label" style="font-size:12px">검색버튼을 눌러주세요.</label>										
+										<h4 class="insert_label" style="font-size:14px;">검색버튼을 눌러주세요.</h4>										
 										</div>
 										<input type="text" id="sample5_roadAddress" class="form-control rounded g-mb-5" readonly="readonly">
 										<input type="text" id="sample5_jibunAddress" name = "address" class="form-control rounded  g-mb-10" readonly="readonly">
@@ -156,28 +222,30 @@ table tr td {
 										<tr class="borderline">
 											<th>방 종류</th>
 											<td colspan="3">
-												<input type="radio" name="property_type" value = "oneroom" style="position:relative; top:6px"><label class="insert_label">원룸</label>
-												<input type="radio" name="property_type" value = "tworoom" style="position:relative; top:6px"><label class="insert_label" >투룸</label>
+												<input type="radio" id="oneroom" name="property_type" value = "oneroom">
+												<label for="oneroom" >원룸</label>
+												<input type="radio" id="tworoom" name="property_type" value = "tworoom">
+												<label for="tworoom" >투룸</label>
 											</td>
 										</tr>
 										<tr class="borderline">
 											<th>매물 종류</th>
 											<td colspan="3">
-											<input type="radio" name="rent_type" value = "year_rent" style="position:relative; top:6px">
-											<label class="insert_label">전세</label>
-											<input type="radio" name="rent_type" value = "month_rent" style="position:relative; top:6px">
-											<label class="insert_label">월세</label>
+											<input type="radio" id="rent_type1" name="rent_type" value = "year_rent">
+											<label for="rent_type1">전세</label>
+											<input type="radio" id="rent_type2" name="rent_type" value = "month_rent" style="position:relative; top:6px">
+											<label for="rent_type2">월세</label>
 											</td>
 										</tr>
 										<tr class="borderline">
 											<th>보증금 <br>/ 전세금</th>
 											<td style="border-right: 1px solid #f7b70b">
 											<input type="text" name = "deposit" id = "deposit" class="form-control rounded pull-left" style="width: 150px;"> 
-											<label class="insert_label">만원</label>
+											<b class="insert_label2">만원</b>
 											</td>
 											<th style="padding-left: 18px">월세</th>
 											<td><input type="text" name ="month_fee" id = "month_fee" class="form-control rounded pull-left" style="width: 150px">
-												<label class="insert_label">만원</label>
+												<b class="insert_label2">만원</b>
 											</td>
 										</tr>
 										<tr class="borderline">
@@ -198,14 +266,14 @@ table tr td {
 											</select></td>
 											<th style="padding-left: 18px">면적</th>
 											<td><input type="text" name ="roomsize" id = "roomsize" class="form-control rounded pull-left" style="width: 150px">
-												<label class="insert_label">평</label>
+												<b class="insert_label2">평</b>
 											</td>
 										</tr>
 										<tr class="borderline">
 											<th>건축연도</th>
 											<td  style="border-right: 1px solid #f7b70b">
 											<input type="text" name = "built_year" id = "built_year" class="form-control rounded pull-left" style="width: 150px;"> 
-											<label class="insert_label">년</label>
+											<b class="insert_label2">년</b>
 											</td>
 											<th style="padding-left: 18px">건물명</th>
 											<td><input type="text" name ="buildingname" id = "buildingname" class="form-control rounded pull-left" style="width: 150px">
@@ -240,82 +308,87 @@ table tr td {
 										<th rowspan="2">관리비</th>
 										<td colspan="3">
 										<input type="text" id = "maintence_fee" name = "maintence_fee" class="form-control rounded pull-left" style="width: 150px">
-										<label class="insert_label">만원</label>
+										<b class="insert_label2">만원</b>
 										</td>
 									</tr>
 									<tr class="borderline">
 										<td colspan="3">
-											<input type="checkbox" name="internet" value="1" style="position:relative; top:6px">
-											<label class="insert_label">인터넷</label>
-											<input type="checkbox" name="tvfee" value="1" style="position:relative; top:6px">
-											<label class="insert_label">케이블</label>
-											<input type="checkbox" name="cleaning" value="1" style="position:relative; top:6px">
-											<label class="insert_label">청소비</label>
-											<input type="checkbox" name="waterfee" value="1" style="position:relative; top:6px">
-											<label class="insert_label">수도세</label>
-											<input type="checkbox" name="gasfee" value="1" style="position:relative; top:6px">
-											<label class="insert_label">가스비</label>
-											<input type="checkbox" name="electronic" value="1" style="position:relative; top:6px">
-											<label class="insert_label">전기세</label>
+											<input type="checkbox" name="internet" value="1" id="internet">
+											<label for="internet">인터넷</label>
+											
+											<input type="checkbox" name="tvfee" value="1" id="tvfee">
+											<label for="tvfee">케이블</label>
+											
+											<input type="checkbox" name="cleaning" value="1" id="cleaning">
+											<label for="cleaning">청소비</label>
+											
+											<input type="checkbox" name="waterfee" value="1" id="waterfee">
+											<label for="waterfee">수도세</label>
+											
+											<input type="checkbox" name="gasfee" value="1" id="gasfee">
+											<label for="gasfee">가스비</label>
+											
+											<input type="checkbox" name="electronic" value="1" id="electronic">
+											<label for="electronic">전기세</label>
 										</td>
 									</tr>
 									<tr class="borderline">
 										<th>주차여부</th>
 										<td colspan="3">
-											<input type="radio" name="car" value = "1" style="position:relative; top:6px">
-											<label class="insert_label">가능</label>
-											<input type="radio" name="car" value = "2" style="position:relative; top:6px">
-											<label class="insert_label">불가능</label>
+											<input type="radio" name="car" value = "1" id="car1">
+											<label for="car1">전기세</label>
+											<input type="radio" name="car" value = "2" id="car2">
+											<label for="car2">불가능</label>
 										</td>
 									</tr>
 									<tr class="borderline">
 										<th>엘레베이터</th>
 										<td colspan="3">
-											<input type="radio" name="elevator" value = "1" style="position:relative; top:6px">
-											<label class="insert_label">있음</label>
-											<input type="radio" name="elevator" value = "2" style="position:relative; top:6px">
-											<label class="insert_label">없음</label>
+											<input type="radio" id="elevator" name="elevator" value = "1" >
+											<label for="elevator">있음</label>
+											<input type="radio" id="elevator1" name="elevator" value = "2" >
+											<label for="elevator1">없음</label>
 										</td>
 									</tr>
 									<tr class="borderline">
 										<th>반려동물</th>
 										<td colspan="3">
-											<input type="radio" name="pet" value = "1" style="position:relative; top:6px">
-											<label class="insert_label">가능</label>
-											<input type="radio" name="pet" value = "2" style="position:relative; top:6px">
-											<label class="insert_label">불가능</label>
+											<input type="radio" id="pet" name="pet" value = "1" >
+											<label for="pet">가능</label>
+											<input type="radio" id="pet1" name="pet" value = "2" >
+											<label for="pet1">불가능</label>
 										</td>
 									</tr>
 									<tr class="borderline">
 										<th>옵션항목</th>
 										<td colspan="3">
-											<input type="checkbox" name="air_conditioner" value="1" style="position:relative; top:6px">
-											<label class="insert_label">에어콘</label>
-											<input type="checkbox" name="fridge" value="1" style="position:relative; top:6px">
-											<label class="insert_label">냉장고</label>
-											<input type="checkbox" name="washing_machine" value="1" style="position:relative; top:6px">
-											<label class="insert_label">세탁기</label>
-											<input type="checkbox" name="gas_stove" value="1" style="position:relative; top:6px">
-											<label class="insert_label">가스레인지</label>
-											<input type="checkbox" name="electric_stove" value="1" style="position:relative; top:6px">
-											<label class="insert_label">인덕션</label>
-											<input type="checkbox" name="microwave" value="1" style="position:relative; top:6px">
-											<label class="insert_label">전자레인지</label>
+											<input type="checkbox" id="air_conditioner" name="air_conditioner" value="1" >
+											<label for="air_conditioner">에어콘</label>
+											<input type="checkbox" id="fridge" name="fridge" value="1" >
+											<label for="fridge">냉장고</label>
+											<input type="checkbox" id="washing_machine" name="washing_machine" value="1" >
+											<label for="washing_machine">세탁기</label>
+											<input type="checkbox" id="gas_stove" name="gas_stove" value="1" >
+											<label for="gas_stove">가스레인지</label>
+											<input type="checkbox" id="electric_stove" name="electric_stove" value="1" >
+											<label for="electric_stove">인덕션</label>
+											<input type="checkbox" id="microwave" name="microwave" value="1" >
+											<label for="microwave">전자레인지</label>
 											<br>
-											<input type="checkbox" name="desk" value="1" style="position:relative; top:6px">
-											<label class="insert_label">책상</label>
-											<input type="checkbox" name="rack" value="1" style="position:relative; top:6px">
-											<label class="insert_label">선반</label>
-											<input type="checkbox" name="bed" value="1" style="position:relative; top:6px">
-											<label class="insert_label">침대</label>
-											<input type="checkbox" name="closet" value="1" style="position:relative; top:6px">
-											<label class="insert_label">옷장</label>
-											<input type="checkbox" name="shoecabinet" value="1" style="position:relative; top:6px">
-											<label class="insert_label">신발장</label>
-											<input type="checkbox" name="doorlock" value="1" style="position:relative; top:6px">
-											<label class="insert_label">도어락</label>
-											<input type="checkbox" name="wifi" value="1" style="position:relative; top:6px">
-											<label class="insert_label">무선인터넷</label>
+											<input type="checkbox" id="desk" name="desk" value="1" >
+											<label for="desk">책상</label>
+											<input type="checkbox" id="rack" name="rack" value="1" >
+											<label for="rack">선반</label>
+											<input type="checkbox" id="bed" name="bed" value="1" >
+											<label for="bed">침대</label>
+											<input type="checkbox" id="closet" name="closet" value="1" >
+											<label for="closet">옷장</label>
+											<input type="checkbox" id="shoecabinet" name="shoecabinet" value="1" >
+											<label for="shoecabinet">신발장</label>
+											<input type="checkbox" id="doorlock" name="doorlock" value="1" >
+											<label for="doorlock">도어락</label>
+											<input type="checkbox" id="wifi" name="wifi" value="1" >
+											<label for="wifi">무선인터넷</label>
 										</td>
 									</tr>
 								</table>
@@ -377,7 +450,11 @@ table tr td {
 		</form>
 		<!-- 전체 col2 -->
 	</div>
+
 	</div>
+	<!-- footer -->
+	<%@ include file="footer.jsp"%> 
+	<!-- end footer -->
 		<!-- container -->
 	</main>
 	
