@@ -378,9 +378,9 @@ $(function() {
                      </td>
                   <tr>
                   <tr>
-                     <td class="addoption ">
+                     <td class="addoption " style="position:relative;">
                         <h4 style="background:#f7be22; color:#fff">추가옵션 <i class="	fa fa-caret-down"></i></h4>
-                        <div class="option_menu text-left">
+                        <div class="option_menu text-left" style="position:absolute;">
                         <input type="checkbox" name="maintence_fee" id = "maintence_fee" value=""> 
                         <label for="maintence_fee">관리비 없음</label>     
                         
@@ -1005,8 +1005,14 @@ $(function() {
    $(function(){
 		$(".option_menu").hide();
 		$(".option_menu2").hide();
+		
 		$(".addoption h4").click(function(){
-	        $(".option_menu").slideToggle("slow");
+			        $(".option_menu").show()
+			        .css({
+						"width":"500px",
+						"height":"300px",
+						
+			        });
 	        $(".addoption h4 i").toggleClass('fa-caret-up');
 	    });
 		$(".addoption2 h4").click(function(){
