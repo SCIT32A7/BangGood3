@@ -49,6 +49,13 @@ public class PropertyController {
 	public String search() {
 		return "search";
 	}
+	
+	// 테마검색
+	@RequestMapping(value = "/themeSearch", method = RequestMethod.GET)
+	public String search(String keyword, Model model) {
+		model.addAttribute("keyword", keyword);
+		return "themeSearch";
+	}
 
 	// 방등록 페이지로 이동
 	@RequestMapping(value = "/insert_property", method = RequestMethod.GET)

@@ -74,7 +74,7 @@
 										<h1 class="promo__title promo__title--right-bar g-pr-30 font-main g-mb-30">SEARCH
 										<br>
 										MY HOUSE</h1>
-										<a href="#" class="btn-u btn-u--construction trim e_img2">더 보기</a>
+										<a href="search" class="btn-u btn-u--construction trim e_img2">더 보기</a>
 									</div>
 								</div>
 							</div>
@@ -88,7 +88,7 @@
 										<h1 class="promo__title g-pl-30 promo__title--left-bar font-main g-mb-30">Renting
 										<br>
 										My House</h1>
-										<a href="#" class="btn-u btn-u--construction trim">더 보기</a>
+										<a href="insert_property" class="btn-u btn-u--construction trim">더 보기</a>
 									</div>
 								</div>
 							</div>
@@ -161,8 +161,9 @@
 						<div class="col-md-6 main_theme">
 						<div class="best-service best-service-1 text-center">
 							<div class="valign__middle">
-								<h2 class="best-service__title font-main g-mb-20">Painting</h2>
-								<a href="#" class="btn-u btn-u--construction trim"><i class="g-mr-10 fa btn-u__fa fa-arrow-right"></i> Read more</a>
+								<h2 class="best-service__title font-main g-mb-20"> 주차 가능 </h2>
+								<a href="themeSearch?keyword='car'" class="btn-u btn-u--construction trim">
+								<i class="g-mr-10 fa btn-u__fa fa-arrow-right"></i> SEARCH </a>
 							</div>
 						</div>
 						</div>
@@ -170,8 +171,9 @@
 						<div class="col-md-6">
 						<div class="best-service best-service-2 text-center" >
 							<div class="valign__middle">
-								<h2 class="best-service__title font-main g-mb-20">Painting</h2>
-								<a href="#" class="btn-u btn-u--construction trim"><i class="g-mr-10 fa btn-u__fa fa-arrow-right"></i> Read more</a>
+								<h2 class="best-service__title font-main g-mb-20"> 반려견 동반 </h2>
+								<a href="themeSearch?keyword='pet'" class="btn-u btn-u--construction trim">
+								<i class="g-mr-10 fa btn-u__fa fa-arrow-right"></i> SEARCH </a>
 							</div>
 						</div>
 					</div>
@@ -180,8 +182,9 @@
 					<div class="col-md-6">
 						<div class="best-service best-service-3 text-center">
 							<div class="valign__middle">
-								<h2 class="best-service__title font-main g-mb-20">Painting</h2>
-								<a href="#" class="btn-u btn-u--construction trim"><i class="g-mr-10 fa btn-u__fa fa-arrow-right"></i> Read more</a>
+								<h2 class="best-service__title font-main g-mb-20"> 엘레베이터 </h2>
+								<a href="themeSearch?keyword='elevator'" class="btn-u btn-u--construction trim">
+								<i class="g-mr-10 fa btn-u__fa fa-arrow-right"></i> SEARCH </a>
 							</div>
 						</div>
 					</div>
@@ -189,8 +192,9 @@
 					<div class="col-md-6">
 						<div class="best-service best-service-4 text-center">
 							<div class="valign__middle">
-								<h2 class="best-service__title font-main g-mb-20">Painting</h2>
-								<a href="#" class="btn-u btn-u--construction trim"><i class="g-mr-10 fa btn-u__fa fa-arrow-right"></i> Read more</a>
+								<h2 class="best-service__title font-main g-mb-20"> 신축 건물</h2>
+								<a href="themeSearch?keyword='newbuild'" class="btn-u btn-u--construction trim">
+								<i class="g-mr-10 fa btn-u__fa fa-arrow-right"></i> SEARCH </a>
 							</div>
 						</div>
 					</div>

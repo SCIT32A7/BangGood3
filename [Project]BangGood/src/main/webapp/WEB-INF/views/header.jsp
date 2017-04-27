@@ -21,13 +21,7 @@
       <!-- Collect the nav links, forms, and other content for toggling -->
       <div
          class="collapse navbar-collapse navbar-ex1-collapse g-pt-25 g-sm-pt-0">
-         <div class="menu-container">
-                    
-            <c:if test ="${not empty loginId}">
-               <span style="position:absolute; top:-8px; right:0; border:1px solid #f7be22; padding:2px 30px;">
-               ${loginId}님 로그인 중</span>
-            </c:if> 
-         
+         <div class="menu-container">  
             <ul class="nav navbar-nav">            
             <c:if test ="${empty loginId}">
                <li class="page-scroll move"><a href="search">방 검색</a></li>              
@@ -42,7 +36,7 @@
                <li class="page-scroll"><a href="searchboard">게시판</a></li>     
                <li class="page-scroll"><a href="mypage">마이 페이지</a></li>
                <li class="page-scroll"><a href="mypage2">관심목록</a></li> 
-               <li class="page-scroll"><a href="logout">로그아웃</a></li>
+               <li class="page-scroll"><a href="logout">${loginId}님 로그아웃</a></li>
               </c:if>
               <c:if test="${loginId.equals(\"admin\")}">
                 <li class="page-scroll move"><a href="search">지도 현황</a></li>
