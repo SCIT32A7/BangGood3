@@ -114,7 +114,7 @@
 				<thead>
 					<tr class="text-center">
 						<th>
-							 <input type="checkbox" id="checkedAll"/>
+							<input type="checkbox" id="checkedAll"/>
   							<label class="admin_label"for="checkedAll"></label>
 						</th>
 						<th class="text-center">매물번호</th>
@@ -127,7 +127,7 @@
 				</thead>
 					<tbody>
 					<c:forEach var = "pro" items ="${list}">
-						<tr>
+						<tr class="text-center">
 							<td>
 								<input name="subCheck" type="checkbox" id="check${pro.property_no}" value="${pro.property_no}">
   								<label class="admin_label" for="check${pro.property_no}"></label>
@@ -216,7 +216,7 @@
 			alert('광고를 중단하실 매물을 선택해주세요.');
 			return false;
 		}
-		if(confirm('해당 매물의 광고를 재게하시겠습니까?')){
+		if(confirm('해당 매물의 광고를 중지하시겠습니까?')){
 			var form = document.getElementById("pagingForm");
 			var stopList = document.getElementById("stopList");
 			stopList.value = checkList;

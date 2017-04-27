@@ -63,7 +63,7 @@
 			<div class="pull-left">
 				<a href="searchboard" class="btn-u btn-block rounded g-mb-30"
 					style="width: 80px;">돌아가기</a>
-				<c:if test = "${loginId == searchBoard.custid }">
+				<c:if test = "${loginId == searchBoard.custid && loginId == 'admin'}">
 				<a href="javascript:deleteCheck()" class="btn-u btn-block rounded g-mb-30"
 					style="width: 80px;">삭제하기</a>
 				<a href="javascript:updateCheck()" class="btn-u btn-block rounded g-mb-30"
@@ -233,10 +233,13 @@ function regist(){
 //댓글 삭제 함수
 function replyDel(){
 	var reply_id = $(this).attr("reply_id");
-	if(id != reply_id){
-		alert('작성자만 삭제 가능합니다.')
-		return false;
-	}	
+	var loginId = "${loginId}";
+	if(loginId != 'admin'){
+		if(id != reply_id ){
+			alert('작성자만 삭제 가능합니다.')
+			return false;
+		}	
+	}
 	var replynum = $(this).attr("data-sno");
 	$.ajax({
 		method : "post",

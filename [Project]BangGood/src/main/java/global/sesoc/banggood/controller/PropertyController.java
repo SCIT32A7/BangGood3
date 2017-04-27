@@ -224,6 +224,7 @@ public class PropertyController {
 	public String read_property(int property_no, Model model) {
 		pr.add_hits(property_no);
 		Property property = pr.select_Property(property_no);
+		System.out.println("게시여부 : "+property.getIsaccessible());
 		Option option = pr.select_Option(property_no);
 		Maintence maintence = pr.select_Maintence(property_no);
 		ArrayList<Picture> pList = pr.select_Picture(property_no);

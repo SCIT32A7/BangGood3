@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -17,6 +19,9 @@ public class SearchBoardRepository {
 
 	@Autowired
 	SqlSession sqlsession;
+	
+	@Autowired
+	HttpSession session;
 	
 	//게시글 리스트 받기
 	public ArrayList<SearchBoard> listBoard(Map<String, Object> search){
@@ -89,11 +94,20 @@ public class SearchBoardRepository {
 	}
 	
 	// 문의 게시글 삭제
-	public int delete(int searchBoard_no){
+	public int delete(ArrayList<Integer> deleteList){
 		int result = 0;
 		SearchBoardDAO dao = sqlsession.getMapper(SearchBoardDAO.class);
+		String loginId = (String) session.getAttribute("loginId");
 		try {
-			result = dao.delete_searchBoard(searchBoard_no);
+			for(int searchBoard_no : deleteList){
+				if(loginId.equals("admin")){
+					ArrayList<SearchReply> rList = dao.getList_searchReply(searchBoard_no);
+					for(SearchReply reply : rList){
+						dao.delete_searchReply(reply.getSearchReply_no());
+					}				
+				}
+				result = dao.delete_searchBoard(searchBoard_no);
+			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

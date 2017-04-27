@@ -105,8 +105,19 @@ public class SearchBoardController {
 	
 	// 문의 게시글 삭제
 	@RequestMapping(value ="/delete_searchboard", method = RequestMethod.GET)
-	public String delete_searchboard(int searchBoard_no, Model model){
-		sbr.delete(searchBoard_no);
+	public String delete_searchboard(int searchBoard_no){
+		ArrayList<Integer> deleteList = new ArrayList<>();
+		deleteList.add(searchBoard_no);
+		sbr.delete(deleteList);
+		return "redirect:searchboard";
+	}
+	
+	//문의 게시글 복수 삭제
+	@RequestMapping(value ="/delete_searchboards", method = RequestMethod.GET)
+	public String delete_searchboards(
+			@RequestParam(value="deleteList") ArrayList<Integer> deleteList){
+		System.out.println("삭제글 갯수 : "+deleteList.size());
+		sbr.delete(deleteList);
 		return "redirect:searchboard";
 	}
 	

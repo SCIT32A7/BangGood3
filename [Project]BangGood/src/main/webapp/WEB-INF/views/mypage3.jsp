@@ -122,6 +122,10 @@
 							</button>
 							<button class="btn-u btn-block rounded"
 								style="background-color: #f7be22; width: 130px;">
+								<a href="#"></i>메세지 삭제</a>
+							</button>
+							<button class="btn-u btn-block rounded"
+								style="background-color: #f7be22; width: 130px;">
 								<a href="javascript:msg_write()"></i>메세지 작성</a>
 							</button>
 						</div>
@@ -137,6 +141,10 @@
 								<table class="table">
 									<thead>
 										<tr>
+											<th>
+												<input type="checkbox" id="checkedAll"/>
+  												<label class="admin_label"for="checkedAll"></label>
+											</th>
 											<th>내용</th>
 											<th>보낸이</th>
 											<th class="hidden-sm">받은날짜</th>
@@ -146,6 +154,10 @@
 									<tbody>
 									<c:forEach var = "msg" items = "${messageList}">							
 										<tr>
+											<td>
+												<input name="subCheck" type="checkbox" id="check${msg.msg_no}" value="${msg.msg_no}">
+  												<label class="admin_label" for="check${msg.msg_no}"></label>
+											</td>
 											<td><div style = "display:inline-block; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; width:500px">
 											<a href="javascript:msg_open(${msg.msg_no})" type="button">
 											${msg.msg_text}</a></div></td>
@@ -218,6 +230,23 @@
 
 		<!-- custom -->
 		<script src="assets/js/custom.js"></script>
+		<script type="text/javascript">
+		//전체 클릭
+		$(function(){	
+			$("#checkedAll").click(function(){
+				if($('#checkedAll').prop('checked')){
+					$('input[name=subCheck]:checkbox').each(function(){
+						$(this).prop('checked',true);
+					});
+				} else{
+					$('input[name=subCheck]:checkbox').each(function(){
+						$(this).prop('checked',false);
+					});
+				}
+			});
+		});
 		
+		
+		</script>		
 </body>
 </html>

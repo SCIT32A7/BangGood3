@@ -292,9 +292,23 @@
                   <hr>
 
                   <c:if test= "${loginId != read_property.custid}">
-                 	 <p class="g-mb-10">게시자 : <span>${read_property.custid}</span></p>
-                 	 <a href="javascript:msg_send()" class="btn-u btn-u-lg btn-block" type="button">메세지보내기</button></a>
-                 	 <a href="insert_cart?property_no=${read_property.property_no}" class="btn-u btn-u-lg btn-block" type="button">찜하기</button></a>
+                 	 <c:if test = "${loginId != 'admin'}">
+                 		 <p class="g-mb-10">게시자 : <span>${read_property.custid}</span></p>
+                  		 <a href="javascript:msg_send()" class="btn-u btn-u-lg btn-block" type="button">메세지보내기</button></a>
+                 		 <a href="insert_cart?property_no=${read_property.property_no}" class="btn-u btn-u-lg btn-block" type="button">찜하기</button></a>
+                 	 </c:if>
+                 	 <c:if test = "${loginId == 'admin'}">
+                 	 	<c:if test = "${read_property.isaccessible == 'true'}">
+              	  			<button class="btn-u btn-u-lg btn-block">
+								<a href="stop_showing_property?property_no=${read_property.property_no}">게시 중지</a>
+							</button>
+						</c:if>
+						<c:if test = "${read_property.isaccessible == 'false'}">
+              	  			<button class="btn-u btn-u-lg btn-block">
+								<a href="restart_showing_property?property_no=${read_property.property_no}">게시 재시작</a>
+							</button>      
+						</c:if>        	  
+              	  	</c:if>
               	  </c:if>
               	  <c:if test = "${loginId == read_property.custid}">
                  	 <a href="select_property_data?property_no=${read_property.property_no}" class="btn-u btn-u-lg btn-block" type="button">매물 수정</button></a>
@@ -310,6 +324,7 @@
 						</button>
 					 </c:if>
               	  </c:if>
+              	 
                </div>
             </div>
 				<!--=== End title right ===-->

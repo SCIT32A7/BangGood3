@@ -10,17 +10,6 @@
 <head>
 <title>banngg</title>
 
-<script type="text/javascript">
-
-function pagingForSubmit(currentPage){
-	var form = document.getElementById("pagingForm")
-	var page = document.getElementById("page");
-	page.value = currentPage;
-	form.submit();
-}
-
-</script>
-
 <!-- Meta -->
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=Edge">
@@ -52,8 +41,9 @@ function pagingForSubmit(currentPage){
 <!-- 메인 글씨 -->
 <!-- CSS Customization -->
 <link rel="stylesheet" href="assets/css/custom.css">
-<link rel="stylesheet"
-	href="assets/plugins/font-awesome/css/font-awesome.min.css">
+<link rel="stylesheet" href="assets/plugins/font-awesome/css/font-awesome.min.css">
+<link rel="stylesheet" href="assets/css/btn_style.css">
+
 </head>
 
 <body id="body" data-spy="scroll" data-target=".one-page-header"
@@ -74,7 +64,7 @@ function pagingForSubmit(currentPage){
 		<div class="headline">
 			<h2>문의게시판</h2>	
 			
-			<form action="searchboard" id = "pagingForm" method="get" class="g-dp-inline pull-right">
+			<form id = "pagingForm" method="get" class="g-dp-inline pull-right">
 				<select name="searchTitle">
 					<option value="title" ${title == 'title' ? 'selected':''}>제목</option>
 					<option value="title-text" ${title == 'title-text' ? 'selected':''}>제목+내용</option>
@@ -88,7 +78,12 @@ function pagingForSubmit(currentPage){
 			<button class="btn-u btn-block rounded" style="background-color:#f7be22; width:80px;display:inline-block">
 						<a href="writeboard">글쓰기</a>	
 			</button>
+			<button class="btn-u btn-block rounded" id = "stop_showing"
+			style=" width:80px;display:inline-block; background: #333">
+				<a href="javascript:delete_board()">삭제</a>
+			</button>
 			<input type = "hidden" name = "page" id = "page">
+			<input type = "hidden" name = "deleteList" id = "deleteList">
 			</form>
 		</div>
 		<!-- Tab pannel 4 -->
@@ -103,6 +98,12 @@ function pagingForSubmit(currentPage){
 				</colgroup>
 				<thead>
 					<tr>
+						<c:if test = "${loginId == 'admin'}">
+							<th>
+								<input type="checkbox" id="checkedAll"/>
+  								<label class="admin_label"for="checkedAll"></label>
+							</th>
+						</c:if>
 						<th>제목</th>
 						<th>작성자</th>						
 						<th class="hidden-sm">등록일</th>
@@ -113,6 +114,12 @@ function pagingForSubmit(currentPage){
 				<c:forEach var="board" items="${list}">
 					<tbody>
 					<tr>
+						<c:if test = "${loginId == 'admin'}">
+							<td>
+								<input name="subCheck" type="checkbox" id="check${board.searchBoard_no}" value="${board.searchBoard_no}">
+  								<label class="admin_label" for="check${board.searchBoard_no}"></label>
+							</td>
+						</c:if>
 						<td><a href="read_searchboard?searchBoard_no=${board.searchBoard_no}">
 						${board.searchBoard_title} (${board.searchBoard_reply})</a></td>
 						<td>${board.custid}</td>
@@ -171,6 +178,56 @@ function pagingForSubmit(currentPage){
 
 	<!-- custom -->
 	<script src="assets/js/custom.js"></script>
+<script type="text/javascript">
+
+function pagingForSubmit(currentPage){
+	var form = document.getElementById("pagingForm")
+	var page = document.getElementById("page");
+	page.value = currentPage;
+	form.action = "searchboard";
+	form.submit();
+}
+
+// 여러 게시글 삭제하기
+function delete_board(){		
+	var checkList = Array();
+	var i=0;
+	var list = document.getElementsByName("subCheck");
+	for(a=0;a<list.length;a++){
+		if (list[a].checked){
+			checkList[i] = list[a].value;
+			i++;		        
+	    }
+	}
+	if(i == 0){
+		alert('삭제할 게시글을 선택해주세요.');
+		return false;
+	}
+	if(confirm('해당 게시글을 정말 삭제하겠습니까?')){
+		var form = document.getElementById("pagingForm");
+		var deleteList = document.getElementById("deleteList");
+		deleteList.value = checkList;
+		form.action = "delete_searchboards";
+		alert('1');
+		form.submit();
+	}
+}
+
+//전체 클릭
+$(function(){	
+	$("#checkedAll").click(function(){
+		if($('#checkedAll').prop('checked')){
+			$('input[name=subCheck]:checkbox').each(function(){
+				$(this).prop('checked',true);
+			});
+		} else{
+			$('input[name=subCheck]:checkbox').each(function(){
+				$(this).prop('checked',false);
+			});
+		}
+	});
+});
+</script>
 
 </body>
 </html>

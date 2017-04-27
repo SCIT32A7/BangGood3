@@ -95,7 +95,7 @@ public class AdminController {
 	
 	//매물 게시 복수개 중단
 	@RequestMapping(value = "stop_showing_propertys", method = RequestMethod.GET)
-	public String stop_showing_property
+	public String stop_showing_propertys
 	(@RequestParam(value="stopList")ArrayList<Integer> stopList){
 		ar.stop_showing(stopList);
 		return "redirect:admin_property";
@@ -103,10 +103,28 @@ public class AdminController {
 	
 	//매물 게시 복수개 재시작
 	@RequestMapping(value = "restart_showing_propertys", method = RequestMethod.GET)
-	public String restart_property
+	public String restart_propertys
 	(@RequestParam(value="restartList")ArrayList<Integer> restartList){
 		System.out.println("전송받은 길이 : "+restartList.size());
 		ar.restart_showing(restartList);
 		return "redirect:admin_waiting_property";
+	}
+	
+	//매물 게시 한개 중단
+	@RequestMapping(value = "stop_showing_property", method = RequestMethod.GET)
+	public String stop_showing_property(int property_no){
+		ArrayList<Integer> stopList = new ArrayList<>();
+		stopList.add(property_no);
+		ar.stop_showing(stopList);
+		return "redirect:read_property?property_no="+property_no;
+	}
+	
+	//매물 게시 한개 재시작
+	@RequestMapping(value = "restart_showing_property", method = RequestMethod.GET)
+	public String restart_property(int property_no){
+		ArrayList<Integer> restartList = new ArrayList<>();
+		restartList.add(property_no);
+		ar.restart_showing(restartList);
+		return "redirect:read_property?property_no="+property_no;
 	}
 }
