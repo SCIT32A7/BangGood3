@@ -63,6 +63,33 @@ public class CanvasController {
 		return result;
 	}
 	
+	@RequestMapping(value = "/loadCanvasForUpdate", method = RequestMethod.GET)
+	public String updateCanvas(String property_no) {
+		Canvas result = repository.loadCanvasForUpdate(property_no);
+		session.setAttribute("canvasForUpdate", result);
+		System.out.println("updateCanvas "+result.toString());
+		session.setAttribute("updateCanvas", result);
+		System.out.println("asdfsadf");
+		return "updateFloorplan";
+	}
+	
+	@RequestMapping(value = "/updateCanvas", method = RequestMethod.POST)
+	public @ResponseBody int updateCanvas(Canvas canvas) {
+		int result = 0;
+		session.getAttribute("canvas");
+		Canvas canvasForUpdate = (Canvas) session.getAttribute("canvasForUpdate");
+		canvas.setDatanum(canvasForUpdate.getDatanum());
+		System.out.println("업데이트 캔버스: "+canvas.toString());
+		
+		result = repository.updateCanvas(canvas);
+		if(result == 1) {
+			logger.info("업데이트 성공");
+		}else {
+			logger.info("업데이트 실패");
+		}
+		return result;
+	}
+	
 	@RequestMapping(value="/loadUserDataList", method = RequestMethod.POST)
 	public @ResponseBody ArrayList<Map<String, Object>> selectUserDataList(String custid) {
 		System.out.println(custid);
@@ -75,13 +102,6 @@ public class CanvasController {
 		return list;
 	}
 	
-	@RequestMapping(value = "/updateCanvas", method = RequestMethod.GET)
-	public String updateCanvas(String property_no) {
-		Canvas result = repository.loadCanvasForUpdate(property_no);
-		System.out.println("updateCanvas "+result.toString());
-		session.setAttribute("updateCanvas", result);
-		return "updateFloorplan";
-	}
 	
 	@RequestMapping(value = "/insert_property2", method = RequestMethod.GET)
 	public String canvasHome() {

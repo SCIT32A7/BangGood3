@@ -28,7 +28,10 @@ public interface MessageDAO {
 	 // 내가 쓴 메시지 리스트 출력전  메시지 갯수 구하기
 	 public int get_iwriteCount(String  custid) throws Exception;
 	
-	 // 메시지 지우기
+	 // 쓴 메시지 지우기
 	 public int delete_message(int msg_no) throws Exception;
+	 
+	 // 받은 메시지 지우기
+	 public int delete_re_message(int msg_no) throws Exception;
 	 
 }

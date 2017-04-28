@@ -1,14 +1,42 @@
+drop table property;
+drop table customer;
+drop table cart;
+drop table message;
+drop table position;
+drop table floorplan;
+drop table maintence;
+drop table message;
+drop table propertyreply;
+drop table roomoption;
+drop table searchboard;
+drop table searchreply;
+drop table picture;
+
+drop sequence seq_property_no;
+drop sequence seq_pic_plan_no;
+drop sequence seq_pic_room_no;
+drop sequence seq_propertyreply_no;
+drop sequence seq_msg_no;
+drop sequence seq_cart_no;
+drop sequence seq_searchboard_no;
+drop sequence seq_searchreply_no;
+drop sequence seq_floorplan_datanum;
+
 -- 회원
 CREATE TABLE customer
 (
 	-- 아이디
 	custid varchar2(20) constraint pk_customer_id primary key,
+	-- 이름
+	name varchar2(20) NOT NULL,
 	-- 비밀번호
 	password varchar2(20) NOT NULL,
 	-- 이메일
 	email varchar2(30) NOT NULL,
 	-- 휴대폰
-	phone number(11) NOT NULL
+	phone number(11) NOT NULL,
+	-- 벌점
+	penalty number default 0
 );
 
 -- 장바구니
@@ -17,7 +45,7 @@ CREATE TABLE cart
 	-- 장바구니번호
 	cart_no number(10,0) constraint pk_cart_no primary key,
 	-- 아이디
-	custid varchar2(20) constraint fk_cart_id references customer,
+	custid varchar2(20) constraint fk_cart_id references customer on delete cascade,
 	-- 담은날짜
 	cart_inputdate date default sysdate,
 	-- 매물번호
@@ -31,7 +59,7 @@ CREATE TABLE message
 	-- 메시지번호
 	msg_no number(10,0) constraint pk_msg_no primary key,
 	-- 보낸이
-	custid varchar2(20) constraint fk_msg_id references customer,
+	custid varchar2(20) constraint fk_msg_id references customer on delete cascade,
 	-- 받는이 : 받는 이 아이디
 	receiver varchar2(20) NOT NULL,
 	-- 메시지내용
@@ -41,11 +69,12 @@ CREATE TABLE message
 	-- 수신확인날짜
 	readdate date,
 	-- 확인여부
-	ischecked varchar2(20) default 'false'
+	ischecked varchar2(20) default 'false',
+	-- 수신 내역 삭제
+	receive_notshowing varchar2(20) default 'false',
+	-- 송신 내역 삭제
+	send_notshowing varchar2(20) default 'false'
 );
-
-drop table property;
-DROP TABLE property CASCADE CONSTRAINTS;
 
 -- 지도 중심 좌표를 위한 테이블
 CREATE TABLE position
@@ -107,21 +136,25 @@ CREATE TABLE property
 	property_like number(3) default 0
 );
 
-select * from property order by deposit;
-
--- 사진
+-- 평면도
 CREATE TABLE floorplan
 (
-	-- 평면도번호
-	pic_plan_no number(10,0) constraint pk_floorplan_no primary key,
-	-- 매물번호
+	-- 평면도 번호(시퀀스)
+	datanum number(38) constraint pk_floorplan_datanum primary key,
+	-- 관련 매물 번호
 	property_no number(10,0) constraint fk_floorplan_property_no references property,
-	-- 사진파일 원래이름
-	pic_name varchar2(30) NOT NULL,
-	-- 사진 저장명
-	pic_savename varchar2(30) NOT NULL,
-	-- 캔버스수정 : 도면도를 수정용, js파일을 열기위한 경로
-	canvasfile varchar2(100) NOT NULL
+	-- 사용 유저
+	custid varchar2(20) not null,
+	-- 사용자 지정 저장 이름
+	saved_name varchar2(20) not null,
+	-- 저장된 아이콘 데이터
+	icons clob,
+	-- 저장된 선 데이터
+	lines clob,
+	-- 창문 및 문 데이터
+	objects clob,
+	-- 축척 데이터
+	scale number not null
 );
 
 -- 사진
@@ -130,7 +163,7 @@ CREATE TABLE picture
 	-- 방사진번호
 	pic_room_no number(10,0) constraint pk_pic_no primary key,
 	-- 매물번호
-	property_no number(10,0) constraint fk_pic_no references property,
+	property_no number(10,0) constraint fk_pic_no references property on delete cascade,
 	-- 사진 구분, 메인, 평면도, 입구, 부엌, 방, 화장실, 일반으로 구분
 	pic_division varchar2(12),
 	-- 사진파일 원래이름
@@ -143,7 +176,7 @@ CREATE TABLE picture
 CREATE TABLE maintence
 (
 	-- 매물번호
-	property_no number(10,0) constraint fk_maintence_property_no references property,
+	property_no number(10,0) constraint fk_maintence_property_no references property on delete cascade,
 	-- 인터넷
 	internet number(1) NOT NULL,
 	-- TV
@@ -162,7 +195,7 @@ CREATE TABLE maintence
 CREATE TABLE roomoption
 (
 	-- 매물번호
-	property_no number(10,0) constraint fk_option_property_no references property,
+	property_no number(10,0) constraint fk_option_property_no references property on delete cascade,
 	-- 애완동물 : 애완동물을 키울 수 있는가?
 	pet number(1) NOT NULL,
 	-- 주차 : 주차가 가능한지 불가능한지
@@ -199,7 +232,6 @@ CREATE TABLE roomoption
 	total number(2) NOT NULL
 );
 
-
 -- 매물 댓글용 테이블
 CREATE TABLE propertyreply
 (
@@ -212,7 +244,7 @@ CREATE TABLE propertyreply
 	-- 댓글내용
 	propertyreply_text varchar2(2000) NOT NULL,
 	-- 매물번호
-	property_no number(10,0) constraint fk_rreply_property_no references property,
+	property_no number(10,0) constraint fk_rreply_property_no references property on delete cascade,
 	-- 사진파일 원래이름
 	pic_name varchar2(30),
 	-- 사진 저장명
@@ -241,14 +273,13 @@ CREATE TABLE searchboard
 	searchboard_reply number(5,0) default 0
 );
 
-
 -- 문의게시판 댓글
 CREATE TABLE searchreply
 (
 	-- 문의게시판 번호
 	searchreply_no number(10,0) constraint pk_sreply_no primary key,
 	-- 문의게시판 번호
-	searchboard_no number(10,0) constraint fk_sreply_sboard_no references searchboard,
+	searchboard_no number(10,0) constraint fk_sreply_sboard_no references searchboard on delete cascade,
 	-- 작성자아이디
 	custid varchar2(20) NOT NULL,
 	-- 문의게시판 내용
@@ -256,10 +287,6 @@ CREATE TABLE searchreply
 	-- searchreply_inputdate
 	searchreply_inputdate date default sysdate
 );
-
-
-
-
 
 /* Create Sequence */
 
@@ -272,10 +299,12 @@ create sequence seq_pic_room_no increment by 1 start with 300000;
 -- 방댓글 번호
 create sequence seq_propertyreply_no increment by 1 start with 400000;
 -- 메시지 번호
-create sequence seq_msg_no increment by 1 start with 700000;
+create sequence seq_msg_no increment by 1 start with 500000;
 -- 장바구니 번호
-create sequence seq_cart_no increment by 1 start with 800000;
+create sequence seq_cart_no increment by 1 start with 600000;
 -- 문의게시판 글 번호
-create sequence seq_searchboard_no increment by 1 start with 900000;
+create sequence seq_searchboard_no increment by 1 start with 700000;
 -- 문의게시판 댓글 번호
-create sequence seq_searchreply_no increment by 1 start with 1000000;
+create sequence seq_searchreply_no increment by 1 start with 800000;
+-- 평면도 테이블 datanum 시퀀스
+create sequence seq_floorplan_datanum;

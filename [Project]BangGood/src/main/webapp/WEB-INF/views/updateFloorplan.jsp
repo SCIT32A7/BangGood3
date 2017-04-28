@@ -468,31 +468,32 @@
 	$(function() {
 		init();
 		
-		var temp = '${updateCanvas}';
-		var updateCanvas = JSON.parse(JSON.stringify(temp));
-		alert(updateCanvas.lines);
-		//로드된 선 데이터 삽입
-		lines = updateCanvas.lines;
-		console.log("loadData 라인 길이:"+ lines.length);
-		
-		//로드된 선 오브젝트(문, 창문) 삽입
-		object = updateCanvas.objects;
-		console.log("loadData 오브젝트 길이:"+ object.length);
-		
-		//로드된 아이콘 데이터 삽입
-		var loadedIcons = updateCanvas.icons;
-		console.log("loadData 아이콘 길이: "+loadedIcons.length);
+		//축척 담기
+				scale = ${updateCanvas.scale}+"";
+				console.log("loadData 축척:"+ scale);
+				
+				//로드된 선 데이터 삽입
+				lines = ${updateCanvas.lines};
+				console.log("loadData 라인 길이:"+ lines.length);
+				
+				//로드된 선 오브젝트(문, 창문) 삽입
+				object = ${updateCanvas.objects};
+				console.log("loadData 오브젝트 길이:"+ object.length);
+				
+				//로드된 아이콘 데이터 삽입
+				var loadedIcons = ${updateCanvas.icons};
+				console.log("loadData 아이콘 길이: "+loadedIcons.length);
 
-		[].forEach.call(loadedIcons, function(temp) {
-			var icon = new Icon();
-			var img = new Image();
-			img.src = temp.src;
-			img.onload = function() {
-				var updatedIcon = insertLoadedValueToIcon(icon, img, temp);
-				iconState.addIcon(updatedIcon);
-				redrawAll();
-			}
-		});
+				[].forEach.call(loadedIcons, function(temp) {
+					var icon = new Icon();
+					var img = new Image();
+					img.src = temp.src;
+					img.onload = function() {
+						var updatedIcon = insertLoadedValueToIcon(icon, img, temp);
+						iconState.addIcon(updatedIcon);
+						redrawAll();
+					}
+				});
 		
 		
 		//offset 설정 함수
@@ -627,13 +628,9 @@
 		
 		$("button#save_nextStage").on("click", function(){
 			if(isDownloaded) { //다음 페이지로 진행
-				alert(scale);
-				saveFloorplan(false, "insert_property2", saved_name, scale);
+				location.href = "select_property_file?property_no="+'${canvasForUpdate.property_no}';
 			} else { //다운로드 과정 자동 실행
 				alert("이미지 다운로드를 먼저 진행해주세요.");
-				$("#updownloadTab").trigger("click");
-				//$("#canvasDownload").trigger("click");
-				//$("button#save_nextStage").trigger("click");
 			}
 		});
 		
@@ -644,10 +641,12 @@
 			//저장 이름 지정
 			saved_name = prompt("저장할 이름을 지정해주세요.", "BangGood");
 			if(saved_name == null) {
-				isDownloaded = false;
+				alert("다시 한 번 다운로드를 눌러 이름을 다시 지정해주세요.");
 				$('#canvasDownload').attr('href', '#').removeAttr('download');
+				isDownloaded = false;
 			} else {
-				downloadFloorplanPng(saved_name, scale);
+				downloadFloorplanPng(saved_name);
+				saveFloorplan(true, "updateCanvas", saved_name, scale);
 				isDownloaded = true;
 			}
 		});

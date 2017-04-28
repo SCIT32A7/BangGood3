@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class Customer {
 
 	private String custid;
+	private String name="바보";
 	private String password;
 	private String email;
 	private String phone;
@@ -12,24 +13,17 @@ public class Customer {
 	private ArrayList<Property> propertyList;
 	private ArrayList<Message> msgList;
 
-	public Customer(String custid, String password, String email, String phone, ArrayList<Cart> cartList,
+	public Customer(String custid, String name, String password, String email, String phone, ArrayList<Cart> cartList,
 			ArrayList<Property> propertyList, ArrayList<Message> msgList) {
 		super();
 		this.custid = custid;
+		this.name = name;
 		this.password = password;
 		this.email = email;
 		this.phone = phone;
 		this.cartList = cartList;
 		this.propertyList = propertyList;
 		this.msgList = msgList;
-	}
-
-	public Customer(String custid, String password, String email, String phone) {
-		super();
-		this.custid = custid;
-		this.password = password;
-		this.email = email;
-		this.phone = phone;
 	}
 
 	public Customer() {
@@ -42,6 +36,14 @@ public class Customer {
 
 	public void setCustid(String custid) {
 		this.custid = custid;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = "바보";
 	}
 
 	public String getPassword() {
@@ -94,7 +96,9 @@ public class Customer {
 
 	@Override
 	public String toString() {
-		return "Customer [custid=" + custid + ", password=" + password + ", email=" + email + ", phone=" + phone + "]";
+		return "Customer [custid=" + custid + ", name=" + name + ", password=" + password + ", email=" + email
+				+ ", phone=" + phone + ", cartList=" + cartList + ", propertyList=" + propertyList + ", msgList="
+				+ msgList + "]";
 	}
 
 }

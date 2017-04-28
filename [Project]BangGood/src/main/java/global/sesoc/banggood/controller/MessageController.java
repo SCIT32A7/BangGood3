@@ -118,4 +118,23 @@ public class MessageController {
 		
 		return "message_writed";
 	}
+	
+	// 받은 메시지 복수개 삭제
+	@RequestMapping(value = "delete_messages", method = RequestMethod.POST)
+	public String delete_messages
+	(@RequestParam(value="deleteList")ArrayList<Integer> deleteList){
+		System.out.println(deleteList.size());
+		int result = mr.delete_message(deleteList);
+		System.out.println(result);
+		return "redirect:get_messageList";
+	}
+	
+	// 쓴 메시지 복수개 삭제
+	@RequestMapping(value = "delete_re_messages", method = RequestMethod.POST)
+	public String delete_re_messages
+	(@RequestParam(value="deleteList")ArrayList<Integer> deleteList){
+		mr.delete_re_message(deleteList);
+		return "redirect:get_iwriteList";
+	}
+	
 }

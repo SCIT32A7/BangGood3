@@ -44,6 +44,7 @@
 			ischecked isChecked
 			from message
 			where receiver = #{custid}
+			and receive_notshowing = 'false'
 			order by msg_no desc) board
 	) where r between #{firstText} and #{lastText}
 	</select>
@@ -69,8 +70,9 @@
 					else to_char(readdate,'YY-MM-DD')
 				end as readDate,
 			ischecked isChecked
-		from message
+		from message 
 		where custid = #{custid}
+		and send_notshowing = 'false'
 		order by msg_no desc) board
 	) where r between #{firstText} and #{lastText}
 	</select>
@@ -80,9 +82,16 @@
 		select count(*) from message where custid = #{custid}
 	</select>
 
-	<!-- 메시지 삭제 -->
+	<!-- 받은 메시지 삭제 -->
 	<delete id="delete_message" parameterType="_int">
-		delete message where msg_no = #{msg_no}
+		update message set receive_notshowing = 'true'
+		where msg_no = #{msg_no}
+	</delete>
+	
+	<!-- 쓴 메시지 삭제 -->
+	<delete id="delete_re_message" parameterType="_int">
+		update message set send_notshowing = 'true'
+		where msg_no = #{msg_no}
 	</delete>
 
 </mapper>

@@ -62,14 +62,21 @@
 			<div class="headline">
 				<h2>고객 요청</h2>
 				<div class="pull-right">
+				<form id = "buttonform">
 					<button class="btn-u btn-block rounded"
 						style="background-color: #f7be22; width: 130px;">
 						<a href="admin_writeList"></i>답변 내역 보기</a>
 					</button>
 					<button class="btn-u btn-block rounded"
 						style="background-color: #f7be22; width: 130px;">
+						<a href="javascript:delete_message()"></i>메세지 삭제</a>
+					</button>
+					<button class="btn-u btn-block rounded"
+						style="background-color: #f7be22; width: 130px;">
 						<a href="javascript:msg_write()"></i>답변하기</a>
 					</button>
+					<input type = "hidden" id = "deleteList" name = "deleteList">
+				</form>	
 				</div>
 			</div>
 			<!--row-->
@@ -83,6 +90,10 @@
 						<table class="table">
 							<thead>
 								<tr>
+									<th>
+										<input type="checkbox" id="checkedAll"/>
+  										<label class="admin_label"for="checkedAll"></label>
+									</th>
 									<th>내용</th>
 									<th>보낸이</th>
 									<th class="hidden-sm">받은날짜</th>
@@ -92,6 +103,10 @@
 							<tbody>
 							<c:forEach var = "msg" items = "${messageList}">							
 								<tr>
+									<td>
+										<input name="subCheck" type="checkbox" id="check${msg.msg_no}" value="${msg.msg_no}">
+  										<label class="admin_label" for="check${msg.msg_no}"></label>
+									</td>
 									<td><div style = "display:inline-block; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; width:500px">
 									<a href="javascript:msg_open(${msg.msg_no})" type="button">
 									${msg.msg_text}</a></div></td>
@@ -164,6 +179,21 @@
 		<!-- custom -->
 		<script src="assets/js/custom.js"></script>
 		<script type="text/javascript">
+		//전체 클릭
+		$(function(){	
+			$("#checkedAll").click(function(){
+				if($('#checkedAll').prop('checked')){
+					$('input[name=subCheck]:checkbox').each(function(){
+						$(this).prop('checked',true);
+					});
+				} else{
+					$('input[name=subCheck]:checkbox').each(function(){
+						$(this).prop('checked',false);
+					});
+				}
+			});
+		});
+		
 		function msg_open(number) {
 			  window.open("message?msg_no="+number, "", 'titlebar=no, scrollbars=yes, toolbar=no, location=no, resizable=no, status=no, menubar=yes, width=350, height=420, left=30%, top=40%');
 		};
@@ -177,6 +207,32 @@
 			var page = document.getElementById("page");
 			page.value = currentPage;
 			form.submit();
+		}
+		
+		// 여러 게시글 삭제하기
+		function delete_message(){		
+			var checkList = Array();
+			var i=0;
+			var list = document.getElementsByName("subCheck");
+			for(a=0;a<list.length;a++){
+				if (list[a].checked){
+					checkList[i] = list[a].value;
+					i++;		        
+			    }
+			}
+			if(i == 0){
+				alert('삭제할 요청사항을 선택해주세요.');
+				return false;
+			}
+			if(confirm('해당 사항을 정말 삭제하겠습니까?')){
+				var form = document.getElementById("buttonform");
+				var deleteList = document.getElementById("deleteList");
+				deleteList.value = checkList;
+				form.method = "post";
+				form.action = "delete_admin_messages";
+				alert('1');
+				form.submit();
+			}
 		}
 		</script>
 		

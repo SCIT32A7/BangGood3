@@ -6,7 +6,8 @@
 	
 	<!-- 회원가입 -->
  	<insert id="customer_insert" parameterType="Customer">
-		insert into customer values(#{custid}, #{password}, #{email}, #{phone})
+		insert into customer (custid, name, password, email, phone)
+		values(#{custid}, #{name}, #{password}, #{email}, #{phone})
 	</insert>
 	
 	<!-- 로그인 및 수정 전 검색 -->
