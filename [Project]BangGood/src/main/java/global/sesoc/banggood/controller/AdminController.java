@@ -185,4 +185,23 @@ public class AdminController {
 		
 		return "admin_writeList";
 	}
+	
+	// 받은 요청 복수개 삭제
+	@RequestMapping(value = "delete_admin_messages", method = RequestMethod.POST)
+	public String delete_messages
+	(@RequestParam(value="deleteList")ArrayList<Integer> deleteList){
+		System.out.println(deleteList.size());
+		int result = mr.delete_message(deleteList);
+		System.out.println(result);
+		return "redirect:admin_messageList";
+	}
+	
+	
+	// 쓴 답변 복수개 삭제
+	@RequestMapping(value = "delete_admin_re_messages", method = RequestMethod.POST)
+	public String delete_re_messages
+	(@RequestParam(value="deleteList")ArrayList<Integer> deleteList){
+		mr.delete_re_message(deleteList);
+		return "redirect:admin_writeList";
+	}
 }

@@ -85,11 +85,13 @@
 	<!-- 받은 메시지 삭제 -->
 	<delete id="delete_message" parameterType="_int">
 		update message set receive_notshowing = 'true'
+		where msg_no = #{msg_no}
 	</delete>
 	
 	<!-- 쓴 메시지 삭제 -->
 	<delete id="delete_re_message" parameterType="_int">
 		update message set send_notshowing = 'true'
+		where msg_no = #{msg_no}
 	</delete>
 
 </mapper>

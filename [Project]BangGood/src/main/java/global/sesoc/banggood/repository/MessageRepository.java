@@ -102,12 +102,29 @@ public class MessageRepository {
 		return count;
 	}
 
-	// 메시지 삭제
-	public int delete_message(int msg_no) {
+	// 받은 메시지 삭제
+	public int delete_message(ArrayList<Integer> deleteList) {
 		MessageDAO dao = session.getMapper(MessageDAO.class);
 		int result = 0;
 		try {
-			result = dao.delete_message(msg_no);
+			for(int msg_no : deleteList){
+				result += dao.delete_message(msg_no);
+			}			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
+	// 쓴 메시지 삭제
+	public int delete_re_message(ArrayList<Integer> deleteList) {
+		MessageDAO dao = session.getMapper(MessageDAO.class);
+		int result = 0;
+		try {
+			for(int msg_no : deleteList){
+				result += dao.delete_re_message(msg_no);
+			}	
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

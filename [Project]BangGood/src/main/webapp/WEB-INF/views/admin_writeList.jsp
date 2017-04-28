@@ -42,22 +42,6 @@
 <link rel="stylesheet" href="assets/css/custom.css">
 <link rel="stylesheet"
 	href="assets/plugins/font-awesome/css/font-awesome.min.css">
-	<script type="text/javascript">
-		function msg_open(number) {
-			  window.open("message?msg_no="+number+"&mine='yes'", "", 'titlebar=no, scrollbars=yes, toolbar=no, location=no, resizable=no, status=no, menubar=yes, width=350, height=420, left=30%, top=40%');
-		};
-		
-		function msg_write() {
-			  window.open("message_write", "", 'titlebar=no, scrollbars=yes, toolbar=no, location=no, resizable=no, status=no, menubar=yes, width=350, height=400, left=30%, top=40%');
-		};
-		
-		function pagingForSubmit(currentPage){
-			var form = document.getElementById("pagingForm")
-			var page = document.getElementById("page");
-			page.value = currentPage;
-			form.submit();
-		}
-	</script>
 </head>
 
 <body id="body" data-spy="scroll" data-target=".one-page-header"
@@ -83,10 +67,17 @@
 					<div class="headline">
 						<h2>요청 답변 내역</h2>
 						<div class="pull-right">
+						<form id = "buttonform">
+							<button class="btn-u btn-block rounded"
+								style="background-color: #f7be22; width: 130px;">
+								<a href="javascript:delete_re_message()"></i>메세지 삭제</a>
+							</button>
 							<button class="btn-u btn-block rounded"
 								style="background-color: #f7be22; width: 130px;">
 								<a href="admin_messageList"></i>고객요청함</a>
 							</button>
+							<input type = "hidden" id = "deleteList" name = "deleteList">
+						</form>	
 						</div>
 					</div>
 					<!--row-->
@@ -100,6 +91,10 @@
 								<table class="table">
 									<thead>
 										<tr>
+											<th>
+												<input type="checkbox" id="checkedAll"/>
+  												<label class="admin_label"for="checkedAll"></label>
+											</th>
 											<th>내용</th>
 											<th>받은이</th>
 											<th class="hidden-sm">보낸날짜</th>
@@ -109,6 +104,10 @@
 									<tbody>
 									<c:forEach var = "msg" items = "${iwriteList}">							
 										<tr>
+											<td>
+												<input name="subCheck" type="checkbox" id="check${msg.msg_no}" value="${msg.msg_no}">
+  												<label class="admin_label" for="check${msg.msg_no}"></label>
+											</td>
 											<td><div style = "display:inline-block; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; width:500px">
 											<a href="javascript:msg_open(${msg.msg_no})" type="button">
 											${msg.msg_text}</a></div></td>
@@ -182,6 +181,67 @@
 
 		<!-- custom -->
 		<script src="assets/js/custom.js"></script>
+		<script type="text/javascript">
+		
+		//전체 클릭
+		$(function(){	
+			$("#checkedAll").click(function(){
+				if($('#checkedAll').prop('checked')){
+					$('input[name=subCheck]:checkbox').each(function(){
+						$(this).prop('checked',true);
+					});
+				} else{
+					$('input[name=subCheck]:checkbox').each(function(){
+						$(this).prop('checked',false);
+					});
+				}
+			});
+		});
+		
+		
+		function msg_open(number) {
+			  window.open("message?msg_no="+number+"&mine='yes'", "", 'titlebar=no, scrollbars=yes, toolbar=no, location=no, resizable=no, status=no, menubar=yes, width=350, height=420, left=30%, top=40%');
+		};
+		
+		
+		function msg_write() {
+			  window.open("message_write", "", 'titlebar=no, scrollbars=yes, toolbar=no, location=no, resizable=no, status=no, menubar=yes, width=350, height=400, left=30%, top=40%');
+		};
+		
+		
+		function pagingForSubmit(currentPage){
+			var form = document.getElementById("pagingForm")
+			var page = document.getElementById("page");
+			page.value = currentPage;
+			form.submit();
+		}
+		
+		// 여러 게시글 삭제하기
+		function delete_re_message(){		
+			var checkList = Array();
+			var i=0;
+			var list = document.getElementsByName("subCheck");
+			for(a=0;a<list.length;a++){
+				if (list[a].checked){
+					checkList[i] = list[a].value;
+					i++;		        
+			    }
+			}
+			if(i == 0){
+				alert('삭제할 쪽지를 선택해주세요.');
+				return false;
+			}
+			if(confirm('해당 쪽지를 정말 삭제하겠습니까?')){
+				var form = document.getElementById("buttonform");
+				var deleteList = document.getElementById("deleteList");
+				deleteList.value = checkList;
+				form.action = "delete_admin_re_messages";
+				form.method = "post";
+				alert('1');
+				form.submit();
+			}
+		}
+	</script>
 		
 </body>
 </html>
