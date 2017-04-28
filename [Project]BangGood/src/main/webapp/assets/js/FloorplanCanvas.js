@@ -1446,7 +1446,7 @@ function moveTemp(req){
 				data : data,
 				success : function(result) {
 					if (result == 1) {
-						alert("평면도 등록에 성공하셨습니다.");
+						alert("평면도 수정에 성공하셨습니다. 다음 진행을 해주세요.");
 					} else if(result == -1) {
 						alert("로그인 후 저장 가능합니다.");
 					} else {

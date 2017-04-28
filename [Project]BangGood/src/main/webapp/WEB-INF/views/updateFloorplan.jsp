@@ -628,12 +628,9 @@
 		
 		$("button#save_nextStage").on("click", function(){
 			if(isDownloaded) { //다음 페이지로 진행
-				location.href = "select_property_file?"${property_no};
+				location.href = "select_property_file?property_no="+'${canvasForUpdate.property_no}';
 			} else { //다운로드 과정 자동 실행
 				alert("이미지 다운로드를 먼저 진행해주세요.");
-				//$("#updownloadTab").trigger("click");
-				//$("#canvasDownload").trigger("click");
-				//$("button#save_nextStage").trigger("click");
 			}
 		});
 		
@@ -645,9 +642,10 @@
 			saved_name = prompt("저장할 이름을 지정해주세요.", "BangGood");
 			if(saved_name == null) {
 				alert("다시 한 번 다운로드를 눌러 이름을 다시 지정해주세요.");
+				$('#canvasDownload').attr('href', '#').removeAttr('download');
 				isDownloaded = false;
 			} else {
-				$('#canvasDownload').attr('href', '#').removeAttr('download');
+				downloadFloorplanPng(saved_name);
 				saveFloorplan(true, "updateCanvas", saved_name, scale);
 				isDownloaded = true;
 			}

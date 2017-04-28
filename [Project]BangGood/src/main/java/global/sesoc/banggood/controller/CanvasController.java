@@ -66,6 +66,7 @@ public class CanvasController {
 	@RequestMapping(value = "/loadCanvasForUpdate", method = RequestMethod.GET)
 	public String updateCanvas(String property_no) {
 		Canvas result = repository.loadCanvasForUpdate(property_no);
+		session.setAttribute("canvasForUpdate", result);
 		System.out.println("updateCanvas "+result.toString());
 		session.setAttribute("updateCanvas", result);
 		System.out.println("asdfsadf");
@@ -73,8 +74,13 @@ public class CanvasController {
 	}
 	
 	@RequestMapping(value = "/updateCanvas", method = RequestMethod.POST)
-	public int updateCanvas(Canvas canvas) {
+	public @ResponseBody int updateCanvas(Canvas canvas) {
 		int result = 0;
+		session.getAttribute("canvas");
+		Canvas canvasForUpdate = (Canvas) session.getAttribute("canvasForUpdate");
+		canvas.setDatanum(canvasForUpdate.getDatanum());
+		System.out.println("업데이트 캔버스: "+canvas.toString());
+		
 		result = repository.updateCanvas(canvas);
 		if(result == 1) {
 			logger.info("업데이트 성공");
