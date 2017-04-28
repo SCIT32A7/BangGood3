@@ -228,7 +228,8 @@
 				<div class="margin-bottom-5">
 						<input type="checkbox" id="checkbox2" value="1" id="internet">
 						<label for="checkbox2" class="g-mr-10">개인정보수집 및 이용동의서에 동의합니다.</label>
-				</div>
+				</div> 
+				
 
 				
 
