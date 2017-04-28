@@ -11,7 +11,7 @@
 					<button type="button" class="close" data-dismiss="modal" style="font-size: 40px;">×</button>
 					</h1>
 				</div>
-				<div class="input-group margin-bottom-20">
+				<div class="input-group margin-bottom-10">
 					<span class="input-group-addon rounded-left"><i class="fa fa-check color-yellow"></i></span>
 					<textarea row="10" cols="43" class="form-control rounded-right" readonly style="resize:none; height:250px">
 이용약관에 대한 동의
@@ -209,14 +209,11 @@
 본 약관은 2017년 4월 28일부터 적용 합니다. 			
 						</textarea>
 				</div>
-				<div class="checkbox margin-bottom-5">
-					<label>
-						<input type="checkbox" id ="checkbox1">
-						<p>
-							이용약관에 동의합니다.
-						</p> </label>
+				<div class=" margin-bottom-5">
+					<input type="checkbox" id="checkbox1" value="1" id="internet">
+						<label for="checkbox1" class="g-mr-10">이용약관에 동의합니다.</label>
 				</div>
-				<div class="input-group margin-bottom-20">
+				<div class="input-group margin-bottom-10">
 					<span class="input-group-addon rounded-left"><i class="fa fa-check color-yellow"></i></span>
 					<textarea row="10" cols="43" class="form-control rounded-right" readonly style="resize:none; height:170px">
 개인 정보 수집 및 이용에 대한 동의
@@ -228,12 +225,9 @@
  • 보유 및 이용기간: 이용계약 종료 후 즉시 파기(단 재가입 유예기간동안 2개월까지)
 						</textarea>
 				</div>
-				<div class="checkbox margin-bottom-5">
-					<label>
-						<input type="checkbox" id ="checkbox2">
-						<p>
-							개인정보수집 및 이용동의서에 동의합니다.
-						</p> </label>
+				<div class="margin-bottom-5">
+						<input type="checkbox" id="checkbox2" value="1" id="internet">
+						<label for="checkbox2" class="g-mr-10">개인정보수집 및 이용동의서에 동의합니다.</label>
 				</div>
 
 				

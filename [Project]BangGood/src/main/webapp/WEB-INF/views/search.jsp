@@ -21,30 +21,21 @@
 <meta name="description" content="">
 <meta name="author" content="">
 
-<!-- Web Fonts -->
-<link
-   href='https://fonts.googleapis.com/css?family=Ek+Mukta:400,600,700'
-   rel='stylesheet' type='text/css'>
-<link href='https://fonts.googleapis.com/css?family=Niconne'
-   rel='stylesheet' type='text/css'>
-<link rel="stylesheet"
-   href="assets/plugins/bootstrap/css/bootstrap.min.css">
-<link rel="stylesheet" href="assets/css/app.css">
-<link rel="stylesheet" href="assets/css/one.style.css">
+		<!-- Fonts -->
+		<link href='https://fonts.googleapis.com/css?family=Ek+Mukta:400,600,700' rel='stylesheet' type='text/css'>
+		<link rel="stylesheet" href="assets/plugins/font-awesome/css/font-awesome.min.css">
+	
+		<link rel="stylesheet" href="assets/plugins/bootstrap/css/bootstrap.min.css">
+		<link rel="stylesheet" href="assets/css/app.css">
+		<link rel="stylesheet" href="assets/css/one.style.css">
 
-<!-- CSS Implementing Plugins -->
-<link rel="stylesheet" href="assets/plugins/pace/pace-flash.css">
-<!-- CSS Theme -->
-<link rel="stylesheet" href="assets/css/construction.style.css">
-<!-- 메인 -->
-<link rel="stylesheet" href="assets/css/global.css">
-<!-- 메인 글씨 -->
-<!-- CSS Customization -->
-<link rel="stylesheet" href="assets/css/custom.css">
-<link rel="stylesheet" href="assets/plugins/font-awesome/css/font-awesome.min.css">
- <!-- 자동완성 -->
-   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-   <link rel="stylesheet" href="/resources/demos/style.css">
+		<!-- CSS Implementing Plugins -->
+		<link rel="stylesheet" href="assets/plugins/hover-effects/css/custom-hover-effects.css">
+		<link rel="stylesheet" href="assets/plugins/pace/pace-flash.css">
+		<link rel="stylesheet" href="assets/css/construction.style.css">
+		<link rel="stylesheet" href="assets/css/global.css">
+		<!-- CSS Customization -->
+		<link rel="stylesheet" href="assets/css/custom.css">
 <style type="text/css">
 
 .mapwrap {
@@ -459,8 +450,18 @@ $(function() {
    </div>
    </div>
    </main>
-
-  
+		<!-- JS Global Compulsory -->
+		<script src="assets/plugins/jquery/jquery.min.js"></script>
+		<script src="assets/plugins/jquery/jquery-migrate.min.js"></script>
+		<script src="assets/plugins/bootstrap/js/bootstrap.js"></script>
+		<!-- JS Implementing Plugins -->
+		<script src="assets/plugins/pace/pace.min.js"></script>
+		<script src="assets/plugins/modernizr.js"></script>
+		<script src="assets/plugins/backstretch/jquery.backstretch.min.js"></script>
+		<!-- JS Page Level-->
+		<script src="assets/js/one.app.js"></script>
+		<!-- custom -->
+		<script src="assets/js/custom.js"></script>
   <script type="text/javascript" src="//apis.daum.net/maps/maps3.js?apikey=8af91664dfbd610fb326b81f6ed2ca57&libraries=services"></script>
    <script type="text/javascript">      
       var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
@@ -1022,15 +1023,7 @@ $(function() {
 	});
  
    </script>
-      
-   <!-- JS Global Compulsory -->
-   
-   <script src="assets/plugins/jquery/jquery.min.js"></script>
-   <script src="assets/plugins/jquery/jquery-migrate.min.js"></script>
-   <script src="assets/plugins/bootstrap/js/bootstrap.js"></script>
-   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-   <!-- custom -->
-   <script src="assets/js/custom.js"></script>
+
     
 
 </body>

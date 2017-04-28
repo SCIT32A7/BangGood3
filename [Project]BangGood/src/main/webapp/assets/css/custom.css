@@ -1,4 +1,93 @@
 
+::-moz-selection {
+  color: #fff;
+  background: #f7b70b;
+}
+::selection {
+  color: #fff;
+  background: #f7b70b;
+}
+.no-column-space [class^="col-"],
+.no-column-space [class*=" col-"] {
+  padding-left: 0px;
+  padding-right: 0px;
+  overflow: hidden;
+}
+.no-padding {
+	padding: 0;
+}
+
+.no-side-padding {
+	padding-left: 0;
+	padding-right: 0;
+}
+
+.font-main {
+	font-family: 'Ek Mukta', sans-serif !important;
+}
+/*Pace loader*/
+.pace .pace-progress {
+   background: #f7b70b;
+}
+
+.pace .pace-progress-inner {
+   box-shadow: 0 0 10px #f7b70b, 0 0 5px #f7b70b;
+}
+
+.pace .pace-activity {
+   border-top-color: #f7b70b;
+   border-left-color: #f7b70b;
+}
+/* btn */
+
+input[type=radio], input[type=checkbox] {
+	display: none;
+}
+
+.option_menu .active {
+	background-position: right 5px;
+}
+label {
+	font-size: 14px;
+	line-height: 0.5;
+	cursor: pointer;
+	display: inline-block;
+	padding: 14px 0px 5px 29px;
+	position: relative;
+	whitespace: no-wrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	-webkit-transition: all .15s ease;
+	transition: all .15s ease;
+	top: 0px;
+	font-weight: normal;
+}
+
+}
+label:first-of-type {
+	border: 0;
+}
+
+label:before {
+	content: "";
+	position: absolute;
+	left: 1rem;
+	top: 1rem;
+	width: 16px;
+	height: 16px;
+	border-radius: 50%;
+	border: .2rem solid #ccc;
+}
+
+/**
+ * How it should look when checked
+ */
+input:checked+label:before {
+	border-color: white;
+	border: none;
+	background: #f7be22;
+}
+
 /* main */
 .main_head {
    position: relative;
@@ -405,19 +494,7 @@
    margin: 0 auto;
    display: block;
 }
-/*Pace loader*/
-.pace .pace-progress {
-   background: #f7b70b;
-}
 
-.pace .pace-progress-inner {
-   box-shadow: 0 0 10px #f7b70b, 0 0 5px #f7b70b;
-}
-
-.pace .pace-activity {
-   border-top-color: #f7b70b;
-   border-left-color: #f7b70b;
-}
 /*  canvas */
 /* header */
 .login_user{
@@ -427,6 +504,5 @@
 	padding:0 30px;
 	background-color:#f7f7f7;
 }
-/* btn style */
 
 

@@ -78,7 +78,7 @@ $(function() {
 	
 
 
-	var owl = $('.owl-carousel');
+	/*var owl = $('.owl-carousel');
 	owl.owlCarousel({
 		items : 3,
 		loop : true,
@@ -100,7 +100,7 @@ $(function() {
 		autoplayTimeout : 1000,
 		autoplayHoverPause : true
 	});
-
+*/
 	/*
 	 * $(".e_img2").hover(function(){ $.backstretch([
 	 * "http://dl.dropbox.com/u/515046/www/outside.jpg" ,
@@ -242,7 +242,13 @@ function loginCheck1(){
 }
 
 
-
+//promo
+$(function() {
+	  $(".fullscreen-static-image1").backstretch(["assets/img/room/2.jpg"],
+	  {duration: 10000, fade:1500}),
+	  $(".fullscreen-static-image2").backstretch(["assets/img/room/1.jpg"],
+	  {duration: 10000, fade:1500});
+	});
 
 
 function senddate() {
@@ -255,4 +261,58 @@ function senddate() {
 	form.action = "join";
 	form.method = "post";
 	form.submit();
+}
+
+//Full Screen
+var handleFullscreen = function() {
+	var WindowHeight = $(window).height();
+	var HeaderHeight = 0;
+
+	if ($(document.body).hasClass('promo-padding-top')) {
+		HeaderHeight = $('.header').height();
+	} else {
+		HeaderHeight = 0;
+	}
+
+	$('.fullheight').height(WindowHeight - HeaderHeight);
+
+	$(window).resize(function() {
+		var WindowHeight = $(window).height();
+		$('.fullheight').height(WindowHeight - HeaderHeight);
+	});
+}
+
+
+// Header
+function handleHeader() {
+	// jQuery to collapse the navbar on scroll
+	if ($('.navbar').offset().top > 150) {
+		$('.navbar-fixed-top').addClass('top-nav-collapse');
+	}
+	$(window).scroll(function() {
+		if ($('.navbar').offset().top > 150) {
+			$('.navbar-fixed-top').addClass('top-nav-collapse');
+		} else {
+			$('.navbar-fixed-top').removeClass('top-nav-collapse');
+		}
+	});
+
+	var $offset = 0;
+	if ($('.one-page-nav-scrolling').hasClass('one-page-nav__fixed')) {
+		$offset = $(".one-page-nav-scrolling").height()+8;
+	}
+	// jQuery for page scrolling feature - requires jQuery Easing plugin
+	$('.page-scroll a.move').bind('click', function(event) {
+		var $position = $($(this).attr('href')).offset().top;
+		$('html, body').stop().animate({
+			scrollTop: $position - $offset
+		}, 600);
+		event.preventDefault();
+	});
+
+
+	// Collapse Navbar When It's Clickicked
+	$(window).scroll(function() {
+		$('.navbar-collapse.in').collapse('hide');
+	});
 }

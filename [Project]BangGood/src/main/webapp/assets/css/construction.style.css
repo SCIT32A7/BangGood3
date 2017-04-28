@@ -1,9 +1,7 @@
 /*--------------------------------------------------
     [1. General]
 ---------------------------------------------------- */
-.font-main {
-	font-family: 'Ek Mukta', sans-serif !important;
-}
+
 
 @media (min-width: 991px){
 	.promo-padding-top {
@@ -12,30 +10,10 @@
 }
 
 /* Default highlight color */
-::-moz-selection {
-  color: #fff;
-  background: #f7b70b;
-}
-::selection {
-  color: #fff;
-  background: #f7b70b;
-}
+
 /* General use classes */
-.no-padding {
-	padding: 0;
-}
 
-.no-side-padding {
-	padding-left: 0;
-	padding-right: 0;
-}
 
-.no-column-space [class^="col-"],
-.no-column-space [class*=" col-"] {
-  padding-left: 0px;
-  padding-right: 0px;
-  overflow: hidden;
-}
 
 
 /* --------------------------------------------------

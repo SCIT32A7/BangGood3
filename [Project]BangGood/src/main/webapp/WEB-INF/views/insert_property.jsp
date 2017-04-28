@@ -16,33 +16,21 @@
 <meta name="description" content="">
 <meta name="author" content="">
 
-<!-- Web Fonts -->
-<link
-	href='https://fonts.googleapis.com/css?family=Ek+Mukta:400,600,700'
-	rel='stylesheet' type='text/css'>
-<link rel="stylesheet"
-	href="assets/plugins/bootstrap/css/bootstrap.min.css">
-<link rel="stylesheet" href="assets/css/app.css">
-<link rel="stylesheet" href="assets/css/one.style.css">
+		<!-- Fonts -->
+		<link href='https://fonts.googleapis.com/css?family=Ek+Mukta:400,600,700' rel='stylesheet' type='text/css'>
+		<link rel="stylesheet" href="assets/plugins/font-awesome/css/font-awesome.min.css">
+	
+		<link rel="stylesheet" href="assets/plugins/bootstrap/css/bootstrap.min.css">
+		<link rel="stylesheet" href="assets/css/app.css">
+		<link rel="stylesheet" href="assets/css/one.style.css">
 
-<!-- CSS Implementing Plugins -->
-<link rel="stylesheet"
-	href="assets/plugins/owl-carousel2/assets/owl.carousel.css">
-<link rel="stylesheet"
-	href="assets/plugins/owl-carousel/owl-carousel/owl.theme.css">
-<link rel="stylesheet"
-	href="assets/plugins/hover-effects/css/custom-hover-effects.css">
-<link rel="stylesheet" href="assets/plugins/pace/pace-flash.css">
-<!-- CSS Theme -->
-<link rel="stylesheet" href="assets/css/construction.style.css">
-<!-- 메인 -->
-<link rel="stylesheet" href="assets/css/global.css">
-<!-- 메인 글씨 -->
-<!-- CSS Customization -->
-<link rel="stylesheet" href="assets/css/custom.css">
-<link rel="stylesheet"
-	href="assets/plugins/font-awesome/css/font-awesome.min.css">
-
+		<!-- CSS Implementing Plugins -->
+		<link rel="stylesheet" href="assets/plugins/hover-effects/css/custom-hover-effects.css">
+		<link rel="stylesheet" href="assets/plugins/pace/pace-flash.css">
+		<link rel="stylesheet" href="assets/css/construction.style.css">
+		<link rel="stylesheet" href="assets/css/global.css">
+		<!-- CSS Customization -->
+		<link rel="stylesheet" href="assets/css/custom.css">
 <style>
 table tr {
 	margin-bottom: 4px;
@@ -61,59 +49,6 @@ table tr td {
 }
 
 
-label {
-	font-size: 14px;
-	line-height: 0.5;
-	cursor: pointer;
-	display: inline-block;
-	padding: 14px 0px 5px 29px;
-	position: relative;
-	whitespace: no-wrap;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	-webkit-transition: all .15s ease;
-	transition: all .15s ease;
-	top: 0px;
-	font-weight: normal;
-}
-
-}
-label:first-of-type {
-	border: 0;
-}
-
-label:before {
-	content: "";
-	position: absolute;
-	left: 1rem;
-	top: 1rem;
-	width: 16px;
-	height: 16px;
-	border-radius: 50%;
-	border: .2rem solid #ccc;
-}
-
-/**
- * How it should look when checked
- */
-input:checked+label:before {
-	border-color: white;
-	border: none;
-	background: #f7be22;
-}
-
-/**
- * How it should look when disabled
- */
-
-
-input[type=radio], input[type=checkbox] {
-	display: none;
-}
-
-.option_menu .active {
-	background-position: right 5px;
-}
 </style>
 </head>
 
@@ -323,7 +258,7 @@ input[type=radio], input[type=checkbox] {
 										<th>주차여부</th>
 										<td colspan="3">
 											<input type="radio" name="car" value = "1" id="car1">
-											<label for="car1">전기세</label>
+											<label for="car1">가능</label>
 											<input type="radio" name="car" value = "2" id="car2">
 											<label for="car2">불가능</label>
 										</td>
@@ -447,39 +382,16 @@ input[type=radio], input[type=checkbox] {
 	
 	<!-- JS Global Compulsory -->
 	<script src="assets/plugins/jquery/jquery.min.js"></script>
-	<script src="assets/plugins/jquery/jquery-migrate.min.js"></script>
-	<script src="assets/plugins/bootstrap/js/bootstrap.js"></script>
-
-	<!-- JS Implementing Plugins -->
-	<script src="assets/plugins/smoothScroll.js"></script>
-	<!-- 스크럴 -->
-	<script src="assets/plugins/jquery.easing.min.js"></script>
-	<!-- 애니메이션 -->
-	<script src="assets/plugins/pace/pace.min.js"></script>
-	<script src="assets/plugins/owl-carousel2/owl.carousel.min.js"></script>
-	<script
-		src="assets/plugins/sky-forms-pro/skyforms/js/jquery.form.min.js"></script>
-	<script
-		src="assets/plugins/sky-forms-pro/skyforms/js/jquery.validate.min.js"></script>
-	<script
-		src="assets/plugins/cube-portfolio/cubeportfolio/js/jquery.cubeportfolio.min.js"></script>
-	<script src="assets/plugins/modernizr.js"></script>
-	<!-- 브라우저 호환성 -->
-	<script src="assets/plugins/backstretch/jquery.backstretch.min.js"></script>
-
-	<!-- JS Page Level-->
-	<script src="assets/js/one.app.js"></script>
-	<script src="assets/js/cube-portfolio.js"></script>
-	<script src="assets/js/contact.js"></script>
-	<script src="assets/js/promo.js"></script>
-
-	<!-- custom -->
-	<script src="assets/js/custom.js"></script>
-		
-	<!-- postcode -->
-	<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
-	<script src="//apis.daum.net/maps/maps3.js?apikey=8af91664dfbd610fb326b81f6ed2ca57&libraries=services"></script>
-	<script src="assets/js/postcode.js"></script>
+		<script src="assets/plugins/jquery/jquery-migrate.min.js"></script>
+		<script src="assets/plugins/bootstrap/js/bootstrap.js"></script>
+		<!-- JS Implementing Plugins -->
+		<script src="assets/plugins/pace/pace.min.js"></script>
+		<script src="assets/plugins/modernizr.js"></script><!-- 브라우저 호환성 -->
+		<script src="assets/plugins/backstretch/jquery.backstretch.min.js"></script>
+		<!-- JS Page Level-->
+		<script src="assets/js/one.app.js"></script>
+		<!-- custom -->
+		<script src="assets/js/custom.js"></script>
 	
 </body>
 </html>

@@ -13,7 +13,7 @@ input[type=radio],input[type=checkbox] {
   border-color: #f7be22;
 }
 
-.admin_label {
+label {
   font-size: 1rem;
   font-weight: bold;
   line-height: 1;
@@ -32,10 +32,10 @@ input[type=radio],input[type=checkbox] {
    * This is the radio fake dot basically
    */
 }
-.admin_label:first-of-type {
+label:first-of-type {
   border: 0;
 }
-.admin_label:before {
+label:before {
   content: "";
     position: absolute;
     left: 23px;
@@ -46,26 +46,3 @@ input[type=radio],input[type=checkbox] {
     border: .2rem solid #ccc;
 }
 
-/**
- * How it should look when checked
- */
-input:checked + label:before {
-  border-color: white;
-  border: none;
-  background: #f7be22;
-}
-/**
- * How it should look when disabled
- */
-input:disabled + label {
-  background: #efefef;
-  color: rgba(0, 0, 0, 0.5);
-  cursor: not-allowed;
-}
-input:disabled + label:hover {
-  border-color: rgba(0, 0, 0, 0.1);
-}
-input:disabled + label:before {
-  border-color: white;
-  background: white;
-}
