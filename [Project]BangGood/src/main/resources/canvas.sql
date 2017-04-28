@@ -20,5 +20,5 @@ CREATE TABLE floorplan
 	-- 창문 및 문 데이터
 	objects clob,
 	-- 축척 데이터
-	scale varchar2(2) not null
+	scale number not null
 ); 

@@ -24,4 +24,9 @@
 	<select id="loadCanvasForUpdate" parameterType="String" resultType="Canvas">
 		SELECT * from floorplan where property_no = #{property_no}
 	</select>
+	<update id="updateCanvas" parameterType="Canvas">
+		UPDATE floorplan 
+		SET saved_name= #{saved_name}, icons= #{icons}, lines=#{lines}, objects=#{objects}
+		WHERE datanum = #{datanum}
+	</update>
 </mapper>
