@@ -19,12 +19,9 @@
 <body id="page-top">
    <h1>방(전세/월세) 가계약</h1>
    <form action="" method="post" id="" >
-   <input type="hidden" id="property_no" name="propertyNo" value="">
-   <c:if test="">
-   		<input type="hidden" id="contractNo" name="contractNo" value="">
-   </c:if>
+   <input type="hidden" id="property_no" name="propertyNo" value="${property.property_no}">
    
-   <h3>부동산의 표시</h3>
+   <h3>부동산의 내역</h3>
    <table border="1">
       <tr>
          <th class="label">소재지<br /> (주소)</th>
@@ -36,26 +33,13 @@
 	 <table border="1">
 	    <tr>
 	        <th class="label">보증금/${property.rent_type}</th>
-	        <th><input type="text" class="" value='￦${property.deposit}/￦${property.month_fee}' placeholder="￦/￦" readonly></th>
+	        <th><input type="text" class="" value='￦${property.deposit} / ￦${property.month_fee}' readonly></th>
 	     	<th class="label">관리비</th>
-	        <th><input type="text" class="" value='￦${property.maintence_fee}' placeholder="￦" readonly></th>
+	        <th><input type="text" class="" value='￦${property.maintence_fee}' readonly></th>
 	    	<th class="label">방 종류</th>
-	        <th><input type="text" class="" value='${property.property_type}' placeholder="원룸/투룸" readonly></th>	
+	        <th><input type="text" class="" value='${property.property_type}' readonly></th>	
 	        <th class="label">방 면적</th>
-	        <th><input type="text" class="" value='${property.roomsize}평' placeholder="평"readonly></th>
-	    </tr>
-	    <tr >
-	        <th class="label">관리비 포함 항목</th>
-	        <th colspan="7"><input type="text" class="" value="${maintence.internet } ${maintence.tvfee } ${maintence.cleaning } 
-	        ${maintence.waterfee } ${maintence.gasfee } ${maintence.electronic }" readonly></th>
-	    </tr>
-	    <tr>
-	        <th class="label">포함 옵션</th>
-	        <th colspan="7"><input type="text" class="" value="${roomoption.pet } ${roomoption.car } ${roomoption.elevator } 
-	        ${roomoption.air_conditioner } ${roomoption.fridge } ${roomoption.washing_machine } ${roomoption.gas_stove } 
-	        ${roomoption.electric_stove } ${roomoption.microwave } ${roomoption.desk } ${roomoption.rack } ${roomoption.bed } 
-	        ${roomoption.closet } ${roomoption.shoecabinet } ${roomoption.doorlock } ${roomoption.wifi } ${roomoption.total }" readonly>
-	        </th>
+	        <th><input type="text" class="" value='${property.roomsize}제곱미터' readonly></th>
 	    </tr>
 	    <tr>    
 	        <th class="label">계약예정일</th>
