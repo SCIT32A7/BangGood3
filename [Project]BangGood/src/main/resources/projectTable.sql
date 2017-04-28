@@ -1,3 +1,27 @@
+drop table property;
+drop table customer;
+drop table cart;
+drop table message;
+drop table position;
+drop table floorplan;
+drop table maintence;
+drop table message;
+drop table propertyreply;
+drop table roomoption;
+drop table searchboard;
+drop table searchreply;
+drop table picture;
+
+drop sequence seq_property_no;
+drop sequence seq_pic_plan_no;
+drop sequence seq_pic_room_no;
+drop sequence seq_propertyreply_no;
+drop sequence seq_msg_no;
+drop sequence seq_cart_no;
+drop sequence seq_searchboard_no;
+drop sequence seq_searchreply_no;
+drop sequence seq_floorplan_datanum;
+
 -- 회원
 CREATE TABLE customer
 (
@@ -112,21 +136,25 @@ CREATE TABLE property
 	property_like number(3) default 0
 );
 
-select * from property order by deposit;
-
--- 사진
+-- 평면도
 CREATE TABLE floorplan
 (
-	-- 평면도번호
-	pic_plan_no number(10,0) constraint pk_floorplan_no primary key,
-	-- 매물번호
-	property_no number(10,0) constraint fk_floorplan_property_no references property on delete cascade,
-	-- 사진파일 원래이름
-	pic_name varchar2(30) NOT NULL,
-	-- 사진 저장명
-	pic_savename varchar2(30) NOT NULL,
-	-- 캔버스수정 : 도면도를 수정용, js파일을 열기위한 경로
-	canvasfile varchar2(100) NOT NULL
+	-- 평면도 번호(시퀀스)
+	datanum number(38) constraint pk_floorplan_datanum primary key,
+	-- 관련 매물 번호
+	property_no number(10,0) constraint fk_floorplan_property_no references property,
+	-- 사용 유저
+	custid varchar2(20) not null,
+	-- 사용자 지정 저장 이름
+	saved_name varchar2(20) not null,
+	-- 저장된 아이콘 데이터
+	icons clob,
+	-- 저장된 선 데이터
+	lines clob,
+	-- 창문 및 문 데이터
+	objects clob,
+	-- 축척 데이터
+	scale number not null
 );
 
 -- 사진
@@ -204,7 +232,6 @@ CREATE TABLE roomoption
 	total number(2) NOT NULL
 );
 
-
 -- 매물 댓글용 테이블
 CREATE TABLE propertyreply
 (
@@ -246,7 +273,6 @@ CREATE TABLE searchboard
 	searchboard_reply number(5,0) default 0
 );
 
-
 -- 문의게시판 댓글
 CREATE TABLE searchreply
 (
@@ -261,10 +287,6 @@ CREATE TABLE searchreply
 	-- searchreply_inputdate
 	searchreply_inputdate date default sysdate
 );
-
-
-
-
 
 /* Create Sequence */
 
