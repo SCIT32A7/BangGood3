@@ -10,7 +10,7 @@ a:hover,
 a:active {
   outline: 0 !important;
   text-decoration: none;;
-}
+} 
 a:focus {
   text-decoration: none;
   color: inherit;

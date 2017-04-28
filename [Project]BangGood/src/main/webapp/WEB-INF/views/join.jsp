@@ -230,9 +230,6 @@
 						<label for="checkbox2" class="g-mr-10">개인정보수집 및 이용동의서에 동의합니다.</label>
 				</div> 
 				
-
-				
-
 				<div class="row margin-bottom-30">
 					<div class="col-md-12">
 						<button type="submit" id="joinBtn2" class="btn-u btn-block rounded" style="background-color:#f7be22">

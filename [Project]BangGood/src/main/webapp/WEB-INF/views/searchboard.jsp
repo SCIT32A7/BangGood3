@@ -185,7 +185,7 @@ function delete_board(){
 		form.submit();
 	}
 }
-
+ 
 //전체 클릭
 $(function(){	
 	$("#checkedAll").click(function(){

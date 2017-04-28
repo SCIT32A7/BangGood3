@@ -15,7 +15,7 @@ $(function() {
 		if (clickbox1 == false) {
 			alert("이용약관에 동의해 주세요.");
 			return false;
-		}
+		} 
 		if (clickbox2 == false) {
 			alert("개인정보수집 및 이용에 동의해 주세요.");
 			return false;

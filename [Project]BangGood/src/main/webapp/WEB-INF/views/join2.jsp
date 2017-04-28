@@ -11,7 +11,7 @@
 					<button type="button" class="close" data-dismiss="modal" style="font-size: 40px;">×</button>
 					</h1>
 				</div>
-
+ 
 				<div class="input-group margin-bottom-20">
 					<span class="input-group-addon rounded-left"><i class="fa fa-user color-yellow"></i></span>
 					<input type="text" name = "custid" id = "joinid" class="form-control rounded-right" placeholder="아이디를 입력해 주세요." style="width:270px; margin-right:10px">

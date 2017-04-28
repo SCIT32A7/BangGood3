@@ -13,7 +13,7 @@
 <script src="assets/plugins/jquery/jquery-migrate.min.js"></script>
 <script src="assets/plugins/bootstrap/js/bootstrap.js"></script>
 <title>banngg</title>
-
+ 
 <!-- Meta -->
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=Edge">
