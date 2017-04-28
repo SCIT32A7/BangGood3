@@ -124,6 +124,9 @@
   	height:95px;
   	margin-left:5px;
   }
+  .canvas_img{
+  	display:none;
+  }
 </style>
   
 </head>
@@ -158,10 +161,7 @@
       <div class="clearfix"></div>
  		<div class="">
  		<h3>
-           <div id="testdiv">테스트</div>
-               <input type="button" value="열기" onclick="$('.common').toggle()" />
-               <input type="button" value="닫기" onclick="$('.room').toggle()" />
-            <div class="icons">
+               
 			<div id="image_container" class="image_container">
  		           <button class="pull-left g-mr-50 btn-u btn-block rounded insert_btn" style="background-color: #ccc; width:100px;">돌아가기</button>
            	<input type="image" id="undo" src="assets/img/icons/sidebar/undo.png" class="do_btn tab_switcher_img" data-toggle="tooltip" title="Undo 단축키 Ctrl+z">
@@ -180,6 +180,7 @@
            	
            	<button id="save_nextStage" class="pull-right btn-u btn-block rounded insert_btn" style="width:100px"> 다음단계</button> 
           	 </div>
+          	 
            	
  		</h3>
  		</div>
@@ -240,25 +241,36 @@
 					</div>
 				</div>
 				<div class="furniture" style="display:none;overflow: auto;">
-					<div class="common">
+		               <div id="tab_switcher" class="tab_switcher">
+				            <ul style="list-style:none">
+				               <li id="pencilTab" class="tab_switcher_img" onclick="$('.common').toggle()" style="cursor: pointer; font-size:20px;" > common</li>
+				               <li id="furnitureTab" class="tab_switcher_img" onclick="$('.room').toggle()" style="cursor: pointer; font-size:20px;">room</li>
+				               <li id="updownloadTab" class="tab_switcher_img" onclick="$('.laundryRoom').toggle()" style="cursor: pointer; font-size:20px;">laundryRoom</li>
+				               <li id="updownloadTab" class="tab_switcher_img" onclick="$('.livingRoom').toggle()" style="cursor: pointer; font-size:20px;">livingRoom</li>
+				               <li id="updownloadTab" class="tab_switcher_img" onclick="$('.kitchen').toggle()" style="cursor: pointer; font-size:20px;">kitchen</li>
+				               <li id="updownloadTab" class="tab_switcher_img" onclick="$('.bathroom').toggle()" style="cursor: pointer; font-size:20px;">bathroom</li>
+				            </ul>
+						</div>		               
+		               
+					<div class="canvas_img common">
 						
 						<img class="buttonImage" alt="airconditioner" src="assets/img/icons/sidebar/AirConditioner.jpg" btn-num="airconditioner"/>
 						<img class="buttonImage" alt="desk" src="assets/img/icons/sidebar/Desk.jpg" btn-num="desk" />
 						<img class="buttonImage" alt="bookShelve" src="assets/img/icons/sidebar/BookShelve.jpg" btn-num="bookShelve"/>
 						<img class="buttonImage" alt="wardrobe" src="assets/img/icons/sidebar/Wardrobe.jpg" btn-num="wardrobe" />
 					</div>
-					<div class="room">
+					<div class="canvas_img room">
 						<img class="buttonImage" alt="singleBed" src="assets/img/icons/sidebar/SingleBed.jpg" btn-num="singleBed" />
 						<img class="buttonImage" alt="doubleBed" src="assets/img/icons/sidebar/DoubleBed.jpg" btn-num="doubleBed" />
 						<img class="buttonImage" alt="tv" src="assets/img/icons/sidebar/TV.jpg" btn-num="tv" />
 						<img class="buttonImage" alt="desk" src="assets/img/icons/sidebar/Desk.jpg" btn-num="desk" />
 						<img class="buttonImage" alt="wardrobe" src="assets/img/icons/sidebar/Wardrobe.jpg" btn-num="wardrobe" />
 					</div>
-					<div calss="laundryRoom">
+					<div class="canvas_img laundryRoom">
 						<img class="buttonImage" alt="drum" src="assets/img/icons/sidebar/Drum.jpg" btn-num="drum" />
 						<img class="buttonImage" alt="washingMachine" src="assets/img/icons/sidebar/WashingMachine.jpg" btn-num="washingMachine" />
 					</div>
-					<div class="livingRoom">
+					<div class="canvas_img livingRoom">
 						<img class="buttonImage" alt="shoeCloset" src="assets/img/icons/sidebar/ShoeCloset.jpg" btn-num="shoeCloset" />
 						<img class="buttonImage" alt="tv" src="assets/img/icons/sidebar/TV.jpg" btn-num="tv" />
 						<img class="buttonImage" alt="sofa1" src="assets/img/icons/sidebar/Sofa1.jpg" btn-num="sofa1" />
@@ -268,7 +280,7 @@
 						<img class="buttonImage" alt="floorTable" src="assets/img/icons/sidebar/FloorTable.jpg" btn-num="table1" />
 						<img class="buttonImage" alt="chairTable" src="assets/img/icons/sidebar/ChairTable.jpg" btn-num="table2" />
 					</div>
-					<div class="kitchen">
+					<div class="canvas_img kitchen">
 						<img class="buttonImage" alt="microwave" src="assets/img/icons/sidebar/Microwave.jpg" btn-num="microwave" />
 						<img class="buttonImage" alt="oven" src="assets/img/icons/sidebar/Oven.jpg" btn-num="oven" />
 						<img class="buttonImage" alt="kitchenSink" src="assets/img/icons/sidebar/KitchenSink.jpg" btn-num="kitchenSink" />
@@ -278,7 +290,7 @@
 						<img class="buttonImage" alt="gasStove4" src="assets/img/icons/sidebar/GasStove4.jpg" btn-num="gasStove4" />
 						<img class="buttonImage" alt="stoveVent" src="assets/img/icons/sidebar/StoveVent.jpg" btn-num="stoveVent" />
 					</div>
-					<div class="bathroom">
+					<div class="canvas_img bathroom">
 						<img class="buttonImage" alt="vent" src="assets/img/icons/sidebar/Vent.jpg" btn-num="vent" />
 						<img class="buttonImage" alt="toilet" src="assets/img/icons/sidebar/Toilet.jpg" btn-num="toilet" />
 						<img class="buttonImage" alt="triBath" src="assets/img/icons/sidebar/TriBath.jpg" btn-num="triBath" />
