@@ -191,7 +191,7 @@
 		<script src="assets/plugins/backstretch/jquery.backstretch.min.js"></script>
 		<!-- JS Page Level-->
 		<script src="assets/js/one.app.js"></script>
-s		<!-- custom -->
+		<!-- custom -->
 		<script src="assets/js/custom.js"></script>
 	</body>
 </html>

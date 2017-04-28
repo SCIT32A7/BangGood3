@@ -336,7 +336,7 @@ input:checked+label:before {
 .insert_name {
    color: #f7b70b;
    text-transform: uppercase;
-   font-size: 12px;
+   font-size: 30px;
    font-weight: bold;
 }
 

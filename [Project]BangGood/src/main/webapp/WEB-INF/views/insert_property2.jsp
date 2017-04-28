@@ -32,7 +32,6 @@
 		<link rel="stylesheet" href="assets/css/global.css">
 		<!-- CSS Customization -->
 		<link rel="stylesheet" href="assets/css/custom.css">
-
 <!-- 평면도 CSS -->
 <style type="text/css">
 .box { display: inline-flex; }
@@ -46,14 +45,14 @@
 
 
 #menuSidebar {
-	background: #ffcc00;
+	background: #f7f7f7;
 	border: thin solid gray;
 	box-shadow: rgba(0, 0, 0, 0.5) 1px 0px 4px;
 	border-radius: 8px;
 }
 
 .canvas__mirror {
-	height: 653px;
+	height: 563px;
     left: 14px;
     position: absolute;
     top: 0px;
@@ -65,31 +64,14 @@
 }
 
 .do_btn{
-	width:60px;
-	height:60px;
+	width:50px;
+	height:50px;
 }
 
 .tab_switcher{
     width: 100%;
 }
 
-.tab_switcher ul{
-	list-style: none;
-	padding:0;
-	margin-left:10px;
-}
-
-.tab_switcher ul li{
-	float:left;
-	width:100%;
-	text-align: center;
-	background:#fff;
-	height:50px;
-	margin-bottom:5px;
-	cursor: pointer;
-	font-size:19px;
-	border:1px solid #f7be22;
-}
 
 .tab_switcher_img{
 	-webkit-filter: grayscale(100%);
@@ -99,24 +81,29 @@
 }
 
 .tab_switcher_img img{
-	width:43px;
-	height:43px;
-	margin-top:3px;
-	margin-left:5px;
+	width:60px;
+	height:60px;
+	margin:6px 2px;
 }
 
 .tab_switcher_img:hover{
 	-webkit-filter: grayscale(0);
 	filter: grayscale(0);
-	margin-left:10px;
+}
+.tab_switcher_img:VISITED{
+-webkit-filter: grayscale(0);
+	filter: grayscale(0);
 }
 .furniture div img {
 	margin-bottom:5px;
 }
-</style>
- <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-  <link rel="stylesheet" href="/resources/demos/style.css">
-  <style>
+.mouse_status{
+    width: 170px;
+    display: inline-block;
+    top: -18px;
+    position: relative;
+}
+/* 평면도 시작시, 축적 선택 폼 체크 */
   .custom-combobox {
     position: relative;
     display: inline-block;
@@ -132,13 +119,13 @@
     margin: 0;
     padding: 5px 10px;
   }
-  </style>
-  <!-- 평면도 시작시, 축적 선택 폼 체크 -->
-  	
+  .buttonImage{
+  	width:95px;
+  	height:95px;
+  	margin-left:5px;
+  }
+</style>
   
-  <script>
-  	
-  </script>
 </head>
 
 <body id="body" data-spy="scroll" data-target=".one-page-header"
@@ -169,9 +156,14 @@
          <!-- 전체 col2 -->
       </div><!-- end row -->
       <div class="clearfix"></div>
+ 		<div class="">
  		<h3>
-            <button class="pull-left g-mr-50 btn-u btn-block rounded insert_btn" style="background-color: #ccc; width:100px;">돌아가기</button>
-           	<div id="image_container"> </div>
+           <div id="testdiv">테스트</div>
+               <input type="button" value="열기" onclick="$('.common').toggle()" />
+               <input type="button" value="닫기" onclick="$('.room').toggle()" />
+            <div class="icons">
+			<div id="image_container" class="image_container">
+ 		           <button class="pull-left g-mr-50 btn-u btn-block rounded insert_btn" style="background-color: #ccc; width:100px;">돌아가기</button>
            	<input type="image" id="undo" src="assets/img/icons/sidebar/undo.png" class="do_btn tab_switcher_img" data-toggle="tooltip" title="Undo 단축키 Ctrl+z">
            	<input type="image" id="redo" src="assets/img/icons/sidebar/redo.png" class="do_btn tab_switcher_img" data-toggle="tooltip" title="Redo 단축키 Ctrl+y">
             <input type="image" src="assets/img/icons/sidebar/Init.png" alt="초기화" id="clearCanvas" class="do_btn tab_switcher_img" data-toggle="tooltip" title="초기화"/>
@@ -184,40 +176,44 @@
            	<a href="#" class="tab_switcher_img" id="canvasDownload" class="do_btn tab_switcher_img" data-toggle="tooltip" title="평면도 이미지 다운로드">
 				<input type="image" src="assets/img/icons/sidebar/Download-button.png" style="width:100px; height:50px;">
 			</a>
-           	<input type="text" id="status" placeholder="마우스 상태" readonly="readonly"/>
+           	<input type="text" id="status" placeholder="마우스 상태" class="form-control mouse_status" readonly="readonly" />
+           	
            	<button id="save_nextStage" class="pull-right btn-u btn-block rounded insert_btn" style="width:100px"> 다음단계</button> 
+          	 </div>
+           	
  		</h3>
+ 		</div>
+ 			
 	<div class="row">
-		<div id="menuSidebar" class="col-sm-2" width="250" style="height:650px">
-			<div class="dashboardLink">
-				
-			</div>
-			<div id="tab_switcher" class="tab_switcher">
-				<ul>
-					<li id="pencilTab" class="tab_switcher_img">Pencil<img alt="pencilTab" src="assets/img/icons/pencilTab.png" /></li>
-					<li id="furnitureTab" class="tab_switcher_img">Furniture<img alt="furnitureTab" src="assets/img/icons/furnitureTab.png" /></li>
-					<li id="updownloadTab" class="tab_switcher_img">Load Floorplan<img alt="updownloadTab" src="assets/img/icons/updownloadTab.png"/></li>
-				</ul>
+		<div id="menuSidebar" class="col-sm-2" style="height:560px;padding:0; border-radius:5px">
+			<div class="dashboardLink text-center">
+				<div id="tab_switcher" class="tab_switcher pull-width" style="background:#f7be22">
+					<a id="pencilTab" class="tab_switcher_img rounded"><img alt="pencilTab" src="assets/img/icons/pencilTab.png" /></a>
+					<a id="furnitureTab" class="tab_switcher_img rounded" ><img alt="furnitureTab" src="assets/img/icons/furnitureTab.png" /></a>
+					<a id="updownloadTab" class="tab_switcher_img rounded"><img alt="updownloadTab" src="assets/img/icons/updownloadTab.png"/></a>
 				<div class="clearfix"></div>
-			</div>
+				</div>
+			</div> 
 			
-			<div id="tab" style="height:450px;">
+			
+			<div id="tab" style="height:480px; padding:20px;">
 				<div class="pencil" style="display:none;  overflow: auto;">
 					<div class="pencilContainer">
 					<div>
 					
 					</div>
-						<select id="selectColor">
-							<option value="black" selected="selected">선 색상: 검정색</option>
-							<option value="grey">선 색상: 회색</option>
+						<select id="selectColor"class="form-control pull-left" >
+							<option value="black" selected="selected">선 색상 : 검정색</option>
+							<option value="grey">선 색상 : 회색</option>
 						</select> 
-						<select id="select">
+						<select id="select" class="form-control pull-left g-mt-10">
 							<option value="3" >얇은 선</option>
 							<option value="5" selected="selected">굵은 선</option>
 						</select>
-						<input type="button" id="line" value="선 그리기" /> 
+						<div class="clearfix"></div>
+						<input type="button" class="form-control g-mt-10" style="background:#f7be22;" id="line" value="선 그리기" /> 
 						<br />
-						<select id="fillColor">
+						<select id="fillColor" class="form-control" >
 							<option value="#FFFFFF" selected="selected">방 색상: 화이트</option>
 							<option value="black">내부 색상: 검정</option>
 							<option value="yellow">내부 색상: 노랑</option>
@@ -225,24 +221,27 @@
 							<option value="#a6a6a6">내부 색상: 회색</option>
 						</select>
 						<br />
-						<input type="button" id="rectangle" value="사각형 그리기" />
+						<input type="button" class="form-control" style="background:#f7be22;" id="rectangle" value="사각형 그리기" />
 						<br />
-						<select id="objectBox">
-							<option value="door" selected="selected">문</option>
-							<option value="window">창문</option>
-						</select>
-						<input type="button" id="object" value="생성" />
-						<br />
-						<select id="lineStep">
+						<select id="lineStep" class="form-control">
 							<option value="50" >미세</option>
 							<option value="300" selected="selected">보통</option>
 							<option value="700">둔감</option>
-						</select> 
-						<input type="button" value="민감도 조정" />
+						</select>
+						<input type="button" class="form-control" style="background:#f7be22;margin-top:10px;" value="민감도 조정" /> 
+						<br>
+						<select id="objectBox" class="form-control">
+							<option value="door" selected="selected">문</option>
+							<option value="window">창문</option>
+						</select>
+						<input type="button" class="form-control" id="object" value="생성"style="background:#f7be22;margin-top:10px;" />
+						
+						
 					</div>
 				</div>
 				<div class="furniture" style="display:none;overflow: auto;">
 					<div class="common">
+						
 						<img class="buttonImage" alt="airconditioner" src="assets/img/icons/sidebar/AirConditioner.jpg" btn-num="airconditioner"/>
 						<img class="buttonImage" alt="desk" src="assets/img/icons/sidebar/Desk.jpg" btn-num="desk" />
 						<img class="buttonImage" alt="bookShelve" src="assets/img/icons/sidebar/BookShelve.jpg" btn-num="bookShelve"/>
@@ -299,9 +298,9 @@
 			</div>
   		</div>
 		<div class="col-sm-10" style="position: relative">
-			<canvas id="rightCanvas" width="1200" height="650">
+			<canvas id="rightCanvas" width="1200" height="560">
 	   	</canvas>
-			<img src="" id="mirror" class="canvas__mirror" width="1200" height="650" />
+			<img src="" id="mirror" class="canvas__mirror" width="1200" height="560" />
 		</div>
 		<!-- end canvas -->
 	</div>

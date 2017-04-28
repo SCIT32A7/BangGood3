@@ -47,7 +47,11 @@ table tr td {
 	padding: 15px;
 	font-size: 15px;
 }
-
+.form-control{
+    height: 29px;
+    padding: 3px 8px;
+    text-align:right
+}
 
 </style>
 </head>
@@ -99,7 +103,7 @@ table tr td {
 										
 										<div class="g-mb-30">
 										<input type="button" onclick="sample5_execDaumPostcode()" class="btn-u btn-block rounded insert_btn" 
-										value="주소검색" style="width:105px; margin-left:5px; float:left;height:35px;">
+										value="주소검색" style="width:105px; margin-left:5px; float:left;height:35px;z-index:100">
 										<h4 class="insert_label" style="font-size:14px;">검색버튼을 눌러주세요.</h4>										
 										</div>
 										<input type="text" id="sample5_roadAddress" class="form-control rounded g-mb-5" readonly="readonly">
@@ -162,11 +166,11 @@ table tr td {
 										<tr class="borderline">
 											<th>보증금 <br>/ 전세금</th>
 											<td style="border-right: 1px solid #f7b70b">
-											<input type="text" name = "deposit" id = "deposit" class="form-control rounded pull-left" style="width: 150px;"> 
+											<input type="text" name = "deposit" id = "deposit" class="form-control rounded pull-left" style="width: 100px;"> 
 											<b class="insert_label2">만원</b>
 											</td>
 											<th style="padding-left: 18px">월세</th>
-											<td><input type="text" name ="month_fee" id = "month_fee" class="form-control rounded pull-left" style="width: 150px">
+											<td><input type="text" name ="month_fee" id = "month_fee" class="form-control rounded pull-left" style="width: 100px">
 												<b class="insert_label2">만원</b>
 											</td>
 										</tr>
@@ -187,18 +191,18 @@ table tr td {
 													<option value = "10">10층 이상</option>
 											</select></td>
 											<th style="padding-left: 18px">면적</th>
-											<td><input type="text" name ="roomsize" id = "roomsize" class="form-control rounded pull-left" style="width: 150px">
+											<td><input type="text" name ="roomsize" id = "roomsize" class="form-control rounded pull-left" style="width: 100px">
 												<b class="insert_label2">평</b>
 											</td>
 										</tr>
 										<tr class="borderline">
 											<th>건축연도</th>
 											<td  style="border-right: 1px solid #f7b70b">
-											<input type="text" name = "built_year" id = "built_year" class="form-control rounded pull-left" style="width: 150px;"> 
+											<input type="text" name = "built_year" id = "built_year" class="form-control rounded pull-left" style="width: 100px;"> 
 											<b class="insert_label2">년</b>
 											</td>
 											<th style="padding-left: 18px">건물명</th>
-											<td><input type="text" name ="buildingname" id = "buildingname" class="form-control rounded pull-left" style="width: 150px">
+											<td><input type="text" name ="buildingname" id = "buildingname" class="form-control rounded pull-left" style="width: 100px;text-align:left">
 											</td>
 										</tr>
 									</table>
@@ -211,8 +215,7 @@ table tr td {
 				<!-- option -->
 				<div class="insert_head pull-left">
 					<h1 class="insert_title font-main">
-						<i class="fa fa-plus-square insert_name"></i>추가정보
-					</h1>
+						<i class="fa fa-plus-square insert_name"></i>추가정보</h1>
 				</div>
 				<div class="clearfix"></div>
 				<div class="row ">
@@ -229,7 +232,7 @@ table tr td {
 										<tr class="borderline">
 										<th rowspan="2">관리비</th>
 										<td colspan="3">
-										<input type="text" id = "maintence_fee" name = "maintence_fee" class="form-control rounded pull-left" style="width: 150px">
+										<input type="text" id = "maintence_fee" name = "maintence_fee" class="form-control rounded pull-left" style="width: 100px">
 										<b class="insert_label2">만원</b>
 										</td>
 									</tr>
@@ -333,7 +336,7 @@ table tr td {
 									<table style="width:100%">
 										<tr class="borderline">
 											<th>방 제목</th>
-											<td><input type="text" id="property_title" name = "property_title" class="form-control rounded pull-width" placeholder="예) 코엑스 5분거리 살기좋은 곳입니다.">
+											<td><input type="text" id="property_title" name = "property_title" class="form-control rounded pull-width" style="text-align:left" placeholder="예) 코엑스 5분거리 살기좋은 곳입니다.">
 											</td>
 										</tr>
 										<tr class="borderline">
@@ -392,6 +395,10 @@ table tr td {
 		<script src="assets/js/one.app.js"></script>
 		<!-- custom -->
 		<script src="assets/js/custom.js"></script>
-	
+			
+	<!-- postcode -->
+	<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+	<script src="//apis.daum.net/maps/maps3.js?apikey=8af91664dfbd610fb326b81f6ed2ca57&libraries=services"></script>
+	<script src="assets/js/postcode.js"></script>
 </body>
 </html>
