@@ -35,7 +35,17 @@ $(function() {
 	$("#loginBtn").click(function() {
 		$("#loginModal").modal();
 	});
-	
+	$("#mail_check").click(function() {
+		$("#JoinModal").modal("hide");
+		$("#mail_check_form").modal({backdrop: "static"});
+	});
+	$("#back_join").click(function(){
+		$("#JoinModal").modal("show");
+	});
+	$("#mailCheck").click(function(){
+		$("#mailcheck_span").html("인증번호가 틀립니다.")
+							.css("color","red");
+	});
 	/*$("#login_ok").click(function() {
 		var login_id = $("#login_id").val();
 		var login_pw = $("#login_pw").val();
@@ -113,11 +123,11 @@ $(function() {
 			},
 			success : function(resp) {
 				if (resp == "exist") {
-					$("#checkid_result").html(id + "는 이미 등록된 아이디입니다.");
+					$("#checkid_result").html("<i style='color:red;margin-right:5px'>"+ id +"</i> 는 이미 등록된 아이디입니다.");
 					$(".joinbox").attr("height","434px");
 					checkStatus = 'no';
 				} else {
-					$("#checkid_result").html(id + "는 사용할 수 있습니다.");
+					$("#checkid_result").html("<i style='color:red'>"+ id + "</i>는 사용할 수 있습니다.");
 					$(".joinbox").attr("height","434px");
 					checkStatus = 'yes';
 				}

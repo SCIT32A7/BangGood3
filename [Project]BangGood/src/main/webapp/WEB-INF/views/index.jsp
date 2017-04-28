@@ -59,6 +59,7 @@
 			<%@ include file="join.jsp"  %> 
 			<%@ include file="join2.jsp"  %> 
 			<%@ include file="join3.jsp"  %> 
+			<%@ include file="mail_check.jsp"  %> 
 			<%@ include file="login.jsp" %> 
 			<!-- end menu -->
 			
