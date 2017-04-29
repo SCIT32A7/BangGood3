@@ -1,6 +1,7 @@
 $(function() {
 	
 	var checkStatus = 'no';
+	var checkMail = 'no';
 	
 	App.init();
 
@@ -36,16 +37,64 @@ $(function() {
 		$("#loginModal").modal();
 	});
 	$("#mail_check").click(function() {
-		$("#JoinModal").modal("hide");
-		$("#mail_check_form").modal({backdrop: "static"});
+		
 	});
 	$("#back_join").click(function(){
 		$("#JoinModal").modal("show");
 	});
 	$("#mailCheck").click(function(){
-		$("#mailcheck_span").html("인증번호가 틀립니다.")
-							.css("color","red");
+		
 	});
+	
+	
+	var checkAjaxSetTimeout;
+	
+	$("#mail_check").on("click", function(){
+		var email = $("#joinemail").val();
+			$.ajax({
+				type : "post",
+				url : "emailcheck",
+				data : {
+					user : email
+				},
+				success : function(data){
+					console.log("메일로 인증번호가 전송되었습니다.");					
+					$("#JoinModal").modal("hide");
+					$("#mail_check_form").modal({backdrop: "static"});
+					},						
+					error : function(e)	{
+						console.log(e);
+					}
+			})		
+	});
+	
+	$("#checkbutton").on("click", function(){
+		var num = $("#checknum").val();				
+		$.ajax({
+			type : "post",
+			url : "checknum",					
+			success : function(data){
+				if (num == data){
+					alert("인증에 성공하였습니다.");
+					checkMail = "yes";
+					$("#mail_check_form").modal("hide");
+					$("#JoinModal").modal();
+					//window.opener.Checknumfunction();
+					//window.close();
+				}else{
+					$("#mailcheck_span").html("인증번호가 틀립니다.")
+					.css("color","red");
+					checknumflag = false;					
+					return false;
+				}
+			},				
+			error : function(e){
+				console.log(e);
+			}
+		})
+	})
+	
+	
 	/*$("#login_ok").click(function() {
 		var login_id = $("#login_id").val();
 		var login_pw = $("#login_pw").val();
@@ -172,7 +221,10 @@ $(function() {
 			alert('아이디 중복 확인을 해주세요.');
 			return false;
 		}
-
+		if(checkMail == "no"){
+			alert('본인인증을 해주세요.');
+			return false;	
+		}
 		$.ajax({
 			method : "post",
 			url : "join",

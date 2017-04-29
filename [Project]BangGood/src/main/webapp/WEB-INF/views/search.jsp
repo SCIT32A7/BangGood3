@@ -36,6 +36,9 @@
 		<link rel="stylesheet" href="assets/css/global.css">
 		<!-- CSS Customization -->
 		<link rel="stylesheet" href="assets/css/custom.css">
+		<!-- 방검색시 오토 컴플릿 Style -->
+		<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  		<link rel="stylesheet" href="/resources/demos/style.css">
 <style type="text/css">
 
 .mapwrap {
@@ -231,6 +234,7 @@ input[type=radio], input[type=checkbox] {
 	background-position: right 5px;
 }
 </style>
+
 <script type="text/javascript">
 $(function() {
     send_data();
@@ -462,6 +466,8 @@ $(function() {
 		<script src="assets/js/one.app.js"></script>
 		<!-- custom -->
 		<script src="assets/js/custom.js"></script>
+		<!-- 방 검색시 사용하는 오토컴플릿 -->
+		<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   <script type="text/javascript" src="//apis.daum.net/maps/maps3.js?apikey=8af91664dfbd610fb326b81f6ed2ca57&libraries=services"></script>
    <script type="text/javascript">      
       var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스

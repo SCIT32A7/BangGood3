@@ -14,8 +14,8 @@
 				 
 				<div class="input-group margin-bottom-5">
 					<span class="input-group-addon rounded-left"><i class="fa fa-lock color-yellow"></i></span>
-					<input type="text" name = "custid" id = "joinid" class="form-control rounded-right" placeholder="인증번호를 입력해주세요." style="width:270px; margin-right:10px">
-					<button id="mailCheck"  class="btn-u btn-block rounded" style="width:80px">
+					<input type="text" name = "checknum" id = "checknum" class="form-control rounded-right" placeholder="인증번호를 입력해주세요." style="width:270px; margin-right:10px">
+					<button id="checkbutton"  class="btn-u btn-block rounded" style="width:80px">
 							확인
 					</button>					
 				</div>

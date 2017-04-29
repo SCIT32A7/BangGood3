@@ -39,11 +39,14 @@
 				
 				<div class="input-group margin-bottom-20">
 					<span class="input-group-addon rounded-left"><i class="fa fa-envelope-o color-yellow" style="font-size:10px"></i></span>
-					<input type="mail" name = "email" id = "joinemail" class="form-control rounded-right" placeholder="이메일 주소를 입력해 주세요." style="width:270px; margin-right:10px">
+					<input type="mail" name = "joinemail" id = "joinemail" class="form-control rounded-right" placeholder="이메일 주소를 입력해 주세요." style="width:270px; margin-right:10px">
 					<button id="mail_check"  class="btn-u btn-block rounded" style="width:80px">
 							메일인증
 					</button>
 				</div>
+				
+				<div class = "maillabel2" id = "maillabel"></div><!-- 4월 29일 -->
+				
 				<div class="input-group margin-bottom-20">
 					<span class="input-group-addon rounded-left"><i class="fa fa-phone color-yellow"></i></span>
 					<input type="text" name = "phone" id = "joinphone" class="form-control rounded-right" placeholder="핸드폰 번호를 입력해 주세요.">
