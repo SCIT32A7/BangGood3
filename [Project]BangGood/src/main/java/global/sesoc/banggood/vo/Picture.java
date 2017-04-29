@@ -4,7 +4,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 public class Picture {
 
-	private int pic_no;
+	private int pic_room_no;
 	private String pic_name;
 	private String pic_savename;
 	private String pic_division;
@@ -14,14 +14,19 @@ public class Picture {
 	public Picture() {
 		super();
 	}
+	
 
-	public int getPic_no() {
-		return pic_no;
+	public int getPic_room_no() {
+		return pic_room_no;
 	}
 
-	public void setPic_no(int pic_no) {
-		this.pic_no = pic_no;
+
+
+	public void setPic_room_no(int pic_room_no) {
+		this.pic_room_no = pic_room_no;
 	}
+
+
 
 	public String getPic_name() {
 		return pic_name;
@@ -65,7 +70,7 @@ public class Picture {
 
 	@Override
 	public String toString() {
-		return "Picture [pic_no=" + pic_no + ", pic_name=" + pic_name + ", pic_savename=" + pic_savename
+		return "Picture [pic_no=" + pic_room_no + ", pic_name=" + pic_name + ", pic_savename=" + pic_savename
 				+ ", pic_division=" + pic_division + ", property_no=" + property_no + ", file=" + file + "]";
 	}
 

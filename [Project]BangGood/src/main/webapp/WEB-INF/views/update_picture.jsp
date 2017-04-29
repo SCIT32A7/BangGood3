@@ -139,7 +139,8 @@ table tr td {
          </div>
       </div>
       <div style="width:672px; margin:auto;">
-      <form action="update_property3" method="post" enctype="multipart/form-data">
+      <form action="update_property_file" method="post" enctype="multipart/form-data">
+         <input type = "hidden" name = "property_no" id = "property_no" value = "${property_no}">
          <table class="photo_line">
             <tr>
                <td>
@@ -151,7 +152,7 @@ table tr td {
                         class="upload photo_btn ">
                   <div id='holder1'>
                      <div class="photo_blank">
-                  	   <img style = "zIndex:100000" class="photo_blank" src="download?pic_name=${picture[0].pic_name}&pic_savename=${picture[0].pic_savename}">
+                        <img style = "zIndex:100000" class="photo_blank" src="download?pic_name=${picture[0].pic_name}&pic_savename=${picture[0].pic_savename}">
                      </div>
                   </div>
                </div>
@@ -165,7 +166,7 @@ table tr td {
                         class="upload photo_btn ">
                   <div id='holder2'>
                      <div class="photo_blank">
-                     	 <img style = "zIndex:100000" class="photo_blank" src="download?pic_name=${picture[1].pic_name}&pic_savename=${picture[1].pic_savename}">
+                         <img style = "zIndex:100000" class="photo_blank" src="download?pic_name=${picture[1].pic_name}&pic_savename=${picture[1].pic_savename}">
                      </div>
                   </div>
                </div>
@@ -179,9 +180,9 @@ table tr td {
                         class="upload photo_btn ">
                   <div id='holder3'>
                      <div class="photo_blank">
-                     	<c:if test = "${picture.size() >= 3 }">
-                     	<img class="photo_blank" src="download?pic_name=${picture[2].pic_name}&pic_savename=${picture[2].pic_savename}">
-                     	</c:if>
+                        <c:if test = "${picture.size() >= 3 }">
+                        <img class="photo_blank" src="download?pic_name=${picture[2].pic_name}&pic_savename=${picture[2].pic_savename}">
+                        </c:if>
                      </div>
                   </div>
                </div>
@@ -197,9 +198,9 @@ table tr td {
                         class="upload photo_btn ">
                   <div id='holder4'>
                      <div class="photo_blank">
-                     	<c:if test = "${picture.size() >= 4 }">
-                     	<img class="photo_blank" src="download?pic_name=${picture[3].pic_name}&pic_savename=${picture[3].pic_savename}">
-                     	</c:if>
+                        <c:if test = "${picture.size() >= 4 }">
+                        <img class="photo_blank" src="download?pic_name=${picture[3].pic_name}&pic_savename=${picture[3].pic_savename}">
+                        </c:if>
                      </div>
                   </div>
                </div>
@@ -213,9 +214,9 @@ table tr td {
                         class="upload photo_btn ">
                   <div id='holder5'>
                      <div class="photo_blank">
-                     	<c:if test = "${picture.size() >= 5 }">
-                     	<img class="photo_blank" src="download?pic_name=${picture[4].pic_name}&pic_savename=${picture[4].pic_savename}">
-                     	</c:if>                     
+                        <c:if test = "${picture.size() >= 5 }">
+                        <img class="photo_blank" src="download?pic_name=${picture[4].pic_name}&pic_savename=${picture[4].pic_savename}">
+                        </c:if>                     
                      </div>
                   </div>
                </div>
@@ -229,9 +230,9 @@ table tr td {
                         class="upload photo_btn ">
                   <div id='holder6'>
                      <div class="photo_blank">
-                     	<c:if test = "${picture.size() >= 6 }">
-                     	<img class="photo_blank" src="download?pic_name=${picture[5].pic_name}&pic_savename=${picture[5].pic_savename}">
-                     	</c:if>                     
+                        <c:if test = "${picture.size() >= 6 }">
+                        <img class="photo_blank" src="download?pic_name=${picture[5].pic_name}&pic_savename=${picture[5].pic_savename}">
+                        </c:if>                     
                      </div>
                   </div>
                </div>
@@ -247,9 +248,9 @@ table tr td {
                         class="upload photo_btn ">
                   <div id='holder7'>
                      <div class="photo_blank">
-                     	<c:if test = "${picture.size() >= 7 }">
-                     	<img class="photo_blank" src="download?pic_name=${picture[6].pic_name}&pic_savename=${picture[6].pic_savename}">
-                     	</c:if>
+                        <c:if test = "${picture.size() >= 7 }">
+                        <img class="photo_blank" src="download?pic_name=${picture[6].pic_name}&pic_savename=${picture[6].pic_savename}">
+                        </c:if>
                      </div>
                   </div>
                </div>
@@ -263,9 +264,9 @@ table tr td {
                         class="upload photo_btn ">
                   <div id='holder8'>
                      <div class="photo_blank">
-                     	<c:if test = "${picture.size() >= 8 }">
-                     	<img class="photo_blank" src="download?pic_name=${picture[7].pic_name}&pic_savename=${picture[7].pic_savename}">
-                     	</c:if>
+                        <c:if test = "${picture.size() >= 8 }">
+                        <img class="photo_blank" src="download?pic_name=${picture[7].pic_name}&pic_savename=${picture[7].pic_savename}">
+                        </c:if>
                      </div>
                   </div>
                </div>
@@ -279,9 +280,9 @@ table tr td {
                         class="upload photo_btn ">
                   <div id='holder9'>
                      <div class="photo_blank">
-                     	<c:if test = "${picture.size() >= 9 }">
-                     	<img class="photo_blank" src="download?pic_name=${picture[8].pic_name}&pic_savename=${picture[8].pic_savename}">
-                     	</c:if>
+                        <c:if test = "${picture.size() >= 9 }">
+                        <img class="photo_blank" src="download?pic_name=${picture[8].pic_name}&pic_savename=${picture[8].pic_savename}">
+                        </c:if>
                      </div>
                   </div>
                </div>
@@ -297,9 +298,9 @@ table tr td {
                         class="upload photo_btn ">
                   <div id='holder10'>
                      <div class="photo_blank">
-                     	<c:if test = "${picture.size() >= 10 }">
-                     	<img class="photo_blank" src="download?pic_name=${picture[9].pic_name}&pic_savename=${picture[9].pic_savename}">
-                     	</c:if>
+                        <c:if test = "${picture.size() >= 10 }">
+                        <img class="photo_blank" src="download?pic_name=${picture[9].pic_name}&pic_savename=${picture[9].pic_savename}">
+                        </c:if>
                      </div>
                   </div>
                </div>
@@ -313,9 +314,9 @@ table tr td {
                         class="upload photo_btn ">
                   <div id='holder11'>
                      <div class="photo_blank">
-                     	<c:if test = "${picture.size() >= 11 }">
-                     	<img class="photo_blank" src="download?pic_name=${picture[10].pic_name}&pic_savename=${picture[10].pic_savename}">
-                     	</c:if>
+                        <c:if test = "${picture.size() >= 11 }">
+                        <img class="photo_blank" src="download?pic_name=${picture[10].pic_name}&pic_savename=${picture[10].pic_savename}">
+                        </c:if>
                      </div>
                   </div>
                </div>
@@ -329,9 +330,9 @@ table tr td {
                         class="upload photo_btn ">
                   <div id='holder12'>
                      <div class="photo_blank">
-                     	<c:if test = "${picture.size() == 12 }">
-                     	<img style = "zIndex:100" class="photo_blank" src="download?pic_name=${picture[11].pic_name}&pic_savename=${picture[11].pic_savename}">
-                     	</c:if>
+                        <c:if test = "${picture.size() == 12 }">
+                        <img style = "zIndex:100" class="photo_blank" src="download?pic_name=${picture[11].pic_name}&pic_savename=${picture[11].pic_savename}">
+                        </c:if>
                      </div>
                   </div>
                </div>
@@ -423,35 +424,27 @@ function photoRemove(num) {
    if(confirm('사진을 취소하시겠습니까?')){
        var wrapper = document.getElementById('wrapper' + num);
        var reset = "<button type='button' class='close' onclick='photoRemove("+num+");'>×</button>";
-  	   if(num == 1){
-   		reset += "<button id='replace"+num+"' class='photo_btn replace'>메인</button>";
-  	   }else if(num == 2){
-   		reset += "<button id='replace"+num+"' class='photo_btn replace'>평면도</button>";
-  	   }else if(num == 3){
-   		reset += "<button id='replace"+num+"' class='photo_btn replace'>현관</button>";
-  	   }else if(num == 4){
-   		reset += "<button id='replace"+num+"' class='photo_btn replace'>방</button>";
-  	   }else if(num == 5){
-   		reset += "<button id='replace"+num+"' class='photo_btn replace'>부엌</button>";
-  	   }else if(num == 6){
-   		reset += "<button id='replace"+num+"' class='photo_btn replace'>화장실</button>";
-  	   }else{
-   		reset += "<button id='replace"+num+"' class='photo_btn replace'>사진</button>";
-  	   }
-   	   reset += "<input type='file' name='uploadFile"+num+"' accept='.gif, .jpg, .png'";
-       reset += "multiple onclick='proFileShow("+num+");'"
-       reset += "class='upload photo_btn '>";
-	  	   reset += "<div id='holder"+num+"'>";
-   	   reset += "<div class='photo_blank'></div>";
-	 	   reset += "</div>"
-       var reset = "<button type='button' class='close' onclick='photoRemove("+num+");'>×</button>";
-      	   reset += "<button id='replace"+num+"' class='photo_btn replace'>메인</button>";
-      	   reset += "<input type='file' name='uploadFile"+num+"' accept='.gif, .jpg, .png'";
-           reset += "multiple onclick='proFileShow("+num+");'"
-           reset += "class='upload photo_btn '>";
-  	  	   reset += "<div id='holder"+num+"'>";
-       	   reset += "<div class='photo_blank'></div>";
-   	 	   reset += "</div>"
+        if(num == 1){
+         reset += "<button id='replace"+num+"' class='photo_btn replace'>메인</button>";
+        }else if(num == 2){
+         reset += "<button id='replace"+num+"' class='photo_btn replace'>평면도</button>";
+        }else if(num == 3){
+         reset += "<button id='replace"+num+"' class='photo_btn replace'>현관</button>";
+        }else if(num == 4){
+         reset += "<button id='replace"+num+"' class='photo_btn replace'>방</button>";
+        }else if(num == 5){
+         reset += "<button id='replace"+num+"' class='photo_btn replace'>부엌</button>";
+        }else if(num == 6){
+         reset += "<button id='replace"+num+"' class='photo_btn replace'>화장실</button>";
+        }else{
+         reset += "<button id='replace"+num+"' class='photo_btn replace'>사진</button>";
+        }
+            reset += "<input type='file' name='uploadFile"+num+"' accept='.gif, .jpg, .png'";
+          reset += "multiple onclick='proFileShow("+num+");'"
+             reset += "class='upload photo_btn '>";
+           reset += "<div id='holder"+num+"'>";
+            reset += "<div class='photo_blank'></div>";
+          reset += "</div>"
        wrapper.innerHTML = reset;
        replace.style.zIndex=1;
    }

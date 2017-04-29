@@ -169,7 +169,9 @@ CREATE TABLE picture
 	-- 사진파일 원래이름
 	pic_name varchar2(100) NOT NULL,
 	-- 사진 저장명
-	pic_savename varchar2(150) NOT NULL
+	pic_savename varchar2(150) NOT NULL,
+ 	 -- 신규여부
+ 	 new number(1) default 1
 );
 
 -- 관리비포함내역

@@ -150,7 +150,6 @@ public class PropertyController {
 
 		canvas.setCustid(property.getCustid());
 		model.addAttribute("canvas", canvas);
-		System.out.println("미들 체크 "+canvas.toString());
 		return "insert_property3";
 	}
 
@@ -224,7 +223,7 @@ public class PropertyController {
 		int result = pr.insert_property(property, option, maintence, canvas, insert_pList);
 		model.addAttribute("result", result);
 		status.setComplete();
-		return "insert_property4";
+		return "redirect:mypage";
 	}
 
 	// 매물 내용 상세읽기, 지도에서 클릭, 장바구니에서 클릭, 등록매물에서 클릭
@@ -232,7 +231,6 @@ public class PropertyController {
 	public String read_property(int property_no, Model model) {
 		pr.add_hits(property_no);
 		Property property = pr.select_Property(property_no);
-		System.out.println("게시여부 : " + property.getIsaccessible());
 		Option option = pr.select_Option(property_no);
 		Maintence maintence = pr.select_Maintence(property_no);
 		ArrayList<Picture> dbList = pr.select_Picture(property_no);
@@ -252,7 +250,7 @@ public class PropertyController {
 				pList.add(5, dbList.get(i));
 			} else {
 				pList.add(6, dbList.get(i));
-			}			
+			}
 		}
 		model.addAttribute("read_property", property);
 		model.addAttribute("read_option", option);
@@ -285,10 +283,10 @@ public class PropertyController {
 		pr.update_Maintence(maintence);
 		return "redirect:read_property?property_no=" + property_no;
 	}
-	
-	// 이미지  파일 수정을 위해 사진 불러오기
-	@RequestMapping(value ="/select_property_file", method = RequestMethod.GET)
-	public String select_property3(int property_no, Model model){
+
+	// 이미지 파일 수정을 위해 사진 불러오기
+	@RequestMapping(value = "/select_property_file", method = RequestMethod.GET)
+	public String select_property3(int property_no, Model model) {
 		ArrayList<Picture> dbList = pr.select_Picture(property_no);
 		ArrayList<Picture> pList = new ArrayList<>();
 		for (int i = 0; i < dbList.size(); i++) {
@@ -306,11 +304,87 @@ public class PropertyController {
 				pList.add(5, dbList.get(i));
 			} else {
 				pList.add(6, dbList.get(i));
-			}			
+			}
+
 		}
 		model.addAttribute("picture", pList);
+		model.addAttribute("property_no", property_no);
 		return "update_picture";
 	}
+
+	// 사진 파일 업데이트
+	   @RequestMapping(value = "/update_property_file", method = RequestMethod.POST)
+	   public String update_property3(MultipartFile uploadFile1, MultipartFile uploadFile2, MultipartFile uploadFile3,
+	         MultipartFile uploadFile4, MultipartFile uploadFile5, MultipartFile uploadFile6, MultipartFile uploadFile7,
+	         MultipartFile uploadFile8, MultipartFile uploadFile9, MultipartFile uploadFile10,
+	         MultipartFile uploadFile11, MultipartFile uploadFile12, int property_no, Model model) {
+
+	      ArrayList<MultipartFile> upload = new ArrayList<>();
+	      upload.add(0, uploadFile1);
+	      upload.add(1, uploadFile2);
+	      upload.add(2, uploadFile3);
+	      upload.add(3, uploadFile4);
+	      upload.add(4, uploadFile5);
+	      upload.add(5, uploadFile6);
+	      upload.add(6, uploadFile7);
+	      upload.add(7, uploadFile8);
+	      upload.add(8, uploadFile9);
+	      upload.add(9, uploadFile10);
+	      upload.add(10, uploadFile11);
+	      upload.add(11, uploadFile12);
+	      
+	      System.out.println("abc : "+upload);
+
+	      ArrayList<Picture> sel_pList = pr.select_Picture(property_no);
+	      pr.delete_Picture(sel_pList);
+
+	      String uploadPath = "/imageFile";
+	      for (int i = 0; i < upload.size(); i++) {
+	         if (!upload.get(i).isEmpty()) {
+	            String savedfile = FileService.saveFile(upload.get(i), uploadPath);
+	            if (i < sel_pList.size()) {
+	               
+	               String fullpath = uploadPath + "/" + sel_pList.get(i).getPic_savename();
+	               FileService.deleteFile(fullpath);
+	               
+	               sel_pList.get(i).setPic_name(upload.get(i).getOriginalFilename());
+	               sel_pList.get(i).setPic_savename(savedfile);
+	               
+	            } else {
+	               
+	               Picture pic = new Picture();
+	               pic.setPic_name(upload.get(i).getOriginalFilename());
+	               pic.setProperty_no(property_no);
+	               pic.setPic_savename(savedfile);
+	               if (i == 0) {
+	                  pic.setPic_division("main"); // 메인사진
+	               }
+	               if (i == 1) {
+	                  pic.setPic_division("plan"); // 평면도
+	               }
+	               if (i == 2) {
+	                  pic.setPic_division("front"); // 입구
+	               }
+	               if (i == 3) {
+	                  pic.setPic_division("room"); // 방
+	               }
+	               if (i == 4) {
+	                  pic.setPic_division("kitchen"); // 싱크대
+	               }
+	               if (i == 5) {
+	                  pic.setPic_division("bathroom"); // 화장실
+	               }
+	               if (i >= 6 && i <= 11) {
+	                  pic.setPic_division("normal"); // 나머지 사진들
+	                  
+	               }
+	               sel_pList.add(pic);
+	            }
+	         }
+	      }
+	      int result = pr.insert_picture(sel_pList);
+	      return "redirect:read_property?property_no=" + property_no;
+	   }
 
 	// 게시매물 광고 중단
 	@RequestMapping(value = "/stop_showing", method = RequestMethod.GET)

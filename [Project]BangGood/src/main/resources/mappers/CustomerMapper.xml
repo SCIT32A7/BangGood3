@@ -21,7 +21,7 @@
 		where custid = #{custid}
 	</update>
 	
-	<!-- 등록 목록 보기 -->
+
 	<select id="see_myinsert" parameterType="String" resultType="Property_list">
 		select
 			pro.property_no property_no, pro.custid custid,

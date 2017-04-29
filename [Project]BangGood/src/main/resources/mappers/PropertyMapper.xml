@@ -48,6 +48,7 @@
    <!-- 매물 사진 입력하기 -->
    <insert id ="insert_picture" parameterType="Picture">
    	insert into picture
+   	(pic_room_no, property_no, pic_division, pic_name, pic_savename)
    	values
    	(seq_pic_room_no.nextval, #{property_no}, #{pic_division}, #{pic_name}, #{pic_savename})   
    </insert>
@@ -92,11 +93,9 @@
    	where property_no = #{property_no}
    </update>
   
-    <!--  매물 사진 수정 -->
-   <update id="update_picture" parameterType="Picture">
-   update picture set pic_division = #{pic_division}, 
-   pic_name = #{pic_name}, pic_savename = #{pic_savename}
-   where property_no = #{property_no}
+    <!--  매물 사진 수정 전 삭제 -->
+   <update id="delete_picture" parameterType="Picture">
+   delete picture where pic_room_no = #{pic_room_no}
    </update>
  
    <!--  매물 기본정보 보기 -->
@@ -123,6 +122,25 @@
    <!--  매물 사진 보기 -->
    <select id="select_property_picture" resultType="Picture" parameterType="_int">
    	select * from picture where property_no = #{property_no}
+   	 and pic_division = 'main'
+   	union
+   	select * from picture where property_no = #{property_no}
+   	 and pic_division = 'plan'
+   	union
+   	select * from picture where property_no = #{property_no}
+   	 and pic_division = 'front'
+   	union
+   	select * from picture where property_no = #{property_no}
+   	 and pic_division = 'room'
+   	union
+   	select * from picture where property_no = #{property_no}
+   	 and pic_division = 'kitchen'
+    union
+   	select * from picture where property_no = #{property_no}
+   	 and pic_division = 'bathroom'
+   	union
+   	select * from picture where property_no = #{property_no}
+   	 and pic_division = 'normal'
    </select>
    
    <!--  보기 시 조회수 증가 -->

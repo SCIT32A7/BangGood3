@@ -57,6 +57,21 @@ public class PropertyRepository {
 		}
 		return result;
 	}
+	
+	// 사진만 입력 메소드
+	public int insert_picture(ArrayList<Picture> pList){
+		PropertyDAO pd = query.getMapper(PropertyDAO.class);
+		int result=0;
+		for (int i = 0; i < pList.size(); i++) {
+			try {
+				result += pd.insert_picture(pList.get(i));
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return result;
+	}
 
 	// 매물 기본정보 불러오기
 	public Property select_Property(int property_no) {
@@ -147,6 +162,21 @@ public class PropertyRepository {
 			e.printStackTrace();
 		}
 		return read_picture;
+	}
+
+	// 매물 사진정보 업데이트 사진 삭제하기
+	public int delete_Picture(ArrayList<Picture> pList) {
+		PropertyDAO pd = query.getMapper(PropertyDAO.class);
+		int result = 0;
+		for (Picture picture : pList) {
+			try {
+				result += pd.delete_picture(picture);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return result;
 	}
 
 	// 조회수 증가

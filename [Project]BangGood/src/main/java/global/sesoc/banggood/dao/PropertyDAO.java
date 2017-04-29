@@ -41,7 +41,7 @@ public interface PropertyDAO {
 	public int update_option(Option option) throws Exception;  // 옵션 수정
 	public int update_maintence(Maintence maintence) throws Exception;  // 관리비 수정
 	
-	public int update_picture(Picture picture) throws Exception;  // 사진 삭제 후 재등록
+	public int delete_picture(Picture picture) throws Exception;  // 사진 삭제 후 재등록
 
 	//조건조회
 	public ArrayList<String> searchProperty(Property_search search) throws Exception;

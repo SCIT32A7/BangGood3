@@ -63,7 +63,7 @@
 			<div class="pull-left">
 				<a href="searchboard" class="btn-u btn-block rounded g-mb-30"
 					style="width: 80px;">돌아가기</a>
-				<c:if test = "${loginId == searchBoard.custid && loginId == 'admin'}">
+				<c:if test = "${loginId == searchBoard.custid || loginId == 'admin'}">
 				<a href="javascript:deleteCheck()" class="btn-u btn-block rounded g-mb-30"
 					style="width: 80px;">삭제하기</a>
 				<a href="javascript:updateCheck()" class="btn-u btn-block rounded g-mb-30"
