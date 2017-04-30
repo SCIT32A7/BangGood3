@@ -116,16 +116,16 @@
             <!--=== title left ===-->
             <div class="col-sm-8 view_bg g-mb-30">
             <div class="inner g-mt-30">
-               <ul>
+              
                <c:forEach var = "pic" items = "${read_picture}">
-                   <li><a href="download?pic_name=${read_picture[0].pic_name}&pic_savename=${read_picture[0].pic_savename}" data-lightbox='roadtrip'>
-                     <img src="download?pic_name=${pic.pic_name}&pic_savename=${pic.pic_savename}">
-               </a></li>
+                   <a href="download?pic_name=${read_picture[0].pic_name}&pic_savename=${read_picture[0].pic_savename}" data-lightbox='roadtrip'>
+                     <img style="position: absolute;left:11.5%;" src="download?pic_name=${pic.pic_name}&pic_savename=${pic.pic_savename}">
+               </a>
                </c:forEach>
-               </ul>
+              <div class="clearfix"></div>
             </div>
-            <div class="clearfix"></div>
-            <div class="thumwrap clearfix">
+            
+            <div class="thumwrap">
                <ul class="gallery">
                   <c:forEach var = "pic" items = "${read_picture}">
                      <li><img src="download?pic_name=${pic.pic_name}&pic_savename=${pic.pic_savename}"></li>
