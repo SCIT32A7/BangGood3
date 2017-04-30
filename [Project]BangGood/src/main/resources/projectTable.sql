@@ -22,6 +22,9 @@ drop sequence seq_searchboard_no;
 drop sequence seq_searchreply_no;
 drop sequence seq_floorplan_datanum;
 
+-- 테이블 만들고 데이터 임포트 후 반드시 아래의 문장을 추가적으로 실행해 줄 것. maintence_fee의 default 0이 먹히지 않음.
+update property set maintence_fee = 0 where maintence_fee is null;
+
 -- 회원
 CREATE TABLE customer
 (

@@ -107,7 +107,14 @@ public class RadarChartController {
 	
 	public Map<String, RadarChart> getAnalysisData(RadarChart radar, Map<String, Object> avg) {
 		Map<String, RadarChart> map = new HashMap<>();
-		
+		System.out.println("aasdf=>"+avg.get("MAXMAINTENCE"));
+		//관리비가 입력이 안됀 데이터에 대한 default = 0으로 초기화
+		if(avg.get("MAXMAINTENCE") == null) {
+			avg.replace("MAXMAINTENCE", 0);
+		}
+		if(avg.get("MINMAINTENCE") == null) {
+			avg.replace("MINMAINTENCE", 0);
+		}
 		//통계를 위한 지역 최대값과 최소값
 		Double maxdeposit = Double.parseDouble(String.valueOf(avg.get("MAXDEPOSIT")));
 		Double mindeposit = Double.parseDouble(String.valueOf(avg.get("MINDEPOSIT")));
