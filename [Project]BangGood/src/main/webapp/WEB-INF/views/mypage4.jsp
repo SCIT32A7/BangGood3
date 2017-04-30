@@ -25,37 +25,26 @@
 
 <!-- Meta -->
 <meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=Edge">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="">
-<meta name="author" content="">
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="description" content="">
+		<meta name="author" content="">
 
-<!-- Web Fonts -->
-<link
-	href='https://fonts.googleapis.com/css?family=Ek+Mukta:400,600,700'
-	rel='stylesheet' type='text/css'>
-<link rel="stylesheet"
-	href="assets/plugins/bootstrap/css/bootstrap.min.css">
-<link rel="stylesheet" href="assets/css/app.css">
-<link rel="stylesheet" href="assets/css/one.style.css">
+	<!-- Fonts -->
+		<link href='https://fonts.googleapis.com/css?family=Ek+Mukta:400,600,700' rel='stylesheet' type='text/css'>
+		<link rel="stylesheet" href="assets/plugins/font-awesome/css/font-awesome.min.css">
+	
+		<link rel="stylesheet" href="assets/plugins/bootstrap/css/bootstrap.min.css">
+		<link rel="stylesheet" href="assets/css/app.css">
+		<link rel="stylesheet" href="assets/css/one.style.css">
 
-<!-- CSS Implementing Plugins -->
-<link rel="stylesheet"
-	href="assets/plugins/owl-carousel2/assets/owl.carousel.css">
-<link rel="stylesheet"
-	href="assets/plugins/owl-carousel/owl-carousel/owl.theme.css">
-<link rel="stylesheet"
-	href="assets/plugins/hover-effects/css/custom-hover-effects.css">
-<link rel="stylesheet" href="assets/plugins/pace/pace-flash.css">
-<!-- CSS Theme -->
-<link rel="stylesheet" href="assets/css/construction.style.css">
-<!-- 메인 -->
-<link rel="stylesheet" href="assets/css/global.css">
-<!-- 메인 글씨 -->
-<!-- CSS Customization -->
-<link rel="stylesheet" href="assets/css/custom.css">
-<link rel="stylesheet"
-	href="assets/plugins/font-awesome/css/font-awesome.min.css">
+		<!-- CSS Implementing Plugins -->
+		<link rel="stylesheet" href="assets/plugins/hover-effects/css/custom-hover-effects.css">
+		<link rel="stylesheet" href="assets/plugins/pace/pace-flash.css">
+		<link rel="stylesheet" href="assets/css/construction.style.css">
+		<link rel="stylesheet" href="assets/css/global.css">
+		<!-- CSS Customization -->
+		<link rel="stylesheet" href="assets/css/custom.css">
 </head>
 
 <body id="body" data-spy="scroll" data-target=".one-page-header"
@@ -72,7 +61,7 @@
 			<h1>My page</h1>
 		</div>
 	</div>
-	<div class="container content profile">
+	<div class="container content profile"style="height:700px;">
 
 		<div class="row">
 			<!--Left Sidebar-->
@@ -81,7 +70,6 @@
 				<h4>
 					<span>${loginId}</span> 님 마이페이지 입니다.
 				</h4>
-				<hr>
 
 				<div class="margin-bottom-50"></div>
 				<ul class="list-group sidebar-nav-v1 margin-bottom-40"
@@ -116,14 +104,12 @@
 					</div>
 					<!--row-->
 					<div class="row">
-						<div class="col-sm-8">
+						<div class="col-sm-9" style="margin-left:50px; padding:30px;">
 						<form action ="customer_update" method = "post" onsubmit = "return checkUpdate()">
 							<table class="table">							
-								<div class="form-group">
-									<tbody>
-										<tr>
-											<th>아이디</th>
-											<td><span>${modify_customer.custid}</span></td>
+										<tr >
+											<th style="border-top:none">아이디</th>
+											<td style="border-top:none"><span>${modify_customer.custid}</span></td>
 										</tr>
 										<tr>
 											<th>비밀번호</th>
@@ -144,50 +130,33 @@
 											<th>이메일</th>
 											<td><span id = "email" name = "email">${modify_customer.email}</span></td>
 										</tr>
-										<tr>
-											<td colspan="2">
-											<input class="rounded form-control mypage_modify_btn" type="submit" value="저장"></td>
-										</tr>
-									</tbody>
-								</div>
 								<!--// form-->
 							</table>
 						</form>
+						<input class="rounded form-control mypage_modify_btn" type="submit" value="저장" style="font-size:26px; height:46px;">
 						</div>
 					</div>
-					<hr>
 					<!--  end row -->
 				</div>
 				<!-- End Profile Content -->
 			</div>
 		</div>
+		</div>
+		<!-- footer -->
+			<%@ include file="footer.jsp"%> 
+			<!-- end footer -->
+		</main>
 		<!--=== End Profile ===-->
 		<!-- JS Global Compulsory -->
-		<script src="assets/plugins/jquery/jquery.min.js"></script>
+				<script src="assets/plugins/jquery/jquery.min.js"></script>
 		<script src="assets/plugins/jquery/jquery-migrate.min.js"></script>
 		<script src="assets/plugins/bootstrap/js/bootstrap.js"></script>
 		<!-- JS Implementing Plugins -->
-		<script src="assets/plugins/smoothScroll.js"></script>
-		<!-- 스크럴 -->
-		<script src="assets/plugins/jquery.easing.min.js"></script>
-		<!-- 애니메이션 -->
 		<script src="assets/plugins/pace/pace.min.js"></script>
-		<script src="assets/plugins/owl-carousel2/owl.carousel.min.js"></script>
-		<script
-			src="assets/plugins/sky-forms-pro/skyforms/js/jquery.form.min.js"></script>
-		<script
-			src="assets/plugins/sky-forms-pro/skyforms/js/jquery.validate.min.js"></script>
-		<script
-			src="assets/plugins/cube-portfolio/cubeportfolio/js/jquery.cubeportfolio.min.js"></script>
 		<script src="assets/plugins/modernizr.js"></script>
-		<!-- 브라우저 호환성 -->
 		<script src="assets/plugins/backstretch/jquery.backstretch.min.js"></script>
 		<!-- JS Page Level-->
 		<script src="assets/js/one.app.js"></script>
-		<script src="assets/js/cube-portfolio.js"></script>
-		<script src="assets/js/contact.js"></script>
-		<script src="assets/js/promo.js"></script>
-
 		<!-- custom -->
 		<script src="assets/js/custom.js"></script>
 		<script type="text/javascript">

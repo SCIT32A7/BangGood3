@@ -10,38 +10,28 @@
 <title>banngg</title>
 
 <!-- Meta -->
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=Edge">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="">
-<meta name="author" content="">
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="description" content="">
+		<meta name="author" content="">
 
-<!-- Web Fonts -->
-<link
-	href='https://fonts.googleapis.com/css?family=Ek+Mukta:400,600,700'
-	rel='stylesheet' type='text/css'>
-<link rel="stylesheet"
-	href="assets/plugins/bootstrap/css/bootstrap.min.css">
-<link rel="stylesheet" href="assets/css/app.css">
-<link rel="stylesheet" href="assets/css/one.style.css">
+	<!-- Fonts -->
+		<link href='https://fonts.googleapis.com/css?family=Ek+Mukta:400,600,700' rel='stylesheet' type='text/css'>
+		<link rel="stylesheet" href="assets/plugins/font-awesome/css/font-awesome.min.css">
+	
+		<link rel="stylesheet" href="assets/plugins/bootstrap/css/bootstrap.min.css">
+		<link rel="stylesheet" href="assets/css/app.css">
+		<link rel="stylesheet" href="assets/css/one.style.css">
 
-<!-- CSS Implementing Plugins -->
-<link rel="stylesheet"
-	href="assets/plugins/owl-carousel2/assets/owl.carousel.css">
-<link rel="stylesheet"
-	href="assets/plugins/owl-carousel/owl-carousel/owl.theme.css">
-<link rel="stylesheet"
-	href="assets/plugins/hover-effects/css/custom-hover-effects.css">
-<link rel="stylesheet" href="assets/plugins/pace/pace-flash.css">
-<!-- CSS Theme -->
-<link rel="stylesheet" href="assets/css/construction.style.css">
-<!-- 메인 -->
-<link rel="stylesheet" href="assets/css/global.css">
-<!-- 메인 글씨 -->
-<!-- CSS Customization -->
-<link rel="stylesheet" href="assets/css/custom.css">
-<link rel="stylesheet"
-	href="assets/plugins/font-awesome/css/font-awesome.min.css">
+		<!-- CSS Implementing Plugins -->
+		<link rel="stylesheet" href="assets/plugins/hover-effects/css/custom-hover-effects.css">
+		<link rel="stylesheet" href="assets/plugins/pace/pace-flash.css">
+		<link rel="stylesheet" href="assets/css/construction.style.css">
+		<link rel="stylesheet" href="assets/css/global.css">
+		<!-- CSS Customization -->
+		<link rel="stylesheet" href="assets/css/custom.css">
+		
 </head>
 
 <body id="body" data-spy="scroll" data-target=".one-page-header"
@@ -58,7 +48,7 @@
 			<h1>My page</h1>
 		</div>
 	</div>
-	<div class="container content profile">
+	<div class="container content profile" style="height:700px;">
 
 		<div class="row">
 			<!--Left Sidebar-->
@@ -174,33 +164,23 @@
 				<!-- End Profile Content -->
 			</div>
 		</div>
+		</div>
+		<!-- footer -->
+			<%@ include file="footer.jsp"%> 
+			<!-- end footer -->
+		</main>
+		
 		<!--=== End Profile ===-->
 		<!-- JS Global Compulsory -->
-		<script src="assets/plugins/jquery/jquery.min.js"></script>
+				<script src="assets/plugins/jquery/jquery.min.js"></script>
 		<script src="assets/plugins/jquery/jquery-migrate.min.js"></script>
 		<script src="assets/plugins/bootstrap/js/bootstrap.js"></script>
 		<!-- JS Implementing Plugins -->
-		<script src="assets/plugins/smoothScroll.js"></script>
-		<!-- 스크럴 -->
-		<script src="assets/plugins/jquery.easing.min.js"></script>
-		<!-- 애니메이션 -->
 		<script src="assets/plugins/pace/pace.min.js"></script>
-		<script src="assets/plugins/owl-carousel2/owl.carousel.min.js"></script>
-		<script
-			src="assets/plugins/sky-forms-pro/skyforms/js/jquery.form.min.js"></script>
-		<script
-			src="assets/plugins/sky-forms-pro/skyforms/js/jquery.validate.min.js"></script>
-		<script
-			src="assets/plugins/cube-portfolio/cubeportfolio/js/jquery.cubeportfolio.min.js"></script>
 		<script src="assets/plugins/modernizr.js"></script>
-		<!-- 브라우저 호환성 -->
 		<script src="assets/plugins/backstretch/jquery.backstretch.min.js"></script>
 		<!-- JS Page Level-->
 		<script src="assets/js/one.app.js"></script>
-		<script src="assets/js/cube-portfolio.js"></script>
-		<script src="assets/js/contact.js"></script>
-		<script src="assets/js/promo.js"></script>
-
 		<!-- custom -->
 		<script src="assets/js/custom.js"></script>
 		<script type="text/javascript">

@@ -11,37 +11,26 @@
 
 <!-- Meta -->
 <meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=Edge">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="">
-<meta name="author" content="">
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="description" content="">
+		<meta name="author" content="">
 
-<!-- Web Fonts -->
-<link
-	href='https://fonts.googleapis.com/css?family=Ek+Mukta:400,600,700'
-	rel='stylesheet' type='text/css'>
-<link rel="stylesheet"
-	href="assets/plugins/bootstrap/css/bootstrap.min.css">
-<link rel="stylesheet" href="assets/css/app.css">
-<link rel="stylesheet" href="assets/css/one.style.css">
+	<!-- Fonts -->
+		<link href='https://fonts.googleapis.com/css?family=Ek+Mukta:400,600,700' rel='stylesheet' type='text/css'>
+		<link rel="stylesheet" href="assets/plugins/font-awesome/css/font-awesome.min.css">
+	
+		<link rel="stylesheet" href="assets/plugins/bootstrap/css/bootstrap.min.css">
+		<link rel="stylesheet" href="assets/css/app.css">
+		<link rel="stylesheet" href="assets/css/one.style.css">
 
-<!-- CSS Implementing Plugins -->
-<link rel="stylesheet"
-	href="assets/plugins/owl-carousel2/assets/owl.carousel.css">
-<link rel="stylesheet"
-	href="assets/plugins/owl-carousel/owl-carousel/owl.theme.css">
-<link rel="stylesheet"
-	href="assets/plugins/hover-effects/css/custom-hover-effects.css">
-<link rel="stylesheet" href="assets/plugins/pace/pace-flash.css">
-<!-- CSS Theme -->
-<link rel="stylesheet" href="assets/css/construction.style.css">
-<!-- 메인 -->
-<link rel="stylesheet" href="assets/css/global.css">
-<!-- 메인 글씨 -->
-<!-- CSS Customization -->
-<link rel="stylesheet" href="assets/css/custom.css">
-<link rel="stylesheet"
-	href="assets/plugins/font-awesome/css/font-awesome.min.css">
+		<!-- CSS Implementing Plugins -->
+		<link rel="stylesheet" href="assets/plugins/hover-effects/css/custom-hover-effects.css">
+		<link rel="stylesheet" href="assets/plugins/pace/pace-flash.css">
+		<link rel="stylesheet" href="assets/css/construction.style.css">
+		<link rel="stylesheet" href="assets/css/global.css">
+		<!-- CSS Customization -->
+		<link rel="stylesheet" href="assets/css/custom.css">
 </head>
 
 <body id="body" data-spy="scroll" data-target="one-page-header"
@@ -76,19 +65,19 @@
 					<tbody>
 						<tr>
 							<th style="width: 100px">제목</th>
-							<td><span>${searchBoard.searchBoard_title}</span></td>
+							<td><span style="font-size: 18px;">${searchBoard.searchBoard_title}</span></td>
 						</tr>
 						<tr>
 							<th style="width: 100px">작성자</th>
-							<td><span>${searchBoard.custid}</span></td>
+							<td><span style="font-size: 18px;"> ${searchBoard.custid}</span></td>
 						</tr>
 						<tr>
 							<th style="width: 100px">작성일</th>
-							<td><span>${searchBoard.searchBoard_inputdate}</span></td>
+							<td><span style="font-size: 18px;">${searchBoard.searchBoard_inputdate}</span></td>
 						</tr>
 						<tr>
 							<th>내용</th>
-							<td><span style = "white-space: pre-line">${searchBoard.searchBoard_text}</span></td>
+							<td><input type="text" style = "white-space: pre-line; width:100%; padding:15px;" required="required" readonly="readonly" value="${searchBoard.searchBoard_text}"></td>
 						</tr>
 					</tbody>
 				</div>
@@ -99,52 +88,39 @@
 		<!-- end row -->
 		<div class="row">
 				<!-- 댓글 쓰는곳 -->
-			<div class="col-md-12">
-					<input type ="hidden" name = "boardnum" id = "boardnum" value = "${searchBoard.searchBoard_no}">
-					<input type ="hidden" name = "loginId" id = "loginId" value = "${loginId}">
+				<div class="col-md-3"></div>
+			<div class="col-md-9">
+					
 					<input type ="text" name ="searchreply_text" id ="searchreply_text" class="form-control rounded pull-left" style="width:500px; height:45px">
-					<input type ="button" id = "searchreply_insert" value="댓글 등록" class="btn-u btn-block rounded pull-left" style="width:100px; height:45px;">
-					<br>
-						      	
+					<input type ="button" id = "searchreply_insert" value="댓글 등록" class="btn-u btn-block rounded pull-left g-ml-10" style="width:100px; height:45px;">
+					<input type ="hidden" name = "boardnum" id = "boardnum" value = "${searchBoard.searchBoard_no}">
+					<input type ="hidden" name = "loginId" id = "loginId" value = "${loginId}">	
+				
+			
 			</div>
+		<div class="clearfix"></div>
+				<span id = "replyArea"></span>	
+			
 		</div>
 		<div class="clearfix margin-bottom-20"></div>
-		<span id = "replyArea"></span>	
+		
 	</div>
 	<!-- content -->
 	
 
 	</main>
 	<!-- JS Global Compulsory -->
-	<script src="assets/plugins/jquery/jquery.min.js"></script>
-	<script src="assets/plugins/jquery/jquery-migrate.min.js"></script>
-	<script src="assets/plugins/bootstrap/js/bootstrap.js"></script>
-
-	<!-- JS Implementing Plugins -->
-	<script src="assets/plugins/smoothScroll.js"></script>
-	<!-- 스크럴 -->
-	<script src="assets/plugins/jquery.easing.min.js"></script>
-	<!-- 애니메이션 -->
-	<script src="assets/plugins/pace/pace.min.js"></script>
-	<script src="assets/plugins/owl-carousel2/owl.carousel.min.js"></script>
-	<script
-		src="assets/plugins/sky-forms-pro/skyforms/js/jquery.form.min.js"></script>
-	<script
-		src="assets/plugins/sky-forms-pro/skyforms/js/jquery.validate.min.js"></script>
-	<script
-		src="assets/plugins/cube-portfolio/cubeportfolio/js/jquery.cubeportfolio.min.js"></script>
-	<script src="assets/plugins/modernizr.js"></script>
-	<!-- 브라우저 호환성 -->
-	<script src="assets/plugins/backstretch/jquery.backstretch.min.js"></script>
-
-	<!-- JS Page Level-->
-	<script src="assets/js/one.app.js"></script>
-	<script src="assets/js/cube-portfolio.js"></script>
-	<script src="assets/js/contact.js"></script>
-	<script src="assets/js/promo.js"></script>
-
-	<!-- custom -->
-	<script src="assets/js/custom.js"></script>
+		<script src="assets/plugins/jquery/jquery.min.js"></script>
+		<script src="assets/plugins/jquery/jquery-migrate.min.js"></script>
+		<script src="assets/plugins/bootstrap/js/bootstrap.js"></script>
+		<!-- JS Implementing Plugins -->
+		<script src="assets/plugins/pace/pace.min.js"></script>
+		<script src="assets/plugins/modernizr.js"></script>
+		<script src="assets/plugins/backstretch/jquery.backstretch.min.js"></script>
+		<!-- JS Page Level-->
+		<script src="assets/js/one.app.js"></script>
+		<!-- custom -->
+		<script src="assets/js/custom.js"></script>
 <script type="text/javascript">
 
 //게시글 삭제
@@ -186,12 +162,12 @@ function init() {
 
 // 댓글 리스트 출력 함수
 function output(resp) {
-	var data = '<table>';
+	var data = '<table >';
 	$.each(resp, function(index, item){
-		data += '<tr class="reviewtr">';
-		data += '	<td class="name" style="padding-right:30px; color:#ccc">' + item.custid + '</td>';
-		data += '	<td class="text" style="width:50%">' + item.searchReply_text + '</td>';
-		data += '	<td class="regdate">' + item.searchReply_inputdate + '</td>';
+		data += '<tr class="reviewtr" style="border-bottom:1px solid #ccc">';
+		data += '	<td class="name" style="padding-right:30px;">' + item.custid + '</td>';
+		data += '	<td class="text" style="width:100%">' + item.searchReply_text + '</td>';
+		data += '	<td class="regdate text-right">' + item.searchReply_inputdate + '</td>';
 		data += '	<td><input type="button" class="delbtn btn-u btn-block rounded g-mb-5" style="background-color:#f7be22";" reply_id="'+item.custid+'" data-sno="'+item.searchReply_no+'"value="삭제" /></td>';
 		data += '</tr>';
 	});

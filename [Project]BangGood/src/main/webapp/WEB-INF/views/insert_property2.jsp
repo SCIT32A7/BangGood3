@@ -255,7 +255,7 @@
 				</div>
 				<div class="furniture" style="display:none;overflow: auto;">
 		               <div id="tab_switcher" class="tab_switcher">
-				            <ul class="furniture_tab" style="list-style:none">
+				            <ul class="furniture_tab" style="list-style:none;padding: 10px;" >
 				               <li id="common" class="tab_switcher_img furniture_menu"> common <i class="fa fa-caret-right"></i></li>
 				               <li id="room" class="tab_switcher_img furniture_menu" onclick="$('.room').toggle()">room <i class="fa fa-caret-right"></i></li>
 				               <li id="laundryRoom" class="tab_switcher_img furniture_menu" onclick="$('.laundryRoom').toggle()">laundryRoom <i class="fa fa-caret-right"></i></li>
