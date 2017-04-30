@@ -26,33 +26,20 @@
 <meta name="description" content="">
 <meta name="author" content="">
 
-<!-- Web Fonts -->
-<link
-	href='https://fonts.googleapis.com/css?family=Ek+Mukta:400,600,700'
-	rel='stylesheet' type='text/css'>
-<link rel="stylesheet"
-	href="assets/plugins/bootstrap/css/bootstrap.min.css">
-<link rel="stylesheet" href="assets/css/app.css">
-<link rel="stylesheet" href="assets/css/one.style.css">
+<link href='https://fonts.googleapis.com/css?family=Ek+Mukta:400,600,700' rel='stylesheet' type='text/css'>
+		<link rel="stylesheet" href="assets/plugins/font-awesome/css/font-awesome.min.css">
+	
+		<link rel="stylesheet" href="assets/plugins/bootstrap/css/bootstrap.min.css">
+		<link rel="stylesheet" href="assets/css/app.css">
+		<link rel="stylesheet" href="assets/css/one.style.css">
 
-<!-- CSS Implementing Plugins -->
-<link rel="stylesheet" href="assets/plugins/owl-carousel2/assets/owl.carousel.css">
-<link rel="stylesheet"
-	href="assets/plugins/owl-carousel/owl-carousel/owl.theme.css">
-<link rel="stylesheet"
-	href="assets/plugins/hover-effects/css/custom-hover-effects.css">
-<link rel="stylesheet" href="assets/plugins/pace/pace-flash.css">
-<!-- CSS Theme -->
-<link rel="stylesheet" href="assets/css/construction.style.css">
-<!-- 메인 -->
-<link rel="stylesheet" href="assets/css/global.css">
-<link rel="stylesheet" href="assets/plugins/fancybox/source/jquery.fancybox.css">
-<!-- 메인 글씨 -->
-<!-- CSS Customization -->
-<link rel="stylesheet" href="assets/css/custom.css">
-<link rel="stylesheet"
-	href="assets/plugins/font-awesome/css/font-awesome.min.css">
-
+		<!-- CSS Implementing Plugins -->
+		<link rel="stylesheet" href="assets/plugins/hover-effects/css/custom-hover-effects.css">
+		<link rel="stylesheet" href="assets/plugins/pace/pace-flash.css">
+		<link rel="stylesheet" href="assets/css/construction.style.css">
+		<link rel="stylesheet" href="assets/css/global.css">
+		<!-- CSS Customization -->
+		<link rel="stylesheet" href="assets/css/custom.css">
 <!-- graph -->
 <script type="text/javascript" src="assets/plugins/jquery/jquery-3.2.0.min.js"></script>
 <link rel="stylesheet" href="assets/css/Nwagon.css" type="text/css">
@@ -89,18 +76,8 @@
 	</style>	
 </head>
 <body id="body" data-spy="scroll" data-target=".one-page-header"
-	class="demo-lightbox-gallery font-main promo-padding-top">
+	class="demo-lightbox-gallery font-main">
 	<main class="wrapper"> <!-- header --> 
-	<%@ include file="header.jsp"%> 
-	<!-- end header --> 
-	<!-- menu -->
-	<%@ include file="join.jsp"%> 
-	<%@ include file="join2.jsp"%> 
-	<%@ include file="join3.jsp"%> 
-	<%@ include file="login.jsp"%> 
-	<!-- end menu -->
-		<!--contents-->
-	<!--=== title Part ===-->
 			<div class="view_title_bg">
 		<div class="container">
 			<div class="col-sm-12 text-center g-mt-40 g-mb-40">
@@ -119,7 +96,7 @@
               
                <c:forEach var = "pic" items = "${read_picture}">
                    <a href="download?pic_name=${read_picture[0].pic_name}&pic_savename=${read_picture[0].pic_savename}" data-lightbox='roadtrip'>
-                     <img style="position: absolute;left:11.5%;" src="download?pic_name=${pic.pic_name}&pic_savename=${pic.pic_savename}">
+                     <img style="position: absolute;left:11.5%;" src="download?pic_name=${read_picture[0].pic_name}&pic_savename=${read_picture[0].pic_savename}">
                </a>
                </c:forEach>
               <div class="clearfix"></div>
@@ -280,7 +257,22 @@
      			   </li>      
    				 </ul>
 				</div>
-				<div class="g-pb-20"></div>
+				<div class="g-pb-30"></div>
+								<!-- 댓글 시작 -->
+	<div id ="property_reply">	
+		<form id = "replyform" action = "insert_propertyReply" method = "post" enctype="multipart/form-data">
+			<ul style="list-style: none;" class="pull-width g-mb-20">
+				<li><input type = "text" id ="propertyreply_text" name = "propertyreply_text" class="form-control pull-left" style="width:80%"></li>
+				<li><input type = "submit" id ="click_reply" class="form-control pull-left btn-u btn-block rounded g-ml-10" value = "댓글입력" style="width:15%"></li>
+				<li><input type="file" id = "replyFile" name="replyFile" accept=".gif, .jpg, .png" class="pull-left"></li>
+			</ul>
+			<input type ="hidden" id = "property_no" name = "property_no" value = "${read_property.property_no}">
+		</form>
+		<div class="clearfix margin-bottom-20"></div>
+		<span id = "replyArea"></span>
+	</div>
+	
+	<!-- 댓글 끝 -->
             </div>
             <!--=== End title left ===-->
             <!--=== title right ===-->
@@ -329,7 +321,7 @@
                </div>
             </div>
 				<!--=== End title right ===-->
-				
+
 			</div>
 		</div>
 	</div>
@@ -338,52 +330,20 @@
 	<!--=== End Content Part ===-->
 	</main>
 	
-	<!-- 댓글 시작 -->
-	<div id ="property_reply">	
-		<form id = "replyform" action = "insert_propertyReply" method = "post" enctype="multipart/form-data">
-			<input type = "text" id ="propertyreply_text" name = "propertyreply_text">
-			<input type = "submit" id ="click_reply" value = "댓글입력">
-			<input type="file" id = "replyFile" name="replyFile" accept=".gif, .jpg, .png">
-       	    <input type ="hidden" id = "property_no" name = "property_no" value = "${read_property.property_no}">
-		</form>
-		<div class="clearfix margin-bottom-20"></div>
-		<span id = "replyArea"></span>
-	</div>
-	
-	<!-- 댓글 끝 -->
 	
 	
-	<!-- JS Global Compulsory -->
 	
 	<script src="assets/plugins/jquery/jquery.min.js"></script>
-	<script src="assets/plugins/jquery/jquery-migrate.min.js"></script>
-	<script src="assets/plugins/bootstrap/js/bootstrap.js"></script>
-
-	<!-- JS Implementing Plugins -->
-	<script src="assets/plugins/smoothScroll.js"></script>
-	<!-- 스크럴 -->
-	<script src="assets/plugins/jquery.easing.min.js"></script>
-	<!-- 애니메이션 -->
-	<script src="assets/plugins/pace/pace.min.js"></script>
-	<script src="assets/plugins/owl-carousel2/owl.carousel.min.js"></script>
-	<script
-		src="assets/plugins/sky-forms-pro/skyforms/js/jquery.form.min.js"></script>
-	<script
-		src="assets/plugins/sky-forms-pro/skyforms/js/jquery.validate.min.js"></script>
-	<script
-		src="assets/plugins/cube-portfolio/cubeportfolio/js/jquery.cubeportfolio.min.js"></script>
-	<script src="assets/plugins/modernizr.js"></script>
-	
-	<script src="assets/plugins/backstretch/jquery.backstretch.min.js"></script>
-
-	<!-- JS Page Level-->
-	<script src="assets/js/one.app.js"></script>
-	<script src="assets/js/cube-portfolio.js"></script>
-	<script src="assets/js/contact.js"></script>
-	<script src="assets/js/promo.js"></script>
-	<!-- custom -->
-	<script src="assets/js/custom.js"></script>
-	<script src="assets/plugins/fancybox/source/jquery.fancybox.pack.js"></script>
+		<script src="assets/plugins/jquery/jquery-migrate.min.js"></script>
+		<script src="assets/plugins/bootstrap/js/bootstrap.js"></script>
+		<!-- JS Implementing Plugins -->
+		<script src="assets/plugins/pace/pace.min.js"></script>
+		<script src="assets/plugins/modernizr.js"></script>
+		<script src="assets/plugins/backstretch/jquery.backstretch.min.js"></script>
+		<!-- JS Page Level-->
+		<script src="assets/js/one.app.js"></script>
+		<!-- custom -->
+		<script src="assets/js/custom.js"></script>
 	<!-- graph -->
 	<script type="text/javascript" src="assets/js/radar.js"></script>
 	<script type="text/javascript" src="assets/js/Nwagon.js"></script>
@@ -444,13 +404,12 @@
 	
 	// 댓글 리스트 출력 함수
 	function output(resp) {
-	var data = '<table>';
+	var data = '<table class="g-mb-20">';
 	$.each(resp, function(index, item){
 		data += '<tr class="reviewtr">';
-		data += '	<td class="name" style="padding-right:30px; color:#ccc">' + item.custid + '</td>';
-		data += '	<td class="text" style="width:50%">' + item.propertyreply_text + '<br>';
-		data += ' 	<img src="reply_download?pic_name='+item.pic_name+'&pic_savename='+item.pic_savename+'"></td>';
-		data += '	<td class="regdate">' + item.propertyreply_inputdate + '</td>';
+		data += '	<td class="name" style="padding-right:30px;">' + item.custid + '</td>';
+		data += '	<td class="text" style="width:100%; "><a href="reply_download?pic_name='+item.pic_name+'&pic_savename='+item.pic_savename+'" data-lightbox="reply"><img src="reply_download?pic_name='+item.pic_name+'&pic_savename='+item.pic_savename+'" width="80" height="80" style="margin-right:10px;"></a>' + item.propertyreply_text+'</td>';
+		data += '	<td class="regdate text-right">' + item.propertyreply_inputdate + '</td>';
 		data += '	<td><input type="button" class="delbtn btn-u btn-block rounded g-mb-5" style="background-color:#f7be22";" reply_id="'+item.custid+'" reply_no="'+item.property_reply_no+'"value="삭제" /></td>';
 		data += '</tr>';
 	});
@@ -475,6 +434,9 @@
 					init();			
 				}
 			});
+		}else{
+			$("#propertyreply_text").val("");
+			$("#replyFile").val("");
 		}
 	}
 	
@@ -503,11 +465,10 @@
 	$(function(){		
 	var gal;
     var galout;
-    var  light = "data-lightbox='roadtrip'";
 		$(".gallery li img").on('click', function() {
 			gal = $(this).attr("src");
 			$(this).html(function(index, html) {
-				galout = "<a href='"+gal+"' data-lightbox='roadtrip'><img src='"+gal+"'/></a>";
+				galout = "<a href='"+gal+"' data-lightbox='roadtrip'><img src='"+gal+"' data-lightbox='roadtrip'/></a>";
 				$(".inner").html(galout);
 			});
 		});
@@ -713,7 +674,7 @@
 		if(confirm('해당 매물의 광고를 다시 시작하시겠습니까?')){
 			location.href = "restart_showing?property_no="+num;
 		}
-	}
+	};
 
 	</script>
 </body>

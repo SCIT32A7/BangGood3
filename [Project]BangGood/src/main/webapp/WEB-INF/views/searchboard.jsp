@@ -48,7 +48,7 @@
 		</div>
 	</div>
 	<!--=== End Breadcrumbs v2 ===--> <!--=== Content Part ===-->
-	<div class="container content">
+	<div class="container content" style="height:700px;">
 		<div class="headline">
 			<h2>문의게시판</h2>	
 			
