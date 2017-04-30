@@ -78,6 +78,7 @@ $(function() {
 					alert("인증에 성공하였습니다.");
 					checkMail = "yes";
 					$("#mail_check_form").modal("hide");
+					$("#joinemail").attr("readonly","readonly");
 					$("#JoinModal").modal();
 					//window.opener.Checknumfunction();
 					//window.close();

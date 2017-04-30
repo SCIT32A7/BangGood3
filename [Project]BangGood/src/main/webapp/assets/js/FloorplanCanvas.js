@@ -947,6 +947,9 @@ function getLineLength (startXY, endXY, scale) {
 	var length = 0;
 	var lengthRound= 0;
 	var px = Math.sqrt(Math.pow(endXY.x * 1 - startXY.x * 1, 2) + Math.pow(endXY.y * 1 - startXY.y * 1, 2));
+	if(typeof(scale) == "number") {
+		scale += "";
+	}
 	switch(scale) {
 	case "1": //원룸용 사이즈
 		length = px/9/10;
@@ -1426,7 +1429,7 @@ function moveTemp(req){
 	function saveFloorplan (on, url, saved_name, scale) {
 		//다운로드 직전 최신화
 		redrawAll();
-		
+		alert("저장시 스케일 입니다"+scale);
 		//데이터 collect
 		var iconArray = iconState.icons;
 		var lineArray = lines;
@@ -1493,17 +1496,18 @@ function moveTemp(req){
 		var objectArray = [];
 		var scale = 0;
 		var datanum = $("#combobox").val();
-		alert(datanum);	
+		
 		$.ajax({
 			method : "POST",
 			url : "loadCanvas",
 			data : { datanum : datanum },
 			async: false,
 			success : function(data) {
+				
 				var lines = JSON.parse(data.lines);
 				var icons = JSON.parse(data.icons);
 				var objects = JSON.parse(data.objects);
-				var scale = data.scale;
+				scale = data.scale;
 				if(Object.keys(lines).length !== 0) {
 					lineArray = lines;
 				} 

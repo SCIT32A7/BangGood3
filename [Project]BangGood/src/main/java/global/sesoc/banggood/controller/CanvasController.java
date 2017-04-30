@@ -92,7 +92,6 @@ public class CanvasController {
 	
 	@RequestMapping(value="/loadUserDataList", method = RequestMethod.POST)
 	public @ResponseBody ArrayList<Map<String, Object>> selectUserDataList(String custid) {
-		System.out.println(custid);
 		ArrayList<Map<String, Object>> list = null;
 		try {
 			list = repository.selectUserDataList(custid);

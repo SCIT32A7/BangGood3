@@ -32,6 +32,8 @@
 		<link rel="stylesheet" href="assets/css/global.css">
 		<!-- CSS Customization -->
 		<link rel="stylesheet" href="assets/css/custom.css">
+<!-- 데이터 불러오기 오토컴플릿 CSS -->
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <!-- 평면도 CSS -->
 <style type="text/css">
 .box {
@@ -106,7 +108,7 @@
 	top: -18px;
 	position: relative;
 }
-/* 평면도 시작시, 축적 선택 폼 체크 */
+/* 데이터 불러오기 오토컴플릿 스타일  */
 .custom-combobox {
 	position: relative;
 	display: inline-block;
@@ -349,8 +351,6 @@
 		<script src="assets/js/custom.js"></script>
 		
    <!-- 평면도 기능 코드 -->
-	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<!-- <script type="text/javascript" src="assets/js/jquery-3.2.0.min.js"></script> -->
 	<script type="text/javascript" src="assets/js/FloorplanCanvas.js"></script>
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<script type="text/javascript" src= "assets/js/autocomplete.js"></script>
@@ -471,8 +471,6 @@
 				isNotProperlySelected = false;
 			}
 		}
-		alert(scale);
-		
 		
 		//offset 설정 함수
 		$(window).on("scroll", function(e) { offsetReload() });
@@ -626,19 +624,21 @@
 				isDownloaded = false;
 				$('#canvasDownload').attr('href', '#').removeAttr('download');
 			} else {
-				downloadFloorplanPng(saved_name, scale);
+				downloadFloorplanPng(saved_name);
 				isDownloaded = true;
 			}
 		});
 		
 		//데이터베이스에서 데이터 로드 하기
 		$("#loadCanvasData").on("click", function() {
-			clearCanvas();
+			$("#clearCanvas").trigger("click");
 			var result = loadUserData();
 			console.log("loadData: "+JSON.stringify(result));
 			
 			//축척 scale 삽입
 			scale = result.scale;
+			console.log("축척 설정: "+result.scale);
+			console.log("scale:"+scale);
 			
 			//로드된 선 데이터 삽입
 			lines = result.lines;
@@ -958,7 +958,8 @@
 			//line//
 			else if (clickE && status == 'lineDrawing') { //그리는 도중의 status값 lineDrawing
 				//선 길이 출력 기능
-				px = getLineLength(downXY, XY, scale); //....................................
+				
+				px = getLineLength(downXY, XY, scale); 
 				ctx.save();
 				ctx.font = "15px Comic Sans MS";
 				ctx.fillStyle = "blue";

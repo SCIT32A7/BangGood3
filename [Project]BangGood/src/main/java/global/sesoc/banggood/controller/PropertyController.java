@@ -225,6 +225,14 @@ public class PropertyController {
 		status.setComplete();
 		return "redirect:mypage";
 	}
+	
+	// 계약서 출력 위한 매물 기본정보 받아오기
+	@RequestMapping(value ="/contract_property", method = RequestMethod.GET)
+	public String contract_property(int property_no, Model model){
+		Property property = pr.select_Property(property_no);		
+		model.addAttribute("property", property);
+		return "contract";
+	}
 
 	// 매물 내용 상세읽기, 지도에서 클릭, 장바구니에서 클릭, 등록매물에서 클릭
 	@RequestMapping(value = "/read_property", method = RequestMethod.GET)

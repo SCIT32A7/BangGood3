@@ -316,6 +316,9 @@
 							<a href="javascript:check_restartShowing(${read_property.property_no})">게시 재시작</a>
 						</button>
 					 </c:if>
+					 <button class="btn-u btn-u-lg btn-block">
+						<a href="contract_property?property_no=${read_property.property_no}">가계약서 출력</a>
+					 </button>
               	  </c:if>
               	 
                </div>

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import global.sesoc.banggood.repository.CustomerRepository;
+import global.sesoc.banggood.vo.Contract;
 import global.sesoc.banggood.vo.Customer;
 import global.sesoc.banggood.vo.Property_list;
 
@@ -140,6 +141,15 @@ public class CustomerController {
 		Customer loginCustomer = cr.search(custid);
 		model.addAttribute("modify_customer", loginCustomer);
 		return "mypage4";
+	}
+	
+	// 계약서 입력내용 가계약서화 하기
+	@RequestMapping(value = "/make_contract", method = RequestMethod.POST)
+	public String make_contract(Contract con, Model model){
+		System.out.println("계약서를 만들자");
+		//System.out.println(con);
+		//model.addAttribute("con", con);
+		return "search";
 	}
 
 }
