@@ -76,23 +76,16 @@ public class RadarChartController {
 		String[] temp1 = address.split("-");
 		String[] temp2 = temp1[0].split(" ");
 		
-		for(String a: temp2) {
-			System.out.println(a);
-		}
-		System.out.println("temp2사이즈 "+temp2.length);
 		int index = 0;
 		for(int i=1; i<temp2.length; i++){
 			if(isNumeric(temp2[i])) {
-				System.out.println("index "+i);
 				index = i;
 				break;
 			}
 		}
-		System.out.println("index "+index);
 		for(int i=1; i<index; i++) {
 			result += temp2[i]+" ";
 		}
-		System.out.println("111111=>"+result);
 		return result;
 	}
 	
@@ -107,14 +100,7 @@ public class RadarChartController {
 	
 	public Map<String, RadarChart> getAnalysisData(RadarChart radar, Map<String, Object> avg) {
 		Map<String, RadarChart> map = new HashMap<>();
-		System.out.println("aasdf=>"+avg.get("MAXMAINTENCE"));
-		//관리비가 입력이 안됀 데이터에 대한 default = 0으로 초기화
-		if(avg.get("MAXMAINTENCE") == null) {
-			avg.replace("MAXMAINTENCE", 0);
-		}
-		if(avg.get("MINMAINTENCE") == null) {
-			avg.replace("MINMAINTENCE", 0);
-		}
+
 		//통계를 위한 지역 최대값과 최소값
 		Double maxdeposit = Double.parseDouble(String.valueOf(avg.get("MAXDEPOSIT")));
 		Double mindeposit = Double.parseDouble(String.valueOf(avg.get("MINDEPOSIT")));
