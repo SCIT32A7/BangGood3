@@ -233,10 +233,11 @@ public class PropertyRepository {
 
 	// 맵 상의 매물의 간단 정보를 읽어오기 위한 메소드
 	public Property_map property_map(String address) {
+		System.out.println(" "+address);
 		PropertyDAO pd = query.getMapper(PropertyDAO.class);
 		Property_map pm = null;
 		try {
-			pm = pd.readProperty_map(address);
+			pm = pd.readProperty_map(" "+address);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
