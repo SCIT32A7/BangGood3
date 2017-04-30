@@ -105,9 +105,9 @@ table tr td {
 										value="주소검색" style="width:105px; margin-left:5px; float:left;height:35px;z-index:100">
 										<h4 class="insert_label" style="font-size:14px;">검색버튼을 눌러주세요.</h4>										
 										</div>
-										<input type="text" id="sample5_roadAddress" class="form-control rounded g-mb-5" readonly="readonly">
-										<input type="text" id="sample5_jibunAddress" name = "address" class="form-control rounded  g-mb-10" readonly="readonly">
-										<input type="text" class="form-control rounded" name = "address_detail" style="height:75px;" placeholder="상세주소를 입력해주세요." required="required">
+										<input type="text" id="sample5_roadAddress" class="form-control rounded g-mb-5" style="text-align:left" readonly="readonly">
+										<input type="text" id="sample5_jibunAddress" name = "address" style="text-align:left" class="form-control rounded  g-mb-10" readonly="readonly">
+										<input type="text" class="form-control rounded" name = "address_detail" style="height:75px; text-align:left" placeholder="상세주소를 입력해주세요." required="required">
 										
 										</td>
 										<td>

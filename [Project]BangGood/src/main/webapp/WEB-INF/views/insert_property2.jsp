@@ -34,15 +34,16 @@
 		<link rel="stylesheet" href="assets/css/custom.css">
 <!-- 평면도 CSS -->
 <style type="text/css">
-.box { display: inline-flex; }
- 
+.box {
+	display: inline-flex;
+}
+
 #rightCanvas {
 	background: #f0f0f5;
 	border: thin solid gray;
 	box-shadow: rgba(0, 0, 0, 0.5) 1px 0px 4px;
 	border-radius: 8px;
 }
-
 
 #menuSidebar {
 	background: #f7f7f7;
@@ -53,80 +54,92 @@
 
 .canvas__mirror {
 	height: 563px;
-    left: 14px;
-    position: absolute;
-    top: 0px;
-    z-index: -1;
+	left: 14px;
+	position: absolute;
+	top: 0px;
+	z-index: -1;
 }
 
 .pencilContainer {
-	background:"#76c2af";
+	background: "#76c2af";
 }
 
-.do_btn{
-	width:50px;
-	height:50px;
+.do_btn {
+	width: 50px;
+	height: 50px;
 }
 
-.tab_switcher{
-    width: 100%;
+.tab_switcher {
+	width: 100%;
 }
 
-
-.tab_switcher_img{
+.tab_switcher_img {
 	-webkit-filter: grayscale(100%);
 	filter: grayscale(100%);
 	-webkit-transition: .3s ease-in-out;
 	transition: .3s ease-in-out;
 }
 
-.tab_switcher_img img{
-	width:60px;
-	height:60px;
-	margin:6px 2px;
+.tab_switcher_img img {
+	width: 60px;
+	height: 60px;
+	margin: 6px 2px;
 }
 
-.tab_switcher_img:hover{
+.tab_switcher_img:hover {
 	-webkit-filter: grayscale(0);
 	filter: grayscale(0);
 }
-.tab_switcher_img:VISITED{
--webkit-filter: grayscale(0);
+
+.tab_switcher_img:VISITED {
+	-webkit-filter: grayscale(0);
 	filter: grayscale(0);
 }
+
 .furniture div img {
-	margin-bottom:5px;
+	margin-bottom: 5px;
 }
-.mouse_status{
-    width: 170px;
-    display: inline-block;
-    top: -18px;
-    position: relative;
+
+.mouse_status {
+	width: 170px;
+	display: inline-block;
+	top: -18px;
+	position: relative;
 }
 /* 평면도 시작시, 축적 선택 폼 체크 */
-  .custom-combobox {
-    position: relative;
-    display: inline-block;
-  }
-  .custom-combobox-toggle {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    margin-left: -1px;
-    padding: 0;
-  }
-  .custom-combobox-input {
-    margin: 0;
-    padding: 5px 10px;
-  }
-  .buttonImage{
-  	width:95px;
-  	height:95px;
-  	margin-left:5px;
-  }
-  .canvas_img{
-  	display:none;
-  }
+.custom-combobox {
+	position: relative;
+	display: inline-block;
+	width: 100%;
+}
+
+.custom-combobox-toggle {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	margin-left: -1px;
+	padding: 0;
+}
+
+.custom-combobox-input {
+	margin-left: 15px;
+	padding: 5px 15px;
+}
+
+.buttonImage {
+	width: 95px;
+	height: 95px;
+	margin-left: 5px;
+}
+
+.canvas_img {
+	display: none;
+}
+
+.furniture_menu {
+	cursor: pointer;
+	font-size: 1.9em;
+}
 </style>
   
 </head>
@@ -161,20 +174,20 @@
       <div class="clearfix"></div>
  		<div class="">
  		<h3>
-               
+           
 			<div id="image_container" class="image_container">
  		           <button class="pull-left g-mr-50 btn-u btn-block rounded insert_btn" style="background-color: #ccc; width:100px;">돌아가기</button>
            	<input type="image" id="undo" src="assets/img/icons/sidebar/undo.png" class="do_btn tab_switcher_img" data-toggle="tooltip" title="Undo 단축키 Ctrl+z">
            	<input type="image" id="redo" src="assets/img/icons/sidebar/redo.png" class="do_btn tab_switcher_img" data-toggle="tooltip" title="Redo 단축키 Ctrl+y">
-            <input type="image" src="assets/img/icons/sidebar/Init.png" alt="초기화" id="clearCanvas" class="do_btn tab_switcher_img" data-toggle="tooltip" title="초기화"/>
-           	<input type="image" src="assets/img/icons/sidebar/Eraser.png" alt="선택삭제" id="deleteCanvasObject" class="do_btn tab_switcher_img" 
+            <input type="image" src="assets/img/icons/sidebar/Init2.png" alt="초기화" id="clearCanvas" class="do_btn tab_switcher_img" data-toggle="tooltip" title="초기화"/>
+           	<input type="image" src="assets/img/icons/sidebar/Eraser2.png" alt="선택삭제" id="deleteCanvasObject" class="do_btn tab_switcher_img" 
            		data-toggle="tooltip" title="선택삭제  단축키: ESC+대상클릭+delete"/>
-           	<input type="image" src="assets/img/icons/sidebar/Rotation.png" alt="아이콘 회전" id="iconRotation" class="do_btn tab_switcher_img" data-toggle="tooltip" title="아이콘 회전 단축키:마우스 Wheel"/>
-           	<input type="image" src="assets/img/icons/sidebar/SelectorMode.png" alt="선택자 모드" id="SelectorMode" class="do_btn tab_switcher_img" data-toggle="tooltip" title="선택자 모드 단축키:ESC"/>
-           	<input type="image" src="assets/img/icons/sidebar/Shift.png" alt="직선그리기" id="shiftMode" class="do_btn tab_switcher_img" data-toggle="tooltip" title="직선 단축키:Shift 누른 상태 유지"/>
-           	<input type="image" src="assets/img/icons/sidebar/Ctrl.png" alt="이어그리기" id="ctrlMode" class="do_btn tab_switcher_img" data-toggle="tooltip" title="선 이어그리기 단축키:Ctrl 누른 상태 유지"/>
+           	<input type="image" src="assets/img/icons/sidebar/Rotation2.png" alt="아이콘 회전" id="iconRotation" class="do_btn tab_switcher_img" data-toggle="tooltip" title="아이콘 회전 단축키:마우스 Wheel"/>
+           	<input type="image" src="assets/img/icons/sidebar/SelectorMode2.png" alt="선택자 모드" id="SelectorMode" class="do_btn tab_switcher_img" data-toggle="tooltip" title="선택자 모드 단축키:ESC"/>
+           	<input type="image" src="assets/img/icons/sidebar/Shift2.png" alt="직선그리기" id="shiftMode" class="do_btn tab_switcher_img" data-toggle="tooltip" title="직선 단축키:Shift 누른 상태 유지"/>
+           	<input type="image" src="assets/img/icons/sidebar/Ctrl2.png" alt="이어그리기" id="ctrlMode" class="do_btn tab_switcher_img" data-toggle="tooltip" title="선 이어그리기 단축키:Ctrl 누른 상태 유지"/>
            	<a href="#" class="tab_switcher_img" id="canvasDownload" class="do_btn tab_switcher_img" data-toggle="tooltip" title="평면도 이미지 다운로드">
-				<input type="image" src="assets/img/icons/sidebar/Download-button.png" style="width:100px; height:50px;">
+				<input type="image" src="assets/img/icons/sidebar/Download-button2.png">
 			</a>
            	<input type="text" id="status" placeholder="마우스 상태" class="form-control mouse_status" readonly="readonly" />
            	
@@ -242,13 +255,14 @@
 				</div>
 				<div class="furniture" style="display:none;overflow: auto;">
 		               <div id="tab_switcher" class="tab_switcher">
-				            <ul style="list-style:none">
-				               <li id="pencilTab" class="tab_switcher_img" onclick="$('.common').toggle()" style="cursor: pointer; font-size:20px;" > common</li>
-				               <li id="furnitureTab" class="tab_switcher_img" onclick="$('.room').toggle()" style="cursor: pointer; font-size:20px;">room</li>
-				               <li id="updownloadTab" class="tab_switcher_img" onclick="$('.laundryRoom').toggle()" style="cursor: pointer; font-size:20px;">laundryRoom</li>
-				               <li id="updownloadTab" class="tab_switcher_img" onclick="$('.livingRoom').toggle()" style="cursor: pointer; font-size:20px;">livingRoom</li>
-				               <li id="updownloadTab" class="tab_switcher_img" onclick="$('.kitchen').toggle()" style="cursor: pointer; font-size:20px;">kitchen</li>
-				               <li id="updownloadTab" class="tab_switcher_img" onclick="$('.bathroom').toggle()" style="cursor: pointer; font-size:20px;">bathroom</li>
+				            <ul class="furniture_tab" style="list-style:none">
+				               <li id="common" class="tab_switcher_img furniture_menu"> common <i class="fa fa-caret-right"></i></li>
+				               <li id="room" class="tab_switcher_img furniture_menu" onclick="$('.room').toggle()">room <i class="fa fa-caret-right"></i></li>
+				               <li id="laundryRoom" class="tab_switcher_img furniture_menu" onclick="$('.laundryRoom').toggle()">laundryRoom <i class="fa fa-caret-right"></i></li>
+				               <li id="livingRoom" class="tab_switcher_img furniture_menu" onclick="$('.livingRoom').toggle()">livingRoom <i class="fa fa-caret-right"></i></li>
+				               <li id="kitchen" class="tab_switcher_img furniture_menu" onclick="$('.kitchen').toggle()">kitchen <i class="fa fa-caret-right"></i></li>
+				               <li id="bathroom" class="tab_switcher_img furniture_menu" onclick="$('.bathroom').toggle()" >bathroom <i class="fa fa-caret-right"></i></li>
+				               <li id="back" class="tab_switcher_img furniture_menu" style="display:none;">back<i class="fa fa-caret-left"></i></li>
 				            </ul>
 						</div>		               
 		               
@@ -305,7 +319,7 @@
 						<!-- 옵션 동적 생성 부분 -->
 						</select>
 					</div>
-					<input type="button" class="btn-u btn-u--construction trim e_img2" value="평면도 불러오기" id="loadCanvasData" />
+					<input type="button" class="btn-u btn-block rounded insert_btn g-mt-10" value="평면도 불러오기" id="loadCanvasData"/>
 				</div>
 			</div>
   		</div>
@@ -997,6 +1011,41 @@
 	             }
 	        };
 	    });
+		$("#common").on("click",function(){
+			$(".furniture_tab li").hide();
+			$(".furniture_tab>li#back").show();
+			$(".common").show();
+		});
+		$("#room").on("click",function(){
+			$(".furniture_tab li").hide();
+			$(".furniture_tab>li#back").show();
+			$(".room").show();
+		});
+		$("#laundryRoom").on("click",function(){
+			$(".furniture_tab li").hide();
+			$(".furniture_tab>li#back").show();
+			$(".laundryRoom").show();
+		});
+		$("#livingRoom").on("click",function(){
+			$(".furniture_tab li").hide();
+			$(".furniture_tab>li#back").show();
+			$(".livingRoom").show();
+		});
+		$("#kitchen").on("click",function(){
+			$(".furniture_tab li").hide();
+			$(".furniture_tab>li#back").show();
+			$(".kitchen").show();
+		});
+		$("#bathroom").on("click",function(){
+			$(".furniture_tab li").hide();
+			$(".furniture_tab>li#back").show();
+			$(".bathroom").show();
+		});
+		$("#back").on("click",function(){
+			$(".furniture_tab li").show();
+			$(".canvas_img").hide();
+			$(this).hide();
+		});
 		
 		$("#pencilTab").on("click", function(){
 			$("#tab").css("overflow","auto");
