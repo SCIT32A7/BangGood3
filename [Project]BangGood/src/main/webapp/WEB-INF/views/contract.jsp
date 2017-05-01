@@ -135,7 +135,7 @@ th{
    <div class="content">
    <table style="margin-bottom:30px; width:80%" class="table">
    	<colgroup>
-   		<col width="30%">
+   		<col width="39%">
    		<col width="30%">
    		<col width="40%">
    	</colgroup>
