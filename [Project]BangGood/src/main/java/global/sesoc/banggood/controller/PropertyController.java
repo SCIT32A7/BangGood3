@@ -44,6 +44,8 @@ public class PropertyController {
 	@Autowired
 	HttpSession session;
 
+	private ArrayList <Integer> seeList = new ArrayList<>();
+	
 	// 매물맵으로 이동
 	@RequestMapping(value = "/search", method = RequestMethod.GET)
 	public String search() {
@@ -225,19 +227,54 @@ public class PropertyController {
 		status.setComplete();
 		return "redirect:mypage";
 	}
-	
+
 	// 계약서 출력 위한 매물 기본정보 받아오기
-	@RequestMapping(value ="/contract_property", method = RequestMethod.GET)
-	public String contract_property(int property_no, Model model){
-		Property property = pr.select_Property(property_no);		
+	@RequestMapping(value = "/contract_property", method = RequestMethod.GET)
+	public String contract_property(int property_no, Model model) {
+		Property property = pr.select_Property(property_no);
 		model.addAttribute("property", property);
 		return "contract";
 	}
 
-	// 매물 내용 상세읽기, 지도에서 클릭, 장바구니에서 클릭, 등록매물에서 클릭
+	// 매물 내용 상세읽기, 장바구니에서 클릭, 등록매물에서 클릭, 아무튼 리스트에서 클릭
 	@RequestMapping(value = "/read_property", method = RequestMethod.GET)
 	public String read_property(int property_no, Model model) {
 		pr.add_hits(property_no);
+		Property property = pr.select_Property(property_no);
+		Option option = pr.select_Option(property_no);
+		Maintence maintence = pr.select_Maintence(property_no);
+		ArrayList<Picture> dbList = pr.select_Picture(property_no);
+		ArrayList<Picture> pList = new ArrayList<>();
+		for (int i = 0; i < dbList.size(); i++) {
+			if (dbList.get(i).getPic_division().equals("main")) {
+				pList.add(0, dbList.get(i));
+			} else if (dbList.get(i).getPic_division().equals("plan")) {
+				pList.add(1, dbList.get(i));
+			} else if (dbList.get(i).getPic_division().equals("front")) {
+				pList.add(2, dbList.get(i));
+			} else if (dbList.get(i).getPic_division().equals("room")) {
+				pList.add(3, dbList.get(i));
+			} else if (dbList.get(i).getPic_division().equals("kitchen")) {
+				pList.add(4, dbList.get(i));
+			} else if (dbList.get(i).getPic_division().equals("bathroom")) {
+				pList.add(5, dbList.get(i));
+			} else {
+				pList.add(6, dbList.get(i));
+			}
+		}
+		model.addAttribute("read_property", property);
+		model.addAttribute("read_option", option);
+		model.addAttribute("read_maintence", maintence);
+		model.addAttribute("read_picture", pList);
+		return "read_property";
+	}
+
+	// 지도에서 클릭해서 상세읽기
+	@RequestMapping(value = "/read_propertymap", method = RequestMethod.GET)
+	public String read_propertyMap(int property_no, Model model) {
+		pr.add_hits(property_no);
+		seeList.add(property_no);
+		session.setAttribute("clickList", seeList);
 		Property property = pr.select_Property(property_no);
 		Option option = pr.select_Option(property_no);
 		Maintence maintence = pr.select_Maintence(property_no);
@@ -321,78 +358,78 @@ public class PropertyController {
 	}
 
 	// 사진 파일 업데이트
-	   @RequestMapping(value = "/update_property_file", method = RequestMethod.POST)
-	   public String update_property3(MultipartFile uploadFile1, MultipartFile uploadFile2, MultipartFile uploadFile3,
-	         MultipartFile uploadFile4, MultipartFile uploadFile5, MultipartFile uploadFile6, MultipartFile uploadFile7,
-	         MultipartFile uploadFile8, MultipartFile uploadFile9, MultipartFile uploadFile10,
-	         MultipartFile uploadFile11, MultipartFile uploadFile12, int property_no, Model model) {
+	@RequestMapping(value = "/update_property_file", method = RequestMethod.POST)
+	public String update_property3(MultipartFile uploadFile1, MultipartFile uploadFile2, MultipartFile uploadFile3,
+			MultipartFile uploadFile4, MultipartFile uploadFile5, MultipartFile uploadFile6, MultipartFile uploadFile7,
+			MultipartFile uploadFile8, MultipartFile uploadFile9, MultipartFile uploadFile10,
+			MultipartFile uploadFile11, MultipartFile uploadFile12, int property_no, Model model) {
 
-	      ArrayList<MultipartFile> upload = new ArrayList<>();
-	      upload.add(0, uploadFile1);
-	      upload.add(1, uploadFile2);
-	      upload.add(2, uploadFile3);
-	      upload.add(3, uploadFile4);
-	      upload.add(4, uploadFile5);
-	      upload.add(5, uploadFile6);
-	      upload.add(6, uploadFile7);
-	      upload.add(7, uploadFile8);
-	      upload.add(8, uploadFile9);
-	      upload.add(9, uploadFile10);
-	      upload.add(10, uploadFile11);
-	      upload.add(11, uploadFile12);
-	      
-	      System.out.println("abc : "+upload);
+		ArrayList<MultipartFile> upload = new ArrayList<>();
+		upload.add(0, uploadFile1);
+		upload.add(1, uploadFile2);
+		upload.add(2, uploadFile3);
+		upload.add(3, uploadFile4);
+		upload.add(4, uploadFile5);
+		upload.add(5, uploadFile6);
+		upload.add(6, uploadFile7);
+		upload.add(7, uploadFile8);
+		upload.add(8, uploadFile9);
+		upload.add(9, uploadFile10);
+		upload.add(10, uploadFile11);
+		upload.add(11, uploadFile12);
 
-	      ArrayList<Picture> sel_pList = pr.select_Picture(property_no);
-	      pr.delete_Picture(sel_pList);
+		System.out.println("abc : " + upload);
 
-	      String uploadPath = "/imageFile";
-	      for (int i = 0; i < upload.size(); i++) {
-	         if (!upload.get(i).isEmpty()) {
-	            String savedfile = FileService.saveFile(upload.get(i), uploadPath);
-	            if (i < sel_pList.size()) {
-	               
-	               String fullpath = uploadPath + "/" + sel_pList.get(i).getPic_savename();
-	               FileService.deleteFile(fullpath);
-	               
-	               sel_pList.get(i).setPic_name(upload.get(i).getOriginalFilename());
-	               sel_pList.get(i).setPic_savename(savedfile);
-	               
-	            } else {
-	               
-	               Picture pic = new Picture();
-	               pic.setPic_name(upload.get(i).getOriginalFilename());
-	               pic.setProperty_no(property_no);
-	               pic.setPic_savename(savedfile);
-	               if (i == 0) {
-	                  pic.setPic_division("main"); // 메인사진
-	               }
-	               if (i == 1) {
-	                  pic.setPic_division("plan"); // 평면도
-	               }
-	               if (i == 2) {
-	                  pic.setPic_division("front"); // 입구
-	               }
-	               if (i == 3) {
-	                  pic.setPic_division("room"); // 방
-	               }
-	               if (i == 4) {
-	                  pic.setPic_division("kitchen"); // 싱크대
-	               }
-	               if (i == 5) {
-	                  pic.setPic_division("bathroom"); // 화장실
-	               }
-	               if (i >= 6 && i <= 11) {
-	                  pic.setPic_division("normal"); // 나머지 사진들
-	                  
-	               }
-	               sel_pList.add(pic);
-	            }
-	         }
-	      }
-	      int result = pr.insert_picture(sel_pList);
-	      return "redirect:read_property?property_no=" + property_no;
-	   }
+		ArrayList<Picture> sel_pList = pr.select_Picture(property_no);
+		pr.delete_Picture(sel_pList);
+
+		String uploadPath = "/imageFile";
+		for (int i = 0; i < upload.size(); i++) {
+			if (!upload.get(i).isEmpty()) {
+				String savedfile = FileService.saveFile(upload.get(i), uploadPath);
+				if (i < sel_pList.size()) {
+
+					String fullpath = uploadPath + "/" + sel_pList.get(i).getPic_savename();
+					FileService.deleteFile(fullpath);
+
+					sel_pList.get(i).setPic_name(upload.get(i).getOriginalFilename());
+					sel_pList.get(i).setPic_savename(savedfile);
+
+				} else {
+
+					Picture pic = new Picture();
+					pic.setPic_name(upload.get(i).getOriginalFilename());
+					pic.setProperty_no(property_no);
+					pic.setPic_savename(savedfile);
+					if (i == 0) {
+						pic.setPic_division("main"); // 메인사진
+					}
+					if (i == 1) {
+						pic.setPic_division("plan"); // 평면도
+					}
+					if (i == 2) {
+						pic.setPic_division("front"); // 입구
+					}
+					if (i == 3) {
+						pic.setPic_division("room"); // 방
+					}
+					if (i == 4) {
+						pic.setPic_division("kitchen"); // 싱크대
+					}
+					if (i == 5) {
+						pic.setPic_division("bathroom"); // 화장실
+					}
+					if (i >= 6 && i <= 11) {
+						pic.setPic_division("normal"); // 나머지 사진들
+
+					}
+					sel_pList.add(pic);
+				}
+			}
+		}
+		int result = pr.insert_picture(sel_pList);
+		return "redirect:read_property?property_no=" + property_no;
+	}
 
 	// 게시매물 광고 중단
 	@RequestMapping(value = "/stop_showing", method = RequestMethod.GET)

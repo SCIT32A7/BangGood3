@@ -72,7 +72,7 @@ th{
 	<h3>거래 정보</h3>
 	<table class="table">
 	 	<tr>
-	    	<th > 방 종류 </th>
+	    	<th> 방 종류 </th>
 	        <th><input type="text" name = "property_type" id= "property_type" value="${property.property_type}" readonly></th>	
 	        <th> 방 면적 </th>
 	        <th><input type="text" name = "roomsize" id= "roomsize" value="${property.roomsize}제곱미터" readonly></th>
@@ -121,8 +121,7 @@ th{
 	
 	<div class="content">
    <h3 style="padding-top:40px;"> 부가 조건 </h3>
-   <textarea rows="10" cols="50" class="buyer" style="width:100%; margin-left:0px; font-size:18px;" id="extra_condi" name="extra_condi">
-   </textarea>
+   <textarea rows="10" cols="50" style="margin-left:0px; font-size:18px;" id="extra_condi" name="extra_condi"></textarea>
    </div>
    <div class="content">
    <h4 align="center">
@@ -133,7 +132,7 @@ th{
    <br/>
    <br/>
    <div class="content">
-   <table style="margin-bottom:30px; width:80%" class="table">
+   <table style="margin-bottom:30px; width:100%" class="table">
    	<colgroup>
    		<col width="39%">
    		<col width="30%">

@@ -16,8 +16,8 @@ public class CustomerRepository {
 
 	@Autowired
 	SqlSession query;
-	
-	public int insert(Customer customer){
+
+	public int insert(Customer customer) {
 		CustomerDAO cd = query.getMapper(CustomerDAO.class);
 		int result = 0;
 		try {
@@ -26,10 +26,10 @@ public class CustomerRepository {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return result;		
+		return result;
 	}
-	
-	public Customer search(String custid){
+
+	public Customer search(String custid) {
 		CustomerDAO cd = query.getMapper(CustomerDAO.class);
 		Customer search_customer = null;
 		try {
@@ -40,8 +40,8 @@ public class CustomerRepository {
 		}
 		return search_customer;
 	}
-	
-	public int update(Customer customer){
+
+	public int update(Customer customer) {
 		CustomerDAO cd = query.getMapper(CustomerDAO.class);
 		int result = 0;
 		try {
@@ -52,9 +52,9 @@ public class CustomerRepository {
 		}
 		return result;
 	}
-	
+
 	// 등록한 매물 목록 보기
-	public ArrayList<Property_list> see_myinsert(String custid){
+	public ArrayList<Property_list> see_myinsert(String custid) {
 		CustomerDAO cd = query.getMapper(CustomerDAO.class);
 		ArrayList<Property_list> pro_in_list = new ArrayList<>();
 		try {
@@ -65,23 +65,23 @@ public class CustomerRepository {
 		}
 		return pro_in_list;
 	}
-	
+
 	// 장바구니 등록
-	public int insert_cart(Map<String, Object> cartMap){
+	public int insert_cart(Map<String, Object> cartMap) {
 		CustomerDAO cd = query.getMapper(CustomerDAO.class);
 		int result = 0;
 		try {
-			result =  cd.insert_cart(cartMap);
-			cd.add_property_like((int)cartMap.get("property_no"));			
+			result = cd.insert_cart(cartMap);
+			cd.add_property_like((int) cartMap.get("property_no"));
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return result;
 	}
-	
+
 	// 장바구니 내용 삭제
-	public void delete_cart(int property_no){
+	public void delete_cart(int property_no) {
 		CustomerDAO cd = query.getMapper(CustomerDAO.class);
 		try {
 			cd.delete_cart(property_no);
@@ -91,8 +91,9 @@ public class CustomerRepository {
 			e.printStackTrace();
 		}
 	}
-	//장바구니 보기
-	public ArrayList<Property_list> see_myCart(String custid){
+
+	// 장바구니 보기
+	public ArrayList<Property_list> see_myCart(String custid) {
 		CustomerDAO cd = query.getMapper(CustomerDAO.class);
 		ArrayList<Property_list> mycart = new ArrayList<>();
 		try {
@@ -104,5 +105,19 @@ public class CustomerRepository {
 		return mycart;
 	}
 
-	
+	// 오늘 읽은 매물 보기
+	public ArrayList<Property_list> see_myclick(ArrayList<Integer> cList) {
+		CustomerDAO cd = query.getMapper(CustomerDAO.class);
+		ArrayList<Property_list> myClick = new ArrayList<>();
+		for (int property_no : cList) {
+			try {
+				myClick = cd.see_myclick(property_no);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return myClick;
+	}
+
 }

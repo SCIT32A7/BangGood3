@@ -21,7 +21,7 @@
 		where custid = #{custid}
 	</update>
 	
-
+	<!-- 내 등록 매물 보기 -->
 	<select id="see_myinsert" parameterType="String" resultType="Property_list">
 		select
 			pro.property_no property_no, pro.custid custid,
@@ -84,5 +84,25 @@
 				from picture where pic_division = 'plan') pic 
 		where cart.property_no = pro.property_no
 		and cart.property_no = pic.property_no
+	</select>
+	
+	<!-- 오늘 읽어본 매물 보기 -->
+	<select id="see_myclick" parameterType="String" resultType="Property_list">
+		select
+			pro.property_no property_no, pro.custid custid,
+			pro.property_title property_title, pro.rent_type rent_type, 
+			pro.property_inputdate property_inputdate, pro.property_hits property_hits,
+			pro.reply_count reply_count, pro.property_like property_like, 
+			pro.deposit deposit, pro.month_fee month_fee,
+			pro.isaccessible isaccessible, pro.issoldout issoldout,
+			pic.pic_name pic_name, pic.pic_savename pic_savename 
+		from
+			(select property_no, custid, property_title, rent_type, property_inputdate,
+				property_hits, reply_count, property_like, deposit, month_fee,
+				isaccessible, issoldout		
+				from property where property_no = #{property_no}) pro,		
+			(select property_no, pic_name, pic_savename
+				from picture where pic_division = 'plan') pic
+		where pro.property_no = pic.property_no 
 	</select>
 </mapper>

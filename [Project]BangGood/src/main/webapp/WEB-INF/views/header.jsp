@@ -35,7 +35,7 @@
                <li class="page-scroll"><a href="insert_property">방 등록</a></li>               
                <li class="page-scroll"><a href="searchboard">게시판</a></li>     
                <li class="page-scroll"><a href="mypage">마이 페이지</a></li>
-               <li class="page-scroll"><a href="mypage2">관심목록</a></li> 
+               <li class="page-scroll"><a href="seeList">오늘 본 매물</a></li> 
                <li class="page-scroll"><a href="logout">${loginId}님 로그아웃</a></li>
               </c:if>
               <c:if test="${loginId.equals(\"admin\")}">
@@ -43,7 +43,6 @@
                 <li class="page-scroll"><a href="admin_property">매물관리</a></li>
                 <li class="page-scroll"><a href="searchboard">게시글 관리</a></li>
                 <li class="page-scroll"><a href="admin_messageList">고객 요청</a></li>
-                <li class="page-scroll"><a href="#">회원 관리</a></li>
                 <li class="page-scroll"><a href="logout">로그아웃</a></li>  
           	  </c:if>                           
             </c:if>

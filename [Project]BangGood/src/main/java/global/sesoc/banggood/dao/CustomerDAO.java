@@ -35,4 +35,7 @@ public interface CustomerDAO {
 	
 	//장바구니 보기
 	public ArrayList<Property_list> see_myCart(String custid) throws Exception;
+	
+	//오늘 읽어본 매물 보기
+	public ArrayList<Property_list> see_myclick(int property_no) throws Exception;
 }

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import global.sesoc.banggood.repository.CustomerRepository;
+import global.sesoc.banggood.repository.PropertyRepository;
 import global.sesoc.banggood.vo.Contract;
 import global.sesoc.banggood.vo.Customer;
 import global.sesoc.banggood.vo.Property_list;
@@ -70,6 +71,8 @@ public class CustomerController {
 			message = "success";
 			session.setAttribute("loginId", custid);
 			session.setAttribute("loginCustomer", customer);
+			ArrayList<Integer> list = new ArrayList<>();
+			session.setAttribute("clickList", list);
 		}
 		model.addAttribute("result", message);
 		return "index";
@@ -146,9 +149,20 @@ public class CustomerController {
 	// 계약서 입력내용 가계약서화 하기
 	@RequestMapping(value = "/make_contract", method = RequestMethod.POST)
 	public String make_contract(Contract con, Model model){
-		System.out.println("계약서를 만들자");
 		model.addAttribute("contract", con);
 		return "contract_print";
 	}
-
+	
+	// 오늘 본 매물 보기
+	@RequestMapping(value ="seeList", method = RequestMethod.GET)
+	public String seeList(Model model){
+		ArrayList<Integer> sList = new ArrayList<>();
+		sList =	(ArrayList<Integer>) session.getAttribute("clickList");
+		ArrayList<Property_list> clickList = new ArrayList<>();
+		if(sList.size()>0){		
+			clickList = cr.see_myclick(sList);		
+		}
+		model.addAttribute("myClick", clickList);
+		return "seeList";
+	}
 }

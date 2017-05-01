@@ -40,6 +40,13 @@
 h3{
 	text-align:left;
 }
+.table tr:NTH-CHILD(1)>th{
+	border-top:none;
+	width:150px;
+}
+th{
+	font-size: 18px;
+}
 </style>
 
 </head>
@@ -48,48 +55,48 @@ h3{
 <form action = "make_contract" method = "post">   
 	<div class="container">
 
-   <h1>굿방 매물 가계약서 양식</h1>
+   <h1>굿방 매물 가계약서</h1>
   
     <div class="content">
    <h3>부동산의 내역</h3>  
-   <table>
+   <table class="table">
       <tr>
          <th class="label"> 소재지 (주소) </th>
-         <th colspan="7">
+         <td>
          	${contract.address}
-         </th>
+         </td>
       </tr>
    </table>
    </div>
     <div class="content">
 	<h3>거래 정보</h3>
-	<table>
+	<table class="table">
 	 	<tr>
 	    	<th class="label"> 방 종류 </th>
-	        <th>${contract.property_type}</th>	
+	        <td>${contract.property_type}</td>	
 	        <th class="label"> 방 면적 </th>
-	        <th>${contract.roomsize}</th>
+	        <td>${contract.roomsize}</td>
 	    </tr>
 	    <tr>
 	        <th class="label"> 보증금/월세 </th>
-	        <th>${contract.deposit}</th>
+	        <td>${contract.deposit}</td>
 	     	<th class="label"> 관리비 </th>
-	        <th>${contract.maintence_fee}</th>
+	        <td>${contract.maintence_fee}</td>
 	    </tr>
 	    <tr>    
 	        <th class="label"> 계약예정일 </th>
-	        <th>${contract.con_date}</th>
+	        <td>${contract.con_date}</td>
 	    </tr>
    </table>
    </div>
     <div class="content">
    <h3> 거래 약정 내용 </h3>
    <p style="text-align:left">위 부동산 소유자(임대인)와 매수(임차)약정자가 양방 협의 하에 다음과 같이 가계약을 체결합니다.</p>
-   <table style="padding: 5px;">
+   <table class="table" style="padding: 5px;">
       <tr>
-         <th>
+         <td>
          ${contract.buyer_name}는 ${contract.contractPrice}원을 ${contract.seller_name}에게 ${contract.con_date}까지 지불합니다.
-         </th>
+         </td>
 	  </tr>
    </table>
    </div>
@@ -109,10 +116,8 @@ h3{
 	</div>
 	
 	<div class="content">
-   <h3> 부가 조건 </h3>
-   <span style = "white-space: pre-wrap; text-align: left">
-      ${contract.extra_condi}
-   </span>
+   <h3 style="padding-top:40px;"> 부가 조건 </h3>
+   <p style = "white-space: pre-wrap; text-align: left">${contract.extra_condi}</p>
    </div>
    <div class="content">
    <h4 align="center">
@@ -123,32 +128,32 @@ h3{
    <br/>
    <br/>
    <div class="content">
-   <table style="margin-bottom:30px; width:100%">
+   <table class="table" style="margin-bottom:30px; width:100%; text-align: left">
       <tr>
          <th rowspan="3"> 매도인 (임대인) </th>
          <th> 성명 </th>
-         <th>${contract.seller_name}&nbsp&nbsp&nbsp&nbsp 서명</th>
+         <td>${contract.seller_name}&nbsp&nbsp&nbsp&nbsp 서명</td>
       </tr>
       <tr>         
          <th> 주민등록번호 </th>
-         <th>${contract.seller_jumin}</th>
+         <td>${contract.seller_jumin}</td>
       </tr>
       <tr> 
          <th> 전화 </th>
-         <th>${contract.seller_phone}</th>
+         <td>${contract.seller_phone}</td>
       </tr>
       <tr>
          <th rowspan="3"> 매수인 (임차인) </th>
          <th> 성명 </th>
-         <th>${contract.buyer_name}&nbsp&nbsp&nbsp&nbsp 서명</th>
+         <td>${contract.buyer_name}&nbsp&nbsp&nbsp&nbsp 서명</td>
       </tr>
       <tr>
          <th> 주민등록번호 </th>
-         <th>${contract.buyer_jumin}</th>
+         <td>${contract.buyer_jumin}</td>
       </tr>
       <tr>
          <th> 전화 </th>
-         <th>${contract.buyer_phone}</th>       
+         <td>${contract.buyer_phone}</td>       
       </tr>
    </table>
    </div>
@@ -156,8 +161,7 @@ h3{
 	
 	</div>
 	 <div class="button">
-   <input type="submit" value ="가계약서 작성완료">
-   <input type="reset" value ="다시 작성하기">
+  		 <input type="button" value ="가계약서  출력">
 	</div>
 	</form>
 	<script src="assets/plugins/jquery/jquery.min.js"></script>
