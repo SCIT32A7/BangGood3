@@ -937,7 +937,7 @@ $(function() {
                      },
                      success : function(resp) {                              
                            property_map = resp;
-                           var overlayTitle = " [ "+property_map.rent_type+" ] "+ property_map.deposit+"/"+property_map.month_fee;
+                           var overlayTitle = "[ "+property_map.property_title+" ]";
                            content = '<div class="mapwrap">';
                            content +=   '<div class="info">';
                            content +=      '<div class="title">';
@@ -949,11 +949,11 @@ $(function() {
                            content +=            '<img src="download?pic_name='+property_map.pic_name+'&pic_savename='+property_map.pic_savename+'" width="150" height="140">';
                            content +=         '</div>';
                            content +=         '<div class="desc g-ml-5">';
-                           content +=            '<h3 class="ellipsis"><a href="#">'+property_map.property_title+'</a></h3>';
-                           content +=            '<div class="jibun ellipsis"></div>';
-                           content +=            '<div><a href="#" target="_blank" class="link"><i class="fa fa-heart"></i>책갈피</a></div>';
-                           content +=            '<div class="info_label"><span class="label label-success g-ml-10 rounded">신축</span></div>';
-                           content +=            '<div><a href="read_propertymap?property_no='+property_map.property_no+'" target="_blank" class="link">자세히보기</a></div>';
+                           content +=			 '<h4 class="ellipsis">'+'<'+property_map.rent_type+'>'+ property_map.deposit+"/"+property_map.month_fee+'</h4>'
+                           content +=            '<h6 class="ellipsis">'+'관리비 : '+property_map.maintence_fee+'만원</h6>';
+                           content +=            '<h6 class="ellipsis">'+'면적 : '+property_map.roomsize+'제곱미터</h6>';
+                           content +=            '<h6 class="ellipsis">'+property_map.built_year+'년 중축, '+property_map.floor+'층</h6>';
+                           content +=            '<div><a href="read_propertymap?property_no='+property_map.property_no+'" target="_blank" class="link">내용보기</a></div>';
                            content +=            '<p class="ellipsis_hit"> <i class="fa fa-eye"></i>' +property_map.property_hits+ '  <i class="fa fa-comments"></i>'+property_map.reply_count+'  <i class="fa fa-heart"></i>'+property_map.property_like+'</p>';
                            content +=         '</div>';                  
                            content +=      '</div>';

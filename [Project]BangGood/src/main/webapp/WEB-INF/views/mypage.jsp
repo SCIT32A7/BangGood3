@@ -102,28 +102,30 @@
 						</div>
 						<div class="col-sm-5">
 							<h2>
-								<a href="read_property?property_no=${property.property_no}" target="_blank">[ ${property.rent_type} ] ${property.deposit} / ${property.month_fee}</a>
+								<a href="read_property?property_no=${property.property_no}" target="_blank">[ ${property.rent_type} ] ${property.deposit}만원 / ${property.month_fee}만원</a>
 							</h2>
 							<ul class="list-unstyled list-inline blog-info-v2"
-								style="float: left">
-								<li><i class="fa fa-clock-o"></i> ${property.property_inputdate}</li>
-							</ul>
-							<p style="float: left">	
-								<br>					
+								style="float: left">								
+								<li> ${property.property_title}</li><br>
+								<li><i class="fa fa-clock-o"></i> ${property.property_inputdate}</li><br>
+								<li> [관리비] ${property.maintence_fee}만원</li><br>
+								<li> [면적] ${property.roomsize}제곱미터 [층수] ${property.floor}층</li><br>
+								<li> [건축연도] ${property.built_year}년</li><br>
+								<br>												
 								<c:if test = "${property.isaccessible == 'true'}">
-									[ 광고 중 ] <br>
+									<li>[ 광고 중 ]</li> &nbsp;&nbsp;&nbsp;
 								</c:if>
 								<c:if test = "${property.isaccessible == 'false'}">
-									[ 허가 요청 중 ] <br>
+									<li>[ 허가 요청 중 ]</li> &nbsp;&nbsp;&nbsp;
 								</c:if>
 								<c:if test = "${property.issoldout == 'true'}">
-									[ 거래 중 ] <br>
+									<li>[ 거래 중 ]</li><br>
 								</c:if>
 								<c:if test = "${property.issoldout == 'false'}">
-									[ 거래 완료 ] <br>
-								</c:if>
-								 ${property.property_title}
-							</p>
+									<li>[ 거래 완료 ]</li><br>
+								</c:if>			
+							</ul>							
+													
 						</div>
 						<div class="col-sm-2">
 							<button class="mypage_btn btn-u btn-block rounded">

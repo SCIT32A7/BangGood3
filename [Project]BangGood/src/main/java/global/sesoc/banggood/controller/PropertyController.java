@@ -30,6 +30,7 @@ import global.sesoc.banggood.vo.Option;
 import global.sesoc.banggood.vo.Picture;
 import global.sesoc.banggood.vo.Position;
 import global.sesoc.banggood.vo.Property;
+import global.sesoc.banggood.vo.Property_list;
 import global.sesoc.banggood.vo.Property_map;
 import global.sesoc.banggood.vo.Property_search;
 import global.sesoc.banggood.vo.propertyReply;
@@ -44,8 +45,8 @@ public class PropertyController {
 	@Autowired
 	HttpSession session;
 
-	private ArrayList <Integer> seeList = new ArrayList<>();
-	
+	private ArrayList<Integer> seeList = new ArrayList<>();
+
 	// 매물맵으로 이동
 	@RequestMapping(value = "/search", method = RequestMethod.GET)
 	public String search() {
@@ -272,9 +273,20 @@ public class PropertyController {
 	// 지도에서 클릭해서 상세읽기
 	@RequestMapping(value = "/read_propertymap", method = RequestMethod.GET)
 	public String read_propertyMap(int property_no, Model model) {
+		String notSession = "false";
 		pr.add_hits(property_no);
-		seeList.add(property_no);
-		session.setAttribute("clickList", seeList);
+		ArrayList<Integer> sessionList = (ArrayList<Integer>) session.getAttribute("clickList");
+		if (sessionList.size() > 0) {
+			for (int i = 0; i < sessionList.size(); i++) {
+				if (sessionList.get(i) == property_no) {
+					notSession = "true";
+				}
+			}
+		}
+		if (notSession.equals("false")) {
+			seeList.add(property_no);
+			session.setAttribute("clickList", seeList);
+		}
 		Property property = pr.select_Property(property_no);
 		Option option = pr.select_Option(property_no);
 		Maintence maintence = pr.select_Maintence(property_no);

@@ -159,8 +159,8 @@
    </update>
    
    <!-- 주소내 모든 매물 검색 -->
-   <select id="searchProperty" parameterType="Property_search"
-      resultType="String">
+   <select id="searchProperty" parameterType="Property_search" resultType="String">
+       <![CDATA[
       select pro.address
       from
       (select property_no, address from property
@@ -204,16 +204,21 @@
       <if test="wifi != 0"> and wifi = #{wifi} </if>
       ) op
       where pro.property_no = op.property_no
+      ]]> 
    </select>
 
    <!-- 지도 마커 클릭시 매물 간단 정보 출력 -->
    <select id="readProperty_map" parameterType="String" resultType="Property_map">
-      select pro.property_no property_no, pro.rent_type rent_type,
-            pro.deposit deposit, pro.month_fee month_fee, pro.property_title property_title, 
+      select pro.property_no property_no, pro.rent_type rent_type, 
+            pro.deposit deposit, pro.month_fee month_fee, 
+            pro.maintence_fee maintence_fee, pro.built_year built_year, 
+            pro.roomsize roomsize, pro.floor floor, 
+            pro.property_title property_title, 
             pro.property_hits property_hits, pro.reply_count reply_count, 
-            pro.property_like property_like,
+            pro.property_like property_like, 
            pic.pic_name pic_name, pic.pic_savename pic_savename
-      from (select property_no, rent_type, deposit, month_fee, property_title,
+      from (select property_no, rent_type, deposit, month_fee, 
+      		maintence_fee, built_year, roomsize, floor, property_title, 
       		property_hits, reply_count, property_like
            from property
            where address = #{address}) pro,

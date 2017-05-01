@@ -21,6 +21,8 @@ $(function() {
 			alert("개인정보수집 및 이용에 동의해 주세요.");
 			return false;
 		}
+		$("#checkbox1").attr('check', false);
+		$("#checkbox2").attr('check', false);
 		$("#agreement").modal("hide");
 		$("#JoinModal").modal();
 	});
@@ -226,6 +228,11 @@ $(function() {
 			alert('본인인증을 해주세요.');
 			return false;	
 		}
+		$("#joinid").val("");
+		$("#joinpw1").val("");
+		$("#joinpw2").val("");
+		$("#joinemail").val("");
+		$("#joinphone").val("");
 		$.ajax({
 			method : "post",
 			url : "join",

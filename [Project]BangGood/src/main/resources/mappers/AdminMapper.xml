@@ -19,7 +19,7 @@
 			and custid like '%'||#{searchid}||'%'
 			</if>
 			) pro			
-   		 order by property_inputdate desc
+   		 order by reply_count asc, property_inputdate desc
 	)  where r between #{firstText} and #{lastText}
 </select>
 

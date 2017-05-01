@@ -103,15 +103,15 @@
 							<h2>
 								<a href="read_property?property_no=${cart.property_no}" target="_blank">[ ${cart.rent_type} ] ${cart.deposit} / ${cart.month_fee}</a>
 							</h2>
-							<ul class="list-unstyled list-inline blog-info-v2"
-								style="float: left">
+							<p style="float: left">${cart.property_title}</p><br>
+							<ul class="list-unstyled list-inline blog-info-v2" style="float: left">
 								<li>By: <a class="color-green" href="#">${cart.custid}</a>
 								</li>
-								<li><i class="fa fa-clock-o"></i> ${cart.property_inputdate}</li>
-							</ul>
-							<p style="float: left">							
-								 ${cart.property_title}
-							</p>
+								<li><i class="fa fa-clock-o"></i> ${cart.property_inputdate}</li><br>								
+								<li> [관리비] ${cart.maintence_fee}만원</li><br>
+								<li> [면적] ${cart.roomsize}제곱미터 &nbsp;&nbsp;&nbsp; [층수] ${cart.floor}층</li><br>
+								<li> [건축연도] ${cart.built_year}년</li><br>
+							</ul>							
 						</div>
 						<div class="col-sm-2">
 							<button class="mypage_btn btn-u btn-block rounded">

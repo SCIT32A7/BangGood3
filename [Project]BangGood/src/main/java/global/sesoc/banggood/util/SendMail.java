@@ -93,9 +93,10 @@ public class SendMail {
       {
          int accreditation = (int) (Math.random() * 1000000);
          String title = "[방굿] 회원 가입에 필요한 인증번호입니다.";
-         String message = "BangGood 관리자입니다."+"\r\n";
-         		message += "회원가입에 필요한 본인인증번호를 전송하였습니다."+"\r\n";         		
-         		message += "인증번호는 " + accreditation + "입니다."+"\r\n";
+         String line = System.getProperty("line.separator");
+         String message = "BangGood 관리자입니다."+line;
+         		message += "회원가입에 필요한 본인인증번호를 전송하였습니다."+line;         		
+         		message += "인증번호는 " + accreditation + "입니다."+line;
          		message += "위 인증번호를 입력창에 입력 후, 확인을 눌러주세요.";
          new SendMail(user, title, message);
          return accreditation;

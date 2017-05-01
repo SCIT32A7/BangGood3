@@ -111,7 +111,7 @@ public class CustomerRepository {
 		ArrayList<Property_list> myClick = new ArrayList<>();
 		for (int property_no : cList) {
 			try {
-				myClick = cd.see_myclick(property_no);
+				myClick.add(cd.see_myclick(property_no));
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

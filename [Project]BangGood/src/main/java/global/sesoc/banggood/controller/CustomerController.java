@@ -156,12 +156,14 @@ public class CustomerController {
 	// 오늘 본 매물 보기
 	@RequestMapping(value ="seeList", method = RequestMethod.GET)
 	public String seeList(Model model){
-		ArrayList<Integer> sList = new ArrayList<>();
-		sList =	(ArrayList<Integer>) session.getAttribute("clickList");
+		ArrayList<Integer> sList = (ArrayList<Integer>) session.getAttribute("clickList");
+		System.out.println("본 매물 : "+sList.size());
 		ArrayList<Property_list> clickList = new ArrayList<>();
 		if(sList.size()>0){		
 			clickList = cr.see_myclick(sList);		
 		}
+		System.out.println("뿌릴 매물 : "+clickList.size());
+		System.out.println(clickList);
 		model.addAttribute("myClick", clickList);
 		return "seeList";
 	}

@@ -44,14 +44,12 @@
 
 	<div class="searchboard_title margin-bottom-20">
 		<div class="searchboard_title-in">
-			<h1> 오늘 본 매물 </h1>
+			<h1> 접속 중 열람한 매물 </h1>
 		</div>
 	</div>
 	<div class="container content profile" style="height:700px;">
 
-		<div class="row">
 			<!-- Profile Content -->
-				<div class="col-md-9">
 				<div class="g-pd-20">
 				<c:if test = "${myClick.size() == 0}">
 					<h2>오늘 본 매물이 없습니다.</h2>
@@ -70,20 +68,17 @@
 							<h2>
 								<a href="read_property?property_no=${click.property_no}" target="_blank">[ ${click.rent_type} ] ${click.deposit} / ${click.month_fee}</a>
 							</h2>
-							<ul class="list-unstyled list-inline blog-info-v2"
-								style="float: left">
+							<p style="float: left">${click.property_title}</p><br>
+							<ul class="list-unstyled list-inline blog-info-v2" style="float: left">
 								<li>By: <a class="color-green" href="#">${click.custid}</a>
 								</li>
-								<li><i class="fa fa-clock-o"></i> ${click.property_inputdate}</li>
+								<li><i class="fa fa-clock-o"></i> ${click.property_inputdate}</li><br>								
+								<li> [관리비] ${click.maintence_fee}만원</li><br>
+								<li> [면적] ${click.roomsize}제곱미터 &nbsp;&nbsp;&nbsp; [층수] ${click.floor}층</li><br>
+								<li> [건축연도] ${click.built_year}년</li><br>
 							</ul>
-							<p style="float: left">							
-								 ${click.property_title}
-							</p>
 						</div>
 						<div class="col-sm-2">
-							<button class="mypage_btn btn-u btn-block rounded">
-								<a href="delete_cart?property_no=${click.property_no}">삭제</a>
-							</button>
 							<div class="project-share">
 								<ul class="list-inline comment-list-v2 pull-right g-mt-100">
 									<li><i class="fa fa-eye"></i>${click.property_hits}</li>
@@ -101,8 +96,6 @@
 				</div>
 				
 				<!-- End Profile Content -->
-			</div>
-		</div>
 		<!-- footer -->
 			<%@ include file="footer.jsp"%> 
 			<!-- end footer -->

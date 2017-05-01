@@ -59,10 +59,6 @@
 		</div>
 	</div>
 	<div class="container content profile">
-
-		<div class="row"></div>
-			<!-- Profile Content -->
-			<div class="col-md-9">
 				<div class="g-pd-20">
 					<div class="headline">
 						<h2>요청 답변 내역</h2>
@@ -151,7 +147,6 @@
 				</div>
 				<!-- End Profile Content -->
 			</div>
-		</div>
 		<!--=== End Profile ===-->
 		<!-- JS Global Compulsory -->
 		<script src="assets/plugins/jquery/jquery.min.js"></script>

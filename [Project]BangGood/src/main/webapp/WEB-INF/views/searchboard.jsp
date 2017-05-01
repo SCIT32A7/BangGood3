@@ -66,10 +66,12 @@
 			<button class="btn-u btn-block rounded" style="background-color:#f7be22; width:80px;display:inline-block">
 						<a href="writeboard">글쓰기</a>	
 			</button>
-			<button class="btn-u btn-block rounded" id = "stop_showing"
-			style=" width:80px;display:inline-block; background: #333">
-				<a href="javascript:delete_board()">삭제</a>
-			</button>
+			<c:if test = "${loginId == 'admin'}">
+				<button class="btn-u btn-block rounded" id = "stop_showing"
+				style=" width:80px;display:inline-block; background: #333">
+					<a href="javascript:delete_board()">삭제</a>
+				</button>
+			</c:if>
 			<input type = "hidden" name = "page" id = "page">
 			<input type = "hidden" name = "deleteList" id = "deleteList">
 			</form>

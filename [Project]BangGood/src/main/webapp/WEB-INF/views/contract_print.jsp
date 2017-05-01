@@ -28,7 +28,6 @@
 	width: 80%;
 }
 
-
 .button {
 	text-align: center;
 	padding-bottom: 20px;
@@ -53,9 +52,10 @@ th{
 
 <body id="page-top">
 <form action = "make_contract" method = "post">   
-	<div class="container">
-
-   <h1>굿방 매물 가계약서</h1>
+	<div class="container" id="container">
+	<div class = "page" style='page-break-before:always'>
+	
+   <h1 style="text-align:center; margin-top:50px">굿방 매물 가계약서</h1>
   
     <div class="content">
    <h3>부동산의 내역</h3>  
@@ -114,9 +114,10 @@ th{
       <span>5. 가계약금은 매도인(임대인)에게 보관하기로 하며, 정식 계약을 체결 시에는 계약금에 충당하여야 합니다.</span>
    </h4>
 	</div>
-	
+	</div>
+<div class = "page" style='page-break-before:always'>
 	<div class="content">
-   <h3 style="padding-top:40px;"> 부가 조건 </h3>
+   <h2 style="padding-top:60px;"> 부가 조건 </h2>
    <p style = "white-space: pre-wrap; text-align: left">${contract.extra_condi}</p>
    </div>
    <div class="content">
@@ -156,12 +157,13 @@ th{
          <td>${contract.buyer_phone}</td>       
       </tr>
    </table>
-   </div>
  	</div>
+   </div>
+</div>
 	
 	</div>
 	 <div class="button">
-  		 <input type="button" value ="가계약서  출력">
+  		 <input type="button" id="printBt" value ="가계약서  출력">
 	</div>
 	</form>
 	<script src="assets/plugins/jquery/jquery.min.js"></script>
@@ -173,6 +175,36 @@ th{
 	<script src="assets/plugins/backstretch/jquery.backstretch.min.js"></script>
 	<!-- JS Page Level-->
 	<script src="assets/js/one.app.js"></script>
+	<script>
+	
+	$(function(){
+		
+		var win = null;
+		var printDiv = null;
+		var printBt = null;
+		printDiv = $('#container')[0].innerHTML;
+		
+		$('#printBt').on("click",function(){
+			printFunc(printDiv);
+		})
+		
+		
+		function printFunc(container){
+			win = window.open();
+			self.focus();
+			win.document.open();
+			win.document.write('<'+'html'+'><'+'head'+'><'+'style'+'>');
+			win.document.write('body,td{font-family:Verdana;font-size:10pt}');
+			win.document.write('<'+'/'+'style'+'><'+'/'+'head'+'><'+'body'+'>');
+			win.document.write(container);
+			win.document.write('<'+'/'+'body'+'><'+'/'+'html'+'>');
+			win.document.close();
+			win.print();
+			win.close();
+		}
+	});
+	
+	</script>
 
 </body>
 
