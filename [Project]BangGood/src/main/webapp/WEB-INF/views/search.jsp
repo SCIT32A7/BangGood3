@@ -230,9 +230,6 @@ input[type=radio], input[type=checkbox] {
 	display: none;
 }
 
-.option_menu .active {
-	background-position: right 5px;
-}
 </style>
 
 <script type="text/javascript">
@@ -240,11 +237,9 @@ $(function() {
     send_data();
  });
 </script>
-
 </head>
-
 <body id="body" data-spy="scroll" data-target=".one-page-header"
-   class="demo-lightbox-gallery font-main promo-padding-top"style="height:100%;">
+   class="demo-lightbox-gallery font-main promo-padding-top"style="height:100%;z-index:3">
    <main class="wrapper"> <!-- header --> 
    <%@ include   file="header.jsp"%> <!-- end header --> 
    <!-- menu -->
@@ -255,7 +250,7 @@ $(function() {
    <!-- end menu -->
    <!-- searchbox -->
       <div id="searchbox" class="search">
-         <input type="text" id="addresstext" name="searchText" class="search_form col-sm-9" placeholder="지역을 입력하세요." > 
+         <input type="text"  id="addresstext" name="searchText" class="search_form col-sm-9" placeholder="지역을 입력하세요." > 
          <input type="image" id ="searchaddresscenter_button" src="assets/img/search.png" class="search_label">
       </div>
       
@@ -263,9 +258,10 @@ $(function() {
    <!-- end searchbox -->
     <div style="margin-top:10px"></div>
     <div class="search_container">
-    <div class="searchbox2 col-sm-2" id="searchbox2">
+    <div class="searchbox2 col-sm-2" id="searchbox2" style="padding:0; height:670px">
        
        
+        
       <div class="searchbox3">
             <table class="table text-center">
                <tbody>
@@ -292,7 +288,7 @@ $(function() {
                  <tr>
                      <td>
                         <p>보증금</p>
-                         <select class="form-control" id="deposit1" style="float:left; width:46%">
+                         <select class="form-control" id="deposit1" style="float:left; width:46%; height: inherit; padding:0">
                              <option selected="selected" value = "0">----</option>
                              <option value = "100">100만원</option>
                              <option value = "500">500만원</option>
@@ -309,7 +305,7 @@ $(function() {
                              <option value = "10000">1억원</option>
                         </select>
                         <span class="pull-left g-mt-10" style="margin:">~</span>
-                        <select class="form-control" id="deposit2" style="float:left; width:46%">
+                        <select class="form-control" id="deposit2" style="float:left; width:46%;height: inherit; padding:0">
                              <option selected="selected" value = "999999">무제한</option>
                              <option value = "500">500만원</option>
                              <option value = "1000">1000만원</option>
@@ -331,7 +327,7 @@ $(function() {
                   <tr>
                      <td>
                         <p>월세</p>
-                         <select class="form-control" id="month_fee1" style="float:left; width:46%">
+                         <select class="form-control" id="month_fee1" style="float:left; width:46%;height: inherit; padding:0">
                              <option selected="selected" value = "0">----</option>
                              <option value = "10">10만원</option>
                              <option value = "20">20만원</option>
@@ -345,7 +341,7 @@ $(function() {
                              <option value = "100">100만원</option>
                         </select>
                         <span class="pull-left g-mt-10" style="margin:">~</span>
-                        <select class="form-control" id="month_fee2" style="float:left; width:46%">
+                        <select class="form-control" id="month_fee2" style="float:left; width:46%;height: inherit; padding:0">
                             <option selected="selected" value = "9999">무제한</option>
                              <option value = "30">30만원</option>
                              <option value = "40">40만원</option>
@@ -363,7 +359,7 @@ $(function() {
                   <tr>
                      <td>
                         <p style="display:inline;">층수</p>
-                         <select class="form-control" id="floor" style="display:inline; width:46%">
+                         <select class="form-control" id="floor" style="display:inline; width:46%;height: inherit; padding:0">
                              <option selected="selected" value = "0">-----</option>
                              <option value="1">1~3층</option>
                              <option value="4">4~6층</option>
@@ -374,8 +370,8 @@ $(function() {
                   <tr>
                   <tr>
                      <td class="addoption " style="position:relative;">
-                        <h4 style="background:#f7be22; color:#fff">추가옵션 <i class="	fa fa-caret-down"></i></h4>
-                        <div class="option_menu text-left" style="position:absolute;">
+                        <h4 style="background:#f7be22; color:#fff;margin:0;">추가옵션 <i class="	fa fa-caret-down"></i></h4>
+                        <div class="option_menu text-left">
                         <input type="checkbox" name="maintence_fee" id = "maintence_fee" value=""> 
                         <label for="maintence_fee">관리비 없음</label>     
                         
@@ -395,7 +391,7 @@ $(function() {
                   </tr>
                   <tr>
                      <td class="addoption2">
-                        <h4 style="background:#f7be22; color:#fff">가구옵션<i class="	fa fa-caret-down"></i></h4>
+                        <h4 style="background:#f7be22; color:#fff; margin:0;">가구옵션<i class="	fa fa-caret-down"></i></h4>
                         <div class="option_menu2 text-left">
                         <input type="checkbox" name="newbulid" id = "air_conditioner" value="">
                          <label for="air_conditioner">에어컨</label>  
@@ -450,7 +446,7 @@ $(function() {
          </div>
     </div>
     <div class="col-sm-10" style="margin:0; padding:0;">
-   <div id="map" class="map" style="width:100%; height:677px; float:left;"></div>
+   <div id="map" class="map" style="width:100%; height:674px; float:left;"></div>
    </div>
    </div>
    </main>
@@ -957,7 +953,7 @@ $(function() {
                            content +=            '<div class="jibun ellipsis"></div>';
                            content +=            '<div><a href="#" target="_blank" class="link"><i class="fa fa-heart"></i>책갈피</a></div>';
                            content +=            '<div class="info_label"><span class="label label-success g-ml-10 rounded">신축</span></div>';
-                           content +=            '<div><a href="read_property?property_no='+property_map.property_no+'" target="_blank" class="link">자세히보기</a></div>';
+                           content +=            '<div><a href="read_propertymap?property_no='+property_map.property_no+'" target="_blank" class="link">자세히보기</a></div>';
                            content +=            '<p class="ellipsis_hit"> <i class="fa fa-eye"></i>' +property_map.property_hits+ '  <i class="fa fa-comments"></i>'+property_map.reply_count+'  <i class="fa fa-heart"></i>'+property_map.property_like+'</p>';
                            content +=         '</div>';                  
                            content +=      '</div>';
@@ -1014,15 +1010,10 @@ $(function() {
 		$(".option_menu2").hide();
 		
 		$(".addoption h4").click(function(){
-			        $(".option_menu").show()
-			        .css({
-						"width":"500px",
-						"height":"300px",
-						
-			        });
+			$(".option_menu").slideToggle("slow");
 	        $(".addoption h4 i").toggleClass('fa-caret-up');
 	    });
-		$(".addoption2 h4").click(function(){
+		$(".addoption2 h4").not().click(function(){
 	        $(".option_menu2").slideToggle("slow");
 	        $(".addoption2 h4 i").toggleClass('fa-caret-up');
 	    });
