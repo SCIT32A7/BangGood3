@@ -38,8 +38,8 @@ CREATE TABLE customer
 	email varchar2(30) NOT NULL,
 	-- 휴대폰
 	phone number(11) NOT NULL,
-	-- 벌점
-	penalty number default 0
+	-- 접속불가
+	stop_access varchar2(10) default 'false'
 );
 
 -- 장바구니
@@ -134,7 +134,7 @@ CREATE TABLE property
 	-- 조회수
 	property_hits number(5) default 0,
 	-- 댓글수
-	reply_count varchar2(5) default 0,
+	reply_count number(5) default 0,
 	-- 좋아요 or 장바구니 삽입수
 	property_like number(3) default 0
 );

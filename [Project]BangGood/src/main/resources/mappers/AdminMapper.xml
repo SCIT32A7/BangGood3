@@ -17,9 +17,9 @@
 			where isaccessible = 'true'
 			<if test = "searchid != null">
 			and custid like '%'||#{searchid}||'%'
+			order by reply_count desc, property_inputdate desc
 			</if>
-			) pro			
-   		 order by reply_count asc, property_inputdate desc
+			) pro   		 
 	)  where r between #{firstText} and #{lastText}
 </select>
 

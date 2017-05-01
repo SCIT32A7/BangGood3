@@ -160,7 +160,6 @@
    
    <!-- 주소내 모든 매물 검색 -->
    <select id="searchProperty" parameterType="Property_search" resultType="String">
-       <![CDATA[
       select pro.address
       from
       (select property_no, address from property
@@ -204,7 +203,6 @@
       <if test="wifi != 0"> and wifi = #{wifi} </if>
       ) op
       where pro.property_no = op.property_no
-      ]]> 
    </select>
 
    <!-- 지도 마커 클릭시 매물 간단 정보 출력 -->
