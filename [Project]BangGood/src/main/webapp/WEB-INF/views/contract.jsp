@@ -2,16 +2,55 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
+<!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->
+<!--[if !IE]><!-->
+
 <head>
-   <meta charset="UTF-8">
-   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-   <title>가계약서 양식</title>      
+		<!-- Meta -->
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="description" content="">
+		<meta name="author" content="">
+		  
+<style>
+.container {
+	padding-top: 40px;
+	padding-bottom: 10px;
+	text-align: center;
+	margin: 40px auto;
+	border: 1px solid #333;
+	width: 80%;
+}
+
+.content {
+	margin: auto;
+	width: 80%;
+}
+
+
+.button {
+	text-align: center;
+	padding-bottom: 20px;
+}
+
+.button input {
+	padding: 5px;
+}
+h3{
+	text-align:left;
+}
+</style>
+
 </head>
 
 <body id="page-top">
+<form action = "make_contract" method = "post">   
+	<div class="container">
+
    <h1>굿방 매물 가계약서 양식</h1>
   
-   <form action = "make_contract" method = "post">   
+    <div class="content">
    <h3>부동산의 내역</h3>  
    <table border="1">
       <tr>
@@ -21,7 +60,8 @@
          </th>
       </tr>
    </table>
-   
+   </div>
+    <div class="content">
 	<h3>거래 정보</h3>
 	<table border="1">
 	 	<tr>
@@ -44,9 +84,10 @@
 	        </th>
 	    </tr>
    </table>
-   
+   </div>
+    <div class="content">
    <h3> 거래 약정 내용 </h3>
-   <label>위 부동산 소유자(임대인)와 매수(임차)약정자가 양방 협의 하에 다음과 같이 가계약을 체결합니다.</label>
+   <p style="text-align:left">위 부동산 소유자(임대인)와 매수(임차)약정자가 양방 협의 하에 다음과 같이 가계약을 체결합니다.</p>
    <table border="1" style="padding: 5px;">
       <tr>
          <th>
@@ -55,24 +96,33 @@
          </th>
 	  </tr>
    </table>
-   <h3> 약 정 </h3>
-   <h4>
-      <span>&nbsp;&nbsp;&nbsp;1. 본 계약은  정식 계약을 체결하기 위하여 작성한 가계약서입니다. 따라서 계약 당사자는 정식계약 체결 시점까지 계약의 체결을 거절할<br /> 
-      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;수 있으며, 당사자 일방이 아무런 통보없이 기한까지 계약을 체결하지 않거나, 당사자가 미리 거절의 통지를 상대방에게 한 때에는 본 <br />
-      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;계약은 즉시 무효가 됩니다.</span><br />
-      <span>&nbsp;&nbsp;&nbsp;2. 전항에 의거 무효가 된 때에는 가계약금은 즉시 전액 몰수합니다. 다만, 당사자 간의 합의로 반환하기로 한 때에는 반환하여야 합니다.</span><br />
-      
-      <span>&nbsp;&nbsp;&nbsp;3. 가계약금을 반환할 의무가 있는 자가 상대방이 기한을 정하여 가계약금의 반환을 요청하였음에도 불구하고 기한까지 반환하지<br /> 
-      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;않은 때에는 지급할 때까지 1일에 1할의 징벌적 지연 이자를 지급하여야 합니다.</span><br />
-      <span>&nbsp;&nbsp;&nbsp;4. 당사자 일방의 책임 있는 사유로 정식 계약이 체결되지 않아 가계약이 무효가 된 때에는 매도자는 상대방에 대하여 교부받은 금액의 <br /> 
-      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;배액을 상환하여야야 하고, 매수자는 상대방에게 교부한 계약음은 매도인에게 전부 귀속됩니다.</span><br />
-      <span>&nbsp;&nbsp;&nbsp;5. 가계약금은 매도인(임대인)에게 보관하기로 하며, 정식 계약을 체결 시에는 계약금에 충당하여야 합니다.</span>
+   </div>
+   <h3 style="text-align:center; margin-top:30px"> 약 정 </h3>
+   <div class="content">
+   <h4 style="text-align:left">
+      <span>1. 본 계약은  정식 계약을 체결하기 위하여 작성한 가계약서입니다. 따라서 계약 당사자는 정식계약 체결 시점까지 계약의 체결을 거절<br /> 
+      &nbsp;&nbsp;&nbsp;할 수 있으며, 당사자 일방이 아무런 통보없이 기한까지 계약을 체결하지 않거나, 당사자가 미리 거절의 통지를 상대방에게 한 때에는<br />  
+      &nbsp;&nbsp;&nbsp;본 계약은 즉시 무효가 됩니다.</span>
+      <br><br>
+      <span>2. 전항에 의거 무효가 된 때에는 가계약금은 즉시 전액 몰수합니다. 다만, 당사자 간의 합의로 반환하기로 한 때에는 반환하여야 합니다.</span>
+       <br><br>
+      <span>3. 가계약금을 반환할 의무가 있는 자가 상대방이 기한을 정하여 가계약금의 반환을 요청하였음에도 불구하고 기한까지 반환하지<br /> 
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;않은 때에는 지급할 때까지 1일에 1할의 징벌적 지연 이자를 지급하여야 합니다.</span>
+       <br><br>
+      <span>4. 당사자 일방의 책임 있는 사유로 정식 계약이 체결되지 않아 가계약이 무효가 된 때에는 매도자는 상대방에 대하여 교부받은 금액의 <br /> 
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;배액을 상환하여야야 하고, 매수자는 상대방에게 교부한 계약음은 매도인에게 전부 귀속됩니다.</span>
+       <br><br>
+      <span>5. 가계약금은 매도인(임대인)에게 보관하기로 하며, 정식 계약을 체결 시에는 계약금에 충당하여야 합니다.</span>
    </h4>
-
+	</div>
+	
+	<div class="content">
    <h3> 부가 조건 </h3>
    <textarea rows="10" cols="75" class="buyer"
-      style="margin-left: 50px; font-size: xx-large;" id="extra_condi" name="extra_condi" >
+      style="margin-left:0px; font-size: xx-large;" id="extra_condi" name="extra_condi" >
    </textarea>
+   </div>
+   <div class="content">
    <h4 align="center">
       <span>본 계약에 대하여 매도인(임대인)과 매수인(임차인)은 이의 없음을 확인하고 각자 서명․ 날인 후 <br />
       <br />매도인(임대인), 매수인(임차인) 각 1통씩 보관하여야 합니다.
@@ -80,12 +130,8 @@
    </h4>
    <br/>
    <br/>
-   <h2 align="center" id="contract_date2" ></h2>
-
-   <br />
-   <br />
-
-   <table style="width: 1000px" border="1">
+   <div class="content">
+   <table style="margin-bottom:30px; width:100%" border="1">
       <tr>
          <th rowspan="3"> 매도인 (임대인) </th>
          <th> 성명 </th>
@@ -113,11 +159,15 @@
          <th><input type="text" id="buyer_phone" name="buyer_phone" class="buyer"></th>       
       </tr>
    </table>
-   
+   </div>
+ 	</div>
+	
+	</div>
+	 <div class="button">
    <input type="submit" value ="가계약서 작성완료">
    <input type="reset" value ="다시 작성하기">
+	</div>
 	</form>
-	
 	<script src="assets/plugins/jquery/jquery.min.js"></script>
 	<script src="assets/plugins/jquery/jquery-migrate.min.js"></script>
 	<script src="assets/plugins/bootstrap/js/bootstrap.js"></script>
