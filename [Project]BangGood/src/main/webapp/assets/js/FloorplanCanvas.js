@@ -1002,15 +1002,15 @@ function getLineLength (startXY, endXY, scale) {
 	}
 	switch(scale) {
 	case "1": //원룸용 사이즈
-		length = px/9/10;
+		length = px/12/10;
 		lengthRound = length.toFixed(2);
 		break;
 	case "2": //투룸용 사이즈
-		length = px/5/10;
+		length = px/10/10;
 		lengthRound = length.toFixed(2);
 		break;
-	case "3": //아파트용 사이즈
-		length = px/2/10;
+	case "3": //쓰리룸용 사이즈
+		length = px/8/10;
 		lengthRound = length.toFixed(2);
 		break;
 	}
