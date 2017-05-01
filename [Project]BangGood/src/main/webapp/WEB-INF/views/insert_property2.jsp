@@ -212,7 +212,7 @@
 			</div> 
 			
 			
-			<div id="tab" style="height:480px; padding:20px;">
+			<div id="tab" style="height:480px; padding:10px;">
 				<div class="pencil" style="display:none;  overflow: auto;">
 					<div class="pencilContainer">
 					<div>
@@ -317,13 +317,14 @@
 						<img class="buttonImage" alt="washstand" src="assets/img/icons/sidebar/Washstand.jpg" btn-num="washstand" />
 					</div>
 				</div>
-				<div class="updownload " style="display:none;overflow: auto;">
+				<div class="updownload ">
 					<div class="ui-widget" id="datanum">
 						<select id='combobox'>
 						<!-- 옵션 동적 생성 부분 -->
 						</select>
 					</div>
-					<input type="button" class="btn-u btn-block rounded insert_btn g-mt-10" value="평면도 불러오기" id="loadCanvasData"/>
+					<input type="button" class="btn-u btn-block rounded insert_btn g-mt-10" value="평면도 불러오기" id="loadCanvasData" style="width: 80%;
+    margin-left: 29px;"/>
 				</div>
 			</div>
   		</div>
