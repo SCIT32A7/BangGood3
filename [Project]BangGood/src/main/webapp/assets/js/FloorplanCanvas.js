@@ -12,11 +12,13 @@ function init() {
 	LW = selector();
 	fixed = fixLine(LW);
 	offsetReload();
-	lineEdgeStep = 300;
+	lineEdgeStep = stepSelect();
 	lineColor="black";
 	iconState = new IconState();
 	drawGrid(ctx, 'gray', Step); //그리드(캔버스객체값,색상,스텝)
 	color = colorSelect();
+	iconUpdateTemp = false;
+	objectMoved = false;
 	img = new Image();
 	//이미지 불러오기(그려내기)
 	img.onload = function() {
@@ -69,6 +71,7 @@ function redrawAll() {
 	drawGrid(ctx, 'gray', Step); //그리드(캔버스객체값,색상,스텝)
 	drawAllLines(lines);
 	iconState.draw();
+	objectDraw();
 }
 
 //selector value값 받아오기
@@ -80,7 +83,6 @@ function selector() {
 //축적 받아오기
 function getScale() {
 	var result = $("#canvasScale option:selected").val();
-	console.log(result);
 	return result;
 }
 
@@ -145,29 +147,29 @@ function drawAllLines(lines) {
 			}
 		}
 	}
-	for (var i = 0; i < lines.length; i++) {
-		if (lines[i].object) {
-			var array = lines[i].object;
-			for (var j = 0; j < array.length; j++) {
-				ObjectIcon(array[j]);
-			}
-		}
-	}
+	
 	//교차점 생성
 	findIntersect();
 	if(updateTemp){
 		drawSelector(updateTemp);
-		if(updateTemp.type=="door"||updateTemp.type=="window"){
+		if(updateTemp.type=="door"||updateTemp.type=="window"||updateTemp.type=="slidingDoor"||updateTemp.type=="slidingWindow"){
 			ObjectIcon(updateTemp,"select");
+			
 		}
 	}
-//꼭지점,교차점 확인용
-/*for(var i=0; i<edge.length; i++){
-		        	//drawPoint(intersects[i]);
-		        	drawPoint(edge[i]);
-} */
-	//console.log(JSON.stringify(lines));
 	
+}
+
+//수정4
+function objectDraw(){
+	for (var i = 0; i < objects.length; i++) {
+		for (var j = 0; j < lines.length; j++) {
+			//console.log(JSON.stringify(objects[i]));
+			if(JSON.stringify(objects[i].line)==JSON.stringify(lines[j].coordinate)){
+				ObjectIcon(objects[i]);
+			}
+		}
+	}
 }
 
 //라인 페인트 메소드
@@ -386,8 +388,9 @@ function drawPoint(intersect) {
 function drawSelector(point) {
 	ctx.save();
 	ctx.beginPath();
-	console.log("drawSelector => "+ JSON.stringify(point));
-	if (point.type == "line") {
+	//console.log("drawSelector => "+ JSON.stringify(point));
+	var type = ''+point.type;
+	if (type == "line") {
 		ctx.moveTo(point.line.x0, point.line.y0);
 		ctx.arc(point.line.x0, point.line.y0, 4, 0, Math.PI * 2);
 		ctx.fill();
@@ -397,7 +400,7 @@ function drawSelector(point) {
 		ctx.arc(point.line.x1, point.line.y1, 4, 0, Math.PI * 2);
 		ctx.fill();
 		ctx.fillStyle = "white";
-	} else if (point.type.substr(0, 4) == "rect") {
+	} else if (type.substr(0, 4) == "rect") {
 		var line1 = point.line1.coordinate,
 			line2 = point.line2.coordinate,
 			line3 = point.line3.coordinate,
@@ -459,6 +462,44 @@ function insertLoadedValueToIcon(icon, img, value) {
 	return icon;
 }
 
+//이미지 아이콘 처음 생성시
+function newImageIcon(iconData){
+	deleteDidntDrawingImage();
+	iconsStat = "on";
+	img = new Image();
+	var icon;
+	//이미지 불러오기(그려내기)
+	img.onload = function() {
+		var width = img.width;
+		var height = img.height;
+		if(!iconData){
+			icon = new Icon(img, 50, 50, (width/2), (height/2),0 );
+			icon.src = imgSource[selectedImage];//....................수정
+			iconState.dragoffx = 50 - icon.x;
+			iconState.dragoffy = 50 - icon.y;
+			iconState.dragging = true;
+			iconState.selection = icon; //현재 마우스로 선택한 대상을 상태에 넣기
+			iconState.isRemovable = true;
+		}else{
+			var temp = iconData;
+			icon = new Icon(img, temp.x, temp.y, temp.width, temp.height, temp.rotateTable);
+			icon.src = temp.src;
+			iconState.isRemovable = true;
+		}
+		clearCanvas();
+		iconState.addIcon(icon);
+		redrawAll();
+	}
+	if(!iconData)img.src = imgSource[selectedImage];
+	else img.src = iconData.src;
+}
+
+//이미지 초기 생성시 저장 하지 않고 다시 생성시 기존 이미지 삭제
+function deleteDidntDrawingImage(){
+	if(iconState.selection){
+		if(iconsStat == "on")iconState.removeIcon(iconState.selection);
+	}
+}
 /*
 * 아이콘 상태 컬랙션....................................
 */
@@ -471,7 +512,6 @@ function IconState() {
 	this.selection = null;
 	this.dragOffX = 0; //이동 추적을 위한 위치 좌표 X
 	this.dragOffY = 0; //이동 추적을 위한 위치 좌표 Y
-	//var myState = this; //지금 IconState 객체를 의미
 	// **** Options ****
 	this.selectionColor = 'green';
 	this.selectionWidth = 2;
@@ -481,9 +521,9 @@ function IconState() {
 function selectIcon(){
 	var icons = iconState.icons;
 	var l = icons.length;
-	console.log("selectIcon Length => "+ l);	
+	//console.log("selectIcon Length => "+ l);	
 	for (var i = l - 1; i >= 0; i--) {
-		console.log("마우스 좌표 :" + XY.x + "/"+ XY.y);
+		//console.log("마우스 좌표 :" + XY.x + "/"+ XY.y);
 		if (icons[i].isOnIcon(XY.x, XY.y)) { //바운더리 체크 기능 수행 true/false
 			var mySel = icons[i]; //현재 선택된 아이콘 객체  (mySel.y -mySel.img.height/4)
 			iconState.dragoffx = XY.x - mySel.x;
@@ -497,7 +537,7 @@ function selectIcon(){
 		}
 	}
 		
-		//아이콘이 아닌 대상을 클릭할 때
+	//아이콘이 아닌 대상을 클릭할 때
 	if (iconState.selection) {
 		draggingResizer = anchorHitTest(XY.x, XY.y, iconState.selection);
 		//꼭지점 앵커를 건드리지 않은 경우
@@ -505,12 +545,18 @@ function selectIcon(){
 			iconState.selection = null;
 			iconState.isRemovable = false;
 			updateTemp = null;
+			//수정3
+			iconsStat = "off";
 			status = "none";//................................................추가
+			//수정4
 		}
+		iconUpdateTemp = false;
 	}
 };
+
 function iconCtrl(XY){
 	if (draggingResizer > -1) {
+		//console.log(iconsStat);
 		//console.log("Resizer");
 		var icon = iconState.selection;
 		var degree = icon.rotateTable;
@@ -565,16 +611,25 @@ function iconCtrl(XY){
 		}
 
 		// 아이콘 우상단과 우하단 세팅
-		icon.right = icon.x + icon.width;
-		icon.bottom = icon.y + icon.height;
+		checkIconSize(icon);
+		/*icon.right = icon.x + icon.width;
+		icon.bottom = icon.y + icon.height;*/
 	} else if (iconState.dragging) {
 		var mouse = XY;
 		iconState.selection.x = mouse.x - iconState.dragoffx;
 		iconState.selection.y = mouse.y - iconState.dragoffy;
+		checkIconSize(iconState.selection);
 	}
+	
 	redrawAll();
 	
-	};
+};
+
+//수정4
+function checkIconSize(icon){
+	icon.right = icon.x+icon.width;
+	icon.bottom = icon.y+icon.height;
+}
 
 //이미지 꼭지점 앵커 그리기........................................수정
 	function drawDragAnchor(x, y, edgeName) {
@@ -588,44 +643,44 @@ function iconCtrl(XY){
 
 
 //4개의 각 꼭지점을 선택했을 때
-		function anchorHitTest(mouseX, mouseY, mySel) {
-			var dx,dy;
-			var degree = mySel.rotateTable;
-			var seta = pi / (180.0 / degree );
-			var x0 = mySel.x;
-			var y0 = mySel.y;
-			var x1 = mySel.x-mySel.width/2;
-			var y1 = mySel.y-mySel.height/2;
-			var x2 = mySel.x+mySel.width/2;
-			var y2 = mySel.y+mySel.height/2;
-			var mx = (mouseX-x0)*Math.cos(-seta)-(mouseY-y0)*Math.sin(-seta)+x0;
-			var my = (mouseX-x0)*Math.sin(-seta)+(mouseY-y0)*Math.cos(-seta)+y0;
-		// top-left
-			dx = x1 - mx;
-			dy = y1 - my;
-			if (dx * dx + dy * dy <= rr) {
-				return (0);
-			}
-		// top-right
-			dx = x2 - mx;
-			dy = y1 - my;
-			if (dx * dx + dy * dy <= rr) {
-				return (1);
-			}
-		// bottom-right
-			dx = x2 - mx;
-			dy = y2 - my;
-			if (dx * dx + dy * dy <= rr) {
-				return (2);
-			}
-		// bottom-left
-			dx = x1 - mx;
-			dy = y2 - my;
-			if (dx * dx + dy * dy <= rr) {
-				return (3);
-			}
-			return (-1);
-		}
+function anchorHitTest(mouseX, mouseY, mySel) {
+	var dx,dy;
+	var degree = mySel.rotateTable;
+	var seta = pi / (180.0 / degree );
+	var x0 = mySel.x;
+	var y0 = mySel.y;
+	var x1 = mySel.x-mySel.width/2;
+	var y1 = mySel.y-mySel.height/2;
+	var x2 = mySel.x+mySel.width/2;
+	var y2 = mySel.y+mySel.height/2;
+	var mx = (mouseX-x0)*Math.cos(-seta)-(mouseY-y0)*Math.sin(-seta)+x0;
+	var my = (mouseX-x0)*Math.sin(-seta)+(mouseY-y0)*Math.cos(-seta)+y0;
+// top-left
+	dx = x1 - mx;
+	dy = y1 - my;
+	if (dx * dx + dy * dy <= rr) {
+		return (0);
+	}
+// top-right
+	dx = x2 - mx;
+	dy = y1 - my;
+	if (dx * dx + dy * dy <= rr) {
+		return (1);
+	}
+// bottom-right
+	dx = x2 - mx;
+	dy = y2 - my;
+	if (dx * dx + dy * dy <= rr) {
+		return (2);
+	}
+// bottom-left
+	dx = x1 - mx;
+	dy = y2 - my;
+	if (dx * dx + dy * dy <= rr) {
+		return (3);
+	}
+	return (-1);
+}
 
 
 /*
@@ -648,21 +703,16 @@ function findIntersect() {
 //getCloseXYToMouse사용
 function findNearestLine(mouseXY) {
 	//var intersectXY = 0;
+	if(iconState.selection)lineEdgeStep=1;
+	else lineEdgeStep = stepSelect();
 	var dist = lineEdgeStep;
 	var Temp = '';
 	var index = 0;
 	var beginXY, endXY, pt = 0;
-	objectTemp = null;
+	//objectTemp = null;
 	for (var i = 0; i < lines.length; i++) {
 		beginXY = { x : lines[i].coordinate.x0, y : lines[i].coordinate.y0 };
 		endXY = { x : lines[i].coordinate.x1, y : lines[i].coordinate.y1 };
-		if(lines[i].object){
-			for(var j=0;j<lines[i].object.length;j++){
-				var result = isObjectIcon(lines[i].object[j]);
-				if(result)objectTemp=lines[i].object[j];
-				//else objectTemp = null;
-			}
-		}
 		var xy = getCloseXYToMouse(beginXY, endXY, mouseXY);
 		var dx = mouseXY.x - xy.x;
 		var dy = mouseXY.y - xy.y;
@@ -801,7 +851,7 @@ function getIntersectXY(intersectX, intersectY) {
 
 function check_and_reverseCoordinate(point1, point2) {
 	//두번째 XY좌표가 첫번째 좌표보다 좌측에 위치에 있을때
-	var tempXY = {};
+	/*var tempXY = {};
 	if (point2.y0 > point2.y1) {
 		tempXY.x = point2.x0;
 		tempXY.y = point2.y0;
@@ -818,7 +868,7 @@ function check_and_reverseCoordinate(point1, point2) {
 		point1.y0 = point1.y1;
 		point1.x1 = tempXY.x;
 		point1.y1 = tempXY.y;
-	}
+	}*/
 	return [ point1, point2 ];
 }
 
@@ -838,7 +888,7 @@ function calculateIntersectPoint2(intersectX, intersectY, point1, point2) {
 	var result = {};
 	var tempXY = {};
 	//두번째 XY좌표가 첫번째 좌표보다 좌측에 위치에 있을때
-	if (point2.x0 > point2.x1) {
+	/*if (point2.x0 > point2.x1) {
 		tempXY.x = point2.x0;
 		tempXY.y = point2.y0;
 		point2.x0 = point2.x1;
@@ -854,7 +904,7 @@ function calculateIntersectPoint2(intersectX, intersectY, point1, point2) {
 		point1.y0 = point1.y1;
 		point1.x1 = tempXY.x;
 		point1.y1 = tempXY.y;
-	}
+	}*/
 	//화면 상에서 나타는 선의 범위 내에서 충돌 지점만 출력
 	if ((intersectX >= point1.x0) && (intersectX <= point1.x1)) {
 		if ((intersectX >= point2.x0) && (intersectX <= point2.x1)) {
@@ -971,13 +1021,13 @@ function getLineLength (startXY, endXY, scale) {
 //Undo임시 저장 공간
 function inputUndo(temp, req) {
 	var temp = JSON.stringify(temp);
-	if (Undo.length < 15) {
+	//console.log(temp + "req : " + req);
+	if (Undo.length < 40) {
 		Undo.push({data : JSON.parse(temp),req : req});
-	} else if (Undo.length >= 15) {
+	} else if (Undo.length >= 40) {
 		Undo.splice(0, 1);
-		Undo.push({data : temp,req : req});
+		Undo.push({data : JSON.parse(temp),req : req});
 	}
-	//console.log(JSON.stringify(Undo));
 }
 
 //Undo임시 저장 공간에서 호출
@@ -988,6 +1038,8 @@ function getUndo(data) {
 		recreateData(data.data);
 	} else if (data.req == "move"){
 		moveData(data.data);
+	} else if (data.req == "direct"){
+		redirect(data.data);
 	}
 }
 
@@ -999,21 +1051,48 @@ function getRedo(data) {
 		removeData(data.data);
 	} else if (data.req == "move"){
 		moveData(data.data);
+	} else if (data.req == "direct"){
+		redirect(data.data);
 	}
+}
+
+//수정4
+function redirect(data){
+	//console.log(JSON.stringify(data));
+	var Temp = '';
+	var index = 0;
+	if(data.data.type=="door"||data.data.type=="window"||data.data.type=="slidingDoor"||data.data.type=="slidingWindow"){
+		Temp = JSON.stringify(objects[data.index]);
+		objects[data.index]=data.data;
+		data.data = JSON.parse(Temp);
+	} 
 }
 
 function moveData(data){
 	var Temp = '';
 	var index = 0;
-	if(data.data.type=="door"||data.data.type=="window"){
-		Temp = (lines[data.data.index].object[data.index]);
-		lines[data.data.index].object[data.index]=data.data;
-		data.data = Temp;
+	//console.log(JSON.stringify(data.data));
+	if(data.data.type=="door"||data.data.type=="window"||data.data.type=="slidingDoor"||data.data.type=="slidingWindow"){
+		Temp = JSON.stringify(objects[data.index]);
+		objects[data.index]=data.data;
+		data.data = JSON.parse(Temp);
+	} else {
+		//console.log(JSON.stringify(data));
+		//console.log(JSON.stringify(iconState.icons[data.index]));
+		Temp = JSON.stringify(iconState.icons[data.index]);
+		iconState.icons[data.index].x=data.data.x;
+		iconState.icons[data.index].y=data.data.y;
+		iconState.icons[data.index].width = data.data.width;
+		iconState.icons[data.index].height = data.data.height;
+		iconState.icons[data.index].rotateTable = data.data.rotateTable;
+		checkIconSize(iconState.icons[data.index]);
+		data.data = JSON.parse(Temp);
 	}
 }
 
 //화면 상에서 드로우 된 객체를 지울때
 function removeData(data) {
+//console.log(JSON.stringify(data.data));
 	if (data.type == "line") {
 		for (var i = 0; i < lines.length; i++) {
 			if (JSON.stringify(lines[i].coordinate) == JSON.stringify(data.coordinate)) lines.splice(i, 1);
@@ -1026,14 +1105,13 @@ function removeData(data) {
 	} else if(data.type == "icon"){
 		iconState.removeIcon(data.data);
 		iconState.selection = null;
-	} else if(data.type=="door"||data.type=="window"){
-		var array = lines[data.index].object;
-		for(var i=0;i<array.length;i++){
-			//console.log(JSON.stringify(array[i]));
-			//console.log(JSON.stringify(data));
-			if(JSON.stringify(array[i])==JSON.stringify(data)){
-			  array.splice(i,1);
-			  //lines[data.index].object = array;
+	} else if(data.data.type=="door"||data.data.type=="window"||data.data.type=="slidingDoor"||data.data.type=="slidingWindow"){
+		for(var i=0;i<objects.length;i++){
+			//console.log(JSON.stringify(objects[i]));
+			//console.log(JSON.stringify(data.data));
+			if(JSON.stringify(objects[i])==JSON.stringify(data.data)){
+				objects.splice(i,1);
+				//lines[data.index].object = array;
 			}
 		}
 	}
@@ -1049,13 +1127,15 @@ function recreateData(data) {
 		lines.push(data.line3);
 		lines.push(data.line4);
 	} else if(data.type == "icon"){
-		iconState.addIcon(data.data);
-		iconState.selection = data.data;
-	} else if(data.type=="door"||data.type=="window"){
-		if(lines[data.index].object){
-    		lines[data.index]['object'].push(data);
-		}else {
-			lines[data.index] = [];
+		//console.log(JSON.stringify(data.data));
+		//data.data.stat = "none";
+		newImageIcon(data.data);
+		//iconState.addIcon(icon);
+	} else if(data.data.type=="door"||data.data.type=="window"||data.data.type=="slidingDoor"||data.data.type=="slidingWindow"){
+		for(var i=0;i<lines.length;i++){
+			if(JSON.stringify(data.data.line)==JSON.stringify(lines[i].coordinate)){
+				objects.push(data.data);
+			}
 		}
 	} 
 }
@@ -1072,6 +1152,86 @@ function selectObjectIcon() {
 	updateTemp = objectTemp;
 }
 
+//아이콘 밑 이미지 크기나 좌표값 변환시 Undo배열에 저장 
+function checkMoveObject(stat){
+	var index;
+	var object;
+	if(stat=="clickOn"){
+		for(var i=0;i<objects.length;i++){
+			if(JSON.stringify(updateTemp)==JSON.stringify(objects[i])){
+				index = i;
+				object = JSON.stringify(updateTemp);
+				//console.log(object);
+				UndoTemp = {object:JSON.parse(object),index:index};
+				objectStat = true;
+			}
+		}
+	}else if(stat=="clickOff"){
+		index = UndoTemp.index;
+		object = UndoTemp.object;
+		if(JSON.stringify(object)!=JSON.stringify(objects[index])){
+			//inputUndo({data:object,index:index},"move");
+			objectStat = false;
+		}else{
+			objectStat = true;
+		}
+	}
+	
+}
+
+function checkMoveIcon(order){
+	var index;
+	var icon;
+	//console.log(iconUpdateTemp);
+	if(order=="clickOn"){
+		for(var i=0;i<iconState.icons.length;i++){
+			if(JSON.stringify(iconState.icons[i])==JSON.stringify(iconState.selection)){
+				index = i;
+				icon = JSON.stringify(iconState.selection);
+				UndoTemp = {icon:JSON.parse(icon),index:index};
+			}
+		}
+	}else if(order=="clickOff"){
+		index = UndoTemp.index;
+		icon = UndoTemp.icon;
+		/*if(iconUpdateTemp)iconUpdateTemp = false;*/
+		iconUpdateTemp = false;
+		if(JSON.stringify(icon)!=JSON.stringify(iconState.selection)){
+			//iconState.selection.stat = "changed";
+			inputUndo({data:icon,index:index},"move");
+			iconState.selection=null;
+			UndoTemp = null;
+			//wheel = false;
+		}else if(JSON.stringify(UndoTemp.icon)==JSON.stringify(iconState.selection)){
+			iconUpdateTemp = true;
+		}
+	}
+	/*if(order=="wheel"&&!clickE){
+		wheel = true;
+		//UndoTemp.wheel = "on";
+	}*/
+}
+
+//수정4
+function checkWheelEvent(){
+	
+	var index = UndoTemp.index;
+	var data;
+	if(UndoTemp.icon){
+		data = UndoTemp.icon;
+		if(JSON.stringify(data)!=JSON.stringify(iconState.selection)){
+			inputUndo({data:data,index:index},"move");
+		}
+	}else if(UndoTemp.object){
+		if(JSON.stringify(UndoTemp.object)!=JSON.stringify(objects[index])){
+			//console.log(JSON.stringify(UndoTemp));
+			inputUndo({data:UndoTemp.object,index:UndoTemp.index},"move");
+		}
+	}
+}
+
+
+
 function deleteRect(line) {
 	for (var i = 0; i < lines.length; i++) {
 		if (JSON.stringify(line.coordinate) == JSON.stringify(lines[i].coordinate)) {
@@ -1082,6 +1242,19 @@ function deleteRect(line) {
 	}
 }
 
+//수정4
+function findObject(XY){
+	var result;
+	for(var i=0;i<objects.length;i++){
+		if(isObjectIcon(objects[i])){
+			//console.log("Ss");
+			result = objects[i];
+			objectTemp = result;
+		}
+	}
+	return result;
+}
+
 //수정
 function isObjectIcon(object){
 	var degree = object.degree;
@@ -1089,17 +1262,17 @@ function isObjectIcon(object){
 	if(object.a=='down'){
 		amp = -1;
 	}
+	var dist = object.dist;
 	var seta = pi / (180.0 / degree )
 	var x0 = object.x;
 	var y0 = object.y;
-	//console.log("x0 : "+x0);
-	var x1 = x0-(object.dist/2);
+	var x1 = x0-(dist/2);
 	var y1 = y0-10;
-	var x2 = x0+(object.dist/2);
+	var x2 = x0+(dist/2);
 	var y2 = y0+10;
 	if(object.type=='door'){
-		y1 = y0+object.dist-amp*(object.dist+5);
-		y2 = y0+object.dist+amp*(object.dist+5);
+		y1 = y0+(dist-(amp*(dist+5)))/2;
+		y2 = y0+(dist+(amp*(dist+5)))/2;
 	}
 	if(y1>y2){
 		var temp = y2;
@@ -1185,7 +1358,8 @@ function findDegree(){
 function drawingObject(order){
 	//status = "objectDraw";
 	var table = findDegree();
-	var object = {x:XY.x,y:XY.y,a:table.a,type:objectSelect,dist:count,degree:table.degree,alpha:0.0};
+	var direct = -1;
+	var object = {x:XY.x,y:XY.y,a:table.a,type:objectSelect,direct:direct,dist:count,degree:table.degree,alpha:0.0};
 	if(order == "draw"){
 		object.alpha = 1.0;
 		ObjectIcon(object);
@@ -1193,176 +1367,287 @@ function drawingObject(order){
 	else if(order == "create"){
 		var temp = lineTemp;
 		object.alpha = 0.0;
-		if(lineTemp.type.substr(0,4)=="rect")temp = findRectLine(temp);
-		delete temp.type;
+		temp = findRectLine(temp);
 		for(var i=0;i<lines.length;i++){
-			/*console.log(JSON.stringify(lines[i].coordinate));
-			console.log(JSON.stringify(temp));*/
 			if(JSON.stringify(lines[i].coordinate)==JSON.stringify(temp.line)){
-				if(!lines[i].object){
-					lines[i].object = [];
-				}
 				if(nearest){
-					object.index = i;
-					lines[i]['object'].push(object);
-					inputUndo(object,"create");
+					object.line = lines[i].coordinate;
+					objects.push(object);
+					inputUndo({data:object},"create");
 				}
 			}
 		}
-		//status = 'none';
+		status = 'none';
 	}
-	
 }
 //수정2
-function findRectLine(rect){
-	var temp;
-	if(rect.type=='rect1'){
-		temp=rect.line1.coordinate;
+function findRectLine(temp){
+	if(lineTemp.type.substr(0,4)=="rect"){
+		if(temp.type=='rect1'){
+			temp=temp.line1.coordinate;
+		}
+		if(temp.type=='rect4'){
+			temp=temp.line4.coordinate;
+		}
+		if(temp.type=='rect2'){
+			temp=temp.line2.coordinate;
+		}
+		if(temp.type=='rect3'){
+			temp=temp.line3.coordinate;
+		}
+	}else{
+		temp = temp.line;
 	}
-	if(rect.type=='rect4'){
-		temp=rect.line4.coordinate;
-	}
-	if(rect.type=='rect2'){
-		temp=rect.line2.coordinate;
-	}
-	if(rect.type=='rect3'){
-		temp=rect.line3.coordinate;
-	}
+	delete temp.type;
 	return {line:temp};
 }
 //수정2
 //오브젝트 수정 objectTemp&&clickE
-function updateObject(object){
+function updateObject(object,order){
 	var index = '';
-	for(var i=0;i<lines[object.index].object.length;i++){
-		if(JSON.stringify(object)==JSON.stringify(lines[object.index].object[i])){
+	var line;
+	for(var i=0;i<objects.length;i++){
+		if(JSON.stringify(object)==JSON.stringify(objects[i])){
 			index = i;
-			console.log("Ds");
 		}
 	}
-	var temp = {x:object.x,y:object.y,a:object.a,type:object.type,dist:object.dist,degree:object.degree,alpha:0.0};
-	temp.x = XY.x;
-	temp.y = XY.y;
-	var table = findDegree();
-	temp.degree = table.degree;
-	temp.a = table.a;
-	temp.alpha = 1.0;
-	ObjectIcon(temp);
-	//tamp
-	if(nearest){
-		//console.log(nearest);
-		lines[object.index].object[index].x = temp.x;
-		lines[object.index].object[index].y = temp.y;
-		lines[object.index].object[index].degree = temp.degree;
-		lines[object.index].object[index].a = temp.a;
-		lines[object.index].object[index].alpha = 0.0;
+	if(order=="draw"){
+		var table = findDegree();
+		line = findRectLine(lineTemp);
+		var temp = {x:XY.x,y:XY.y,a:table.a,type:object.type,direct:object.direct,dist:object.dist,degree:table.degree,alpha:1.0,line:line.line};
+		ObjectIcon(temp);
+		objectMoved = true;
+	}
+	if(nearest && order=="update"){
+		var table = findDegree();
+		line = findRectLine(lineTemp);
+		//console.log("저장");
+		objects[index].x = XY.x;
+		objects[index].y = XY.y;
+		objects[index].a = table.a;
+		objects[index].degree = table.degree;
+		objects[index].line = line.line;
+		objects[index].alpha = 0.0;
+		
+		if(JSON.stringify(UndoTemp.object)!=JSON.stringify(objects[index])){
+			inputUndo({data:UndoTemp.object,index:UndoTemp.index},"move");
+		}
+		updateTemp = null;
+		status = "none";
 	}
 	
 }
+
+//전체 체크
+function checkAll(){
+   if(objectWheel){
+      checkWheelEvent();
+   }
+   else if(iconState.selection){
+      if(wheel){
+         checkWheelEvent();
+      }else if(iconsStat != "on"){
+         checkMoveIcon("clickOff");
+      }
+   }
+   //checkMoveObject("clickOn");
+   objectWheel = false;
+   wheel = false;
+   objectStat = false;
+   updateTemp = null;
+   UndoTemp = null;
+}
+
+//오브젝트 아이콘 방향 회전
+function objectDirect(object){
+	var index = '';
+	for(var i=0;i<objects.length;i++){
+		if(JSON.stringify(object)==JSON.stringify(objects[i])){
+			index = i;
+		}
+	}
+	inputUndo({data:objects[index],index:index},"direct");
+	if(object.direct==1){
+		object.direct = -1;
+	}else {
+		object.direct = 1;
+	}
+	objects[index]=object;
+}
+
 //수정2
 //오브젝트 아이콘 크기수정
 function objectResizer(object,key){
 	var index = '';
-	for(var i=0;i<lines[object.index].object.length;i++){
-		if(JSON.stringify(object)==JSON.stringify(lines[object.index].object[i])){
+	for(var i=0;i<objects.length;i++){
+		if(JSON.stringify(object)==JSON.stringify(objects[i])){
 			index = i;
 		}
 	}
+	objectStat = true;
 	if(key=="up" && object.dist<80){
 		object.dist++;
 	}else if(key=="down" && object.dist>30){
 		object.dist--;
 	}
-	lines[object.index].object[i]=object;
+	updateTemp = object;
+	//objects[index]=object;
 } 
 
 //수정2
 function ObjectIcon(object,select){
-	//var nearest = findNearestLine(XY);
-	//if(nearest)XY = nearest;
-	//var slope = '';
-	//var xy,dx,dy = '';
-	var dist = object.dist;
-	var locationX = object.x, 
-		locationY = object.y;
-	var a = object.a;
-	//var set = 1;
-	var type = object.type;
-	var alpha = object.alpha;
-	if(select=="select")alpha = 1.0;
-	var degree = object.degree;
-	/*Layer 0 - Code Starts Here*/
-	if(type=="window"){
-		ctx.save();
-		ctx.beginPath();
-		ctx.strokeStyle="#f0f0f0";
-		ctx.lineWidth=1;
-		ctx.translate(locationX, locationY);
-		ctx.rotate(degree*Math.PI/180);
-		ctx.rect(-dist/2,-5,dist,10);
-		ctx.fillStyle = "#f0f0f0";
-		ctx.fill();
-		ctx.stroke();
-		ctx.restore();
-		//objects selectline
-		ctx.save();
-		ctx.translate(locationX, locationY);
-		ctx.rotate(degree*Math.PI/180);
-		ctx.rect(-dist/2-5,-10,dist+10,20);
-		ctx.setLineDash([ 5, 3 ]);
-		ctx.strokeStyle="#333333";
-		ctx.lineWidth=0.5;
-		ctx.globalAlpha = alpha;
-		ctx.stroke();
-		ctx.restore();
-	}
-	/*Layer 1 - Code Starts Here*/
-	if(type=="door"){
-		ctx.save();
-		ctx.beginPath();
-		ctx.strokeStyle="#333333";
-		ctx.lineWidth=1;
-		ctx.translate(locationX, locationY);
-		ctx.rotate(degree*Math.PI/180);
-		ctx.moveTo(-dist/2,0);
-		ctx.lineTo(-dist/2,(dist+5));
-		ctx.stroke();
-		/*Layer 2 - Code Starts Here*/
-		ctx.beginPath();
-		ctx.strokeStyle="#333333";
-		ctx.lineWidth=1;
-		ctx.moveTo(-dist/2,(dist+5));
-		ctx.quadraticCurveTo(dist/2,(dist+5),dist/2,0);
-		ctx.stroke();
-		ctx.restore();
-		//Layer 3
-		ctx.save();
-		ctx.beginPath();
-		ctx.strokeStyle="#f0f0f0";
-		ctx.lineWidth=1;
-		ctx.translate(locationX, locationY);
-		ctx.rotate(degree*Math.PI/180);
-		ctx.rect(-dist/2,-5,dist,10);
-		ctx.fillStyle = "#f0f0f0";
-		ctx.fill();
-		ctx.stroke();
-		ctx.restore();
-		//objects selectline
-		ctx.save();
-		ctx.translate(locationX, locationY);
-		ctx.rotate(degree*Math.PI/180);
-		ctx.rect(-dist/2-5,-10,dist+10,(dist+20));
-		ctx.setLineDash([ 5, 3 ]);
-		ctx.strokeStyle="#333333";
-		ctx.lineWidth=0.5;
-		ctx.globalAlpha = alpha;
-		ctx.stroke();
-		ctx.restore();
-	}
+		var direct = object.direct;
+		var dist = object.dist;
+		var locationX = object.x, 
+			locationY = object.y;
+		var a = object.a;
+		var type = object.type;
+		var alpha = object.alpha;
+		if(select=="select")alpha = 1.0;
+		var degree = object.degree;
+		/*Layer 0 */
+		if(type=="window"){
+			ctx.save();
+			ctx.beginPath();
+			ctx.strokeStyle="#bfbfbf";
+			ctx.lineWidth=1;
+			ctx.translate(locationX, locationY);
+			//console.log("XY2 : "+locationX+" , "+locationY);
+			ctx.rotate(degree*Math.PI/180);
+			ctx.rect(-dist/2,-4,dist,8);
+			ctx.fillStyle = "#f0f0f0";
+			ctx.fill();
+			ctx.stroke();
+			ctx.restore();
+			//objects selectline
+			ctx.save();
+			ctx.translate(locationX, locationY);
+			ctx.rotate(degree*Math.PI/180);
+			ctx.rect(-dist/2-5,-10,dist+10,20);
+			ctx.setLineDash([ 5, 3 ]);
+			ctx.strokeStyle="#333333";
+			ctx.lineWidth=0.5;
+			ctx.globalAlpha = alpha;
+			ctx.stroke();
+			ctx.restore();
+		}
+	 	/*Layer 1*/
+		else if(type=="door"){
+	 		ctx.save();
+			ctx.beginPath();
+			ctx.strokeStyle="#333333";
+			ctx.lineWidth=1;
+			ctx.translate(locationX, locationY);
+			ctx.rotate(degree*Math.PI/180);
+			ctx.moveTo(direct*(dist/2),0);
+			ctx.lineTo(direct*(dist/2),(dist+5));
+			ctx.stroke();
+			/*Layer 2 */
+			ctx.beginPath();
+			ctx.strokeStyle="#333333";
+			ctx.lineWidth=1;
+			ctx.moveTo(direct*dist/2,(dist+5));
+			ctx.quadraticCurveTo(-direct*dist/2,(dist+5),-direct*dist/2,0);
+			ctx.stroke();
+			ctx.restore();
+			ctx.save();
+			ctx.beginPath();
+			ctx.lineWidth=1;
+			ctx.translate(locationX, locationY);
+			ctx.rotate(degree*Math.PI/180);
+			ctx.rect(-dist/2,-4,dist,8);
+			ctx.strokeStyle="#bfbfbf";
+			ctx.fillStyle = "#f0f0f0";
+			ctx.fill();
+			ctx.stroke();
+			ctx.restore();
+			//objects selectline
+			ctx.save();
+			ctx.translate(locationX, locationY);
+			ctx.rotate(degree*Math.PI/180);
+			ctx.rect(-dist/2-5,-10,dist+10,(dist+20));
+			ctx.setLineDash([ 5, 3 ]);
+			ctx.strokeStyle="#333333";
+			ctx.lineWidth=0.5;
+			ctx.globalAlpha = alpha;
+			ctx.stroke();
+			ctx.restore();
+	 	}
+		//sliding door
+		else if(type=="slidingWindow"){
+			ctx.save();
+	 		ctx.beginPath();
+	 		ctx.lineWidth=1;
+	 		ctx.translate(locationX, locationY);
+	 		ctx.rotate(degree*Math.PI/180);
+	 		ctx.rect(-dist/2-5.5,-4,dist,8);
+	 		ctx.strokeStyle="#bfbfbf";
+	 		ctx.fillStyle = "#ffffff";
+	 		ctx.fill();
+	 		ctx.stroke();
+	 		ctx.restore();
+	 		ctx.save();
+	 		ctx.beginPath();
+	 		ctx.strokeStyle="#bfbfbf";
+	 		ctx.lineWidth=1;
+	 		ctx.translate(locationX, locationY);
+	 		ctx.rotate(degree*Math.PI/180);
+	 		ctx.rect(direct*dist/2-5,-3,-direct*dist/2,6);
+	 		ctx.fillStyle = "#bfbfbf";
+	 		ctx.fill();
+	 		ctx.stroke();
+	 		ctx.restore();
+	 		//objects selectline
+	 		ctx.save();
+	 		ctx.translate(locationX, locationY);
+	 		ctx.rotate(degree*Math.PI/180);
+	 		ctx.rect(-dist/2-8,-6,dist+3,12);
+	 		ctx.setLineDash([ 5, 3 ]);
+	 		ctx.strokeStyle="#333333";
+	 		ctx.lineWidth=0.5;
+	 		ctx.globalAlpha = alpha;
+	 		ctx.stroke();
+	 		ctx.restore();
+	 	}
+		else if(type=="slidingDoor"){
+			ctx.save();
+			ctx.beginPath();
+			ctx.lineWidth=1;
+			ctx.translate(locationX, locationY);
+			ctx.rotate(degree*Math.PI/180);
+			ctx.rect(-dist/2,-4,dist,8);
+			ctx.strokeStyle="#ffffff";
+			ctx.fillStyle = "#ffffff";
+			ctx.fill();
+			ctx.stroke();
+			ctx.restore();
+			ctx.save();
+			ctx.beginPath();
+			ctx.strokeStyle="#bfbfbf";
+			ctx.lineWidth=1;
+			ctx.translate(locationX, locationY);
+			ctx.rotate(degree*Math.PI/180);
+			ctx.rect(-direct*dist/2,0,direct*(dist-10),-3);
+			ctx.fillStyle = "#bfbfbf";
+			ctx.fill();
+			ctx.stroke();
+			ctx.restore();
+			//objects selectline
+			ctx.save();
+			ctx.translate(locationX, locationY);
+			ctx.rotate(degree*Math.PI/180);
+			ctx.rect(-dist/2-5,-6,dist+10,12);
+			ctx.setLineDash([ 5, 3 ]);
+			ctx.strokeStyle="#333333";
+			ctx.lineWidth=0.5;
+			ctx.globalAlpha = alpha;
+			ctx.stroke();
+			ctx.restore();
+		}
 };
 
 //수정
-function moveTemp(req){
+/*function moveTemp(req){
 	if(req=="object"){
 		var array = lines[updateTemp.index].object;
 		for(var i=0;i<array.length;i++){
@@ -1378,150 +1663,150 @@ function moveTemp(req){
 	if(req=="image"){
 		//console.log("imageSelect");
 	}
+}*/
+
+function mouseXY(e) {
+	//client는 마우스의 좌표 - offset은 canvas의 좌표 즉 canvas안에서의 마우스의 좌표
+	var tempX = parseInt(e.clientX - offsetX); 
+	var tempY = parseInt(e.clientY - offsetY);
+
+	if (status == "image") return { x : tempX, y : tempY };
+
+	//ShiftKey입력후 선을 그릴시 직석으로 
+	//일정 좌표 이상으로 벗어나면 해당 방향으로 직선
+	if (ShiftKey && status == "lineDrawing") {
+		var Dx = Math.abs(downXY.x - tempX);
+		var Dy = Math.abs(downXY.y - tempY);
+		if (Dx > Dy) {
+			//               return{x:tempX-fixed,y:downXY.y}
+			return { x : tempX, y : downXY.y }
+		} else {
+			//               return{x:downXY.x,y:tempY-fixed}
+			return { x : downXY.x, y : tempY }
+		}
+	}
+	if ((tempX % 2) == 0) mouseX = tempX;
+	if ((tempY % 2) == 0) mouseY = tempY;
+	return { x : mouseX - fixed, y : mouseY - fixed }
 }
 
-	function mouseXY(e) {
-		//client는 마우스의 좌표 - offset은 canvas의 좌표 즉 canvas안에서의 마우스의 좌표
-		var tempX = parseInt(e.clientX - offsetX); 
-		var tempY = parseInt(e.clientY - offsetY);
-	
-		if (status == "image") return { x : tempX, y : tempY };
-	
-		//ShiftKey입력후 선을 그릴시 직석으로 
-		//일정 좌표 이상으로 벗어나면 해당 방향으로 직선
-		if (ShiftKey && status == "lineDrawing") {
-			var Dx = Math.abs(downXY.x - tempX);
-			var Dy = Math.abs(downXY.y - tempY);
-			if (Dx > Dy) {
-				//               return{x:tempX-fixed,y:downXY.y}
-				return { x : tempX, y : downXY.y }
-			} else {
-				//               return{x:downXY.x,y:tempY-fixed}
-				return { x : downXY.x, y : tempY }
-			}
-		}
-		if ((tempX % 5) == 0) mouseX = tempX;
-		if ((tempY % 5) == 0) mouseY = tempY;
-		return { x : mouseX - fixed, y : mouseY - fixed }
-	}
+//미우스 좌표값 반환 (객체의 위치 계산)
+function getCrossXY(e) {
+	var mouseX = parseInt(e.clientX - offsetX); //client는 마우스의 좌표 - offset은 canvas의 좌표 즉 canvas안에서의 마우스의 좌표
+	var mouseY = parseInt(e.clientY - offsetY);
+	return { x : mouseX - fixed, y : mouseY - fixed }
+}
 
-	//미우스 좌표값 반환 (객체의 위치 계산)
-	function getCrossXY(e) {
-		var mouseX = parseInt(e.clientX - offsetX); //client는 마우스의 좌표 - offset은 canvas의 좌표 즉 canvas안에서의 마우스의 좌표
-		var mouseY = parseInt(e.clientY - offsetY);
-		return { x : mouseX - fixed, y : mouseY - fixed }
-	}
+//다운로드 업로드 관련 메소드 모음............................................................................
 
-	//다운로드 업로드 관련 메소드 모음............................................................................
+//다운로드 이미지
+function downloadFloorplanPng(saved_name) {
+	//다운로드 직전 최신화
+	redrawAll();
 	
-	//다운로드 이미지
-	function downloadFloorplanPng(saved_name) {
-		//다운로드 직전 최신화
-		redrawAll();
-		
-		//파일 다운로드 기능
-		var dataURL = canvas.toDataURL("image/png");
-		var newdata = dataURL.replace(/^data:image\/png/, 'data:application/octet-stream');
-		$('#canvasDownload').attr('download', saved_name+'.png').attr('href', newdata);
-	}
+	//파일 다운로드 기능
+	var dataURL = canvas.toDataURL("image/png");
+	var newdata = dataURL.replace(/^data:image\/png/, 'data:application/octet-stream');
+	$('#canvasDownload').attr('download', saved_name+'.png').attr('href', newdata);
+}
+
+//DB에 데이터 저장
+function saveFloorplan (on, url, saved_name, scale) {
+	//다운로드 직전 최신화
+	redrawAll();
 	
-	//DB에 데이터 저장
-	function saveFloorplan (on, url, saved_name, scale) {
-		//다운로드 직전 최신화
-		redrawAll();
-		alert("저장시 스케일 입니다"+scale);
-		//데이터 collect
-		var iconArray = iconState.icons;
-		var lineArray = lines;
-		var objectArray = []; // 임시
-		var data = { lines : JSON.stringify(lineArray),
-					 icons : JSON.stringify(iconArray),
-					 objects : JSON.stringify(objectArray),
-					 scale : scale,
-					 saved_name : saved_name };
-		if(on) {
-			//서버 저장
-			$.ajax({
-				method : "POST",
-				url : url,
-				dataType : "JSON",
-				async : false,
-				data : data,
-				success : function(result) {
-					if (result == 1) {
-						alert("평면도 수정에 성공하셨습니다. 다음 진행을 해주세요.");
-					} else if(result == -1) {
-						alert("로그인 후 저장 가능합니다.");
-					} else {
-						alert("저장 실패");
-					}
-				},
-				error : function() {
-					alert("서버 등록 실패. 다시 시도하여 주세요.");
-				}
-			});
-		} else {
-			//방 등록과정 중 캔버스 서버 임시 저장
-			var $form = $('<form></form>');
-			$form.attr('action', url);
-			$form.attr('method', "POST");
-			$form.appendTo('body');
-			for(var key in data) {
-				var value = data[key];
-				$form.append($('<input type="hidden" value='+value+' name="'+key+'">'));
-			}
-			$form.submit();
-		} 
-	}	
-	
-	//DB에서 유저 평면도 리스트 로드
-	function loadUserFloorplanList(custid) {
-		var availableList = [];
-		$.ajax({
-			url: "loadUserDataList",
-			type: "POST",
-			async: false,
-			data: {custid : custid},
-			success : function(list) {
-				availableList = list;
-			}
-		});
-		return availableList;
-	}
-	
-	//DB에서 데이터 로드
-	function loadUserData() {
-		var lineArray = [];
-		var iconArray = [];
-		var objectArray = [];
-		var scale = 0;
-		var datanum = $("#combobox").val();
-		
+	//데이터 collect
+	var iconArray = iconState.icons;
+	var lineArray = lines;
+	var objectArray = objects;
+	var data = { lines : JSON.stringify(lineArray),
+				 icons : JSON.stringify(iconArray),
+				 objects : JSON.stringify(objectArray),
+				 scale : scale,
+				 saved_name : saved_name };
+	if(on) {
+		//서버 저장
 		$.ajax({
 			method : "POST",
-			url : "loadCanvas",
-			data : { datanum : datanum },
-			async: false,
-			success : function(data) {
-				
-				var lines = JSON.parse(data.lines);
-				var icons = JSON.parse(data.icons);
-				var objects = JSON.parse(data.objects);
-				scale = data.scale;
-				if(Object.keys(lines).length !== 0) {
-					lineArray = lines;
-				} 
-				if(Object.keys(icons).length !== 0) {
-					iconArray = icons;
-				}
-				if(Object.keys(objects).length !== 0) {
-					objectArray = objects;
+			url : url,
+			dataType : "JSON",
+			async : false,
+			data : data,
+			success : function(result) {
+				if (result == 1) {
+					alert("평면도 수정에 성공하셨습니다. 다음 진행을 해주세요.");
+				} else if(result == -1) {
+					alert("로그인 후 저장 가능합니다.");
+				} else {
+					alert("저장 실패");
 				}
 			},
 			error : function() {
-				console.log("loadCanvas error occured");
-				init();
+				alert("서버 등록 실패. 다시 시도하여 주세요.");
 			}
 		});
-		return {lines: lineArray, icons: iconArray, objects: objectArray, scale: scale};
-	}
+	} else {
+		//방 등록과정 중 캔버스 서버 임시 저장
+		var $form = $('<form></form>');
+		$form.attr('action', url);
+		$form.attr('method', "POST");
+		$form.appendTo('body');
+		for(var key in data) {
+			var value = data[key];
+			$form.append($('<input type="hidden" value='+value+' name="'+key+'">'));
+		}
+		$form.submit();
+	} 
+}	
+
+//DB에서 유저 평면도 리스트 로드
+function loadUserFloorplanList(custid) {
+	var availableList = [];
+	$.ajax({
+		url: "loadUserDataList",
+		type: "POST",
+		async: false,
+		data: {custid : custid},
+		success : function(list) {
+			availableList = list;
+		}
+	});
+	return availableList;
+}
+
+//DB에서 데이터 로드
+function loadUserData() {
+	var lineArray = [];
+	var iconArray = [];
+	var objectArray = [];
+	var scale = 0;
+	var datanum = $("#combobox").val();
+	
+	$.ajax({
+		method : "POST",
+		url : "loadCanvas",
+		data : { datanum : datanum },
+		async: false,
+		success : function(data) {
+			
+			var lines = JSON.parse(data.lines);
+			var icons = JSON.parse(data.icons);
+			var objects = JSON.parse(data.objects);
+			scale = data.scale;
+			if(Object.keys(lines).length !== 0) {
+				lineArray = lines;
+			} 
+			if(Object.keys(icons).length !== 0) {
+				iconArray = icons;
+			}
+			if(Object.keys(objects).length !== 0) {
+				objectArray = objects;
+			}
+		},
+		error : function() {
+			console.log("loadCanvas error occured");
+			init();
+		}
+	});
+	return {lines: lineArray, icons: iconArray, objects: objectArray, scale: scale};
+}

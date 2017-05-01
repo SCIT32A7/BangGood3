@@ -249,6 +249,8 @@
 						<select id="objectBox" class="form-control">
 							<option value="door" selected="selected">문</option>
 							<option value="window">창문</option>
+							<option value="slidingDoor">미닫이 문</option>
+							<option value="slidingWindow">미닫이 창문</option>
 						</select>
 						<input type="button" class="form-control" id="object" value="생성"style="background:#f7be22;margin-top:10px;" />
 						
@@ -366,7 +368,10 @@
 	var custid = '${loginId}';
 
 	// Line 변수 모음 
-	var object = [];
+	var objects = [];
+	var objectStat; //수정4 오브젝트 수정시 발생
+	var objectMoved; //수정4 오브젝트 수정시 발생
+	var objectWheel; //수정4 오브젝트 수정시 발생
 	var lines = []; //JSON type array: lines.push(line);
 	var intersects = []; //직선의 교차점 기록 JSON TYPE: {x: intersectXY.x, y: intersectXY.y}
 	var Rect = []; //사각형 선의 좌표값(4개),타입,색 정보
@@ -410,6 +415,10 @@
 	//이벤트 변수 모음
 	var count = 45;
 	var seta = 0;
+	//수정4
+	var wheel = false;
+	//수정
+	var countUpdate;
 
 	// 다운로드 관련
 	var mirror; //캔버스 반영 이미지 태그
@@ -460,7 +469,11 @@
 	var resizerRadius = 8; //꼭지점 사이즈
 	var rr = resizerRadius * resizerRadius;
 	var draggingResizer = -1; // -1: none, 0:left-top, 1:right-top, 2:right-bottom, 3:left-bottom
-	
+	//수정4
+	var iconsStat;
+	var selectedImage;
+	var iconUpdateTemp;
+		
 	$(function() {
 		init();
 		var isNotProperlySelected = true;
@@ -479,16 +492,16 @@
 		//아이콘을 그리는 기능
 		Icon.prototype.draw = function() {
 			ctx.save();
+			var x = this.width/2;
+			var y = this.height/2;
 			ctx.translate((this.x) , (this.y));
 			ctx.rotate(this.rotateTable*Math.PI/180);
-			ctx.drawImage(this.img, -(this.width/2),-(this.height/2), this.width,this.height);
+			ctx.drawImage(this.img, -(x),-(y), this.width, this.height);
 			ctx.restore();
 		}
 
 		//이미지 바운더리 체크 기능
 		Icon.prototype.isOnIcon = function(mouseX, mouseY) {
-			console.log("isOnIcon");
-			console.log(this.rotateTable);
 			var degree = this.rotateTable;
 			var seta = pi / (180.0 / degree );
 			var mx = (mouseX-this.x)*Math.cos(-seta)-(mouseY-this.y)*Math.sin(-seta)+this.x;
@@ -506,13 +519,18 @@
 		}
 
 		IconState.prototype.removeIcon = function(icon) {
+			var rotateTempOne;
+			var rotateTempTwo;
 			if (icon != null) {
 				var length = iconState.icons.length
 				for (var i = length - 1; i > -1; i--) {
-					if (iconState.icons[i] == icon) {
+					rotateTempTwo = iconState.icons[i].rotateTable;
+					if (JSON.stringify(iconState.icons[i]) == JSON.stringify(icon)) {
 						iconState.icons.splice(i, 1);
 						IconState.isRemovable = false;
 						iconState.draw();
+						//회전값 복구 삭제 Undo시 필요
+						//icon.rotateTable = rotateTempOne;
 						return;
 					}
 				}
@@ -575,29 +593,15 @@
 		    ctx.restore();
 		}
 		
+		//수정4
 		//이미지 버튼 이벤트
 		$(".buttonImage").on("click", function() {
 			status = "image";
-			var selectedImage = $(this).attr("btn-num");
-			
-			img = new Image();
-			//이미지 불러오기(그려내기)
-			img.onload = function() {
-				var width = img.width;
-				var height = img.height;
-				var icon = new Icon(img, 50, 50, (width/2), (height/2), 0);
-				icon.src = imgSource[selectedImage];//....................수정
-				iconState.dragoffx = 50 - icon.x;
-				iconState.dragoffy = 50 - icon.y;
-				iconState.dragging = true;
-				iconState.selection = icon; //현재 마우스로 선택한 대상을 상태에 넣기
-				iconState.isRemovable = true;
-				clearCanvas();
-				inputUndo({data:icon,type:"icon"},"create");
-				iconState.addIcon(icon);
-				redrawAll();
+			selectedImage = $(this).attr("btn-num");
+			newImageIcon();
+			if(objectWheel||iconState.selection){
+				checkAll();
 			}
-			img.src = imgSource[selectedImage];
 		});
 
 		
@@ -645,8 +649,8 @@
 			console.log("loadData 라인 길이:"+ lines.length);
 			
 			//로드된 선 오브젝트(문, 창문) 삽입
-			object = result.objects;
-			console.log("loadData 오브젝트 길이:"+ object.length);
+			objects = result.objects;
+			console.log("loadData 오브젝트 길이:"+ objects.length);
 			
 			//로드된 아이콘 데이터 삽입
 			var loadedIcons = result.icons;
@@ -691,27 +695,42 @@
 		//기본 status 설정
 		//선 버튼
 		$("#line").on("click", function() {
+			if(objectWheel||wheel){
+				checkAll();
+			}
 			status = 'line';
 			canvas.style.cursor = "crosshair";
 			updateTemp = null;
+			objectTemp = null;
+			iconState.selection = null;
 		//drawAllLines(lines);
 		});
 
 		//사각형 버튼
 		$("#rectangle").on("click", function() {
+			if(objectWheel||wheel){
+				checkAll();
+			}
 			status = 'rect';
 			canvas.style.cursor = "crosshair";
 			updateTemp = null;
+			objectTemp = null;
+			iconState.selection = null;
 		//drawAllLines(lines);
 		});
 		
 		//오브잭트 버튼
 		$("#object").on("click", function() {
+			if(objectWheel||wheel){
+				checkAll();
+			}
 			status = 'object';
 			count = 45;
 			objectSelect = selectObject();
 			canvas.style.cursor = "crosshair";
 			updateTemp = null;
+			objectTemp = null;
+			iconState.selection = null;
 		//drawAllLines(lines);
 		});
 
@@ -719,7 +738,7 @@
 			ctx.clearRect(0, 0, canvas.width, canvas.height);
 			init();
 			lines = [];
-			object = [];
+			objects = [];
 			intersects = []; 
 			Rect = []; //사각형 선의 좌표값(4개),타입,색 정보
 			edge = [];
@@ -737,12 +756,27 @@
 		$(window).keydown(function(e) {
 			//Esc
 			if (e.keyCode == KEYCODE.Esc) {
-				updateTemp = null;
+				//수정4
+				//wheel = false;
+				if(objectWheel){
+					checkWheelEvent();
+					objectWheel = false;
+					objectStat = false;
+					checkMoveObject("clickOn");
+				}else if(wheel){
+					checkWheelEvent();
+					wheel = false;
+				}
+				updateTemp = null;	//변경!!!
+				//if (status == "line" || status == "rect" || status == "object" || status == "image") {
 				if (status!="lineDrawing"&&status != "rectDrawing") {
 					status = 'none';
 					canvas.style.cursor = "Default";
-					iconState.removeIcon(iconState.selection);
-					iconState.selection = null;
+					if(iconsStat=="on"){ 
+						iconState.removeIcon(iconState.selection);
+						iconsStat="off";
+					}
+					//iconState.selection = null;
 				} else if (status == "lineDrawing") {
 					clickE = false;
 					status = 'line';
@@ -752,7 +786,7 @@
 				}
 				updateTemp = null;
 				iconState.selection = null;
-				drawAllLines(lines);
+				redrawAll();
 			}
 			//Shift
 			else if (e.keyCode == KEYCODE.Shift) {
@@ -769,8 +803,21 @@
 					keyEvent = 'straight';
 				}
 			}
+			//수정4
 			//Undo시 임시저장 공간의 마지막 부분을 호출하여 함수에 반환
 			else if (e.keyCode == KEYCODE.Z && CtrlKey) {
+				if(objectWheel){
+					checkWheelEvent();
+					objectWheel = false;
+					objectStat = false;
+				}else if(iconState.selection){
+					if(wheel){
+						checkWheelEvent();
+						wheel = false;
+					}else {
+						//checkMoveIcon("clickOff");
+					}
+				}
 				if (Undo.length > 0) {
 					getUndo(Undo[Undo.length - 1]);
 					Redo.push(Undo.pop());
@@ -778,6 +825,8 @@
 					drawAllLines(lines);
 				}
 				updateTemp = null;
+				iconState.selection = null;
+				wheel = false;
 				redrawAll();
 			}
 			
@@ -786,14 +835,14 @@
 				if (Redo.length > 0) {
 					getRedo(Redo[Redo.length - 1]);
 					Undo.push(Redo.pop());
-					//console.log(JSON.stringify(Undo));
 					drawAllLines(lines);
 				}
+				iconState.selection = null;
 				updateTemp = null;
 				redrawAll();
 			}
 			
-			//수정
+			//수정4
 			//Delete키 누를시 드로우드 객체 삭제 => Undo임시 저장 공간에 입력
 			else if (e.keyCode == KEYCODE.Delete) {
 				if (updateTemp) {
@@ -810,18 +859,16 @@
 						//console.log(JSON.stringify(updateTemp.line1));
 						deleteRect(updateTemp.line1);
 					} else if (updateTemp.type == "icon") {
-						inputUndo({data:iconState.selection,type:"icon"},"delete");
-						iconState.removeIcon(iconState.selection);
-						iconState.selection = null;
-					}else if (updateTemp.type == "door"||updateTemp.type == "window"){
-						inputUndo(updateTemp,"delete");
-						//console.log(JSON.stringify(updateTemp));
-						var array = lines[updateTemp.index].object;
-						//console.log(JSON.stringify(array));
-						for(var i=0;i<array.length;i++){
-							if(JSON.stringify(updateTemp) == JSON.stringify(array[i])){
-								array.splice(i,1);
-								//lines[updateTemp.index]['object'].push(array);
+						if(iconsStat!="on"){
+							inputUndo({data:iconState.selection,type:"icon"},"delete");
+							iconState.removeIcon(iconState.selection);
+							iconState.selection = null;
+						}
+					}else if (updateTemp.type == "door"||updateTemp.type == "window"||updateTemp.type=="slidingDoor"||updateTemp.type=="slidingWindow"){
+						inputUndo({data:updateTemp},"delete");
+						for(var i=0;i<objects.length;i++){
+							if(JSON.stringify(updateTemp) == JSON.stringify(objects[i])){
+								objects.splice(i,1);
 							}
 						}
 					}
@@ -848,64 +895,132 @@
 		});
 
 		//마우스 이벤트
+		//마우스 더블클릭시
+		$("#rightCanvas").on("dblclick",function(e){
+			if(status == 'objectSelect' && objectTemp){
+				if(objectTemp.type=="door"||objectTemp.type=="slidingDoor"||objectTemp.type=="slidingWindow"){
+					objectDirect(objectTemp);
+					redrawAll();
+				}
+			}
+		});
 
 		//마우스 누를시
-		$("#rightCanvas").on("mousedown", function(e) {
-			e.preventDefault();
-			//var XY;   //mouse의 좌표값을 받아오는 함수 호출
-			//line//
-			if (clickE) {
-				return; //클릭토글의 비정상 작동 제한
-			}
-			updateTemp = null;
-			redrawAll();
-			clickE = true;
-			if (status == "line") {
-				//XY = mouseXY(e);
-				status = "lineDrawing";
-			} else if (status == "lineDrawing" && keyEvent == 'straight') {
-				XY = upXY;
-			} else if (status == "rect") {
-				status = "rectDrawing";
-			} 
-			
-			if ((status == 'none'||status == 'objectSelect')&&objectTemp){
-				selectObjectIcon();
-				status="objectSelect";
-				redrawAll();
-			}else if (status == "object"||status == 'objectSelect') {
-				drawingObject("create");
-				redrawAll();
-			}
-			else if (nearest && status == 'none') {
-				selectLine();
-				redrawAll();
-			} 
-			if (status == "none" || status == "image") {
-				if(selectIcon(XY)){
-					//status="image";
-					moveTemp("image");
-				}
-				redrawAll();
-			} 
-			//선택자 행위
-			/////////
-			downXY = XY;
-			//status 확인
-			$("#status").val("마우스 상태: " + status);
-		});
+	    $("#rightCanvas").on("mousedown", function(e) {
+	         e.preventDefault();
+	         if (clickE) {
+	            return; //클릭토글의 비정상 작동 제한
+	         }
+	         
+	         updateTemp = null;
+	         redrawAll();
+	         clickE = true;
+	         if (status == "line") {
+	            //XY = mouseXY(e);
+	            status = "lineDrawing";
+	         } else if (status == "lineDrawing" && keyEvent == 'straight') {
+	            XY = upXY;
+	         } else if (status == "rect") {
+	            status = "rectDrawing";
+	         }
+	         if (nearest && status == 'none'&&!objectTemp) {
+	            selectLine();
+	            console.log("??");
+	            redrawAll();
+	         }else if ((status == 'none'||status == 'objectSelect')){
+	            if(objectWheel){
+	               //testFunc();
+	               checkWheelEvent();
+	               objectWheel = false;
+	               objectStat = false;
+	            }
+	            if(objectTemp){
+	               selectObjectIcon();
+	               status="objectSelect"
+	            }
+	            else {
+	               updateTemp = null;
+	               //objectStat = false;
+	               status="none"
+	            }
+	            if(updateTemp&&!objectStat){
+	               checkMoveObject("clickOn");
+	            }
+	            redrawAll();
+	         }
+	         
+	         if (status == "object") {
+	            drawingObject("create");
+	            redrawAll();
+	         }
+	         /* if (nearest && status == 'none') {
+	            if(!objectTemp){
+	               selectLine();
+	            }
+	            redrawAll();
+	         }  */
+	         if (status == "none" || status == "image") {
+	            selectIcon(XY);
+	            if(iconState.selection&&!iconUpdateTemp){
+	               checkMoveIcon("clickOn");
+	            }else if(wheel){
+	               checkWheelEvent();
+	               wheel = false;
+	            }
+	            redrawAll();
+	         } 
+	         //선택자 행위
+	         /////////
+	         downXY = XY;
+	         //status 확인
+	         $("#status").val("mousedown => " + status);
+	    });
 
 		//마우스를 땔시
 		$("#rightCanvas").on("mouseup", function(e) {
 			e.preventDefault();
+			//var XY = mouseXY(e);
 			if((downXY.x+downXY.y)==(XY.x+XY.y)){
+				//console.log(objectTemp);
 				if(status!="image"&&!objectTemp){
 					status = 'none';
+					//wheel = false;
 					clickE = false;
+				}else if(status=="image"&&!iconState.selection){
+					status = 'none';
 				}
 				//return;
 			}
+			/* if(objectMoved){
+				checkWheelEvent();
+			} */
+			if (status == 'objectSelect'){
+				if(objectMoved){
+					updateObject(updateTemp,"update");
+					objectMoved = false;
+				}
+				checkMoveObject("clickOff");
+				/* if(objectStat&&objectMoved){
+					console.log("들어와");
+					 if(updateTemp.type=="door"||updateTemp.type=="window"||updateTemp.type=="slidingDoor"||updateTemp.type=="slidingWindow"){
+					} 
+				} */
+				//status = "none";
+				objectWheel = false;
+				redrawAll();
+			}
 			if (status == "image") {
+				if(iconState.selection){
+					//console.log(iconUpdateTemp);
+					if(iconsStat!="on"){
+					//if(iconsStat!="on"&&!iconUpdateTemp){
+						//if(UndoTemp&&!UndoTemp.wheel)
+						checkMoveIcon("clickOff");
+					}else if(iconsStat=="on"){
+						inputUndo({data:iconState.selection,type:"icon"},"create");
+						iconsStat="off";
+					}
+				}
 				iconState.dragging = false;
 				draggingResizer = -1;
 			} else if (clickE && status == 'lineDrawing') {
@@ -921,18 +1036,23 @@
 			} 
 			clickE = false;
 			clickU = true;
+			//objectTemp = null;
 			//status 확인
-			$("#status").val("마우스 상태: " +status);
+			$("#status").val("mouseup => "+status);
 		});
 
 		//마우스 이동시
 		$("#rightCanvas").on("mousemove", function(e) {
 			e.preventDefault();
 			nearest = null;
+			objectTemp = null;
 			XY = mouseXY(e);
+			//console.log("XY1 : "+XY.x+" , "+XY.y);
 			crossXY = mouseXY(e);
 			crossHair(getCrossXY(e));
 			//if(!clickE) return;
+			objectTemp = findObject(XY);
+			//console.log(JSON.stringify(objectTemp));
 			nearest = findNearestLine(XY);
 			nearest1 = edgeStep(XY);
 			if (nearest) {
@@ -949,17 +1069,25 @@
 				iconCtrl(XY);
 				redrawAll();
 			}
-			else if (status == "object") {
-				drawingObject("draw");
+			if (clickE && status == 'rectDrawing') { //그리는 도중의 status값 lineDrawing
+				//iconState.valid = false;
+				createLine(downXY, XY, 'drawing');
 			}
-			else if (clickE && status == "objectSelect") {
-				updateObject(updateTemp);
+			//수정3
+			if (status == "object") {
+				drawingObject("draw");
+				//redrawAll();
+			}
+			if (clickE && status == "objectSelect") {
+				if(updateTemp){
+					updateObject(updateTemp,"draw");
+				}
+				//redrawAll();
 			}
 			//line//
 			else if (clickE && status == 'lineDrawing') { //그리는 도중의 status값 lineDrawing
 				//선 길이 출력 기능
-				
-				px = getLineLength(downXY, XY, scale); 
+				px = getLineLength(downXY, XY, scale); //....................................
 				ctx.save();
 				ctx.font = "15px Comic Sans MS";
 				ctx.fillStyle = "blue";
@@ -967,51 +1095,63 @@
 				createLine(downXY, XY, 'drawing');
 				ctx.restore();
 			}
-			else if (clickE && status == 'rectDrawing') { //그리는 도중의 status값 lineDrawing
-				//iconState.valid = false;
-				createLine(downXY, XY, 'drawing');
-			}
 		////////
 			//status 확인
-			$("#status").val("마우스 상태: " +status);
+			$("#status").val("mousemove =>" +status);
 		});
 		
 		//마우스 휠 이벤트
 		
 		$("#rightCanvas").on("mousewheel",function(e){
 			e.preventDefault();
+			//wheel = true;
 			var E = e.originalEvent.deltaY;
 	    	redrawAll();
-	        console.log(status);
 	        if (E<0) {
 	             if(status=="object"){
 	            	 if(count<80) count++;
+		     		 //updateObject(updateTemp,"draw");
 	            	 drawingObject("draw");
-		     		 // ObjectIcon(XY,"drawing");
+	            	 //redrawAll();
 	   	         } else if(status=="image" && iconState.selection ){
 		             seta +=5;
 		             iconState.selection.rotateTable = seta;
+		             if(iconsStat!="on"){
+		            	 //checkMoveIcon("wheel");
+		            	 wheel = true;
+	            	 }
 		             redrawAll();
-	   	      	 }else if(status=="object"||status=="objectSelect"&&(updateTemp.type=="door"||updateTemp.type=="window")){
-					 objectResizer(updateTemp,"up");
-	   	      		 
+	   	      	 }else if(status=="object"||status=="objectSelect"&&(updateTemp.type=="door"||updateTemp.type=="window"||updateTemp.type=="slidingDoor"||updateTemp.type=="slidingWindow")){
+	   	      		 objectResizer(updateTemp,"up");
+	   	      		 //redrawAll();
+		             //checkMoveObject("wheel");
+	   	      		 objectWheel = true;
 	             }
 		    }else{
 		         //wheel = "dwon";
 	             if(status=="object"){
 	            	 if(count>30) count--;
+		     		 //updateObject(updateTemp,"draw");
 	            	 drawingObject("draw");
-	     			 //ObjectIcon(XY,"drawing");
+	            	 //redrawAll();
 	             }
 	             else if(status=="image" && iconState.selection ){
 	            	 seta -=5;
 	            	 iconState.selection.rotateTable = seta;
+	            	 if(iconsStat!="on"){
+		            	 //checkMoveIcon("wheel");
+		            	 wheel = true;
+	            	 }
 	            	 redrawAll();
-	             }else if(status=="object"||status=="objectSelect"&&(updateTemp.type=="door"||updateTemp.type=="window")){
+	             }else if(status=="object"||status=="objectSelect"&&(updateTemp.type=="door"||updateTemp.type=="window"||updateTemp.type=="slidingDoor"||updateTemp.type=="slidingWindow")){
 	            	 objectResizer(updateTemp,"down");
+	            	 //redrawAll();
+	            	 //checkMoveObject("wheel");
+	            	 objectWheel = true;
 	             }
 	        };
 	    });
+		
 		$("#common").on("click",function(){
 			$(".furniture_tab li").hide();
 			$(".furniture_tab>li#back").show();
@@ -1070,13 +1210,25 @@
 			if (Redo.length > 0) {
 				getRedo(Redo[Redo.length - 1]);
 				Undo.push(Redo.pop());
-				//console.log(JSON.stringify(Undo));
 				drawAllLines(lines);
 			}
+			iconState.selection = null;
 			updateTemp = null;
 			redrawAll();
 		});
 		$("#undo").on("click", function() {
+			if(objectWheel){
+				checkWheelEvent();
+				objectWheel = false;
+				objectStat = false;
+			}else if(iconState.selection){
+				if(wheel){
+					checkWheelEvent();
+					wheel = false;
+				}else {
+					//checkMoveIcon("clickOff");
+				}
+			}
 			if (Undo.length > 0) {
 				getUndo(Undo[Undo.length - 1]);
 				Redo.push(Undo.pop());
@@ -1084,6 +1236,8 @@
 				drawAllLines(lines);
 			}
 			updateTemp = null;
+			iconState.selection = null;
+			wheel = false;
 			redrawAll();
 		});
 		
@@ -1120,12 +1274,27 @@
 		});
 		
 		$("#SelectorMode").on("click", function() {
-			updateTemp = null;
+			//수정4
+			//wheel = false;
+			if(objectWheel){
+				checkWheelEvent();
+				objectWheel = false;
+				objectStat = false;
+				checkMoveObject("clickOn");
+			}else if(wheel){
+				checkWheelEvent();
+				wheel = false;
+			}
+			updateTemp = null;	//변경!!!
+			//if (status == "line" || status == "rect" || status == "object" || status == "image") {
 			if (status!="lineDrawing"&&status != "rectDrawing") {
 				status = 'none';
 				canvas.style.cursor = "Default";
-				iconState.removeIcon(iconState.selection);
-				iconState.selection = null;
+				if(iconsStat=="on"){ 
+					iconState.removeIcon(iconState.selection);
+					iconsStat="off";
+				}
+				//iconState.selection = null;
 			} else if (status == "lineDrawing") {
 				clickE = false;
 				status = 'line';
@@ -1135,76 +1304,91 @@
 			}
 			updateTemp = null;
 			iconState.selection = null;
-			drawAllLines(lines);
+			redrawAll();
 		});
+		
 		$("#iconRotation").on("click", function(e) {
 			e.preventDefault();
+			//wheel = true;
 			var E = e.originalEvent.deltaY;
 	    	redrawAll();
-	        console.log(status);
 	        if (E<0) {
 	             if(status=="object"){
 	            	 if(count<80) count++;
+		     		 //updateObject(updateTemp,"draw");
 	            	 drawingObject("draw");
-		     		 // ObjectIcon(XY,"drawing");
+	            	 //redrawAll();
 	   	         } else if(status=="image" && iconState.selection ){
 		             seta +=5;
 		             iconState.selection.rotateTable = seta;
+		             if(iconsStat!="on"){
+		            	 //checkMoveIcon("wheel");
+		            	 wheel = true;
+	            	 }
 		             redrawAll();
-	   	      	 }else if(status=="object"||status=="objectSelect"&&(updateTemp.type=="door"||updateTemp.type=="window")){
-					 objectResizer(updateTemp,"up");
-	   	      		 
+	   	      	 }else if(status=="object"||status=="objectSelect"&&(updateTemp.type=="door"||updateTemp.type=="window"||updateTemp.type=="slidingDoor"||updateTemp.type=="slidingWindow")){
+	   	      		 objectResizer(updateTemp,"up");
+	   	      		 //redrawAll();
+		             //checkMoveObject("wheel");
+	   	      		 objectWheel = true;
 	             }
 		    }else{
 		         //wheel = "dwon";
 	             if(status=="object"){
 	            	 if(count>30) count--;
+		     		 //updateObject(updateTemp,"draw");
 	            	 drawingObject("draw");
-	     			 //ObjectIcon(XY,"drawing");
+	            	 //redrawAll();
 	             }
 	             else if(status=="image" && iconState.selection ){
 	            	 seta -=5;
 	            	 iconState.selection.rotateTable = seta;
+	            	 if(iconsStat!="on"){
+		            	 //checkMoveIcon("wheel");
+		            	 wheel = true;
+	            	 }
 	            	 redrawAll();
-	             }else if(status=="object"||status=="objectSelect"&&(updateTemp.type=="door"||updateTemp.type=="window")){
+	             }else if(status=="object"||status=="objectSelect"&&(updateTemp.type=="door"||updateTemp.type=="window"||updateTemp.type=="slidingDoor"||updateTemp.type=="slidingWindow")){
 	            	 objectResizer(updateTemp,"down");
+	            	 //redrawAll();
+	            	 //checkMoveObject("wheel");
+	            	 objectWheel = true;
 	             }
 	        };
 		});
+		
 		$("#deleteCanvasObject").on("click", function() {
-				if (updateTemp) {
-					if (updateTemp.type == "line") {
-						var coord = { x0 : updateTemp.line.x0, y0 : updateTemp.line.y0,
-							x1 : updateTemp.line.x1, y1 : updateTemp.line.y1 };
-						for (var i = 0; i < lines.length; i++) {
-							if (JSON.stringify(coord) == JSON.stringify(lines[i].coordinate)) {
-								inputUndo(lines[i], "delete");
-								lines.splice(i, 1);
-							}
+			if (updateTemp) {
+				if (updateTemp.type == "line") {
+					var coord = { x0 : updateTemp.line.x0, y0 : updateTemp.line.y0,
+						x1 : updateTemp.line.x1, y1 : updateTemp.line.y1 };
+					for (var i = 0; i < lines.length; i++) {
+						if (JSON.stringify(coord) == JSON.stringify(lines[i].coordinate)) {
+							inputUndo(lines[i], "delete");
+							lines.splice(i, 1);
 						}
-					} else if (updateTemp.type.substr(0, 4) == "rect") {
-						//console.log(JSON.stringify(updateTemp.line1));
-						deleteRect(updateTemp.line1);
-					} else if (updateTemp.type == "icon") {
+					}
+				} else if (updateTemp.type.substr(0, 4) == "rect") {
+					//console.log(JSON.stringify(updateTemp.line1));
+					deleteRect(updateTemp.line1);
+				} else if (updateTemp.type == "icon") {
+					if(iconsStat!="on"){
 						inputUndo({data:iconState.selection,type:"icon"},"delete");
 						iconState.removeIcon(iconState.selection);
 						iconState.selection = null;
-					}else if (updateTemp.type == "door"||updateTemp.type == "window"){
-						inputUndo(updateTemp,"delete");
-						//console.log(JSON.stringify(updateTemp));
-						var array = lines[updateTemp.index].object;
-						//console.log(JSON.stringify(array));
-						for(var i=0;i<array.length;i++){
-							if(JSON.stringify(updateTemp) == JSON.stringify(array[i])){
-								array.splice(i,1);
-								//lines[updateTemp.index]['object'].push(array);
-							}
+					}
+				}else if (updateTemp.type == "door"||updateTemp.type == "window"||updateTemp.type=="slidingDoor"||updateTemp.type=="slidingWindow"){
+					inputUndo({data:updateTemp},"delete");
+					for(var i=0;i<objects.length;i++){
+						if(JSON.stringify(updateTemp) == JSON.stringify(objects[i])){
+							objects.splice(i,1);
 						}
 					}
 				}
-				updateTemp = null;
-				redrawAll();
-			//edge=[];
+			}
+			updateTemp = null;
+			redrawAll();
+		//edge=[];
 		});
 		
 	});//  ready end
