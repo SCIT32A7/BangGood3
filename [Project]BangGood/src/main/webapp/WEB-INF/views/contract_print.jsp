@@ -52,47 +52,43 @@ h3{
   
     <div class="content">
    <h3>부동산의 내역</h3>  
-   <table border="1">
+   <table>
       <tr>
          <th class="label"> 소재지 (주소) </th>
          <th colspan="7">
-         	<input type="text" name = "address" id= "address" value="${property.address} ${property.address_detail}" readonly>
+         	${contract.address}
          </th>
       </tr>
    </table>
    </div>
     <div class="content">
 	<h3>거래 정보</h3>
-	<table border="1">
+	<table>
 	 	<tr>
 	    	<th class="label"> 방 종류 </th>
-	        <th><input type="text" name = "property_type" id= "property_type" value="${property.property_type}" readonly></th>	
+	        <th>${contract.property_type}</th>	
 	        <th class="label"> 방 면적 </th>
-	        <th><input type="text" name = "roomsize" id= "roomsize" value="${property.roomsize}제곱미터" readonly></th>
+	        <th>${contract.roomsize}</th>
 	    </tr>
 	    <tr>
 	        <th class="label"> 보증금/월세 </th>
-	        <th><input type="text" name = "deposit" id= "deposit" value="${property.deposit}원 / ${property.month_fee}원" readonly></th>
+	        <th>${contract.deposit}</th>
 	     	<th class="label"> 관리비 </th>
-	        <th><input type="text" name = "maintence_fee" id= "maintence_fee" value="${property.maintence_fee}원" readonly></th>
+	        <th>${contract.maintence_fee}</th>
 	    </tr>
 	    <tr>    
 	        <th class="label"> 계약예정일 </th>
-	        <th>
-	        <input type="date" id="con_date" name="con_date" required>
-	        <input type="button" id = "data_commit" value ="확인">
-	        </th>
+	        <th>${contract.con_date}</th>
 	    </tr>
    </table>
    </div>
     <div class="content">
    <h3> 거래 약정 내용 </h3>
    <p style="text-align:left">위 부동산 소유자(임대인)와 매수(임차)약정자가 양방 협의 하에 다음과 같이 가계약을 체결합니다.</p>
-   <table border="1" style="padding: 5px;">
+   <table style="padding: 5px;">
       <tr>
          <th>
-         <input type="text" id="contractPrice" name = "contractPrice">원을 
-         <span id="contract_date"></span>까지 지불합니다.
+         ${contract.buyer_name}는 ${contract.contractPrice}원을 ${contract.seller_name}에게 ${contract.con_date}까지 지불합니다.
          </th>
 	  </tr>
    </table>
@@ -114,8 +110,9 @@ h3{
 	
 	<div class="content">
    <h3> 부가 조건 </h3>
-   <textarea rows="10" cols="50" class="buyer" style="margin-left:0px; font-size: xx-large;" id="extra_condi" name="extra_condi">
-   </textarea>
+   <span style = "white-space: pre-wrap; text-align: left">
+      ${contract.extra_condi}
+   </span>
    </div>
    <div class="content">
    <h4 align="center">
@@ -126,32 +123,32 @@ h3{
    <br/>
    <br/>
    <div class="content">
-   <table style="margin-bottom:30px; width:100%" border="1">
+   <table style="margin-bottom:30px; width:100%">
       <tr>
          <th rowspan="3"> 매도인 (임대인) </th>
          <th> 성명 </th>
-         <th><input type="text" class="seller" id="seller_name" name="seller_name"></th>
+         <th>${contract.seller_name}&nbsp&nbsp&nbsp&nbsp 서명</th>
       </tr>
       <tr>         
          <th> 주민등록번호 </th>
-         <th><input type="text" class="seller" id="seller_jumin" name="seller_jumin"></th>
+         <th>${contract.seller_jumin}</th>
       </tr>
       <tr> 
          <th> 전화 </th>
-         <th><input type="text" class="seller" id="seller_phone" name="seller_phone"></th>
+         <th>${contract.seller_phone}</th>
       </tr>
       <tr>
          <th rowspan="3"> 매수인 (임차인) </th>
          <th> 성명 </th>
-         <th><input type="text" id="buyer_name" name="buyer_name" class="buyer" required></th>
+         <th>${contract.buyer_name}&nbsp&nbsp&nbsp&nbsp 서명</th>
       </tr>
       <tr>
          <th> 주민등록번호 </th>
-         <th><input type="text" id="buyer_jumin" name="buyer_jumin" class="buyer"></th>
+         <th>${contract.buyer_jumin}</th>
       </tr>
       <tr>
          <th> 전화 </th>
-         <th><input type="text" id="buyer_phone" name="buyer_phone" class="buyer"></th>       
+         <th>${contract.buyer_phone}</th>       
       </tr>
    </table>
    </div>
@@ -172,15 +169,7 @@ h3{
 	<script src="assets/plugins/backstretch/jquery.backstretch.min.js"></script>
 	<!-- JS Page Level-->
 	<script src="assets/js/one.app.js"></script>
-	
-	<script type="text/javascript">
-	$("#data_commit").on("click", function(){
-		alert($("#con_date").val());
-		var date = $("#con_date").val();
-		
-		$("#contract_date").html(date);
-	});
-	</script>
+
 </body>
 
 

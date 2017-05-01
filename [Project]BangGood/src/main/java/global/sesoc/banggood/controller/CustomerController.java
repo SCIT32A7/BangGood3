@@ -147,9 +147,8 @@ public class CustomerController {
 	@RequestMapping(value = "/make_contract", method = RequestMethod.POST)
 	public String make_contract(Contract con, Model model){
 		System.out.println("계약서를 만들자");
-		//System.out.println(con);
-		//model.addAttribute("con", con);
-		return "search";
+		model.addAttribute("contract", con);
+		return "contract_print";
 	}
 
 }

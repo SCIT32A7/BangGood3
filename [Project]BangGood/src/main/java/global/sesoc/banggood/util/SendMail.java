@@ -43,7 +43,7 @@ public class SendMail {
             
             InternetAddress from = new InternetAddress();
 
-            from = new InternetAddress("굿방관리자<jintest1012@gmailcom>");
+            from = new InternetAddress("BangGood<jintest1012@gmailcom>");
 
             // 이메일 발신자
             msg.setFrom(from);
@@ -92,8 +92,11 @@ public class SendMail {
       public int test(String user)
       {
          int accreditation = (int) (Math.random() * 1000000);
-         String title = "[굿방] 회원 가입에 필요한 인증번호입니다.";
-         String message = "인증번호 : " + accreditation;
+         String title = "[방굿] 회원 가입에 필요한 인증번호입니다.";
+         String message = "BangGood 관리자입니다."+"\r\n";
+         		message += "회원가입에 필요한 본인인증번호를 전송하였습니다."+"\r\n";         		
+         		message += "인증번호는 " + accreditation + "입니다."+"\r\n";
+         		message += "위 인증번호를 입력창에 입력 후, 확인을 눌러주세요.";
          new SendMail(user, title, message);
          return accreditation;
       }
