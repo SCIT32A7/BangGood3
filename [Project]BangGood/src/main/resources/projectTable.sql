@@ -168,7 +168,7 @@ CREATE TABLE picture
 	-- 매물번호
 	property_no number(10,0) constraint fk_pic_no references property on delete cascade,
 	-- 사진 구분, 메인, 평면도, 입구, 부엌, 방, 화장실, 일반으로 구분
-	pic_division varchar2(12),
+	pic_division varchar2(30),
 	-- 사진파일 원래이름
 	pic_name varchar2(100) NOT NULL,
 	-- 사진 저장명

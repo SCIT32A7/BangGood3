@@ -1212,6 +1212,7 @@
 			updateTemp = null;
 			redrawAll();
 		});
+		
 		$("#undo").on("click", function() {
 			if(objectWheel){
 				checkWheelEvent();

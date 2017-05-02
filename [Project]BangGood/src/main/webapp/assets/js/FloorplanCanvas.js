@@ -213,44 +213,44 @@ function rectPaint(beginXY, endXY) {
 
 //라인 그리기
 //화면에 보여지는 이미지와 이미지의 정보
-	function createLine(beginXY, endXY, stat) {
-		//화면상에 마우스를 따라다니는 라인
-		if (stat == 'drawing') {
-			if (status == 'lineDrawing') {
-				linePaint(beginXY, endXY, lineColor);
-				var coordinate = {"x0" : beginXY.x, "y0" : beginXY.y, "x1" : endXY.x, "y1" : endXY.y};
-				var slope = getSlope(beginXY, endXY);
-				var line = { "coordinate" : coordinate, "slope" : slope };
-				findIntersectWithMouse(line);
-			} else if (status == 'rectDrawing') {
-				rectPaint(beginXY, endXY);
-				rect = rectDefined(beginXY, endXY);
-				findIntersectWithMouse(rect.line1);
-				findIntersectWithMouse(rect.line2);
-				findIntersectWithMouse(rect.line3);
-				findIntersectWithMouse(rect.line4);
-			} 
-		}
-		//화면상에서 보이는 라인을 lines에 저장
-		else if (stat == 'lineCreate') {
-			linePaint(beginXY, endXY);
-			var coordinate = {"x0" : beginXY.x,"y0" : beginXY.y,"x1" : endXY.x,"y1" : endXY.y};
+function createLine(beginXY, endXY, stat) {
+	//화면상에 마우스를 따라다니는 라인
+	if (stat == 'drawing') {
+		if (status == 'lineDrawing') {
+			linePaint(beginXY, endXY, lineColor);
+			var coordinate = {"x0" : beginXY.x, "y0" : beginXY.y, "x1" : endXY.x, "y1" : endXY.y};
 			var slope = getSlope(beginXY, endXY);
-			var line = {"coordinate" : coordinate, "slope" : slope, "lineWidth" : ctx.lineWidth, "type" : "line", length : px+"m", lineColor:lineColor};
-			lines.push(line);
-			inputUndo(line, "create");
-		
-		} else if (stat == 'rectCreate') {
-			//사각형 저장
+			var line = { "coordinate" : coordinate, "slope" : slope };
+			findIntersectWithMouse(line);
+		} else if (status == 'rectDrawing') {
 			rectPaint(beginXY, endXY);
-			var rect = rectDefined(beginXY, endXY);
-			lines.push({"coordinate" : rect.line1.coordinate,"slope" : rect.line1.slope,"lineWidth" : LW,"type" : "rect1","color" : color, "length":rectPx1+"m"});
-			lines.push({"coordinate" : rect.line2.coordinate,"slope" : rect.line2.slope,"lineWidth" : LW,"type" : "rect2","color" : color, "length":rectPx2+"m"});
-			lines.push({"coordinate" : rect.line3.coordinate,"slope" : rect.line3.slope,"lineWidth" : LW,"type" : "rect3","color" : color, "length":rectPx1+"m"});
-			lines.push({"coordinate" : rect.line4.coordinate,"slope" : rect.line4.slope,"lineWidth" : LW,"type" : "rect4","color" : color, "length":rectPx2+"m"});
-			inputUndo(rect, "create");
-		}
+			rect = rectDefined(beginXY, endXY);
+			findIntersectWithMouse(rect.line1);
+			findIntersectWithMouse(rect.line2);
+			findIntersectWithMouse(rect.line3);
+			findIntersectWithMouse(rect.line4);
+		} 
 	}
+	//화면상에서 보이는 라인을 lines에 저장
+	else if (stat == 'lineCreate') {
+		linePaint(beginXY, endXY);
+		var coordinate = {"x0" : beginXY.x,"y0" : beginXY.y,"x1" : endXY.x,"y1" : endXY.y};
+		var slope = getSlope(beginXY, endXY);
+		var line = {"coordinate" : coordinate, "slope" : slope, "lineWidth" : ctx.lineWidth, "type" : "line", length : px+"m", lineColor:lineColor};
+		lines.push(line);
+		inputUndo(line, "create");
+	
+	} else if (stat == 'rectCreate') {
+		//사각형 저장
+		rectPaint(beginXY, endXY);
+		var rect = rectDefined(beginXY, endXY);
+		lines.push({"coordinate" : rect.line1.coordinate,"slope" : rect.line1.slope,"lineWidth" : LW,"type" : "rect1","color" : color, "length":rectPx1+"m"});
+		lines.push({"coordinate" : rect.line2.coordinate,"slope" : rect.line2.slope,"lineWidth" : LW,"type" : "rect2","color" : color, "length":rectPx2+"m"});
+		lines.push({"coordinate" : rect.line3.coordinate,"slope" : rect.line3.slope,"lineWidth" : LW,"type" : "rect3","color" : color, "length":rectPx1+"m"});
+		lines.push({"coordinate" : rect.line4.coordinate,"slope" : rect.line4.slope,"lineWidth" : LW,"type" : "rect4","color" : color, "length":rectPx2+"m"});
+		inputUndo(rect, "create");
+	}
+}
 
 //사각형에 속한 선의 좌표값과 기울기값을 라인 형식으로 반환
 //top, right, left, bottom
