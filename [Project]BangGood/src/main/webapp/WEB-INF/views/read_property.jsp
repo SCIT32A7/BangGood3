@@ -308,12 +308,12 @@
                  	 <a href="select_property_file?property_no=${read_property.property_no}" class="btn-u btn-u-lg btn-block" type="button">파일 변경</button></a>
                  	 <c:if test = "${read_property.issoldout == 'true'}">
 						<button class="btn-u btn-u-lg btn-block">
-							<a href="javascript:check_stopShowing(${read_property.property_no})">게시 중지</a>
+							<a href="javascript:check_stopShowing(${read_property.property_no})">미공개</a>
 						</button>
 					 </c:if>
 					 <c:if test = "${read_property.issoldout == 'false'}">
 						<button class="btn-u btn-u-lg btn-block">
-							<a href="javascript:check_restartShowing(${read_property.property_no})">게시 재시작</a>
+							<a href="javascript:check_restartShowing(${read_property.property_no})">공개</a>
 						</button>
 					 </c:if>
 					 <button class="btn-u btn-u-lg btn-block">

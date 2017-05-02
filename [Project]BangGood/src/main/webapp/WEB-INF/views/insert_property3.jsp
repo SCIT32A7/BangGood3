@@ -358,8 +358,8 @@ function photoRemove(num) {
                   class="btn-u btn-block rounded insert_btn">다음단계</button>
             </div>
             <div class="col-md-4">
-               <button class="btn-u btn-block rounded insert_btn"
-                  style="background-color: #ccc">돌아가기</button>
+              <button class="btn-u btn-block rounded insert_btn"
+                  style="background-color: #ccc" onclick = "location.href='./back_property2'">돌아가기</button>
             </div>
             <div class="col-md-2"></div>
          </div>

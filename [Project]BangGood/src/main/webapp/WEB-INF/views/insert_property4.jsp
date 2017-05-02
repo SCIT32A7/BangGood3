@@ -257,7 +257,7 @@
                      </div>
                      <div class="col-md-4">
                         <button class="btn-u btn-block rounded insert_btn"
-                           style="background-color: #ccc">돌아가기</button>
+                           style="background-color: #ccc" onclick = "location.href='./insert_property'">처음으로</button>
                      </div>
                      <div class="col-md-2"></div>
                   </div>

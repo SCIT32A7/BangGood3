@@ -83,11 +83,11 @@
 					<a href="javascript:pagingForSubmit(1)"><i class="fa fa-search"></i>검색</a>
 				</button>
 				<button class="btn-u btn-block rounded" style=" width:100px;display:inline-block">
-						<a href="admin_waiting_property">미게시매물</a>	
+						<a href="admin_waiting_property">미공개매물</a>	
 				</button>
 				<button class="btn-u btn-block rounded" id = "stop_showing"
 				style=" width:80px;display:inline-block; background: #333">
-					<a href="javascript:stop_showing()">게시 중지</a>
+					<a href="javascript:stop_showing()">광고 중지</a>
 				</button>
 			<input type = "hidden" name = "page" id = "page">
 			<input type = "hidden" name = "stopList" id = "stopList">

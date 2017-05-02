@@ -155,6 +155,11 @@ public class PropertyController {
 		model.addAttribute("canvas", canvas);
 		return "insert_property3";
 	}
+	
+	@RequestMapping(value = "/back_property2", method = RequestMethod.GET)
+	public String back_property2(){
+		return "insert_property2";
+	}
 
 	// 방등록 3차, 평면도 및 사진 첨부하기
 	@RequestMapping(value = "/insert_property3", method = RequestMethod.POST)

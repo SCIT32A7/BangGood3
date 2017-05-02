@@ -139,12 +139,12 @@
 							</button>
 							<c:if test = "${property.issoldout == 'true'}">
 								<button class="mypage_btn btn-u btn-block rounded">
-									<a href="javascript:check_stopShowing(${property.property_no})">게시 중지</a>
+									<a href="javascript:check_stopShowing(${property.property_no})">미공개</a>
 								</button>
 							</c:if>
 							<c:if test = "${property.issoldout == 'false'}">
 								<button class="mypage_btn btn-u btn-block rounded">
-									<a href="javascript:check_restartShowing(${property.property_no})">게시 재시작</a>
+									<a href="javascript:check_restartShowing(${property.property_no})">공개</a>
 								</button>
 							</c:if>
 							<div class="project-share">

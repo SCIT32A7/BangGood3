@@ -88,7 +88,7 @@
 				</button>
 
 			<button class="btn-u btn-block rounded" style=" width:80px; display:inline-block; background: #333">
-						<a href="javascript:restart_showing()">재게시</a>	
+						<a href="javascript:restart_showing()">광고 허가</a>	
 			</button>
 			<input type = "hidden" name = "page" id = "page">
 			<input type = "hidden" name = "restartList" id = "restartList">
@@ -213,10 +213,10 @@
 	 		}
 		}
 		if(i == 0){
-			alert('광고를 재게하실 매물을 선택해주세요.');
+			alert('광고를 시작할 매물을 선택해주세요.');
 			return false;
 		}
-		if(confirm('해당 매물의 광고를 재게하시겠습니까?')){
+		if(confirm('해당 매물의 광고를 허가하시겠습니까?')){
 			var form = document.getElementById("pagingForm");
 			var restartList = document.getElementById("restartList");
 			restartList.value = checkList;
