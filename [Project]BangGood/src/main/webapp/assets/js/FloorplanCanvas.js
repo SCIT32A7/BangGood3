@@ -376,7 +376,7 @@ function drawRect(rect) {
 function drawPoint(intersect) {
 	ctx.save();
 	ctx.beginPath();
-	ctx.arc(intersect.x, intersect.y, 3, 0, Math.PI * 2);
+	ctx.arc(intersect.x, intersect.y, 6, 0, Math.PI * 2);
 	ctx.strokeStyle = 'red';
 	ctx.lineWidth = 1.5;
 	ctx.stroke();
@@ -392,12 +392,12 @@ function drawSelector(point) {
 	var type = ''+point.type;
 	if (type == "line") {
 		ctx.moveTo(point.line.x0, point.line.y0);
-		ctx.arc(point.line.x0, point.line.y0, 4, 0, Math.PI * 2);
+		ctx.arc(point.line.x0, point.line.y0, 6, 0, Math.PI * 2);
 		ctx.fill();
 		ctx.fillStyle = "white";
 
 		ctx.moveTo(point.line.x1, point.line.y1);
-		ctx.arc(point.line.x1, point.line.y1, 4, 0, Math.PI * 2);
+		ctx.arc(point.line.x1, point.line.y1, 6, 0, Math.PI * 2);
 		ctx.fill();
 		ctx.fillStyle = "white";
 	} else if (type.substr(0, 4) == "rect") {
@@ -407,27 +407,27 @@ function drawSelector(point) {
 			line4 = point.line4.coordinate;
 		//11
 		ctx.moveTo(line1.x0, line1.y0);
-		ctx.arc(line1.x0, line1.y0, 4, 0, Math.PI * 2);
+		ctx.arc(line1.x0, line1.y0, 6, 0, Math.PI * 2);
 		ctx.fill();
 		ctx.fillStyle = "white";
 		//2
 		ctx.moveTo(line2.x0, line2.y0);
-		ctx.arc(line2.x0, line2.y0, 4, 0, Math.PI * 2);
+		ctx.arc(line2.x0, line2.y0, 6, 0, Math.PI * 2);
 		ctx.fill();
 		ctx.fillStyle = "white";
 		//5
 		ctx.moveTo(line3.x1, line3.y1);
-		ctx.arc(line3.x1, line3.y1, 4, 0, Math.PI * 2);
+		ctx.arc(line3.x1, line3.y1, 6, 0, Math.PI * 2);
 		ctx.fill();
 		ctx.fillStyle = "white";
 		//7
 		ctx.moveTo(line4.x1, line4.y1);
-		ctx.arc(line4.x1, line4.y1, 4, 0, Math.PI * 2);
+		ctx.arc(line4.x1, line4.y1, 6, 0, Math.PI * 2);
 		ctx.fill();
 		ctx.fillStyle = "white";
 	}
 	ctx.strokeStyle = 'black';
-	ctx.lineWidth = 1;
+	ctx.lineWidth = 3;
 	ctx.stroke();
 	ctx.restore();
 }

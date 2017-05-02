@@ -583,7 +583,7 @@ public class PropertyController {
 	@RequestMapping(value = "/delete_propertyReply", method = RequestMethod.POST)
 	public int delete_propertyReply(int property_reply_no, int property_no) {
 		int result = 0;
-		propertyReply dpr = pr.select_propertyReply(property_reply_no); // 오늘입력
+		propertyReply dpr = pr.select_propertyReply(property_reply_no);
 		result = pr.delete_propertyReply(property_reply_no, property_no);
 		String uploadPath = "/replyFile";
 
@@ -591,6 +591,7 @@ public class PropertyController {
 			String fullpath = uploadPath + "/" + dpr.getPic_savename();
 			FileService.deleteFile(fullpath);
 		}
+		
 		return result;
 	}
 

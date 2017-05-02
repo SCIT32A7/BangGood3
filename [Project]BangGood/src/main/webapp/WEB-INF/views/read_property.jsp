@@ -481,7 +481,9 @@
 				"property_no" : property_no
 			},
 			async : false,
-			success : init()
+			success : function(resp){
+				init();			
+			}
 		});
 	}	
 	

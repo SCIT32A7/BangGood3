@@ -305,7 +305,9 @@ public class PropertyRepository {
 		int result = 0;
 		try {
 			result = pd.delete_propertyReply(property_reply_no);
-			pd.sub_reply_count(property_no);
+			if(result==1){
+				pd.sub_reply_count(property_no);
+			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
