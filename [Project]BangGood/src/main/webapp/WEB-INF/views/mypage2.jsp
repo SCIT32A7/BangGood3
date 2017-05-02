@@ -47,7 +47,7 @@
 			<h1>My page</h1>
 		</div>
 	</div>
-	<div class="container content profile" style="height:700px;">
+	<div class="container content profile" style="height:auto;">
 
 		<div class="row">
 			<!--Left Sidebar-->
