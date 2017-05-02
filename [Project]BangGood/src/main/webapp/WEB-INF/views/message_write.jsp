@@ -34,6 +34,15 @@
 		var receiver_c = document.getElementById("receiver_c");
 		var msg_text_c = document.getElementById("msg_text_c");
 		
+		if(receiver_c.value.length == 0){
+			alert('수신인을 입력해주세요.');
+			return false;
+		}
+		if(msg_text_c.value.length == 0){
+			alert('메시지의 내용을 입력해주세요.');
+			return false;
+		}
+		
 		var form = document.getElementById("send_form");
 		var receiver = document.getElementById("receiver");
 		var msg_text = document.getElementById("msg_text");

@@ -132,8 +132,9 @@
 										</tr>
 								<!--// form-->
 							</table>
+							<input class="rounded form-control mypage_modify_btn" type="submit" value="저장" style="font-size:26px; height:46px;">
 						</form>
-						<input class="rounded form-control mypage_modify_btn" type="submit" value="저장" style="font-size:26px; height:46px;">
+						
 						</div>
 					</div>
 					<!--  end row -->
@@ -163,7 +164,7 @@
 		function checkUpdate(){
 			var pw1 = document.getElementById("pw1");
 			var pw2 = document.getElementById("pw2");
-			var p = document.getElementById("phone");
+			var p = document.getElementById("phone");			
 			
 			if(pw1.value.length == 0){
 				alert('비밀번호를 입력해주세요.');

@@ -555,6 +555,19 @@ public class PropertyController {
 		int result = pr.insert_propertyReply(prRe);
 		return result;
 	}
+	
+	// 사진 없는 댓글입력
+	@ResponseBody
+	@RequestMapping(value = "/insert_propertyReply_notphoto", method = RequestMethod.POST)
+	public int insert_propertyReply_notphoto(int property_no, String propertyreply_text) {
+		propertyReply prRe = new propertyReply();
+		String custid = (String) session.getAttribute("loginId");
+		prRe.setCustid(custid);
+		prRe.setProperty_no(property_no);
+		prRe.setPropertyreply_text(propertyreply_text);
+		int result = pr.insert_propertyReply(prRe);
+		return result;
+	}
 
 	// 댓글 출력을 위한 메소드
 	@ResponseBody

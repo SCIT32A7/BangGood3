@@ -111,11 +111,14 @@ table tr td {
 }
 </style>
 <script type="text/javascript">
+
+
+
 function proFileShow(num) {
     var upload = document.getElementsByName('uploadFile' + num)[0];
     var holder = document.getElementById('holder' + num);
     var replace = document.getElementById('replace' + num);
-
+	
     upload.onchange = function(e) {
        e.preventDefault();
        var file = upload.files[0];
@@ -194,14 +197,14 @@ function photoRemove(num) {
          </div>
       </div>
       <div style="width:672px; margin:auto;">
-      <form action="insert_property3" method="post" enctype="multipart/form-data">
+      <form action="insert_property3" method="post" enctype="multipart/form-data" onsubmit ="return insert_property3_check()">
          <table class="photo_line">
             <tr>
                <td>
                <div id = "wrapper1">
                   <button type="button" class="close" onclick="photoRemove(1);">×</button>
                      <button id="replace1" class="photo_btn replace" >메인</button>
-                     <input type="file" name="uploadFile1" accept=".gif, .jpg, .png"
+                     <input type="file" name="uploadFile1" id ="uploadFile1" accept=".gif, .jpg, .png"
                         multiple onclick="proFileShow(1);"
                         class="upload photo_btn ">
                   <div id='holder1'>
@@ -213,7 +216,7 @@ function photoRemove(num) {
                <div id = "wrapper2">
                    <button type="button" class="close" onclick="photoRemove(2);">×</button>
                      <button id="replace2" class="photo_btn replace">평면도</button>
-                     <input type="file" name="uploadFile2" accept=".gif, .jpg, .png"
+                     <input type="file" name="uploadFile2" id ="uploadFile2" accept=".gif, .jpg, .png"
                         multiple onclick="proFileShow(2);"
                         class="upload photo_btn ">
                   <div id='holder2'>
@@ -225,7 +228,7 @@ function photoRemove(num) {
                <div id = "wrapper3">
                   <button type="button" class="close" onclick="photoRemove(3);">×</button>
                      <button id="replace3" class="photo_btn replace">현관</button>
-                     <input type="file" name="uploadFile3" accept=".gif, .jpg, .png"
+                     <input type="file" name="uploadFile3" id ="uploadFile3" accept=".gif, .jpg, .png"
                         multiple onclick="proFileShow(3);"
                         class="upload photo_btn ">
                   <div id='holder3'>
@@ -239,7 +242,7 @@ function photoRemove(num) {
                <div id = "wrapper4">
                   <button type="button" class="close" onclick="photoRemove(4);">×</button>
                      <button id="replace4" class="photo_btn replace">방</button>
-                     <input type="file" name="uploadFile4" accept=".gif, .jpg, .png"
+                     <input type="file" name="uploadFile4" id ="uploadFile4" accept=".gif, .jpg, .png"
                         multiple onclick="proFileShow(4);"
                         class="upload photo_btn ">
                   <div id='holder4'>
@@ -251,7 +254,7 @@ function photoRemove(num) {
                <div id = "wrapper5">
                   <button type="button" class="close" onclick="photoRemove(5);">×</button>
                      <button id="replace5" class="photo_btn replace">부엌</button>
-                     <input type="file" name="uploadFile5" accept=".gif, .jpg, .png"
+                     <input type="file" name="uploadFile5" id ="uploadFile5" accept=".gif, .jpg, .png"
                         multiple onclick="proFileShow(5);"
                         class="upload photo_btn ">
                   <div id='holder5'>
@@ -263,7 +266,7 @@ function photoRemove(num) {
                <div id = "wrapper6">
                   <button type="button" class="close" onclick="photoRemove(6);">×</button>
                      <button id="replace6" class="photo_btn replace">화장실</button>
-                     <input type="file" name="uploadFile6" accept=".gif, .jpg, .png"
+                     <input type="file" name="uploadFile6" id ="uploadFile6" accept=".gif, .jpg, .png"
                         multiple onclick="proFileShow(6);"
                         class="upload photo_btn ">
                   <div id='holder6'>
@@ -410,7 +413,8 @@ function photoRemove(num) {
    <script src="//apis.daum.net/maps/maps3.js?apikey=8af91664dfbd610fb326b81f6ed2ca57&libraries=services"></script>
    <script src="assets/js/postcode.js"></script>
    
-   
+   <!-- formCheck -->
+	<script src="assets/js/formCheck.js"></script>
    
 </body>
 </html>

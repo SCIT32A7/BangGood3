@@ -57,7 +57,7 @@ public interface PropertyDAO {
 	
 	// 매물 댓글 입력
 	public int insert_propertyReply(propertyReply pr) throws Exception;
-	
+
 	// 매물 댓글 내역 불러오기
 	public ArrayList<propertyReply> get_propertyReply(int property_no) throws Exception;
 

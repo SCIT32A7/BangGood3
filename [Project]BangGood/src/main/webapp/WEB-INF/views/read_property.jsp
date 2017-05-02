@@ -258,9 +258,9 @@
    				 </ul>
 				</div>
 				<div class="g-pb-30"></div>
-								<!-- 댓글 시작 -->
+	<!-- 댓글 시작 -->
 	<div id ="property_reply">	
-		<form id = "replyform" action = "insert_propertyReply" method = "post" enctype="multipart/form-data">
+		<form id = "replyform">
 			<ul style="list-style: none;" class="pull-width g-mb-20">
 				<li><input type = "text" id ="propertyreply_text" name = "propertyreply_text" class="form-control pull-left" style="width:80%"></li>
 				<li><input type = "submit" id ="click_reply" class="form-control pull-left btn-u btn-block rounded g-ml-10" value = "댓글입력" style="width:15%"></li>
@@ -411,7 +411,11 @@
 	$.each(resp, function(index, item){
 		data += '<tr class="reviewtr">';
 		data += '	<td class="name" style="padding-right:30px;">' + item.custid + '</td>';
-		data += '	<td class="text" style="width:100%; "><a href="reply_download?pic_name='+item.pic_name+'&pic_savename='+item.pic_savename+'" data-lightbox="reply"><img src="reply_download?pic_name='+item.pic_name+'&pic_savename='+item.pic_savename+'" width="80" height="80" style="margin-right:10px;"></a>' + item.propertyreply_text+'</td>';
+		if(item.pic_name != null && item.pic_savename != null){
+			data += '	<td class="text" style="width:100%; "><a href="reply_download?pic_name='+item.pic_name+'&pic_savename='+item.pic_savename+'" data-lightbox="reply"><img src="reply_download?pic_name='+item.pic_name+'&pic_savename='+item.pic_savename+'" width="80" height="80" style="margin-right:10px;"></a>' + item.propertyreply_text+'</td>';
+		}else{
+			data += '	<td class="text" style="width:100%; ">' + item.propertyreply_text+'</td>';
+		}
 		data += '	<td class="regdate text-right">' + item.propertyreply_inputdate + '</td>';
 		data += '	<td><input type="button" class="delbtn btn-u btn-block rounded g-mb-5" style="background-color:#f7be22";" reply_id="'+item.custid+'" reply_no="'+item.property_reply_no+'"value="삭제" /></td>';
 		data += '</tr>';
@@ -430,13 +434,31 @@
 			alert('댓글을 입력해주세요');
 			return false;
 		}		
-		if(confirm('댓글을 입력하시겠습니까?')){			
-			$("#replyform").ajaxForm({
-				async : false,
-				success : function(resp){
-					init();			
-				}
-			});
+		if(confirm('댓글을 입력하시겠습니까?')){
+			if($("#replyFile").val()==''){
+				$.ajax({					
+					url : "insert_propertyReply_notphoto",
+					method : "post",
+					async : false,
+					data : {
+						"property_no" : property_no,
+						"propertyreply_text" : replytext,
+					},
+					success : function(resp){
+						init();			
+					}
+				});
+			} else {
+				$("#replyform").ajaxForm({
+					url : "insert_propertyReply",
+					method : "post",
+					enctype : "multipart/form-data",
+					async : false,
+					success : function(resp){
+						init();			
+					}
+				});
+			}
 		}else{
 			$("#propertyreply_text").val("");
 			$("#replyFile").val("");

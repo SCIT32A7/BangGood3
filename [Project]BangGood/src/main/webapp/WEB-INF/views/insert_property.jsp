@@ -70,7 +70,7 @@ table tr td {
 	<div class="container-fluid content view_title_bg">
 		<div class="row">
 		<div class="col-md-2"></div>
-		<form action = "insert_property" method = "post">
+		<form action = "insert_property" method = "post" onsubmit = "return insert_property1_check()">
 		<div class="col-md-8">
 			<div class="headline">
 				<h2 style="font-size: 28px;">방 등록</h2>
@@ -399,5 +399,8 @@ table tr td {
 	<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 	<script src="//apis.daum.net/maps/maps3.js?apikey=8af91664dfbd610fb326b81f6ed2ca57&libraries=services"></script>
 	<script src="assets/js/postcode.js"></script>
+	
+	<!-- formCheck -->
+	<script src="assets/js/formCheck.js"></script>
 </body>
 </html>
