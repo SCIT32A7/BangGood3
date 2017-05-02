@@ -571,7 +571,7 @@ $(function() {
                      send_data();
                   }
                });              
-              }       
+              }
           });
           
           $("#year_rent").click(function(){
@@ -833,6 +833,13 @@ $(function() {
               }
               send_data();          
            });
+           
+           $(window).keydown(function(e) {
+   				//Esc 버튼 눌렀을때, 오버레이 전체 제거
+	   			if (e.keyCode == '27') {
+	   				allCloseOverlay();
+	   			}
+   		   });
          
       })
       
