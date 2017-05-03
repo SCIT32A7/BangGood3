@@ -31,6 +31,11 @@
 		<link rel="stylesheet" href="assets/css/global.css">
 		<!-- CSS Customization -->
 		<link rel="stylesheet" href="assets/css/custom.css">
+<style>
+.list li{
+	font-size:17px;
+}
+</style>
 </head>
 
 <body id="body" data-spy="scroll" data-target=".one-page-header"
@@ -56,34 +61,36 @@
 				</c:if>
 				<c:if test = "${myClick.size() > 0}">
 					<div class="headline">
-						<h2>관심 매물</h2>
+						<h2>오늘 본 매물</h2>
 					</div>
 					<!--row-->
 					<c:forEach var = "click" items = "${myClick}">
 					<div class="row">
-						<div class="col-sm-5">
+						<div class="col-sm-4">
 							<img class ="img-responsive"  src="download?pic_name=${click.pic_name}&pic_savename=${click.pic_savename}">
 						</div>
-						<div class="col-sm-5">
+						<div class="col-sm-6">
 							<h2>
 								<a href="read_property?property_no=${click.property_no}" target="_blank">[ ${click.rent_type} ] ${click.deposit} / ${click.month_fee}</a>
 							</h2>
-							<p style="float: left">${click.property_title}</p><br>
-							<ul class="list-unstyled list-inline blog-info-v2" style="float: left">
+							<h4 style="display:inline;float: left">${click.property_title}</h4><br><br>
+							
+							<ul class="list list-unstyled list-inline blog-info-v2" style="float: left">
 								<li>By: <a class="color-green" href="#">${click.custid}</a>
 								</li>
-								<li><i class="fa fa-clock-o"></i> ${click.property_inputdate}</li><br>								
+								<li><i class="fa fa-clock-o"></i> ${click.property_inputdate}</li><br>
 								<li> [관리비] ${click.maintence_fee}만원</li><br>
 								<li> [면적] ${click.roomsize}제곱미터 &nbsp;&nbsp;&nbsp; [층수] ${click.floor}층</li><br>
 								<li> [건축연도] ${click.built_year}년</li><br>
 							</ul>
-						</div>
+						</div> 
+						
 						<div class="col-sm-2">
 							<div class="project-share">
 								<ul class="list-inline comment-list-v2 pull-right g-mt-100">
-									<li><i class="fa fa-eye"></i>${click.property_hits}</li>
-									<li><i class="fa fa-comments"></i>${click.reply_count}</li>
-									<li><i class="fa fa-heart"></i>${click.property_like}</li>
+									<li style="font-size:17px;"><i class="fa fa-eye"></i>${click.property_hits}</li>
+									<li style="font-size:17px;"><i class="fa fa-comments"></i>${click.reply_count}</li>
+									<li style="font-size:17px;"><i class="fa fa-heart"></i>${click.property_like}</li>
 								</ul>
 							</div>
 						</div>
