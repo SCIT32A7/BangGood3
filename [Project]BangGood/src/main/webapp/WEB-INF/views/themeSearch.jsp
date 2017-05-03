@@ -46,7 +46,6 @@
    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
    <link rel="stylesheet" href="/resources/demos/style.css">
 <style type="text/css">
-
 .mapwrap {
 	position: absolute;
 	left: 0;
@@ -111,9 +110,10 @@
 }
 
 .desc .ellipsis {
-	font-size: 15px;
+	font-size: 13px;
     overflow: hidden;
     text-overflow: ellipsis;
+    margin:3px;
 }
 .ellipsis_hit{
 position:absolute;
@@ -129,7 +129,8 @@ float:left;
 	color: #888;
 	margin-top: -2px;
 }
-
+ 
+ 
 .info .img {
 float:left;
 	width: 150px;
@@ -144,7 +145,7 @@ float:left;
 	position: absolute;
 	margin-left: -12px;
 	left: 50%;
-	bottom: 0;
+	bottom: 19px;
 	width: 22px;
 	height: 12px;
 	background:
@@ -152,7 +153,9 @@ float:left;
 }
 
 .info .link {
-	color: #f78ab0;
+	font-weight: bold;
+    font-size: 16px;
+    margin-left: 8px;
 }
 
 #addresstext {
@@ -290,9 +293,9 @@ input[type=radio], input[type=checkbox] {
                      </td>
                   </tr>
                  <tr>
-                     <td>
+                      <td>
                         <p>보증금</p>
-                         <select class="form-control" id="deposit1" style="float:left; width:46%">
+                         <select class="form-control" id="deposit1" style="float:left; width:46%; height: inherit; padding:0">
                              <option selected="selected" value = "0">----</option>
                              <option value = "100">100만원</option>
                              <option value = "500">500만원</option>
@@ -309,7 +312,7 @@ input[type=radio], input[type=checkbox] {
                              <option value = "10000">1억원</option>
                         </select>
                         <span class="pull-left g-mt-10" style="margin:">~</span>
-                        <select class="form-control" id="deposit2" style="float:left; width:46%">
+                        <select class="form-control" id="deposit2" style="float:left; width:46%;height: inherit; padding:0">
                              <option selected="selected" value = "999999">무제한</option>
                              <option value = "500">500만원</option>
                              <option value = "1000">1000만원</option>
@@ -329,9 +332,9 @@ input[type=radio], input[type=checkbox] {
                      </td>
                   </tr>
                   <tr>
-                     <td>
+                   <td>
                         <p>월세</p>
-                         <select class="form-control" id="month_fee1" style="float:left; width:46%">
+                         <select class="form-control" id="month_fee1" style="float:left; width:46%;height: inherit; padding:0">
                              <option selected="selected" value = "0">----</option>
                              <option value = "10">10만원</option>
                              <option value = "20">20만원</option>
@@ -345,7 +348,7 @@ input[type=radio], input[type=checkbox] {
                              <option value = "100">100만원</option>
                         </select>
                         <span class="pull-left g-mt-10" style="margin:">~</span>
-                        <select class="form-control" id="month_fee2" style="float:left; width:46%">
+                        <select class="form-control" id="month_fee2" style="float:left; width:46%;height: inherit; padding:0">
                             <option selected="selected" value = "9999">무제한</option>
                              <option value = "30">30만원</option>
                              <option value = "40">40만원</option>
@@ -956,7 +959,7 @@ input[type=radio], input[type=checkbox] {
                      },
                      success : function(resp) {                              
                            property_map = resp;
-                           var overlayTitle = " [ "+property_map.rent_type+" ] "+ property_map.deposit+"/"+property_map.month_fee;
+                           var overlayTitle = "[ "+property_map.property_title+" ]";
                            content = '<div class="mapwrap">';
                            content +=   '<div class="info">';
                            content +=      '<div class="title">';
@@ -968,11 +971,11 @@ input[type=radio], input[type=checkbox] {
                            content +=            '<img src="download?pic_name='+property_map.pic_name+'&pic_savename='+property_map.pic_savename+'" width="150" height="140">';
                            content +=         '</div>';
                            content +=         '<div class="desc g-ml-5">';
-                           content +=            '<h3 class="ellipsis"><a href="#">'+property_map.property_title+'</a></h3>';
-                           content +=            '<div class="jibun ellipsis"></div>';
-                           content +=            '<div><a href="#" target="_blank" class="link"><i class="fa fa-heart"></i>책갈피</a></div>';
-                           content +=            '<div class="info_label"><span class="label label-success g-ml-10 rounded">신축</span></div>';
-                           content +=            '<div><a href="read_property?property_no='+property_map.property_no+'" target="_blank" class="link">자세히보기</a></div>';
+                           content +=			 '<h3 class="ellipsis">'+'<'+property_map.rent_type+'>'+ property_map.deposit+"/"+property_map.month_fee+'</h3>'
+                           content +=            '<h5 class="ellipsis">'+'관리비 : '+property_map.maintence_fee+'만원</h5>';
+                           content +=            '<h5 class="ellipsis">'+'면적 : '+property_map.roomsize+'제곱미터</h5>';
+                           content +=            '<h5 class="ellipsis">'+property_map.built_year+'년 중축, '+property_map.floor+'층</h5>';
+                           content +=            '<a href="read_propertymap?property_no='+property_map.property_no+'" target="_blank" class="link">내용보기</a>';
                            content +=            '<p class="ellipsis_hit"> <i class="fa fa-eye"></i>' +property_map.property_hits+ '  <i class="fa fa-comments"></i>'+property_map.reply_count+'  <i class="fa fa-heart"></i>'+property_map.property_like+'</p>';
                            content +=         '</div>';                  
                            content +=      '</div>';

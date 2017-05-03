@@ -54,7 +54,8 @@
 	font-family: 'Malgun Gothic', dotum, '돋움', sans-serif;
 	line-height: 1.5;
 }
-
+ 
+ 
 
 .mapwrap .info {
 	width: 300px;
