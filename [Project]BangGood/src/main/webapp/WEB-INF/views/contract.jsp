@@ -187,7 +187,6 @@ th{
 	
 	<script type="text/javascript">
 	$("#data_commit").on("click", function(){
-		alert($("#con_date").val());
 		var date = $("#con_date").val();
 		
 		$("#contract_date").html(date);

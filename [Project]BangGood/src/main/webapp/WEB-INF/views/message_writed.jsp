@@ -267,7 +267,6 @@
 				deleteList.value = checkList;
 				form.action = "delete_re_messages";
 				form.method = "post";
-				alert('1');
 				form.submit();
 			}
 		}

@@ -251,7 +251,6 @@ content: "";
 				deleteList.value = checkList;
 				form.method = "post";
 				form.action = "delete_admin_messages";
-				alert('1');
 				form.submit();
 			}
 		}

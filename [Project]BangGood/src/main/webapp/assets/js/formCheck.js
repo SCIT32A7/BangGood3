@@ -120,7 +120,6 @@ function insert_property3_check(){
 	var uploadFile5 = document.getElementById('uploadFile5');
 	var uploadFile6 = document.getElementById('uploadFile6');
 	
-	alert('사진 업로드 검사');
 	
 	if(uploadFile1.value == ''){
 		alert('메인으로 올릴 사진을 업로드해주세요.')

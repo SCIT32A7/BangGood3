@@ -284,10 +284,6 @@ $(function() {
 				$("#Joinfinish").modal("show");
 			},
 			error : function(jqXHR) {
-				alert(jqXHR.status);
-				alert(jqXHR.statusText);
-				alert(jqXHR.responseText);
-				alert(jqXHR.readyState);
 				return false;				
 			}
 		});
@@ -350,7 +346,6 @@ $(function() {
 
 function senddate() {
 	var form = document.getElementById("join")
-	alert(form);
 	var custid = document.getElementById("joinid");
 	var password = document.getElementById("joinpw1");
 	var email = document.getElementById("joinemail");

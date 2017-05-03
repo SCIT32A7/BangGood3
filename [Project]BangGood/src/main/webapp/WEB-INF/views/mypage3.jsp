@@ -284,7 +284,6 @@ content: "";
 				deleteList.value = checkList;
 				form.method = "post";
 				form.action = "delete_messages";
-				alert('1');
 				form.submit();
 			}
 		}
