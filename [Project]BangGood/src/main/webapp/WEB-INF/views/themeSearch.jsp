@@ -536,8 +536,6 @@ input[type=radio], input[type=checkbox] {
   	
   	
   	$(function() {
-  		
-  		alert(keyword);
   	    send_data();
   	 });   
   	

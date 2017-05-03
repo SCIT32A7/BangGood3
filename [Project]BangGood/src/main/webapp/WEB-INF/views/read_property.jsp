@@ -439,7 +439,7 @@
 				$.ajax({					
 					url : "insert_propertyReply_notphoto",
 					method : "post",
-					async : false,
+					/* async : false, */
 					data : {
 						"property_no" : property_no,
 						"propertyreply_text" : replytext,
@@ -453,7 +453,7 @@
 					url : "insert_propertyReply",
 					method : "post",
 					enctype : "multipart/form-data",
-					async : false,
+					/* async : false, */
 					success : function(resp){
 						init();			
 					}

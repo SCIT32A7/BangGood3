@@ -663,7 +663,6 @@
 		
 		$("button#save_nextStage").on("click", function(){
 			if(isDownloaded) { //다음 페이지로 진행
-				alert(scale);
 				saveFloorplan(false, "insert_property2", saved_name, scale);
 			} else { //다운로드 과정 자동 실행
 				alert("이미지 다운로드를 먼저 진행해주세요.");
