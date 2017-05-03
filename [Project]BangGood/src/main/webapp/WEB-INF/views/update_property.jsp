@@ -75,9 +75,6 @@ table tr td {
       <div class="col-md-8">
          <div class="headline">
             <h2 style="font-size: 28px;">방 기본정보 수정</h2>
-            <div class="pull-right">
-               <h1>Step1</h1>
-            </div>
          </div>
        
             <!-- map -->
@@ -153,7 +150,7 @@ table tr td {
 								<th style="padding-left: 18px">면적</th>
 								<td><input type="text" name ="roomsize" id = "roomsize" class="form-control rounded pull-left"
 								 style="width: 100px" value = "${select_property.roomsize}">
-									<b class="insert_label">평</b>
+									<b class="insert_label">제곱미터</b>
 								</td>
                               </tr>
                               <tr class="borderline">
@@ -226,27 +223,25 @@ table tr td {
                                 <input type="radio" name="car" value = "1" id="car1" ${select_option.car == '1' ? 'checked' : ''}>
                                  <label for="car1">가능</label>
                                  <input type="radio" name="car" value = "2" id="car2" ${select_option.car == '2' ? 'checked' : ''}>
-                                 <label for="car2">불가능</label>l">불가능</label>
+                                 <label for="car2">불가능</label>
                               </td>
                            </tr>
                            <tr class="borderline">
                               <th>엘레베이터</th>
                               <td colspan="3">
-                                 <input type="radio" id="elevator" name="elevator" value = "1" ${select_option.elevator == '1' ? 'checked' : ''}>>
+                                 <input type="radio" id="elevator" name="elevator" value = "1" ${select_option.elevator == '1' ? 'checked' : ''}>
                                  <label for="elevator">있음</label>
-                                 <input type="radio" id="elevator1" name="elevator" value = "2" ${select_option.elevator == '2' ? 'checked' : ''}>>
+                                 <input type="radio" id="elevator1" name="elevator" value = "2" ${select_option.elevator == '2' ? 'checked' : ''}>
                                  <label for="elevator1">없음</label>
                               </td>
                            </tr>
                            <tr class="borderline">
                               <th>반려동물</th>
                               <td colspan="3">
-                                <input type="radio" name="pet" value = "1" 
-								style="position:relative; top:6px" ${select_option.pet == '1' ? 'checked' : ''}>
-								<label class="insert_label">가능</label>
-								<input type="radio" name="pet" value = "2" 
-								style="position:relative; top:6px" ${select_option.pet == '2' ? 'checked' : ''}>
-								<label class="insert_label">불가능</label>
+                                <input type="radio" name="pet" id="pet" value = "1"  ${select_option.pet == '1' ? 'checked' : ''}>
+								<label for="pet">가능</label>
+								<input type="radio" name="pet"  id="pet1"value = "2" ${select_option.pet == '2' ? 'checked' : ''}>
+								<label for="pet1">불가능</label>
                            </tr>
                            <tr class="borderline">
                               <th>옵션항목</th>
@@ -300,7 +295,7 @@ table tr td {
                            <table style="width:100%">
                              <tr class="borderline">
 								<th>방 제목</th>
-								<td><input type="text" id="property_title" name = "property_title"
+								<td><input type="text" id="property_title" name = "property_title" style="text-align:left"
 								 class="form-control rounded pull-width" value = "${select_property.property_title}">
 							</td>
 							</tr>
@@ -323,7 +318,7 @@ table tr td {
             <div class="margin-bottom-30"></div>
             <div class="row ">
                <div class="col-md-2"></div>
-               <div class="col-md-4">
+               <div class="col-md-8">
                   <button type="submit" class="btn-u btn-block rounded insert_btn">
               		    매물 정보 변경
                   </button>
