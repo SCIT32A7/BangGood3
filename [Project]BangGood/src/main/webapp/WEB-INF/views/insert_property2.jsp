@@ -145,8 +145,46 @@
 	cursor: pointer;
 	font-size: 1.9em;
 }
+
+/* 튜토리얼 */
+.tutorial {
+	border: 23px solid #f7be22;
+	background-color: white;
+	overflow: auto;	
+}
+.tuto_btn{
+	width:40px;
+	border:5px solid #f7be22;
+	font-size:18px;
+	padding:8px;
+	
+}
+.tuto_btn:hover{
+	background:#f7be22;
+}
+@keyframes pulse {
+  from {
+    transform: scale3d(1, 1, 1);
+  }
+
+  50% {
+    transform: scale3d(1.05, 1.05, 1.05);
+  }
+
+  to {
+    transform: scale3d(1.3, 1.3, 1.3);
+  }
+}
+
+.pulse {
+  animation-name: pulse;
+}
+
+
 </style>
-  
+ <script type="text/javascript">
+
+ </script>
 </head>
 
 <body id="body" data-spy="scroll" data-target=".one-page-header"
@@ -174,12 +212,20 @@
       </div><!-- 중간 맞추기col -->
      
       <div class="col-md-2"></div>
-         <!-- 전체 col2 -->
-      </div><!-- end row -->
+      <!-- 튜토리얼 -->
+ 		<%@ include file="FloorplanTutorial/start.jsp"%> 
+ 		<%@ include file="FloorplanTutorial/step1.jsp"%> 
+ 		<%@ include file="FloorplanTutorial/step2.jsp"%> 
+ 		<%@ include file="FloorplanTutorial/step3.jsp"%> 
+ 		<%@ include file="FloorplanTutorial/step4.jsp"%> 
+ 		<%@ include file="FloorplanTutorial/end.jsp"%> 
+ 		<!-- tutorial -->
+      </div>
+      <!-- end row -->
       <div class="clearfix"></div>
  		<div class="">
  		<h3>
-           
+            
 			<div id="image_container" class="image_container">
  		           <button class="pull-left g-mr-50 btn-u btn-block rounded insert_btn" style="background-color: #ccc; width:100px;" onClick = "location.href='./insert_property'">돌아가기</button>
            	<input type="image" id="undo" src="assets/img/icons/sidebar/undo.png" class="do_btn tab_switcher_img" data-toggle="tooltip" title="Undo 단축키 Ctrl+z">
@@ -195,15 +241,17 @@
 				<input type="image" src="assets/img/icons/sidebar/Download-button2.png">
 			</a>
            	<input type="text" id="status" placeholder="마우스 상태" class="form-control mouse_status" readonly="readonly" />
-           	
-           	<button id="save_nextStage" class="pull-right btn-u btn-block rounded insert_btn" style="width:100px"> 다음단계</button> 
+           		<button id="save_nextStage" class="pull-right btn-u btn-block rounded insert_btn" style="width:100px"> 다음단계</button> 
+           	<a href="#open"><input type="image" src="assets/img/icons/sidebar/tutorial.png" id="tutorial" alt="튜토리얼" class="do_btn tab_switcher_img pull-right g-pl-10" style="width:80px;height:70px; margin-right:100px;"data-toggle="tooltip" title="튜토리얼"/>
+          		</a>
           	 </div>
           	 
            	
  		</h3>
  		</div>
- 			
-	<div class="row">
+ 		
+		
+		<div class="row">
 		<div id="menuSidebar" class="col-sm-2" style="height:560px;padding:0; border-radius:5px">
 			<div class="dashboardLink text-center">
 				<div id="tab_switcher" class="tab_switcher pull-width" style="background:#f7be22">
@@ -216,10 +264,9 @@
 			
 			
 			<div id="tab" style="height:480px; padding:10px;">
-				<div class="pencil" style="display:none;  overflow: auto;">
+				<div class="pencil" style="overflow: auto; display: none;">
 					<div class="pencilContainer">
 					<div>
-					
 					</div>
 						<select id="selectColor"class="form-control pull-left" >
 							<option value="black" selected="selected">선 색상 : 검정색</option>
@@ -260,16 +307,16 @@
 						
 					</div>
 				</div>
-				<div class="furniture" style="display:none;overflow: auto;">
+				<div class="furniture" style="display:none;overflow: auto;"data-backdrop="false">
 		               <div id="tab_switcher" class="tab_switcher">
 				            <ul class="furniture_tab" style="list-style:none;padding: 10px;" >
-				               <li id="common" class="tab_switcher_img furniture_menu"> common <i class="fa fa-caret-right"></i></li>
-				               <li id="room" class="tab_switcher_img furniture_menu" onclick="$('.room').toggle()">room <i class="fa fa-caret-right"></i></li>
-				               <li id="laundryRoom" class="tab_switcher_img furniture_menu" onclick="$('.laundryRoom').toggle()">laundryRoom <i class="fa fa-caret-right"></i></li>
-				               <li id="livingRoom" class="tab_switcher_img furniture_menu" onclick="$('.livingRoom').toggle()">livingRoom <i class="fa fa-caret-right"></i></li>
-				               <li id="kitchen" class="tab_switcher_img furniture_menu" onclick="$('.kitchen').toggle()">kitchen <i class="fa fa-caret-right"></i></li>
-				               <li id="bathroom" class="tab_switcher_img furniture_menu" onclick="$('.bathroom').toggle()" >bathroom <i class="fa fa-caret-right"></i></li>
-				               <li id="back" class="tab_switcher_img furniture_menu" style="display:none;">back<i class="fa fa-caret-left"></i></li>
+				               <li id="common" class="tab_switcher_img furniture_menu g-mb-5"> common <i class="fa fa-caret-right"></i></li>
+				               <li id="room" class="tab_switcher_img furniture_menu g-mb-5" onclick="$('.room').toggle()">room <i class="fa fa-caret-right"></i></li>
+				               <li id="laundryRoom" class="tab_switcher_img furniture_menu g-mb-5" onclick="$('.laundryRoom').toggle()">laundryRoom <i class="fa fa-caret-right"></i></li>
+				               <li id="livingRoom" class="tab_switcher_img furniture_menu g-mb-5" onclick="$('.livingRoom').toggle()">livingRoom <i class="fa fa-caret-right"></i></li>
+				               <li id="kitchen" class="tab_switcher_img furniture_menu g-mb-5" onclick="$('.kitchen').toggle()">kitchen <i class="fa fa-caret-right"></i></li>
+				               <li id="bathroom" class="tab_switcher_img furniture_menu g-mb-5" onclick="$('.bathroom').toggle()" >bathroom <i class="fa fa-caret-right"></i></li>
+				               <li id="back" class="tab_switcher_img furniture_menu g-mb-5" style="display:none;">back<i class="fa fa-caret-left"></i></li>
 				            </ul>
 						</div>		               
 		               
@@ -320,7 +367,7 @@
 						<img class="buttonImage" alt="washstand" src="assets/img/icons/sidebar/Washstand.jpg" btn-num="washstand" />
 					</div>
 				</div>
-				<div class="updownload ">
+				<div class="updownload " style="display:none;">
 					<div class="ui-widget" id="datanum">
 						<select id='combobox'>
 						<!-- 옵션 동적 생성 부분 -->
@@ -361,6 +408,10 @@
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<script type="text/javascript" src= "assets/js/autocomplete.js"></script>
 	<script>
+	//tutorial
+	 $(document).ready(function(){
+		    $("#open").modal();
+	 });
 //Basic 변수 모음
 	var canvas;
 	var ctx;
@@ -1212,7 +1263,6 @@
 			updateTemp = null;
 			redrawAll();
 		});
-		
 		$("#undo").on("click", function() {
 			if(objectWheel){
 				checkWheelEvent();
@@ -1266,8 +1316,6 @@
 				}
 				$("#ctrlMode").removeAttr("class").attr("class", "do_btn");
 			}
-			
-			
 		});
 		
 		$("#SelectorMode").on("click", function() {

@@ -34,21 +34,58 @@ $(function() {
 	$("#joinBtn3").click(function() {
 		insert_customer();
 	});
-
+	
 	$("#loginBtn").click(function() {
 		$("#loginModal").modal();
 	});
 	$("#mail_check").click(function() {
-		
 	});
 	$("#back_join").click(function(){
 		$("#JoinModal").modal("show");
 	});
 	$("#mailCheck").click(function(){
-		
 	});
 	
 	
+	$("#tutorial").click(function() {
+		$("#open").modal("show");
+	});
+	$("#step1Btn").click(function() {
+		$("#step1Modal").modal("show");
+		$("#open").modal("hide");
+	});
+	$("#step1_backBtn").click(function() {
+		$("#step1Modal").modal("hide");
+		$("#open").modal("show");
+	});
+	$("#step2Btn").click(function() {
+		$("#step2Modal").modal("show");
+		$("#step1Modal").modal("hide");
+	});
+	$("#step2_backBtn").click(function() {
+		$("#step2Modal").modal("hide");
+		$("#step1Modal").modal("show");
+	});
+	$("#step3Btn").click(function() {
+		$("#step3Modal").modal("show");
+		$("#step2Modal").modal("hide");
+	});
+	$("#step3_backBtn").click(function() {
+		$("#step3Modal").modal("hide");
+		$("#step2Modal").modal("show");
+	});
+	$("#step4Btn").click(function() {
+		$("#step3Modal").modal("hide");
+		$("#step4Modal").modal("show");
+	});
+	$("#step4_backBtn").click(function() {
+		$("#step4Modal").modal("hide");
+		$("#step3Modal").modal("show");
+	});
+	$("#endBtn").click(function() {
+		$("#step4Modal").modal("hide");
+		$("#endModal").modal("show");
+	});
 	var checkAjaxSetTimeout;
 	
 	$("#mail_check").on("click", function(){
