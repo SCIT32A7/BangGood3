@@ -85,13 +85,15 @@
 			</table>
 			</div>
 		</div>
+		
+		<hr>
 		<!-- end row -->
 		<div class="row">
 				<!-- 댓글 쓰는곳 -->
-				<div class="col-md-3"></div>
-			<div class="col-md-9">
+				<div class="col-md-2"></div>
+			<div class="col-md-10">
 					
-					<input type ="text" name ="searchreply_text" id ="searchreply_text" class="form-control rounded pull-left" style="width:500px; height:45px">
+					<input type ="text" name ="searchreply_text" id ="searchreply_text" class="form-control rounded pull-left" style="width:700px; height:45px">
 					<input type ="button" id = "searchreply_insert" value="댓글 등록" class="btn-u btn-block rounded pull-left g-ml-10" style="width:100px; height:45px;">
 					<input type ="hidden" name = "boardnum" id = "boardnum" value = "${searchBoard.searchBoard_no}">
 					<input type ="hidden" name = "loginId" id = "loginId" value = "${loginId}">	
@@ -99,8 +101,13 @@
 			
 			</div>
 		<div class="clearfix"></div>
+		<div class="row">
+				<!-- 댓글 쓰는곳 -->
+				<div class="col-md-2"></div>
+			<div class="col-md-10">
 				<span id = "replyArea"></span>	
 			
+		</div>
 		</div>
 		<div class="clearfix margin-bottom-20"></div>
 		
@@ -162,12 +169,12 @@ function init() {
 
 // 댓글 리스트 출력 함수
 function output(resp) {
-	var data = '<table >';
+	var data = '<table style="margin-top:20px;">';
 	$.each(resp, function(index, item){
 		data += '<tr class="reviewtr" style="border-bottom:1px solid #ccc">';
 		data += '	<td class="name" style="padding-right:30px;">' + item.custid + '</td>';
-		data += '	<td class="text" style="width:100%">' + item.searchReply_text + '</td>';
-		data += '	<td class="regdate text-right">' + item.searchReply_inputdate + '</td>';
+		data += '	<td class="text" style="width:80%">' + item.searchReply_text + '</td>';
+		data += '	<td class="regdate text-right" style="width:80px;">' + item.searchReply_inputdate + '</td>';
 		data += '	<td><input type="button" class="delbtn btn-u btn-block rounded g-mb-5" style="background-color:#f7be22";" reply_id="'+item.custid+'" data-sno="'+item.searchReply_no+'"value="삭제" /></td>';
 		data += '</tr>';
 	});

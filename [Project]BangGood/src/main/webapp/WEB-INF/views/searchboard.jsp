@@ -120,7 +120,7 @@ content: "";
   								<label class="admin_label"for="checkedAll"></label>
 							</th>
 						</c:if>
-						<th>제목</th>
+						<th style="width:400px;">제목</th>
 						<th>작성자</th>						
 						<th class="hidden-sm">등록일</th>
 						<th class="hidden-sm">조회</th>
@@ -138,7 +138,7 @@ content: "";
 						</c:if>
 						<td><a href="read_searchboard?searchBoard_no=${board.searchBoard_no}">
 						${board.searchBoard_title} (${board.searchBoard_reply})</a></td>
-						<td>${board.custid}</td>
+						<td style="width:300px;">${board.custid}</td>
 						<td>${board.searchBoard_inputdate}</td>
 						<td>${board.searchBoard_hits}</td>
 					</tr>

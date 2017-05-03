@@ -117,7 +117,7 @@
 						<div class="col-md-6">
 						<div class="best-service best-service-2 text-center" >
 							<div class="valign__middle">
-								<h2 class="best-service__title font-main g-mb-20"> 반려견 동반 </h2>
+								<h2 class="best-service__title font-main g-mb-20"> 반려동물 동반 </h2>
 								<a href="themeSearch?keyword=pet" class="btn-u btn-u--construction trim">
 								<i class="g-mr-10 fa btn-u__fa fa-arrow-right"></i> SEARCH </a>
 							</div>
@@ -158,22 +158,29 @@
 			<!-- end theme -->
 			<div class="container-fluid content">
 				<div class="row">
-					<div class="col-md-2"></div>
-					<div class="col-md-8">
-						<div class="col-sm-4">
-							<img src="assets/img/bg/17.jpg" width="300" height="200">
-							<p>굿방ㅇㅇㅇㅎㅇㅇㅎㅇㅎ</p>
+					<div class="col-md-12 g-mb-20">
+						<div class="col-sm-3 text-center" style="border-right:1px solid #f7b70b">
+							<img src="assets/img/bg/plan.png" width="250" height="200" class="g-mb-20">
+							<h5 class = "text-center">방 구조를 상세히 알 수 있는<br>
+							평면도를 만들 수 있습니다.</h5>
 						</div>
-						<div class="col-sm-4">
-							<img src="assets/img/bg/13.jpg" width="300" height="200">
-							<p>굿방ㅇㅇㅇㅎㅇㅇㅎㅇㅎ</p>
+						<div class="col-sm-3 text-center" style="border-right:1px solid #f7b70b">
+							<img src="assets/img/bg/chart.jpg" width="250" height="200" class="g-mb-20">
+							<h5 class = "text-center">같은 동에 있는 매물들과<br>
+							현재 보는 매물을 비교한<br>
+							비교분석 차트를 제공합니다.</h5>
 						</div>
-						<div class="col-sm-4">
-							<img src="assets/img/bg/14.jpg" width="300" height="200">
-							<p>굿방ㅇㅇㅇㅎㅇㅇㅎㅇㅎ</p>
+						<div class="col-sm-3 text-center" style="border-right:1px solid #f7b70b">
+							<img src="assets/img/bg/contract.png" width="250" height="200" class="g-mb-20">
+							<h5 class = "text-center">사용자 간의 직거래를 위한<br>
+							가계약서가 인쇄 가능합니다.</h5>
+						</div>
+						<div class="col-sm-3 text-center">
+							<img src="assets/img/bg/search.jpg" width="250" height="200" class="g-mb-20">
+							<h5 class = "text-center">지역, 보증금, 월세 이외에<br>
+							상세한 옵션 검색이 가능합니다</h5>
 						</div>
 					</div>
-					<div class="col-md-2"></div>
 				</div>
 			</div>
 			<!-- footer -->

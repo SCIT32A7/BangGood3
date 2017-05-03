@@ -96,9 +96,9 @@
 					</div>
 					<!--row-->
 					<c:forEach var = "property" items = "${pro_in_list}">
-					<div class="row">
+					<div class="row" style="position:relative;">
 						<div class="col-sm-5">
-							<img class ="img-responsive" src="download?pic_name=${property.pic_name}&pic_savename=${property.pic_savename}">
+							<img class ="img-responsive" width="330" height="230" src="download?pic_name=${property.pic_name}&pic_savename=${property.pic_savename}">
 						</div>
 						<div class="col-sm-5">
 							<h2>
@@ -106,8 +106,9 @@
 							</h2>
 							<ul class="list-unstyled list-inline blog-info-v2"
 								style="float: left">								
-								<li> ${property.property_title}</li><br>
+								<li> ${property.property_title}</li><br><br>
 								<li><i class="fa fa-clock-o"></i> ${property.property_inputdate}</li><br>
+								
 								<li> [관리비] ${property.maintence_fee}만원</li><br>
 								<li> [면적] ${property.roomsize}제곱미터 [층수] ${property.floor}층</li><br>
 								<li> [건축연도] ${property.built_year}년</li><br>
@@ -127,11 +128,11 @@
 							</ul>							
 													
 						</div>
-						<div class="col-sm-2">
-							<button class="mypage_btn btn-u btn-block rounded">
+						<div class="col-sm-2 text-center">
+							<button class="mypage_btn btn-u btn-block rounded" >
 								<a href="select_property_data?property_no=${property.property_no}">매물 수정</a>
 							</button>
-							<button class="mypage_btn btn-u btn-block rounded">
+							<button class="mypage_btn btn-u btn-block rounded" style="width:100px;">
 								<a href="loadCanvasForUpdate?property_no=${property.property_no}">평면도 변경</a>
 							</button>
 							<button class="mypage_btn btn-u btn-block rounded">
@@ -147,11 +148,11 @@
 									<a href="javascript:check_restartShowing(${property.property_no})">공개</a>
 								</button>
 							</c:if>
-							<div class="project-share">
-								<ul class="list-inline comment-list-v2 pull-right g-mt-100">
-									<li><i class="fa fa-eye"></i>${property.property_hits}</li>
-									<li><i class="fa fa-comments"></i>${property.reply_count}</li>
-									<li><i class="fa fa-heart"></i>${property.property_like}</li>
+							<div class="project-share" style="position:absolute; bottom:-45px; right:20px;">
+								<ul class="list-inline comment-list-v2 pull-right g-mt-10">
+									<li style="font-size:17px"><i class="fa fa-eye"></i>${property.property_hits}</li>
+									<li style="font-size:17px"><i class="fa fa-comments"></i>${property.reply_count}</li>
+									<li style="font-size:17px"><i class="fa fa-heart"></i>${property.property_like}</li>
 								</ul>
 							</div>
 						</div>

@@ -291,7 +291,7 @@ $(function() {
                  <tr>
                      <td>
                         <p>보증금</p>
-                         <select class="form-control" id="deposit1" style="float:left; width:46%; height: inherit; padding:0">
+                         <select class="form-control" id="deposit1" style="float:left; width:46%; height: inherit; padding:0;margin-left:5px">
                              <option selected="selected" value = "0">----</option>
                              <option value = "100">100만원</option>
                              <option value = "500">500만원</option>
@@ -330,7 +330,7 @@ $(function() {
                   <tr>
                      <td>
                         <p>월세</p>
-                         <select class="form-control" id="month_fee1" style="float:left; width:46%;height: inherit; padding:0">
+                         <select class="form-control" id="month_fee1" style="float:left; width:46%;height: inherit; padding:0;margin-left:5px">
                              <option selected="selected" value = "0">----</option>
                              <option value = "10">10만원</option>
                              <option value = "20">20만원</option>

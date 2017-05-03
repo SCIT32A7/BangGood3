@@ -190,10 +190,10 @@ input:checked+label:before {
     font-size: 0;
 	background: url(../img/next.png) no-repeat;
 }
-.best-service-1 { background: url(../img/room/3.jpg) no-repeat scroll 50% 0 / cover;}
-.best-service-2 { background: url(../img/room/4.jpg) no-repeat scroll 50% 0 / cover;}
-.best-service-3 { background: url(../img/room/5.jpg) no-repeat scroll 50% 0 / cover;}
-.best-service-4 { background: url(../img/room/6.jpg) no-repeat scroll 50% 0 / cover;}
+.best-service-1 { background: url(../img/main/search_car.jpg) no-repeat scroll 50% 0 / cover;}
+.best-service-2 { background: url(../img/main/search_pet.jpg) no-repeat scroll 50% 0 / cover;}
+.best-service-3 { background: url(../img/main/search_maintence.jpg) no-repeat scroll 50% 0 / cover;}
+.best-service-4 { background: url(../img/main/search_newbuilt.png) no-repeat scroll 50% 0 / cover;}
 
 .best-service {
 	min-height: 400px;

@@ -52,7 +52,7 @@
 			<h1> 접속 중 열람한 매물 </h1>
 		</div>
 	</div>
-	<div class="container content profile" style="height:700px;">
+	<div class="container content profile" style="height:auto;">
 
 			<!-- Profile Content -->
 				<div class="g-pd-20">

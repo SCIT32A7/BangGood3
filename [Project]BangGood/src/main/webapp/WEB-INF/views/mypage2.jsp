@@ -95,10 +95,10 @@
 					</div>
 					<!--row-->
 					<c:forEach var = "cart" items = "${myCart}">
-					<div class="row">
+					<div class="row" style="position:relative;">
 						<div class="col-sm-5">
-							<img class ="img-responsive"  src="download?pic_name=${cart.pic_name}&pic_savename=${cart.pic_savename}">
-						</div>
+							<img class ="img-responsive" width="330" height="230" src="download?pic_name=${cart.pic_name}&pic_savename=${cart.pic_savename}">
+						</div> 
 						<div class="col-sm-5">
 							<h2>
 								<a href="read_property?property_no=${cart.property_no}" target="_blank">[ ${cart.rent_type} ] ${cart.deposit} / ${cart.month_fee}</a>
@@ -117,11 +117,11 @@
 							<button class="mypage_btn btn-u btn-block rounded">
 								<a href="delete_cart?property_no=${cart.property_no}">삭제</a>
 							</button>
-							<div class="project-share">
-								<ul class="list-inline comment-list-v2 pull-right g-mt-100">
-									<li><i class="fa fa-eye"></i>${cart.property_hits}</li>
-									<li><i class="fa fa-comments"></i>${cart.reply_count}</li>
-									<li><i class="fa fa-heart"></i>${cart.property_like}</li>
+							<div class="project-share" style="position:absolute; bottom:-45px; right:20px;">
+								<ul class="list-inline comment-list-v2 pull-right g-mt-10">
+									<li style="font-size:17px"><i class="fa fa-eye"></i>${cart.property_hits}</li>
+									<li style="font-size:17px"><i class="fa fa-comments"></i>${cart.reply_count}</li>
+									<li style="font-size:17px"><i class="fa fa-heart"></i>${cart.property_like}</li>
 								</ul>
 							</div>
 						</div>
