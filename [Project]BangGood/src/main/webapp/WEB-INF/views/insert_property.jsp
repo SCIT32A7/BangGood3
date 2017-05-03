@@ -191,7 +191,7 @@ table tr td {
 											</select></td>
 											<th style="padding-left: 18px">면적</th>
 											<td><input type="text" name ="roomsize" id = "roomsize" class="form-control rounded pull-left" style="width: 100px">
-												<b class="insert_label2">평</b>
+												<b class="insert_label2">제곱미터</b>
 											</td>
 										</tr>
 										<tr class="borderline">

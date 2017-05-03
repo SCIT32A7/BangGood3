@@ -8,7 +8,7 @@
 						<div class="col-md-12">
 							<div class="heading-footer">
 								<img src="assets/img/title/17.gif">
-								<p>Copyright © 2014 - All Rights Reserved</p>
+								<p>Copyright © 2017 - All Rights Reserved</p>
 						</div>
 					</div>
 				</div>

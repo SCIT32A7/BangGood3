@@ -32,6 +32,37 @@
 		<link rel="stylesheet" href="assets/css/global.css">
 		<!-- CSS Customization -->
 		<link rel="stylesheet" href="assets/css/custom.css">
+<style>
+label{
+    font-size: 14px;
+    line-height: 0.5;
+    cursor: pointer;
+    display: inline-block;
+    padding: 18px 0px 0px 26px;
+    position: relative;
+    whitespace: no-wrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-transition: all .15s ease;
+    transition: all .15s ease;
+    top: 5px;
+    left: 8px;
+    font-weight: normal;
+}
+label:before{
+content: "";
+    position: absolute;
+    left: 1rem;
+    top: 2px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    border: .2rem solid #ccc
+}
+.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {
+	vertical-align: middle;
+}
+</style>
 </head>
 
 <body id="body" data-spy="scroll" data-target=".one-page-header"
@@ -80,12 +111,7 @@
 
 		<div class="table-responsive">
 			<table class="table">
-				<colgroup>
-					<col width="300px">
-					<col width="100px">
-					<col width="100px">
-					<col width="100px">
-				</colgroup>
+				
 				<thead>
 					<tr>
 						<c:if test = "${loginId == 'admin'}">
@@ -100,9 +126,9 @@
 						<th class="hidden-sm">조회</th>
 					</tr>
 				</thead>
-				
+				<tbody>
 				<c:forEach var="board" items="${list}">
-					<tbody>
+					
 					<tr>
 						<c:if test = "${loginId == 'admin'}">
 							<td>
@@ -116,9 +142,9 @@
 						<td>${board.searchBoard_inputdate}</td>
 						<td>${board.searchBoard_hits}</td>
 					</tr>
-					</tbody>
+					
 				</c:forEach>
-				
+				</tbody>
 			</table>
 		</div>
 
@@ -183,7 +209,6 @@ function delete_board(){
 		var deleteList = document.getElementById("deleteList");
 		deleteList.value = checkList;
 		form.action = "delete_searchboards";
-		alert('1');
 		form.submit();
 	}
 }

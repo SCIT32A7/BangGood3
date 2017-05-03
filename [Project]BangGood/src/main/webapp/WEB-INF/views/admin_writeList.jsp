@@ -147,6 +147,11 @@
 				</div>
 				<!-- End Profile Content -->
 			</div>
+			<!-- footer -->
+			<%@ include file="footer.jsp"%> 
+			<!-- end footer -->
+			</main>
+			
 		<!--=== End Profile ===-->
 		<!-- JS Global Compulsory -->
 		<script src="assets/plugins/jquery/jquery.min.js"></script>

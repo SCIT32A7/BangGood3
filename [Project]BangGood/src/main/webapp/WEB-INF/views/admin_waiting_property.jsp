@@ -10,45 +10,65 @@
 <head>
 <title>banngg</title>
 
+
 <!-- Meta -->
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=Edge">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="">
-<meta name="author" content="">
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="description" content="">
+		<meta name="author" content="">
 
-<!-- Web Fonts -->
-<link
-	href='https://fonts.googleapis.com/css?family=Ek+Mukta:400,600,700'
-	rel='stylesheet' type='text/css'>
-<link rel="stylesheet"
-	href="assets/plugins/bootstrap/css/bootstrap.min.css">
-<link rel="stylesheet" href="assets/css/app.css">
-<link rel="stylesheet" href="assets/css/one.style.css">
+		<!-- Fonts -->
+		<link href='https://fonts.googleapis.com/css?family=Ek+Mukta:400,600,700' rel='stylesheet' type='text/css'>
+		<link rel="stylesheet" href="assets/plugins/font-awesome/css/font-awesome.min.css">
+	
+		<link rel="stylesheet" href="assets/plugins/bootstrap/css/bootstrap.min.css">
+		<link rel="stylesheet" href="assets/css/app.css">
+		<link rel="stylesheet" href="assets/css/one.style.css">
 
-<!-- CSS Implementing Plugins -->
-<link rel="stylesheet"
-	href="assets/plugins/owl-carousel2/assets/owl.carousel.css">
-<link rel="stylesheet"
-	href="assets/plugins/owl-carousel/owl-carousel/owl.theme.css">
-<link rel="stylesheet"
-	href="assets/plugins/hover-effects/css/custom-hover-effects.css">
-<link rel="stylesheet" href="assets/plugins/pace/pace-flash.css">
-<!-- CSS Theme -->
-<link rel="stylesheet" href="assets/css/construction.style.css">
-<!-- 메인 -->
-<link rel="stylesheet" href="assets/css/global.css">
-<!-- 메인 글씨 -->
-<!-- CSS Customization -->
-<link rel="stylesheet" href="assets/css/custom.css">
-<link rel="stylesheet" href="assets/plugins/font-awesome/css/font-awesome.min.css">
-<link rel="stylesheet" href="assets/css/btn_style.css">
+		<!-- CSS Implementing Plugins -->
+		<link rel="stylesheet" href="assets/plugins/hover-effects/css/custom-hover-effects.css">
+		<link rel="stylesheet" href="assets/plugins/pace/pace-flash.css">
+		<link rel="stylesheet" href="assets/css/construction.style.css">
+		<link rel="stylesheet" href="assets/css/global.css">
+		<!-- CSS Customization -->
+		<link rel="stylesheet" href="assets/css/custom.css">
 
+		
 <style>
 .searchboard_title {
 	text-align: center;
 	position: relative;
 	background: url(assets/img/bg/1.jpg) no-repeat ;
+}
+label{
+    font-size: 14px;
+    line-height: 0.5;
+    cursor: pointer;
+    display: inline-block;
+    padding: 18px 0px 0px 26px;
+    position: relative;
+    whitespace: no-wrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-transition: all .15s ease;
+    transition: all .15s ease;
+    top: 5px;
+    left: 8px;
+    font-weight: normal;
+}
+label:before{
+content: "";
+    position: absolute;
+    left: 1rem;
+    top: 2px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    border: .2rem solid #ccc
+}
+.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {
+	vertical-align: middle;
 }
 </style>	
 
@@ -73,7 +93,7 @@
 		</div>
 	</div>
 	<!--=== End Breadcrumbs v2 ===--> <!--=== Content Part ===-->
-	<div class="container content">
+	<div class="container content" style="height:700px;">
 		<div class="headline">
 			<h2>대기 중 매물</h2>	
 			<form id = "pagingForm" method="get" class="g-dp-inline pull-right" style="vertical-align: middle;">
@@ -160,37 +180,22 @@
 	</div>
 	<div class="clearfix margin-bottom-20"></div>
 	<!--=== End Content Part ===--> 
+	<!-- footer -->
+			<%@ include file="footer.jsp"%> 
+			<!-- end footer -->
 	</main>
-	<!-- JS Global Compulsory -->
-	<script src="assets/plugins/jquery/jquery.min.js"></script>
-	<script src="assets/plugins/jquery/jquery-migrate.min.js"></script>
-	<script src="assets/plugins/bootstrap/js/bootstrap.js"></script>
-
-	<!-- JS Implementing Plugins -->
-	<script src="assets/plugins/smoothScroll.js"></script>
-	<!-- 스크럴 -->
-	<script src="assets/plugins/jquery.easing.min.js"></script>
-	<!-- 애니메이션 -->
-	<script src="assets/plugins/pace/pace.min.js"></script>
-	<script src="assets/plugins/owl-carousel2/owl.carousel.min.js"></script>
-	<script
-		src="assets/plugins/sky-forms-pro/skyforms/js/jquery.form.min.js"></script>
-	<script
-		src="assets/plugins/sky-forms-pro/skyforms/js/jquery.validate.min.js"></script>
-	<script
-		src="assets/plugins/cube-portfolio/cubeportfolio/js/jquery.cubeportfolio.min.js"></script>
-	<script src="assets/plugins/modernizr.js"></script>
-	<!-- 브라우저 호환성 -->
-	<script src="assets/plugins/backstretch/jquery.backstretch.min.js"></script>
-
-	<!-- JS Page Level-->
-	<script src="assets/js/one.app.js"></script>
-	<script src="assets/js/cube-portfolio.js"></script>
-	<script src="assets/js/contact.js"></script>
-	<script src="assets/js/promo.js"></script>
-
-	<!-- custom -->
-	<script src="assets/js/custom.js"></script>
+		<!-- JS Global Compulsory -->
+				<script src="assets/plugins/jquery/jquery.min.js"></script>
+		<script src="assets/plugins/jquery/jquery-migrate.min.js"></script>
+		<script src="assets/plugins/bootstrap/js/bootstrap.js"></script>
+		<!-- JS Implementing Plugins -->
+		<script src="assets/plugins/pace/pace.min.js"></script>
+		<script src="assets/plugins/modernizr.js"></script>
+		<script src="assets/plugins/backstretch/jquery.backstretch.min.js"></script>
+		<!-- JS Page Level-->
+		<script src="assets/js/one.app.js"></script>
+		<!-- custom -->
+		<script src="assets/js/custom.js"></script>
 <script type="text/javascript">
 	
 	
