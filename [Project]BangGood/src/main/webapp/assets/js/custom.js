@@ -256,7 +256,15 @@ $(function() {
 		if (phone.length == 0) {
 			alert('휴대폰 번호를 입력해주세요.');
 			return false;
+		} 
+		/*if(typeof(phone) != "number") {
+			alert("휴대폰 번호 숫자만 입력해주세요.");
+			return false;
 		}
+		if(phone.length >= 12) {
+			alert("휴대폰 번호는 11자리 이내입니다.");
+			return false;
+		}*/
 		if(checkStatus == "no"){
 			alert('아이디 중복 확인을 해주세요.');
 			return false;

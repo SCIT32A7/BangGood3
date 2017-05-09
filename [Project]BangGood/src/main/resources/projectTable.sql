@@ -22,24 +22,19 @@ drop sequence seq_searchboard_no;
 drop sequence seq_searchreply_no;
 drop sequence seq_floorplan_datanum;
 
--- 테이블 만들고 데이터 임포트 후 반드시 아래의 문장을 추가적으로 실행해 줄 것. maintence_fee의 default 0이 먹히지 않음.
-update property set maintence_fee = 0 where maintence_fee is null;
 
 -- 회원
 CREATE TABLE customer
 (
 	-- 아이디
 	custid varchar2(20) constraint pk_customer_id primary key,
-	-- 이름
-	name varchar2(20) NOT NULL,
 	-- 비밀번호
 	password varchar2(20) NOT NULL,
 	-- 이메일
 	email varchar2(30) NOT NULL,
 	-- 휴대폰
 	phone number(11) NOT NULL,
-	-- 접속불가
-	stop_access varchar2(10) default 'false'
+
 );
 
 -- 장바구니
