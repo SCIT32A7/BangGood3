@@ -82,7 +82,7 @@
 								<div class="promo-block__content g-pl-50 ">
 									<div class="text-left pull-left">
 										<span class="promo__pretitle g-dp-block g-mb-20">방 내놓기</span>
-										<h1 class="promo__title g-pl-30 promo__title--left-bar font-main g-mb-30">Renting
+										<h1 class="promo__title g-pl-30 promo__title--left-bar font-main g-mb-30">RENTING
 										<br>
 										My House</h1>
 										<a href="insert_property" class="btn-u btn-u--construction trim">더 보기</a>
@@ -98,7 +98,7 @@
 				<div class="container g-mt-80 g-mb-50">
 					<div class="main_head text-center ">
 						<span class="main_name g-dp-block g-mb-20">테마 검색</span>
-						<h1 class="main_title font-main g-mb-60">THEMA SEARCH</h1>
+						<h1 class="main_title font-main g-mb-60">THEME SEARCH</h1>
 					</div>
 				</div>
 				<div class="container-fluid no-column-space">

@@ -345,8 +345,8 @@
 						<img class="buttonImage" alt="sofa2" src="assets/img/icons/sidebar/Sofa2.jpg" btn-num="sofa2" />
 						<img class="buttonImage" alt="sofa4" src="assets/img/icons/sidebar/Sofa4.jpg" btn-num="sofa4" />
 						<img class="buttonImage" alt="diningTable" src="assets/img/icons/sidebar/DiningTable.jpg" btn-num="diningTable" />
-						<img class="buttonImage" alt="floorTable" src="assets/img/icons/sidebar/FloorTable.jpg" btn-num="table1" />
-						<img class="buttonImage" alt="chairTable" src="assets/img/icons/sidebar/ChairTable.jpg" btn-num="table2" />
+						<img class="buttonImage" alt="floorTable" src="assets/img/icons/sidebar/FloorTable.jpg" btn-num="table2" />
+						<img class="buttonImage" alt="chairTable" src="assets/img/icons/sidebar/ChairTable.jpg" btn-num="table1" />
 					</div>
 					<div class="canvas_img kitchen">
 						<img class="buttonImage" alt="microwave" src="assets/img/icons/sidebar/Microwave.jpg" btn-num="microwave" />
