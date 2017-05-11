@@ -32,7 +32,8 @@
             <c:if test ="${not empty loginId}">   
               <c:if test="${!loginId.equals(\"admin\")}">       
                <li class="page-scroll move"><a href="search">방 검색</a></li>
-               <li class="page-scroll"><a href="insert_property">방 등록</a></li>               
+               <li class="page-scroll"><a href="insert_property">방 등록</a></li>
+               <li class="page-scroll"><a href="practiceFloorplan">평면도</a></li>               
                <li class="page-scroll"><a href="searchboard">게시판</a></li>     
                <li class="page-scroll"><a href="mypage">마이 페이지</a></li>
                <li class="page-scroll"><a href="seeList">오늘 본 매물</a></li> 

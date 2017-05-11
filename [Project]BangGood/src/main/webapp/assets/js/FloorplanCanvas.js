@@ -1734,7 +1734,11 @@ function saveFloorplan (on, url, saved_name, scale) {
 			data : data,
 			success : function(result) {
 				if (result == 1) {
-					alert("평면도 수정에 성공하셨습니다. 다음 진행을 해주세요.");
+					if(url == "saveCanvas") {
+						alert("평면도 등록에 성공하셨습니다. 완료를 눌러주세요. 마이페이로 이동합니다.");
+					} else {
+						alert("평면도 수정에 성공하셨습니다. 다음 진행을 해주세요.");
+					}
 				} else if(result == -1) {
 					alert("로그인 후 저장 가능합니다.");
 				} else {

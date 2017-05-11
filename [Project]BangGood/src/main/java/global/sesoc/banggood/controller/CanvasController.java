@@ -63,13 +63,17 @@ public class CanvasController {
 		return result;
 	}
 	
+	@RequestMapping(value="/practiceFloorplan", method = RequestMethod.GET)
+	public String practiceCanvas() {
+		return "practiceFloorplan";
+	}
+	
 	@RequestMapping(value = "/loadCanvasForUpdate", method = RequestMethod.GET)
 	public String updateCanvas(String property_no) {
 		Canvas result = repository.loadCanvasForUpdate(property_no);
 		session.setAttribute("canvasForUpdate", result);
 		System.out.println("updateCanvas "+result.toString());
 		session.setAttribute("updateCanvas", result);
-		System.out.println("asdfsadf");
 		return "updateFloorplan";
 	}
 	
