@@ -90,6 +90,19 @@ $(function() {
 	
 	$("#mail_check").on("click", function(){
 		var email = $("#joinemail").val();
+		if (email.length == 0) {
+			alert('인증하실 이메일 주소를 입력해주세요');
+			return false;
+		}
+		if (email == "@") {
+			alert('인증하실 이메일 주소를 정확히 입력해주세요');
+			return false;
+		}
+		if (!email.includes("@")){
+			alert('이메일 주소에는 @를 포합해주세요.');
+			return false;
+		}
+		
 			$.ajax({
 				type : "post",
 				url : "emailcheck",

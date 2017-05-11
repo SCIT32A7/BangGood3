@@ -16,6 +16,11 @@
 		</script>
 	</c:if>
 </c:if>
+<c:if test = "${not empty interceptor}">	
+	<script>
+		alert('굿방 회원만 이용 가능합니다.');
+	</script>
+</c:if>
 <html lang="en">
 	<!--<![endif]-->
 	<head>
