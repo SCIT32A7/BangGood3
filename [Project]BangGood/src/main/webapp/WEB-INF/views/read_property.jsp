@@ -286,7 +286,7 @@
                   <c:if test= "${loginId != read_property.custid}">
                  	 <c:if test = "${loginId != 'admin'}">
                  		 <p class="g-mb-10">게시자 : <span>${read_property.custid}</span></p>
-                  		 <a href="javascript:msg_send(${read_property.custid})" class="btn-u btn-u-lg btn-block" type="button">메세지보내기</button></a>
+                  		 <a href="javascript:msg_send()" class="btn-u btn-u-lg btn-block" type="button">메세지보내기</button></a>
                  		 <a href="insert_cart?property_no=${read_property.property_no}" class="btn-u btn-u-lg btn-block" type="button">찜하기</button></a>
                  	 </c:if>
                  	 <c:if test = "${loginId == 'admin'}">
@@ -360,6 +360,7 @@
 	<script>	
 	var id = "${loginId}";
 	var property_no = "${read_property.property_no}";
+	var property_custid = "${read_property.custid}";
 	var selectedRadar;
 	var avgRadar;
 	var percentRadar;
@@ -684,8 +685,8 @@
 	} 
 	
 	//메시지 창 열기
-	function msg_send(property_id) {
-		  window.open("message_send?sender="+property_id, "", 'titlebar=no, scrollbars=yes, toolbar=no, location=no, resizable=no, status=no, menubar=yes, width=350, height=400, left=30%, top=40%');
+	function msg_send() {
+		  window.open("message_send?sender="+property_custid, "", 'titlebar=no, scrollbars=yes, toolbar=no, location=no, resizable=no, status=no, menubar=yes, width=350, height=400, left=30%, top=40%');
 	};
 
 	// 광고 중단 여부 재확인 메소드
