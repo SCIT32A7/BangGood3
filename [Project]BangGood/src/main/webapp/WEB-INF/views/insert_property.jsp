@@ -107,7 +107,7 @@ table tr td {
 										</div>
 										<input type="text" id="sample5_roadAddress" class="form-control rounded g-mb-5" style="text-align:left" readonly="readonly">
 										<input type="text" id="sample5_jibunAddress" name = "address" style="text-align:left" class="form-control rounded  g-mb-10" readonly="readonly">
-										<input type="text" class="form-control rounded" name = "address_detail" style="height:75px; text-align:left" placeholder="상세주소를 입력해주세요." required="required">
+										<input type="text" class="form-control rounded" name = "address_detail" style="height:75px; text-align:left" value = "103호" required="required">
 										
 										</td>
 										<td>
@@ -147,7 +147,7 @@ table tr td {
 										<tr class="borderline">
 											<th>방 종류</th>
 											<td colspan="3">
-												<input type="radio" id="oneroom" name="property_type" value = "oneroom">
+												<input type="radio" id="oneroom" name="property_type" value = "oneroom" checked>
 												<label for="oneroom" >원룸</label>
 												<input type="radio" id="tworoom" name="property_type" value = "tworoom">
 												<label for="tworoom" >투룸</label>
@@ -158,18 +158,18 @@ table tr td {
 											<td colspan="3">
 											<input type="radio" id="rent_type1" name="rent_type" value = "year_rent">
 											<label for="rent_type1">전세</label>
-											<input type="radio" id="rent_type2" name="rent_type" value = "month_rent" style="position:relative; top:6px">
+											<input type="radio" id="rent_type2" name="rent_type" value = "month_rent" style="position:relative; top:6px" checked>
 											<label for="rent_type2">월세</label>
 											</td>
 										</tr>
 										<tr class="borderline">
 											<th>보증금 <br>/ 전세금</th>
 											<td style="border-right: 1px solid #f7b70b">
-											<input type="text" name = "deposit" id = "deposit" class="form-control rounded pull-left" style="width: 100px;"> 
+											<input type="text" name = "deposit" id = "deposit" class="form-control rounded pull-left" style="width: 100px;" value = "500"> 
 											<b class="insert_label2">만원</b>
 											</td>
 											<th style="padding-left: 18px">월세</th>
-											<td><input type="text" name ="month_fee" id = "month_fee" class="form-control rounded pull-left" style="width: 100px">
+											<td><input type="text" name ="month_fee" id = "month_fee" class="form-control rounded pull-left" style="width: 100px" value = "60">
 												<b class="insert_label2">만원</b>
 											</td>
 										</tr>
@@ -190,18 +190,18 @@ table tr td {
 													<option value = "10">10층 이상</option>
 											</select></td>
 											<th style="padding-left: 18px">면적</th>
-											<td><input type="text" name ="roomsize" id = "roomsize" class="form-control rounded pull-left" style="width: 100px">
+											<td><input type="text" name ="roomsize" id = "roomsize" class="form-control rounded pull-left" style="width: 100px" value = "62.3">
 												<b class="insert_label2">제곱미터</b>
 											</td>
 										</tr>
 										<tr class="borderline">
 											<th>건축연도</th>
 											<td  style="border-right: 1px solid #f7b70b">
-											<input type="text" name = "built_year" id = "built_year" class="form-control rounded pull-left" style="width: 100px;"> 
+											<input type="text" name = "built_year" id = "built_year" class="form-control rounded pull-left" style="width: 100px;" value = "1990"> 
 											<b class="insert_label2">년</b>
 											</td>
 											<th style="padding-left: 18px">건물명</th>
-											<td><input type="text" name ="buildingname" id = "buildingname" class="form-control rounded pull-left" style="width: 100px;text-align:left">
+											<td><input type="text" name ="buildingname" id = "buildingname" class="form-control rounded pull-left" style="width: 100px;text-align:left" value = "삼성빌라">
 											</td>
 										</tr>
 									</table>
@@ -231,22 +231,22 @@ table tr td {
 										<tr class="borderline">
 										<th rowspan="2">관리비</th>
 										<td colspan="3">
-										<input type="text" id = "maintence_fee" name = "maintence_fee" class="form-control rounded pull-left" style="width: 100px">
+										<input type="text" id = "maintence_fee" name = "maintence_fee" class="form-control rounded pull-left" style="width: 100px" value = "5">
 										<b class="insert_label2">만원</b>
 										</td>
 									</tr>
 									<tr class="borderline">
 										<td colspan="3">
-											<input type="checkbox" name="internet" value="1" id="internet">
+											<input type="checkbox" name="internet" value="1" id="internet" checked> 
 											<label for="internet">인터넷</label>
 											 
 											<input type="checkbox" name="tvfee" value="1" id="tvfee">
 											<label for="tvfee">케이블</label>
 											
-											<input type="checkbox" name="cleaning" value="1" id="cleaning">
+											<input type="checkbox" name="cleaning" value="1" id="cleaning" checked>
 											<label for="cleaning">청소비</label>
 											
-											<input type="checkbox" name="waterfee" value="1" id="waterfee">
+											<input type="checkbox" name="waterfee" value="1" id="waterfee" checked>
 											<label for="waterfee">수도세</label>
 											
 											<input type="checkbox" name="gasfee" value="1" id="gasfee">
@@ -261,14 +261,14 @@ table tr td {
 										<td colspan="3">
 											<input type="radio" name="car" value = "1" id="car1">
 											<label for="car1">가능</label>
-											<input type="radio" name="car" value = "2" id="car2">
+											<input type="radio" name="car" value = "2" id="car2" checked>
 											<label for="car2">불가능</label>
 										</td>
 									</tr>
 									<tr class="borderline">
 										<th>엘레베이터</th>
 										<td colspan="3">
-											<input type="radio" id="elevator" name="elevator" value = "1" >
+											<input type="radio" id="elevator" name="elevator" value = "1" checked>
 											<label for="elevator">있음</label>
 											<input type="radio" id="elevator1" name="elevator" value = "2" >
 											<label for="elevator1">없음</label>
@@ -277,7 +277,7 @@ table tr td {
 									<tr class="borderline">
 										<th>반려동물</th>
 										<td colspan="3">
-											<input type="radio" id="pet" name="pet" value = "1" >
+											<input type="radio" id="pet" name="pet" value = "1" checked>
 											<label for="pet">가능</label>
 											<input type="radio" id="pet1" name="pet" value = "2" >
 											<label for="pet1">불가능</label>
@@ -286,13 +286,13 @@ table tr td {
 									<tr class="borderline">
 										<th>옵션항목</th>
 										<td colspan="3">
-											<input type="checkbox" id="air_conditioner" name="air_conditioner" value="1" >
+											<input type="checkbox" id="air_conditioner" name="air_conditioner" value="1" checked>
 											<label for="air_conditioner">에어콘</label>
-											<input type="checkbox" id="fridge" name="fridge" value="1" >
+											<input type="checkbox" id="fridge" name="fridge" value="1" checked>
 											<label for="fridge">냉장고</label>
-											<input type="checkbox" id="washing_machine" name="washing_machine" value="1" >
+											<input type="checkbox" id="washing_machine" name="washing_machine" value="1" checked>
 											<label for="washing_machine">세탁기</label>
-											<input type="checkbox" id="gas_stove" name="gas_stove" value="1" >
+											<input type="checkbox" id="gas_stove" name="gas_stove" value="1" checked>
 											<label for="gas_stove">가스레인지</label>
 											<input type="checkbox" id="electric_stove" name="electric_stove" value="1" >
 											<label for="electric_stove">인덕션</label>
@@ -301,15 +301,15 @@ table tr td {
 											<br>
 											<input type="checkbox" id="desk" name="desk" value="1" >
 											<label for="desk">책상</label>
-											<input type="checkbox" id="rack" name="rack" value="1" >
+											<input type="checkbox" id="rack" name="rack" value="1" checked>
 											<label for="rack">선반</label>
 											<input type="checkbox" id="bed" name="bed" value="1" >
 											<label for="bed">침대</label>
 											<input type="checkbox" id="closet" name="closet" value="1" >
 											<label for="closet">옷장</label>
-											<input type="checkbox" id="shoecabinet" name="shoecabinet" value="1" >
+											<input type="checkbox" id="shoecabinet" name="shoecabinet" value="1" checked>
 											<label for="shoecabinet">신발장</label>
-											<input type="checkbox" id="doorlock" name="doorlock" value="1" >
+											<input type="checkbox" id="doorlock" name="doorlock" value="1" checked>
 											<label for="doorlock">도어락</label>
 											<input type="checkbox" id="wifi" name="wifi" value="1" >
 											<label for="wifi">무선인터넷</label>
@@ -335,13 +335,35 @@ table tr td {
 									<table style="width:100%">
 										<tr class="borderline">
 											<th>방 제목</th>
-											<td><input type="text" id="property_title" name = "property_title" class="form-control rounded pull-width" style="text-align:left" placeholder="예) 코엑스 5분거리 살기좋은 곳입니다.">
+											<td><input type="text" id="property_title" name = "property_title" class="form-control rounded pull-width" style="text-align:left" value = "프레젝트 시연용">
 											</td>
 										</tr>
 										<tr class="borderline">
 											<th>방 설명</th>
 											<td>
-											<textarea type="text" class="pull-width" id="property_text" name = "property_text" style="width: 100%; height: 250px" placeholder="방에 대한 설명을 써주세요."></textarea>
+											<textarea type="text" class="pull-width" id="property_text" name = "property_text" style="width: 100%; height: 250px" >
+프레젝트 시연용
+											
+프레젝트 시연용
+											
+프레젝트 시연용
+											
+프레젝트 시연용
+											
+프레젝트 시연용
+											
+프레젝트 시연용
+
+프레젝트 시연용
+
+프레젝트 시연용
+
+프레젝트 시연용
+
+프레젝트 시연용
+
+프레젝트 시연용
+											</textarea>
 											</td>
 										</tr>
 									</table>
