@@ -236,8 +236,31 @@ public class PropertyRepository {
 		System.out.println(" "+address);
 		PropertyDAO pd = query.getMapper(PropertyDAO.class);
 		Property_map pm = null;
+		ArrayList<Property_map> pmList;
 		try {
-			pm = pd.readProperty_map(" "+address);
+			pmList = pd.readProperty_map(" "+address);
+			if(pmList.size() == 0){
+				if(address.contains("1동")){
+					address = address.replace("1동", "일동");
+					System.out.println("바뀐주소" + address);
+					pmList = pd.readProperty_map(" "+address);
+				}else if(address.contains("2동")){
+					address = address.replace("2동", "이동");
+					System.out.println("바뀐주소" + address);
+					pmList = pd.readProperty_map(" "+address);
+				}else if(address.contains("3동")){
+					address = address.replace("3동", "삼동");
+					System.out.println("바뀐주소" + address);
+					pmList = pd.readProperty_map(" "+address);
+				}else if(address.contains("4동")){
+					address = address.replace("4동", "사동");
+					System.out.println("바뀐주소" + address);
+					pmList = pd.readProperty_map(" "+address);
+				}
+				pm = pmList.get(0);
+			}else{
+			 pm = pmList.get(0);
+			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

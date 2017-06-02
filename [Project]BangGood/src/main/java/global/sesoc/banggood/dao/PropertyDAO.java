@@ -47,7 +47,7 @@ public interface PropertyDAO {
 	public ArrayList<String> searchProperty(Property_search search) throws Exception;
 	
 	// 지도 상에서 매물 정보 띄우기
-	public Property_map readProperty_map(String address) throws Exception;
+	public ArrayList<Property_map> readProperty_map(String address) throws Exception;
 	
 	// 주소 자동완성을 위한 메소드
 	public ArrayList<String> getPosition(String searchText) throws Exception;

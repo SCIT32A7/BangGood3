@@ -219,7 +219,7 @@
       		maintence_fee, built_year, roomsize, floor, property_title, 
       		property_hits, reply_count, property_like
            from property
-           where address = #{address}) pro,
+           where address like '%'||#{address}||'%') pro,
           (select property_no, pic_name, pic_savename 
            from picture
            where pic_division = 'main') pic 
